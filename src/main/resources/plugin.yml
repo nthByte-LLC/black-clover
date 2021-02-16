@@ -1,0 +1,4 @@
+name: BlackClover
+version: ${project.version}
+main: net.dohaw.blackclover.BlackCloverPlugin
+api-version: 1.16
