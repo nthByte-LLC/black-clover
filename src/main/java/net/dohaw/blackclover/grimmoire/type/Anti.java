@@ -1,0 +1,30 @@
+package net.dohaw.blackclover.grimmoire.type;
+
+import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
+import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+
+import java.util.List;
+
+public class Anti extends GrimmoireWrapper {
+
+    public Anti() {
+        super(GrimmoireType.ANTI);
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return null;
+    }
+
+    @Override
+    public int getTier() {
+        return 5;
+    }
+
+    @Override
+    public GrimmoireClassType getClassType() {
+        return GrimmoireClassType.SPECIAL;
+    }
+
+}

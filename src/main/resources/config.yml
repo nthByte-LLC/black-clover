@@ -1,6 +1,20 @@
+Testing Mode: true
+
 Grimmoire Properties:
-  Material: BOOK_AND_QUILL
+  Material: WRITABLE_BOOK
+  Display Name: "%name% Magic"
+  Lore:
+    - "&fTier: %tierNum% &f(%rarity%&f)"
+    - "&fClass: %class%"
 
 Obtaining Chance:
+  Tier 2: 50
+  Tier 3: 35
+  Tier 4: 10
+  Tier 5: 5
+
+# Please don't touch these 2 lines
+Tier 5 Grimmoire Acquired: false
+Tier 4 Grimmoire Acquired: false
 
 

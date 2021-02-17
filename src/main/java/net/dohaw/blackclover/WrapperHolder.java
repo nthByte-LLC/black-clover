@@ -3,7 +3,7 @@ package net.dohaw.blackclover;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WrapperHolder {
+public class WrapperHolder{
 
     public static Map<Enum, Wrapper> wrappers = new HashMap<>();
 

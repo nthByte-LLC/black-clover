@@ -28,8 +28,9 @@ public enum GrimmoireType {
     TRAP,
     DARK;
 
+    @Override
     public String toString(){
-        return StringUtils.capitalize(this.name());
+        return StringUtils.capitalize(this.name().toLowerCase());
     }
 
 }

@@ -1,5 +1,7 @@
 package net.dohaw.blackclover.util;
 
+import lombok.NonNull;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +14,7 @@ public class NBTHandler {
 
     public static final NamespacedKey GRIMMOIRE_TYPE_PDC_KEY = NamespacedKey.minecraft("grimmoire_type");
 
-    public static boolean hasGrimmoire(Player player){
+    public static boolean hasGrimmoire(@NonNull Player player){
 
         PlayerInventory inv = player.getInventory();
         for(ItemStack stack : inv.getContents()){
@@ -27,6 +29,13 @@ public class NBTHandler {
 
         return false;
 
+    }
+
+    public static void markGrimmoire(@NonNull ItemStack stack, GrimmoireType grimmoireType){
+        ItemMeta meta = stack.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        pdc.set(GRIMMOIRE_TYPE_PDC_KEY, PersistentDataType.STRING, grimmoireType.toString().toLowerCase());
+        stack.setItemMeta(meta);
     }
 
 }
