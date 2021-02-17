@@ -3,6 +3,7 @@ package net.dohaw.blackclover.config;
 import net.dohaw.corelib.Config;
 import net.dohaw.corelib.helpers.ItemStackHelper;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -30,10 +31,16 @@ public class BaseConfig extends Config {
         if(tier == 2 || tier == 3){
             return true;
         }else if(tier == 4 || tier == 5){
-            return config.getBoolean("Tier " + tier + " Grimmoire Acquired");
+            System.out.println("TEST: " + config.getString("Acquisition Info.Tier " + tier + ".Who Has It"));
+            return config.getString("Acquisition Info.Tier " + tier + ".Who Has It") != null;
         }else{
             throw new IllegalArgumentException("Unexpected Tier!");
         }
+    }
+
+    public void setWhoHasIt(Player whoHasIt, int tier){
+        if(tier != 4 && tier != 5) throw new IllegalArgumentException("The only tiers that you can use this method for are tiers 4 and 5!");
+        config.set("Acquisition Info.Tier " + tier + ".Who Has It", whoHasIt.getName());
     }
 
     public ItemStack createBaseGrimmoire(){

@@ -3,9 +3,11 @@ package net.dohaw.blackclover.listener;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.util.NBTHandler;
 import net.dohaw.corelib.ProbabilityUtilities;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -27,8 +29,9 @@ public class PlayerWatcher implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
 
-        if(!NBTHandler.hasGrimmoire(e.getPlayer())){
-            e.getPlayer().getInventory().addItem(getRandomGrimmoire());
+        Player player = e.getPlayer();
+        if(!NBTHandler.hasGrimmoire(player)){
+            giveRandomGrimmoire(player);
         }else{
             System.out.println("Has grimmoire");
         }
@@ -48,7 +51,7 @@ public class PlayerWatcher implements Listener {
 
     }
 
-    private ItemStack getRandomGrimmoire(){
+    private void giveRandomGrimmoire(Player player){
 
         List<Integer> tiersAvailable = new ArrayList<>();
         tiersAvailable.add(2);
@@ -77,15 +80,20 @@ public class PlayerWatcher implements Listener {
         Random rand = new Random();
         GrimmoireWrapper randomGrimmoire = tierWrappers.get(rand.nextInt(tierWrappers.size()));
 
-        ItemStack baseGrimmoire = BlackCloverPlugin.getBaseGrimmoire();
-        randomGrimmoire.adaptItemStack(baseGrimmoire);
+        ItemStack grimmoire = BlackCloverPlugin.getBaseGrimmoire();
+        randomGrimmoire.adaptItemStack(grimmoire);
 
         if(baseConfig.isInTestingMode()){
             System.out.println("Random Tier: " + randomTier);
             System.out.println("Grimmoire Acquired: " + randomGrimmoire.getKEY());
+        }else{
+            NBTHandler.markGrimmoire(grimmoire, (GrimmoireType) randomGrimmoire.getKEY());
+            if(randomTier == 5 || randomTier == 4){
+                baseConfig.setWhoHasIt(player, randomTier);
+            }
         }
 
-        return baseGrimmoire;
+        player.getInventory().addItem(grimmoire);
 
     }
 
