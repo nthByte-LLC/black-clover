@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 
 import java.util.List;
 
@@ -25,6 +26,11 @@ public class Anti extends GrimmoireWrapper {
     @Override
     public GrimmoireClassType getClassType() {
         return GrimmoireClassType.SPECIAL;
+    }
+
+    @Override
+    public List<SpellType> getSpells() {
+        return null;
     }
 
 }

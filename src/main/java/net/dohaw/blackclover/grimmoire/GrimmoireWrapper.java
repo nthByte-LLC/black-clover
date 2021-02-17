@@ -3,8 +3,10 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
@@ -20,11 +22,21 @@ public abstract class GrimmoireWrapper extends Wrapper {
         this.config = new GrimmoireConfig("grimmoires" + File.separator + TYPE.toString().toLowerCase() + ".yml");
     }
 
+    /**
+     * Other names for this grimmoire. Usually for identifying a grimmoire within all the grimmoires via a command alias.
+     * @return The aliases/nicknames
+     */
     public abstract List<String> getAliases();
 
+    /**
+     * Tier of the grimmoire
+     * @return The tier number
+     */
     public abstract int getTier();
 
     public abstract GrimmoireClassType getClassType();
+
+    public abstract List<SpellType> getSpells();
 
     /**
      * Edits the itemstack properties based on what the grimmoire is
@@ -74,6 +86,41 @@ public abstract class GrimmoireWrapper extends Wrapper {
         meta.setLore(lore);
         baseGrimmoire.setItemMeta(meta);
 
+        writeInGrimmoire(baseGrimmoire);
+
+    }
+
+    private void writeInGrimmoire(ItemStack grimmoire){
+
+        BookMeta bookMeta = (BookMeta) grimmoire.getItemMeta();
+        bookMeta.setTitle("Blank");
+        bookMeta.setAuthor("Server");
+        String firstPageHeader = StringUtils.colorString(config.getDisplayNameColor() + getCenteredHeader());
+        //20 characters wide
+        String underHeader = "&0-------------------";
+        String manaLine = "Testing\n";
+        String firstPage = StringUtils.colorString(firstPageHeader + underHeader );
+
+
+
+        bookMeta.addPage(firstPage);
+
+        grimmoire.setItemMeta(bookMeta);
+
+    }
+
+    private String getCenteredHeader(){
+
+        String txt = getKEY().toString() + " Magic";
+        //Don't know why this is wrong or why this works. Just added 4 and that centers the text.
+        int headerMargin = (19 - txt.length() + 4) / 2;
+        String headerMarginSpace = "";
+
+        for (int i = 0; i <= headerMargin; i++) {
+            headerMarginSpace += " ";
+        }
+
+        return headerMarginSpace + txt + headerMarginSpace;
 
     }
 

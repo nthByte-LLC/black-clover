@@ -1,8 +1,8 @@
 Testing Mode: true
 
 Grimmoire Properties:
-  Material: WRITABLE_BOOK
-  Display Name: "%name% Magic"
+  Material: WRITTEN_BOOK
+  Display Name: "Grimmoire of %name%"
   Lore:
     - "&fTier: %tierNum% &f(%rarity%&f)"
     - "&fClass: %class%"
