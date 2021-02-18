@@ -5,6 +5,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sand extends GrimmoireWrapper {
@@ -30,7 +31,10 @@ public class Sand extends GrimmoireWrapper {
 
     @Override
     public List<SpellType> getSpells() {
-        return null;
+        return new ArrayList<SpellType>(){{
+            add(SpellType.FIRE_BALL);
+            add(SpellType.FIRE_CONTROL);
+        }};
     }
 
 }

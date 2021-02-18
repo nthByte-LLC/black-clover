@@ -7,6 +7,12 @@ Grimmoire Properties:
     - "&fTier: %tierNum% &f(%rarity%&f)"
     - "&fClass: %class%"
 
+Base Mana:
+  Tier 2: 1000
+  Tier 3: 1500
+  Tier 4: 2000
+  Tier 5: 2500
+
 Obtaining Chance:
   Tier 2: 50
   Tier 3: 35

@@ -56,6 +56,10 @@ public class BaseConfig extends Config {
         return grimmoire;
     }
 
+    public int getTierBaseMana(int tier){
+        return config.getInt("Base Mana.Tier " + tier);
+    }
+
     public boolean isInTestingMode(){
         return config.getBoolean("Testing Mode");
     }

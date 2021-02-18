@@ -1,15 +1,20 @@
 package net.dohaw.blackclover.grimmoire;
 import lombok.Getter;
 import lombok.NonNull;
+import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
+import net.md_5.bungee.api.chat.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.xml.soap.Text;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GrimmoireWrapper extends Wrapper {
@@ -95,16 +100,40 @@ public abstract class GrimmoireWrapper extends Wrapper {
         BookMeta bookMeta = (BookMeta) grimmoire.getItemMeta();
         bookMeta.setTitle("Blank");
         bookMeta.setAuthor("Server");
+
+        String firstPage = "";
         String firstPageHeader = StringUtils.colorString(config.getDisplayNameColor() + getCenteredHeader());
+        firstPage += firstPageHeader;
+
         //20 characters wide
-        String underHeader = "&0-------------------";
-        String manaLine = "Testing\n";
-        String firstPage = StringUtils.colorString(firstPageHeader + underHeader );
+        String underHeader = "&0-------------------\n";
+        firstPage += underHeader;
 
+        BlackCloverPlugin plugin = (BlackCloverPlugin) CoreLib.getInstance();
+        String plusSign = "&2[+]&0";
+        String manaLine = plusSign + " " + plugin.getBaseMana(getTier()) + " Mana\n";
+        firstPage += manaLine;
 
+        // The spells
+        for(SpellType spell : getSpells()){
+
+            String spellName = org.apache.commons.lang.StringUtils.capitalize(spell.toString().replace("_", " ").toLowerCase());
+            String spellLine;
+            boolean isUlt = spell.isUltimate();
+
+            if(isUlt){
+                 spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
+            }else{
+                spellLine = plusSign + " Spell: " + spellName + "\n";
+            }
+
+            firstPage += spellLine;
+
+        }
+
+        firstPage = StringUtils.colorString(firstPage);
 
         bookMeta.addPage(firstPage);
-
         grimmoire.setItemMeta(bookMeta);
 
     }

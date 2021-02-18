@@ -15,7 +15,8 @@ import java.util.HashMap;
 
 public final class BlackCloverPlugin extends JavaPlugin {
 
-
+    @Getter
+    private int t2BaseMana, t3BaseMana, t4BaseMana, t5BaseMana;
 
     private static ItemStack baseGrimmoire;
 
@@ -37,10 +38,10 @@ public final class BlackCloverPlugin extends JavaPlugin {
         JPUtils.validateFiles("config.yml");
 
         this.baseConfig = new BaseConfig();
+        loadConfigValues();
         baseGrimmoire = baseConfig.createBaseGrimmoire();
 
         JPUtils.registerEvents(new PlayerWatcher(this));
-
         registerGrimmoires();
     }
 
@@ -55,6 +56,13 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.ANTI);
     }
 
+    private void loadConfigValues(){
+        this.t2BaseMana = baseConfig.getTierBaseMana(2);
+        this.t3BaseMana = baseConfig.getTierBaseMana(3);
+        this.t4BaseMana = baseConfig.getTierBaseMana(4);
+        this.t5BaseMana = baseConfig.getTierBaseMana(5);
+    }
+
     private void validateGrimmoireFiles(){
         HashMap<String, Object> fileInfo = new HashMap<>();
         File folder = new File(getDataFolder(), "grimmoires");
@@ -63,6 +71,18 @@ public final class BlackCloverPlugin extends JavaPlugin {
             fileInfo.put(resourceFileName, folder);
         }
         JPUtils.validateFilesOrFolders(fileInfo, false);
+    }
+
+    public int getBaseMana(int tier){
+        if(tier == 2){
+            return t2BaseMana;
+        }else if(tier == 3){
+            return t3BaseMana;
+        }else if(tier == 4){
+            return t4BaseMana;
+        }else{
+            return t5BaseMana;
+        }
     }
 
     public static ItemStack getBaseGrimmoire(){
