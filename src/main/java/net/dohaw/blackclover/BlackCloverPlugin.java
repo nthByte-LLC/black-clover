@@ -4,25 +4,20 @@ import lombok.Getter;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
-import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.listener.PlayerWatcher;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ManaRegener;
-import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
-import net.dohaw.corelib.ProbabilityUtilities;
-import net.dohaw.corelib.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class BlackCloverPlugin extends JavaPlugin {
 
@@ -48,7 +43,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
             new HashMap<String, Object>(){{
                 put("data", getDataFolder());
                 put("grimmoires", getDataFolder());
-                put("player_data", getDataFolder() + File.separator + "data");
+                put("player_data", new File(getDataFolder() + File.separator + "data"));
             }}
             ,true
         );
@@ -67,7 +62,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        playerDataManager.saveAllData();
     }
 
     private void registerGrimmoires(){
@@ -109,58 +104,12 @@ public final class BlackCloverPlugin extends JavaPlugin {
         return baseGrimmoire.clone();
     }
 
-    private void giveRandomGrimmoire(Player player){
+    public void giveRandomGrimmoire(Player player){
 
-        List<Integer> tiersAvailable = new ArrayList<>();
-        tiersAvailable.add(2);
-        tiersAvailable.add(3);
 
-        boolean isTierFourAvailable = baseConfig.isGrimmoireTierAvailable(4);
-        if(isTierFourAvailable){
-            tiersAvailable.add(4);
-        }
-
-        boolean isTierFiveAvailable = baseConfig.isGrimmoireTierAvailable(5);
-        if(isTierFiveAvailable){
-            tiersAvailable.add(5);
-        }
-
-        ProbabilityUtilities pu = new ProbabilityUtilities();
-        for(int tier : tiersAvailable){
-            int obtainingChance = baseConfig.getObtainingChance(tier);
-            pu.addChance(tier, obtainingChance);
-        }
-
-        int randomTier = (int) pu.getRandomElement();
-        List<GrimmoireWrapper> tierWrappers = Grimmoire.getByTier(randomTier);
-
-        Random rand = new Random();
-        GrimmoireWrapper randomGrimmoire = tierWrappers.get(rand.nextInt(tierWrappers.size()));
-
-        ItemStack grimmoire = BlackCloverPlugin.getBaseGrimmoire();
-        randomGrimmoire.adaptItemStack(grimmoire);
-
-        if(baseConfig.isInTestingMode()){
-            System.out.println("Random Tier: " + randomTier);
-            System.out.println("Grimmoire Acquired: " + randomGrimmoire.getKEY());
-        }else{
-            PDCHandler.markGrimmoire(grimmoire, (GrimmoireType) randomGrimmoire.getKEY());
-            if(randomTier == 5 || randomTier == 4){
-                baseConfig.setWhoHasIt(player, randomTier);
-            }
-        }
-
-        initManaUser(player, randomGrimmoire);
-        player.getInventory().addItem(grimmoire);
 
     }
 
-    private void initManaUser(Player player, GrimmoireWrapper grimmoireWrapper){
-        int maxMana = this.getMaxMana(grimmoireWrapper.getTier());
-        PDCHandler.markPlayer(player, this.getMaxMana(grimmoireWrapper.getTier()));
-        BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), BarColor.BLUE, BarStyle.SOLID);
-        bar.addPlayer(player);
-        manaBars.put(player.getUniqueId(), bar);
-    }
+
 
 }

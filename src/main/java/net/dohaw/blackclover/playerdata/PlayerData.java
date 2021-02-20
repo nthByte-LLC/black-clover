@@ -36,4 +36,9 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
+    public void saveData(){
+        config.saveData(this);
+    }
+
+
 }

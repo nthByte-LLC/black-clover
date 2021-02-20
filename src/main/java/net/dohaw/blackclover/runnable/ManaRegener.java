@@ -5,6 +5,8 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.exception.GrimmoireWrapperNotFoundException;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.Bukkit;
@@ -33,60 +35,62 @@ public class ManaRegener extends BukkitRunnable {
     @SneakyThrows
     @Override
     public void run() {
+
         for(Player player : Bukkit.getOnlinePlayers()){
 
             PersistentDataContainer pdc = player.getPersistentDataContainer();
-            if(pdc.has(PDCHandler.MANA_PDC, PersistentDataType.INTEGER)){
-                if(PDCHandler.hasGrimmoire(player)){
+            if(PDCHandler.hasGrimmoire(player)){
 
-                    int manaAmount = PDCHandler.getMana(player);
-                    GrimmoireWrapper grimmoireWrapper = PDCHandler.getGrimmoireWrapper(player);
-                    if(grimmoireWrapper != null){
+                PlayerDataManager pdm = plugin.getPlayerDataManager();
+                PlayerData pd = pdm.getData(player.getUniqueId());
+                int manaAmount = pd.getManaAmount();
+                GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
+                if(grimmoireWrapper != null){
 
-                        int tier = grimmoireWrapper.getTier();
-                        int maxTierMana = plugin.getMaxMana(tier);
+                    int tier = grimmoireWrapper.getTier();
+                    int maxMana = pd.getMaxMana();
 
-                        if(maxTierMana != manaAmount){
+                    if(maxMana != manaAmount){
 
-                            int manaAmountAdditive;
-                            if(tier == 2){
-                                manaAmountAdditive = baseRegenAmount * t2RegenMult;
-                            }else if(tier == 3){
-                                manaAmountAdditive = baseRegenAmount * t3RegenMult;
-                            }else if(tier == 4){
-                                manaAmountAdditive = baseRegenAmount * t4RegenMult;
-                            }else if(tier == 5){
-                                manaAmountAdditive = baseRegenAmount * t5RegenMult;
-                            }else{
-                                throw new IllegalArgumentException("Invalid tier found in PDC!");
-                            }
-
-                            manaAmount += manaAmountAdditive;
-
-                            if(manaAmount > plugin.getMaxMana(tier)){
-                                manaAmount = maxTierMana;
-                            }
-
-                            System.out.println("MANA AMOUNT: " + manaAmount);
-
-                            pdc.set(PDCHandler.MANA_PDC, PersistentDataType.INTEGER, manaAmount);
-
+                        int manaAmountAdditive;
+                        if(tier == 2){
+                            manaAmountAdditive = baseRegenAmount * t2RegenMult;
+                        }else if(tier == 3){
+                            manaAmountAdditive = baseRegenAmount * t3RegenMult;
+                        }else if(tier == 4){
+                            manaAmountAdditive = baseRegenAmount * t4RegenMult;
+                        }else if(tier == 5){
+                            manaAmountAdditive = baseRegenAmount * t5RegenMult;
+                        }else{
+                            throw new IllegalArgumentException("Invalid tier!");
                         }
 
-                    }else{
-                        throw new GrimmoireWrapperNotFoundException();
+                        manaAmount += manaAmountAdditive;
+
+                        if(manaAmount > maxMana){
+                            manaAmount = maxMana;
+                        }
+
+                        System.out.println("MANA AMOUNT: " + manaAmount);
+                        pd.setMaxMana(manaAmount);
+                        updateManaBar(pd);
+
                     }
+
                 }else{
-                    plugin.getLogger().warning("A player somehow has the Mana PDC, but not a grimmoire...");
+                    throw new GrimmoireWrapperNotFoundException();
                 }
             }
+
         }
+
     }
 
-    private void updateManaBar(Player player, GrimmoireWrapper wrapper, int manaAmount){
-        BossBar manaBar = plugin.getManaBars().get(player.getUniqueId());
-        int maxManaAmount =
-        manaBar.setTitle(StringUtils.colorString("&bMana: &f" + manaAmount + "/" + plugin.getMaxMana(wrapper.getTier())));
+    private void updateManaBar(PlayerData pd){
+        BossBar manaBar = plugin.getManaBars().get(pd.getUuid());
+        int manaAmount = pd.getManaAmount();
+        int maxMana = pd.getMaxMana();
+        manaBar.setTitle(StringUtils.colorString("&bMana: &f" + manaAmount + "/" + maxMana));
     }
 
 }

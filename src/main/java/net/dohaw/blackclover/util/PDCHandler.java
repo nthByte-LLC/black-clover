@@ -14,7 +14,6 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class PDCHandler {
 
-    public static final NamespacedKey MANA_PDC = NamespacedKey.minecraft("bc_mana_amount");
     public static final NamespacedKey GRIMMOIRE_TYPE_PDC_KEY = NamespacedKey.minecraft("grimmoire_type");
 
     public static boolean hasGrimmoire(@NonNull Player player){
@@ -32,16 +31,6 @@ public class PDCHandler {
 
     }
 
-    public static void markPlayer(@NonNull Player player, int maxMana){
-        PersistentDataContainer pdc = player.getPersistentDataContainer();
-        pdc.set(MANA_PDC, PersistentDataType.INTEGER, 0);
-    }
-
-    public static int getMana(@NonNull Player player){
-        PersistentDataContainer pdc = player.getPersistentDataContainer();
-        return pdc.get(MANA_PDC, PersistentDataType.INTEGER);
-    }
-
     public static void markGrimmoire(@NonNull ItemStack stack, GrimmoireType grimmoireType){
         ItemMeta meta = stack.getItemMeta();
         PersistentDataContainer pdc = meta.getPersistentDataContainer();
@@ -56,22 +45,6 @@ public class PDCHandler {
             return pdc.has(GRIMMOIRE_TYPE_PDC_KEY, PersistentDataType.STRING);
         }
         return false;
-    }
-
-    public static GrimmoireWrapper getGrimmoireWrapper(Player player){
-
-        for(ItemStack stack : player.getInventory().getContents()){
-            if(isGrimmoire(stack)){
-                ItemMeta meta = stack.getItemMeta();
-                PersistentDataContainer pdc = meta.getPersistentDataContainer();
-                String grimmoireTypeStr = pdc.get(GRIMMOIRE_TYPE_PDC_KEY, PersistentDataType.STRING);
-                GrimmoireType grimmoireType = GrimmoireType.valueOf(grimmoireTypeStr.toUpperCase());
-                return (GrimmoireWrapper) Grimmoire.getByKey(grimmoireType);
-            }
-        }
-
-        return null;
-
     }
 
 }

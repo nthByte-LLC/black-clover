@@ -1,27 +1,15 @@
 package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
-import net.dohaw.blackclover.config.BaseConfig;
-import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.GrimmoireType;
-import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.util.PDCHandler;
-import net.dohaw.corelib.ProbabilityUtilities;
-import net.dohaw.corelib.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Player;
+import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 public class PlayerWatcher implements Listener {
 
@@ -33,7 +21,15 @@ public class PlayerWatcher implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        plugin.getPlayerDataManager().loadData(e.getPlayer().getUniqueId());
+        plugin.getPlayerDataManager().loadData(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e){
+        PlayerDataManager pdm = plugin.getPlayerDataManager();
+        UUID uuid = e.getPlayer().getUniqueId();
+        pdm.saveData(uuid);
+        pdm.removeDataFromMemory(uuid);
     }
 
     @EventHandler

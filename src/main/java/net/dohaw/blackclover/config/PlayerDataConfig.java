@@ -11,10 +11,6 @@ import java.util.UUID;
 
 public class PlayerDataConfig extends Config {
 
-    public PlayerDataConfig(String fileName) {
-        super(fileName);
-    }
-
     public PlayerDataConfig(File file){
         super(file);
     }
@@ -22,13 +18,15 @@ public class PlayerDataConfig extends Config {
     public PlayerData loadData(UUID uuid){
 
         String grimmoireTypeStr = config.getString("Grimmoire Type");
-        GrimmoireType grimmoireType = GrimmoireType.valueOf(grimmoireTypeStr);
+        GrimmoireType grimmoireType = GrimmoireType.valueOf(grimmoireTypeStr.toUpperCase());
         GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) Grimmoire.getByKey(grimmoireType);
         PlayerData pd = new PlayerData(uuid, grimmoireWrapper);
 
         pd.setMaxMana(config.getInt("Max Mana"));
         pd.setManaAmount(config.getInt("Mana Amount"));
         pd.setConfig(this);
+
+
 
         return pd;
 
@@ -38,6 +36,7 @@ public class PlayerDataConfig extends Config {
         config.set("Max Mana", pd.getMaxMana());
         config.set("Mana Amount", pd.getManaAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
+        saveConfig();
     }
 
 }
