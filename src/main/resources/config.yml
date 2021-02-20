@@ -1,5 +1,6 @@
 Testing Mode: true
 
+# Grimmoire Display Properties.
 Grimmoire Properties:
   Material: WRITTEN_BOOK
   Display Name: "Grimmoire of %name%"
@@ -7,17 +8,33 @@ Grimmoire Properties:
     - "&fTier: %tierNum% &f(%rarity%&f)"
     - "&fClass: %class%"
 
-Base Mana:
-  Tier 2: 1000
-  Tier 3: 1500
-  Tier 4: 2000
-  Tier 5: 2500
+# The amount of mana regen that occurs per second (Without Tier Multipliers)
+Base Mana Regen: 50
 
-Obtaining Chance:
-  Tier 2: 50
-  Tier 3: 35
-  Tier 4: 10
-  Tier 5: 5
+# Tier Properties
+## Base Mana
+## Obtaining Chance
+## Mana Regen Multiplier
+Tier Properties:
+  Tier 2:
+    # The starting mana for a tier. (Without upgrades)
+    Max Mana: 1000
+    # The chance at which a player has at obtaining this tier grimmoire
+    Obtaining Chance: 50
+    # It takes the "Base Mana Regen" and multiplies it by this number. That's how much the player regenerates mana per second.
+    Mana Regen Multiplier: 1
+  Tier 3:
+    Max Mana: 1500
+    Obtaining Chance: 35
+    Mana Regen Multiplier: 1.25
+  Tier 4:
+    Max Mana: 2000
+    Obtaining Chance: 10
+    Mana Regen Multiplier: 2
+  Tier 5:
+    Max Mana: 2500
+    Obtaining Chance: 5
+    Mana Regen Multiplier: 5
 
 # Please don't touch these 2 lines
 Acquisition Info:

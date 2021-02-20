@@ -16,11 +16,19 @@ public class BaseConfig extends Config {
     }
 
     public int getObtainingChance(int tier){
-        return config.getInt("Obtaining Chance.Tier " + tier);
+        return config.getInt("Tier Properties.Tier " + tier + ".Obtaining Chance");
     }
 
-    public int getQuantity(int tier){
-        return config.getInt("Quantity of Grimmoire.Tier " + tier);
+    public int getTierMaxMana(int tier){
+        return config.getInt("Tier Properties.Tier " + tier + ".Max Mana");
+    }
+
+    public int getTierManaRegenMultiplier(int tier){
+        return config.getInt("Tier Properties.Tier " + tier + ".Mana Regen Multiplier");
+    }
+
+    public int getBaseRegen(){
+        return config.getInt("Base Mana Regen");
     }
 
     public Material getGrimmoireMaterial(){
@@ -31,7 +39,6 @@ public class BaseConfig extends Config {
         if(tier == 2 || tier == 3){
             return true;
         }else if(tier == 4 || tier == 5){
-            System.out.println("TEST: " + config.getString("Acquisition Info.Tier " + tier + ".Who Has It"));
             return config.getString("Acquisition Info.Tier " + tier + ".Who Has It") != null;
         }else{
             throw new IllegalArgumentException("Unexpected Tier!");
@@ -54,10 +61,6 @@ public class BaseConfig extends Config {
         grimmoire.setItemMeta(meta);
         ItemStackHelper.addGlowToItem(grimmoire);
         return grimmoire;
-    }
-
-    public int getTierBaseMana(int tier){
-        return config.getInt("Base Mana.Tier " + tier);
     }
 
     public boolean isInTestingMode(){

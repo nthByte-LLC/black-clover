@@ -7,14 +7,11 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
-import net.md_5.bungee.api.chat.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.xml.soap.Text;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GrimmoireWrapper extends Wrapper {
@@ -111,7 +108,7 @@ public abstract class GrimmoireWrapper extends Wrapper {
 
         BlackCloverPlugin plugin = (BlackCloverPlugin) CoreLib.getInstance();
         String plusSign = "&2[+]&0";
-        String manaLine = plusSign + " " + plugin.getBaseMana(getTier()) + " Mana\n";
+        String manaLine = plusSign + " " + plugin.getMaxMana(getTier()) + " Mana\n";
         firstPage += manaLine;
 
         // The spells
