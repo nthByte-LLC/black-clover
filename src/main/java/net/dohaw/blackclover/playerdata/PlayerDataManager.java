@@ -36,6 +36,10 @@ public class PlayerDataManager {
         return playerData.get(uuid);
     }
 
+    /**
+     * Loads player data. Usually used when a player joins the server.
+     * @param player The player you want to load data for.
+     */
     public void loadData(Player player){
 
         UUID uuid = player.getUniqueId();
@@ -51,12 +55,19 @@ public class PlayerDataManager {
 
     }
 
+    /**
+     * Saves all the player data. Usually used on plugin shutdown.
+     */
     public void saveAllData(){
         for(PlayerData pd : playerData.values()){
             pd.saveData();
         }
     }
 
+    /**
+     * Method to create Player data. Usually used if a player has never joined the server before.
+     * @param player
+     */
     private void createData(Player player){
 
         UUID uuid = player.getUniqueId();
@@ -94,8 +105,9 @@ public class PlayerDataManager {
 
             int maxMana = plugin.getMaxMana(randomGrimmoire.getTier());
             pd.setGrimmoireWrapper(randomGrimmoire);
+            System.out.println("MAX MANA: " + maxMana);
             pd.setMaxMana(maxMana);
-            pd.setManaAmount(maxMana);
+            pd.setManaAmount(0);
 
             initManaBar(player, randomGrimmoire);
 
@@ -108,6 +120,11 @@ public class PlayerDataManager {
 
     }
 
+    /**
+     * Intializes the mana bar that is at the top of a player's screen.
+     * @param player The player you want to initialize the bar for
+     * @param grimmoireWrapper The grimmoire that the player has.
+     */
     private void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
         int maxMana = plugin.getMaxMana(grimmoireWrapper.getTier());
         BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), BarColor.BLUE, BarStyle.SOLID);
@@ -115,6 +132,10 @@ public class PlayerDataManager {
         plugin.getManaBars().put(player.getUniqueId(), bar);
     }
 
+    /**
+     * Gets a random tier. Certain tiers may not be available to achieve if they are limited and another player has a tier grimmoire already. (For example, 4 and 5 are limited)
+     * @return A random grimmoire tier
+     */
     private int getRandomTier(){
 
         BaseConfig baseConfig = plugin.getBaseConfig();
@@ -143,16 +164,29 @@ public class PlayerDataManager {
 
     }
 
+    /**
+     * Gets a random grimmoire according to the tier. Usually used for when players first join the server and don't have a grimmoire
+     * @param tier The tier number
+     * @return A random grimmoire
+     */
     private GrimmoireWrapper getRandomGrimmoire(int tier){
         List<GrimmoireWrapper> tierWrappers = Grimmoire.getByTier(tier);
         Random rand = new Random();
         return tierWrappers.get(rand.nextInt(tierWrappers.size()));
     }
 
+    /**
+     * Simply removes the data from the map that contains the player data
+     * @param uuid The player's UUID
+     */
     public void removeDataFromMemory(UUID uuid){
         playerData.remove(uuid);
     }
 
+    /**
+     * Uses the config tied to the PlayerData object and saves the PlayerData properties in its yml file.
+     * @param uuid The player's UUID
+     */
     public void saveData(UUID uuid){
         PlayerData pd = playerData.get(uuid);
         pd.getConfig().saveData(pd);

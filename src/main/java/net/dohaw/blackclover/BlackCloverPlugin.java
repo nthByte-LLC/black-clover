@@ -5,10 +5,12 @@ import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.listener.PlayerWatcher;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ManaRegener;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
+import net.dohaw.corelib.StringUtils;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -104,12 +106,17 @@ public final class BlackCloverPlugin extends JavaPlugin {
         return baseGrimmoire.clone();
     }
 
-    public void giveRandomGrimmoire(Player player){
 
+    public void updateManaBar(PlayerData pd){
 
+        BossBar manaBar = manaBars.get(pd.getUuid());
+        double manaAmount = pd.getManaAmount();
+        double maxMana = pd.getMaxMana();
+        double percentageManaFull = manaAmount / maxMana;
+
+        manaBar.setProgress(percentageManaFull);
+        manaBar.setTitle(StringUtils.colorString("&bMana: &f" + (int)manaAmount + " / " + (int)maxMana));
 
     }
-
-
 
 }

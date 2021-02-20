@@ -26,8 +26,6 @@ public class PlayerDataConfig extends Config {
         pd.setManaAmount(config.getInt("Mana Amount"));
         pd.setConfig(this);
 
-
-
         return pd;
 
     }
