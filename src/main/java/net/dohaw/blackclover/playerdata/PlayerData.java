@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -51,5 +52,8 @@ public class PlayerData {
         return Bukkit.getPlayer(uuid);
     }
 
+    public boolean canCastSpell(SpellWrapper spell){
+        return manaAmount >= spell.getRegenConsumed();
+    }
 
 }

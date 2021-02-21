@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
+import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.listener.PlayerWatcher;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
@@ -13,6 +14,7 @@ import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -71,6 +73,11 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.SAND);
         Grimmoire.registerWrapper(Grimmoire.FIRE);
         Grimmoire.registerWrapper(Grimmoire.ANTI);
+        for(Wrapper grimmoireWrapper : Grimmoire.wrappers.values()){
+            if(grimmoireWrapper instanceof Listener){
+                JPUtils.registerEvents((Listener) grimmoireWrapper);
+            }
+        }
     }
 
     private void loadConfigValues(){

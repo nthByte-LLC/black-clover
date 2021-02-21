@@ -7,7 +7,6 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.ItemStackUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,7 +41,7 @@ public class FireFists extends DamageSpellWrapper implements Listener {
 
     @Override
     public ItemStack createSpellBoundItem() {
-        return ItemStackUtil.createStack(this, Material.SOUL_TORCH, grimmoireConfig.getCustomItemDisplayName((SpellType) KEY), grimmoireConfig.getCustomItemLore((SpellType) KEY));
+        return ItemStackUtil.createStack(this, grimmoireConfig.getCustomItemMaterial(KEY), grimmoireConfig.getCustomItemDisplayName(KEY), grimmoireConfig.getCustomItemLore(KEY));
     }
 
     @EventHandler

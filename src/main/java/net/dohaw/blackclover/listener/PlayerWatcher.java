@@ -8,8 +8,10 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -41,12 +43,25 @@ public class PlayerWatcher implements Listener {
     @EventHandler
     public void onPrepareToCast(PlayerInteractEvent e){
 
-        ItemStack item = e.getItem();
-        PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
-        SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
-        if(spellBoundToItem != null){
-            spellBoundToItem.cast(pd);
+        Action action = e.getAction();
+        if(action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR){
+            ItemStack item = e.getItem();
+            PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
+            Player player = pd.getPlayer();
+            SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
+            if(spellBoundToItem != null){
+                if(!pd.getSpellsOnCooldown().contains(spellBoundToItem.getKEY())){
+                    if(pd.canCastSpell(spellBoundToItem)){
+                        spellBoundToItem.cast(pd);
+                    }else{
+                        player.sendMessage("You don't have enough mana at the moment!");
+                    }
+                }else{
+                    player.sendMessage("This spell is on cooldown!");
+                }
+            }
         }
+
 
     }
 

@@ -2,6 +2,7 @@ package net.dohaw.blackclover.config;
 
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.corelib.Config;
+import org.bukkit.Material;
 
 import java.util.List;
 
@@ -33,6 +34,10 @@ public class GrimmoireConfig extends Config {
 
     public int getCustomItemHotbarNum(SpellType spellType){
         return config.getInt("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Hotbar Number");
+    }
+
+    public Material getCustomItemMaterial(SpellType spellType){
+        return Material.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Material", "APPLE"));
     }
 
 }

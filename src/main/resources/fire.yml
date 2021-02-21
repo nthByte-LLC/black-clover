@@ -4,6 +4,7 @@ Percentage Mana Expended: 10
 Spell Settings:
   fire_fists:
     Custom Item Properties:
+      Material: TORCH
       Hotbar Number: 0
       Display Name: "&cFire Fists"
       Lore:
