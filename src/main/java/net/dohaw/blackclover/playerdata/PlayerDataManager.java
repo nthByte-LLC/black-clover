@@ -7,6 +7,7 @@ import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.ProbabilityUtilities;
 import net.dohaw.corelib.StringUtils;
@@ -16,6 +17,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +52,16 @@ public class PlayerDataManager {
             initManaBar(player, pd.getGrimmoireWrapper());
             playerData.put(pd.getUuid(), pd);
         }else{
-            createData(player);
+            PlayerData pd = createData(player);
+            if(pd != null){
+                PlayerInventory inv = player.getInventory();
+                GrimmoireWrapper grimmoire = pd.getGrimmoireWrapper();
+                for(SpellWrapper spell : grimmoire.getSpells().values()){
+                    ItemStack spellBoundItem = spell.getSpellBoundItem();
+                    int hotbarSlot = spell.getHotbarSlot();
+                    inv.setItem(hotbarSlot, spellBoundItem);
+                }
+            }
         }
 
     }
@@ -68,7 +79,7 @@ public class PlayerDataManager {
      * Method to create Player data. Usually used if a player has never joined the server before.
      * @param player
      */
-    private void createData(Player player){
+    private PlayerData createData(Player player){
 
         UUID uuid = player.getUniqueId();
         File file = new File(plugin.getDataFolder() + File.separator + "data" + File.separator + "player_data", uuid.toString() + ".yml");
@@ -105,7 +116,6 @@ public class PlayerDataManager {
 
             int maxMana = plugin.getMaxMana(randomGrimmoire.getTier());
             pd.setGrimmoireWrapper(randomGrimmoire);
-            System.out.println("MAX MANA: " + maxMana);
             pd.setMaxMana(maxMana);
             pd.setManaAmount(0);
 
@@ -114,9 +124,13 @@ public class PlayerDataManager {
             playerData.put(player.getUniqueId(), pd);
             player.getInventory().addItem(grimmoire);
 
+            return pd;
+
         }else{
             plugin.getLogger().warning("There has been an error creating data for the player " + Bukkit.getPlayer(uuid).getName());
         }
+
+        return null;
 
     }
 

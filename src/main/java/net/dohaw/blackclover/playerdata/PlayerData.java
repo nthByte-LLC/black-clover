@@ -4,10 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.util.HashSet;
 import java.util.UUID;
 
 public class PlayerData {
+
+    @Getter
+    private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
 
     @Getter @Setter
     private int maxMana, manaAmount;
@@ -38,6 +45,10 @@ public class PlayerData {
 
     public void saveData(){
         config.saveData(this);
+    }
+
+    public Player getPlayer(){
+        return Bukkit.getPlayer(uuid);
     }
 
 

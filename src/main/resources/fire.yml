@@ -3,11 +3,23 @@ Percentage Mana Expended: 10
 
 Spell Settings:
   fire_fists:
+    Custom Item Properties:
+      Hotbar Number: 0
+      Display Name: "&cFire Fists"
+      Lore:
+        - "This is a test line"
+        - "This is another test line"
     Damage Scale: 1
     # In seconds
     Cooldown: 20
     Mana Used: 100
   fire_ball:
+    Custom Item Properties:
+      Hotbar Number: 1
+      Display Name: "&cFire Fists"
+      Lore:
+        - "This is a test line"
+        - "This is another test line"
     Damage Scale: 1
     Cooldown: 5
     Mana Used: 100

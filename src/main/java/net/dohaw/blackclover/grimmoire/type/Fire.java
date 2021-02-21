@@ -3,12 +3,13 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.FireFists;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Fire extends GrimmoireWrapper {
+
+    public FireFists fireFists;
 
     public Fire() {
         super(GrimmoireType.FIRE);
@@ -30,11 +31,9 @@ public class Fire extends GrimmoireWrapper {
     }
 
     @Override
-    public List<SpellType> getSpells() {
-        return new ArrayList<SpellType>(){{
-            add(SpellType.FIRE_BALL);
-            add(SpellType.FIRE_CONTROL);
-        }};
+    public void initSpells() {
+        this.fireFists = new FireFists(config);
+        this.spells.put(fireFists.getKEY(), fireFists);
     }
 
 }

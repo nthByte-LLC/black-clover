@@ -3,9 +3,7 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.spell.SpellType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Anti extends GrimmoireWrapper {
@@ -30,11 +28,8 @@ public class Anti extends GrimmoireWrapper {
     }
 
     @Override
-    public List<SpellType> getSpells() {
-        return new ArrayList<SpellType>(){{
-            add(SpellType.FIRE_BALL);
-            add(SpellType.FIRE_CONTROL);
-        }};
+    public void initSpells() {
+
     }
 
 }

@@ -1,10 +1,12 @@
 package net.dohaw.blackclover.grimmoire;
+
 import lombok.Getter;
 import lombok.NonNull;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.inventory.ItemStack;
@@ -12,9 +14,18 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-public abstract class GrimmoireWrapper extends Wrapper {
+public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
+
+    /**
+     * The slot number for each spell bound item and the spell iteself.
+     */
+    @Getter
+    protected Map<SpellType, SpellWrapper> spells = new HashMap<>();
 
     @Getter
     protected GrimmoireConfig config;
@@ -22,6 +33,7 @@ public abstract class GrimmoireWrapper extends Wrapper {
     public GrimmoireWrapper(final GrimmoireType TYPE){
         super(TYPE);
         this.config = new GrimmoireConfig("grimmoires" + File.separator + TYPE.toString().toLowerCase() + ".yml");
+        initSpells();
     }
 
     /**
@@ -36,9 +48,13 @@ public abstract class GrimmoireWrapper extends Wrapper {
      */
     public abstract int getTier();
 
+    /**
+     * The class of the grimmoire
+     * @return The class
+     */
     public abstract GrimmoireClassType getClassType();
 
-    public abstract List<SpellType> getSpells();
+    public abstract void initSpells();
 
     /**
      * Edits the itemstack properties based on what the grimmoire is
@@ -112,11 +128,11 @@ public abstract class GrimmoireWrapper extends Wrapper {
         firstPage += manaLine;
 
         // The spells
-        for(SpellType spell : getSpells()){
+        for(SpellWrapper spell : spells.values()){
 
             String spellName = org.apache.commons.lang.StringUtils.capitalize(spell.toString().replace("_", " ").toLowerCase());
             String spellLine;
-            boolean isUlt = spell.isUltimate();
+            boolean isUlt = spell.getKEY().isUltimate();
 
             if(isUlt){
                  spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";

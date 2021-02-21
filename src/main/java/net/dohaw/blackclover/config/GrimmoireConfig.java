@@ -3,6 +3,8 @@ package net.dohaw.blackclover.config;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.corelib.Config;
 
+import java.util.List;
+
 public class GrimmoireConfig extends Config {
 
     public GrimmoireConfig(String fileName) {
@@ -19,6 +21,18 @@ public class GrimmoireConfig extends Config {
 
     public int getManaUsed(SpellType spellType){
         return config.getInt("Spell Settings." + spellType.getConfigKey() + ".Mana Used");
+    }
+
+    public String getCustomItemDisplayName(SpellType spellType){
+        return config.getString("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Display Name");
+    }
+
+    public List<String> getCustomItemLore(SpellType spellType){
+        return config.getStringList("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Lore");
+    }
+
+    public int getCustomItemHotbarNum(SpellType spellType){
+        return config.getInt("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Hotbar Number");
     }
 
 }

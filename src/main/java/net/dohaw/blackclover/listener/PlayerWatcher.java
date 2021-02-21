@@ -1,7 +1,12 @@
 package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
+import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -33,10 +38,19 @@ public class PlayerWatcher implements Listener {
     }
 
     @EventHandler
-    public void onCastSpell(PlayerInteractEvent e){
+    public void onPrepareToCast(PlayerInteractEvent e){
 
 
 
+    }
+
+    @EventHandler
+    public void onPostCast(PlayerCastSpellEvent e){
+        PlayerData pd = e.getPlayerData();
+        SpellWrapper spellCasted = e.getSpellCasted();
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            pd.getSpellsOnCooldown().add(spellCasted.getKEY());
+        }, (long) (spellCasted.getCooldown() * 20));
     }
 
     private ItemStack ensureProperHotbar(){
