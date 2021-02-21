@@ -1,2 +1,22 @@
 Display Name Color: "&c"
 Percentage Mana Expended: 10
+
+Spell Settings:
+  fire_fists:
+    Damage Scale: 1
+    # In seconds
+    Cooldown: 20
+    Mana Used: 100
+  fire_ball:
+    Damage Scale: 1
+    Cooldown: 5
+    Mana Used: 100
+  fire_blast:
+    Damage Scale: 1
+    Cooldown: 5
+    Mana Used: 100
+  fire_Protection:
+    Cooldown: 5
+    Flame Duration: 2
+    Flame Damage Per Tick: 1
+    Mana Used: 100

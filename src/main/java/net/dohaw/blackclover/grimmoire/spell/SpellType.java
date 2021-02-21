@@ -4,16 +4,21 @@ import lombok.Getter;
 
 public enum SpellType {
 
-    FIRE_FIRSTS(false),
-    FIRE_BALL(false),
-    FIRE_BLAST(false),
-    FIRE_PROTECTION(false),
-    FIRE_CONTROL(true);
+    FIRE_FISTS("fire_fists", false),
+    FIRE_BALL("fire_ball", false),
+    FIRE_BLAST("fire_blast", false),
+    FIRE_PROTECTION("fire_protection", false),
+    FIRE_CONTROL("fire_control",true);
 
     @Getter
     private boolean isUltimate;
-    SpellType(boolean isUltimate){
+
+    @Getter
+    private String configKey;
+
+    SpellType(String configKey, boolean isUltimate){
         this.isUltimate = isUltimate;
+        this.configKey = configKey;
     }
 
 }
