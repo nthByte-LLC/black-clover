@@ -28,6 +28,7 @@ public class FireFists extends DamageSpellWrapper implements Listener {
         Player player = pd.getPlayer();
         PersistentDataContainer pdc = player.getPersistentDataContainer();
         pdc.set(nsk(), PersistentDataType.STRING, " ");
+        Bukkit.broadcastMessage("CASTED!");
         Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, this));
     }
 

@@ -6,6 +6,9 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 public abstract class SpellWrapper extends Wrapper<SpellType> {
 
@@ -42,6 +45,12 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
 
     public NamespacedKey nsk(){
         return NamespacedKey.minecraft(KEY.getConfigKey());
+    }
+
+    public boolean isSpellBoundItem(ItemStack stack){
+        ItemMeta meta = stack.getItemMeta();
+        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+        return pdc.has(nsk(), PersistentDataType.STRING);
     }
 
     public abstract void cast(PlayerData pd);

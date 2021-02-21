@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
+import net.dohaw.blackclover.util.PDCHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,7 +41,12 @@ public class PlayerWatcher implements Listener {
     @EventHandler
     public void onPrepareToCast(PlayerInteractEvent e){
 
-
+        ItemStack item = e.getItem();
+        PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
+        SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
+        if(spellBoundToItem != null){
+            spellBoundToItem.cast(pd);
+        }
 
     }
 
@@ -48,8 +54,10 @@ public class PlayerWatcher implements Listener {
     public void onPostCast(PlayerCastSpellEvent e){
         PlayerData pd = e.getPlayerData();
         SpellWrapper spellCasted = e.getSpellCasted();
+        pd.getSpellsOnCooldown().add(spellCasted.getKEY());
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            pd.getSpellsOnCooldown().add(spellCasted.getKEY());
+            pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
+            Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
         }, (long) (spellCasted.getCooldown() * 20));
     }
 

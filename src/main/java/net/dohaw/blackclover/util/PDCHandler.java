@@ -2,6 +2,9 @@ package net.dohaw.blackclover.util;
 
 import lombok.NonNull;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
+import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,5 +45,15 @@ public class PDCHandler {
 //        }
 //        return false;
 //    }
+
+    public static SpellWrapper getSpellBoundToItem(PlayerData pd, ItemStack stack){
+        GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
+        for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+            if(spell.isSpellBoundItem(stack)){
+                return spell;
+            }
+        }
+        return null;
+    }
 
 }
