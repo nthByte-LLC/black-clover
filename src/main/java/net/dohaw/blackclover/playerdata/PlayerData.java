@@ -8,14 +8,21 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerData {
 
     @Getter
     private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
+
+    @Getter
+    private Map<SpellType, BukkitTask> activeSpells = new HashMap<>();
 
     @Getter @Setter
     private int maxMana, manaAmount;
@@ -54,6 +61,20 @@ public class PlayerData {
 
     public boolean hasSufficientManaForSpell(SpellWrapper spell){
         return manaAmount >= spell.getRegenConsumed();
+    }
+
+    public boolean isSpellOnCooldown(SpellType spellType){
+        return spellsOnCooldown.contains(spellType);
+    }
+
+    public boolean isSpellActive(SpellType spellType){
+        return activeSpells.containsKey(spellType);
+    }
+
+    public void removeActiveSpell(SpellType spellType){
+        BukkitTask runnable = activeSpells.get(spellType);
+        runnable.cancel();
+        activeSpells.remove(spellType);
     }
 
 }

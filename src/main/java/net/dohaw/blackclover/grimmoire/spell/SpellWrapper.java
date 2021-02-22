@@ -1,17 +1,22 @@
 package net.dohaw.blackclover.grimmoire.spell;
 
 import lombok.Getter;
+import lombok.NonNull;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.ItemStackUtil;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
 public abstract class SpellWrapper extends Wrapper<SpellType> {
+
+    @Getter
+    protected Particle particle;
 
     @Getter
     protected int hotbarSlot;
@@ -27,7 +32,6 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
     @Getter
     protected double regenConsumed;
 
-
     protected GrimmoireConfig grimmoireConfig;
 
     public SpellWrapper(SpellType spellType, GrimmoireConfig grimmoireConfig) {
@@ -42,13 +46,16 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
     }
 
     public NamespacedKey nsk(){
-        return NamespacedKey.minecraft(KEY.getConfigKey() + "_item");
+        return NamespacedKey.minecraft(KEY.getConfigKey());
     }
 
-    public boolean isSpellBoundItem(ItemStack stack){
-        ItemMeta meta = stack.getItemMeta();
-        PersistentDataContainer pdc = meta.getPersistentDataContainer();
+    public boolean isSpellBound(@NonNull PersistentDataHolder pdh){
+        PersistentDataContainer pdc = pdh.getPersistentDataContainer();
         return pdc.has(nsk(), PersistentDataType.STRING);
+    }
+
+    public boolean isSpellBoundItem(@NonNull ItemStack stack){
+        return this.isSpellBound(stack.getItemMeta());
     }
 
     public abstract void cast(PlayerData pd);
@@ -57,6 +64,7 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
         this.cooldown = grimmoireConfig.getNumberSetting(KEY, "Cooldown");
         this.regenConsumed = grimmoireConfig.getNumberSetting(KEY, "Mana Used");
         this.hotbarSlot = grimmoireConfig.getCustomItemHotbarNum(KEY);
+        this.particle = grimmoireConfig.getParticle(KEY);
     }
 
     public ItemStack createSpellBoundItem() {

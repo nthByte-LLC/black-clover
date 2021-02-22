@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -50,6 +51,16 @@ public class PDCHandler {
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
         for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
             if(spell.isSpellBoundItem(stack)){
+                return spell;
+            }
+        }
+        return null;
+    }
+
+    public static SpellWrapper getSpellBoundToProjectile(PlayerData pd, Projectile projectile){
+        GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
+        for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+            if(spell.isSpellBound(projectile)){
                 return spell;
             }
         }

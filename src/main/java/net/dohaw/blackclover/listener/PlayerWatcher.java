@@ -2,19 +2,26 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.grimmoire.spell.Projectable;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.UUID;
 
@@ -44,13 +51,23 @@ public class PlayerWatcher implements Listener {
 
         Action action = e.getAction();
         if(action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR){
+
             ItemStack item = e.getItem();
             PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
             Player player = pd.getPlayer();
             SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
+
             if(spellBoundToItem != null){
+
+                SpellType spellType = spellBoundToItem.getKEY();
                 e.setCancelled(true);
-                if(!pd.getSpellsOnCooldown().contains(spellBoundToItem.getKEY())){
+                if(pd.isSpellActive(spellType)){
+                    if(player.isSneaking()){
+                        pd.removeActiveSpell(spellType);
+                    }
+                }
+
+                if(!pd.isSpellOnCooldown(spellType)){
                     if(pd.hasSufficientManaForSpell(spellBoundToItem)){
                         spellBoundToItem.cast(pd);
                         Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToItem));
@@ -60,8 +77,37 @@ public class PlayerWatcher implements Listener {
                 }else{
                     player.sendMessage("This spell is on cooldown!");
                 }
+
             }else{
                 System.out.println("NOT SPELL BOUND");
+            }
+        }
+
+
+    }
+
+    @EventHandler
+    public void onDamagedByProjectile(EntityDamageByEntityEvent e){
+
+        Entity eDamaged = e.getEntity();
+        Entity eDamager = e.getDamager();
+
+        if(eDamager instanceof Projectile){
+            Projectile proj = (Projectile) eDamager;
+            ProjectileSource projSource = proj.getShooter();
+            if(projSource instanceof Player){
+
+                Player damager = (Player) projSource;
+                PlayerDataManager pdm = plugin.getPlayerDataManager();
+                PlayerData pdDamager = pdm.getData(damager.getUniqueId());
+
+                Projectable projectableSpellWrapper = (Projectable) PDCHandler.getSpellBoundToProjectile(pdDamager, proj);
+                if(projectableSpellWrapper != null){
+                    projectableSpellWrapper.onHit(eDamaged, pdDamager);
+                }else{
+                    System.out.println("NOT SPELL BOUND PROJECTILE");
+                }
+
             }
         }
 

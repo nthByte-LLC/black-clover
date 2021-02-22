@@ -1,5 +1,7 @@
 package net.dohaw.blackclover.grimmoire;
 
+import lombok.Setter;
+import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.WrapperHolder;
 import net.dohaw.blackclover.grimmoire.type.Anti;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grimmoire extends WrapperHolder {
+
+    @Setter
+    public static BlackCloverPlugin instance;
 
     public static final GrimmoireWrapper FIRE = new Fire();
     public static final GrimmoireWrapper SAND = new Sand();

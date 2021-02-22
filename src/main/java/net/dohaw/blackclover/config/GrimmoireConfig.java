@@ -3,6 +3,7 @@ package net.dohaw.blackclover.config;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.corelib.Config;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class GrimmoireConfig extends Config {
 
     public Material getCustomItemMaterial(SpellType spellType){
         return Material.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Material", "APPLE"));
+    }
+
+    public Particle getParticle(SpellType spellType){
+        return Particle.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Particle", "FLAME"));
     }
 
 }

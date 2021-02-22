@@ -1,6 +1,6 @@
 Display Name Color: "&c"
 Percentage Mana Expended: 10
-
+Particle: FLAME
 Spell Settings:
   fire_fists:
     Custom Item Properties:
@@ -10,8 +10,9 @@ Spell Settings:
       Lore:
         - "This is a test line"
         - "This is another test line"
-    # Damage Scale for the fire, not the punch
+    # Damage Scale for the punch
     Damage Scale: 1
+    Fire Ticks Per Punch: 5
     # In seconds
     Cooldown: 20
     Mana Used: 100
