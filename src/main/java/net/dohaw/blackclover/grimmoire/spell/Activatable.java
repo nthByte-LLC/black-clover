@@ -4,4 +4,5 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 
 public interface Activatable {
     void activateRunnable(PlayerData pd);
+    int getDuration();
 }

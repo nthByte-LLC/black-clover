@@ -4,6 +4,8 @@ import lombok.Getter;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
+import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.listener.PlayerWatcher;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
@@ -72,9 +74,14 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.SAND);
         Grimmoire.registerWrapper(Grimmoire.FIRE);
         Grimmoire.registerWrapper(Grimmoire.ANTI);
-        for(Wrapper grimmoireWrapper : Grimmoire.wrappers.values()){
-            if(grimmoireWrapper instanceof Listener){
-                JPUtils.registerEvents((Listener) grimmoireWrapper);
+        for(Wrapper wrapper : Grimmoire.wrappers.values()){
+            if(wrapper instanceof GrimmoireWrapper){
+                GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) wrapper;
+                for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+                    if(spell instanceof Listener){
+                        JPUtils.registerEvents((Listener) spell);
+                    }
+                }
             }
         }
     }

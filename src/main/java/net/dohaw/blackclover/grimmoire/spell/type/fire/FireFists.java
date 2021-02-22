@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.fire;
 
+import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.Activatable;
@@ -26,7 +27,6 @@ public class FireFists extends DamageSpellWrapper implements Listener, Activatab
 
     @Override
     public void cast(PlayerData pd) {
-        Bukkit.broadcastMessage("CASTING FIRE FISTS");
         activateRunnable(pd);
     }
 
@@ -45,7 +45,11 @@ public class FireFists extends DamageSpellWrapper implements Listener, Activatab
                 int currentFireTicks = eDamaged.getFireTicks();
                 eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
 
-                eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 10, 1, 1, 1);
+                eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+
+                if(damageScale != 1){
+                    e.setDamage(e.getDamage() * damageScale);
+                }
 
             }
         }
@@ -57,18 +61,34 @@ public class FireFists extends DamageSpellWrapper implements Listener, Activatab
 
         BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
 
-            int mana = pd.getManaAmount();
-            int newMana = (int) (mana - regenConsumed);
-            pd.setManaAmount(newMana);
+            BlackCloverPlugin instance = Grimmoire.instance;
+            PlayerData updatedData = instance.getPlayerDataManager().getData(pd.getUuid());
 
-            Player player = pd.getPlayer();
-            World world = player.getWorld();
-            world.spawnParticle(particle, player.getLocation(), 10, 1, 1, 1);
+            if(updatedData.hasSufficientManaForSpell(this)){
+
+                int mana = updatedData.getManaAmount();
+                int newMana = (int) (mana - regenConsumed);
+                updatedData.setManaAmount(newMana);
+                instance.updateManaBar(updatedData);
+
+                Player player = updatedData.getPlayer();
+                World world = player.getWorld();
+                world.spawnParticle(particle, player.getLocation(), 30, 1, 1, 1);
+
+            }else{
+                updatedData.removeActiveSpell(this.KEY);
+            }
 
         }, 1, 20);
 
-        pd.getActiveSpells().put(this.KEY, runnable);
+        PlayerData updatedData = Grimmoire.instance.getPlayerDataManager().getData(pd.getUuid());
+        updatedData.getActiveSpells().put(this.KEY, runnable);
 
+    }
+
+    @Override
+    public int getDuration() {
+        return 0;
     }
 
 }

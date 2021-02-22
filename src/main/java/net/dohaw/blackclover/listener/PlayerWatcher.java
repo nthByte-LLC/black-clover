@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.grimmoire.spell.Activatable;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
@@ -83,7 +84,6 @@ public class PlayerWatcher implements Listener {
             }
         }
 
-
     }
 
     @EventHandler
@@ -123,6 +123,7 @@ public class PlayerWatcher implements Listener {
             pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
             Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
         }, (long) (spellCasted.getCooldown() * 20));
+
     }
 
     private ItemStack ensureProperHotbar(){
