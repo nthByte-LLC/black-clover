@@ -122,7 +122,7 @@ public class PlayerDataManager {
             initManaBar(player, randomGrimmoire);
 
             playerData.put(player.getUniqueId(), pd);
-            player.getInventory().addItem(grimmoire);
+            player.getInventory().setItemInOffHand(grimmoire);
 
             return pd;
 
@@ -202,7 +202,7 @@ public class PlayerDataManager {
      * @param uuid The player's UUID
      */
     public void saveData(UUID uuid){
-        PlayerData pd = playerData.get(uuid);
+        PlayerData pd = getData(uuid);
         pd.getConfig().saveData(pd);
     }
 

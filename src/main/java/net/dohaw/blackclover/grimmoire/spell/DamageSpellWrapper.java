@@ -8,8 +8,14 @@ public abstract class DamageSpellWrapper extends SpellWrapper{
     @Getter
     protected double damageScale;
 
-    public DamageSpellWrapper(SpellType spellType, String spellBoundItemKey, GrimmoireConfig grimmoireConfig) {
-        super(spellType, spellBoundItemKey, grimmoireConfig);
+    public DamageSpellWrapper(SpellType spellType, GrimmoireConfig grimmoireConfig) {
+        super(spellType, grimmoireConfig);
+    }
+
+    @Override
+    public void loadSettings(){
+        super.loadSettings();
+        this.damageScale = grimmoireConfig.getNumberSetting(KEY, "Damage Scale");
     }
 
 }

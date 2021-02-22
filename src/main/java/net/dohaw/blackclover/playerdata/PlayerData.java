@@ -52,7 +52,7 @@ public class PlayerData {
         return Bukkit.getPlayer(uuid);
     }
 
-    public boolean canCastSpell(SpellWrapper spell){
+    public boolean hasSufficientManaForSpell(SpellWrapper spell){
         return manaAmount >= spell.getRegenConsumed();
     }
 

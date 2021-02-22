@@ -10,6 +10,7 @@ Spell Settings:
       Lore:
         - "This is a test line"
         - "This is another test line"
+    # Damage Scale for the fire, not the punch
     Damage Scale: 1
     # In seconds
     Cooldown: 20
@@ -17,10 +18,9 @@ Spell Settings:
   fire_ball:
     Custom Item Properties:
       Hotbar Number: 1
-      Display Name: "&cFire Fists"
+      Display Name: "&cFire Ball"
       Lore:
-        - "This is a test line"
-        - "This is another test line"
+        - "This is the fireball line"
     Damage Scale: 1
     Cooldown: 5
     Mana Used: 100

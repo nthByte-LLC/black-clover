@@ -2,7 +2,6 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
-import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
@@ -50,15 +49,19 @@ public class PlayerWatcher implements Listener {
             Player player = pd.getPlayer();
             SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
             if(spellBoundToItem != null){
+                e.setCancelled(true);
                 if(!pd.getSpellsOnCooldown().contains(spellBoundToItem.getKEY())){
-                    if(pd.canCastSpell(spellBoundToItem)){
+                    if(pd.hasSufficientManaForSpell(spellBoundToItem)){
                         spellBoundToItem.cast(pd);
+                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToItem));
                     }else{
                         player.sendMessage("You don't have enough mana at the moment!");
                     }
                 }else{
                     player.sendMessage("This spell is on cooldown!");
                 }
+            }else{
+                System.out.println("NOT SPELL BOUND");
             }
         }
 

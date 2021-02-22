@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.ItemStackUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -26,14 +27,11 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
     @Getter
     protected double regenConsumed;
 
-    @Getter
-    private String spellBoundItemKey;
 
     protected GrimmoireConfig grimmoireConfig;
 
-    public SpellWrapper(SpellType spellType, String spellBoundItemKey, GrimmoireConfig grimmoireConfig) {
+    public SpellWrapper(SpellType spellType, GrimmoireConfig grimmoireConfig) {
         super(spellType);
-        this.spellBoundItemKey = spellBoundItemKey;
         this.grimmoireConfig = grimmoireConfig;
         loadSettings();
         this.spellBoundItem = createSpellBoundItem();
@@ -44,7 +42,7 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
     }
 
     public NamespacedKey nsk(){
-        return NamespacedKey.minecraft(KEY.getConfigKey());
+        return NamespacedKey.minecraft(KEY.getConfigKey() + "_item");
     }
 
     public boolean isSpellBoundItem(ItemStack stack){
@@ -55,8 +53,14 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
 
     public abstract void cast(PlayerData pd);
 
-    public abstract void loadSettings();
+    public void loadSettings(){
+        this.cooldown = grimmoireConfig.getNumberSetting(KEY, "Cooldown");
+        this.regenConsumed = grimmoireConfig.getNumberSetting(KEY, "Mana Used");
+        this.hotbarSlot = grimmoireConfig.getCustomItemHotbarNum(KEY);
+    }
 
-    public abstract ItemStack createSpellBoundItem();
+    public ItemStack createSpellBoundItem() {
+        return ItemStackUtil.createStack(this, grimmoireConfig.getCustomItemMaterial(KEY), grimmoireConfig.getCustomItemDisplayName(KEY), grimmoireConfig.getCustomItemLore(KEY));
+    }
 
 }
