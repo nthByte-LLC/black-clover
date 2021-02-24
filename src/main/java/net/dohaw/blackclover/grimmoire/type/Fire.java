@@ -7,6 +7,8 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.fire.FireBall;
 import net.dohaw.blackclover.grimmoire.spell.type.fire.FireFists;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Fire extends GrimmoireWrapper {
@@ -20,7 +22,7 @@ public class Fire extends GrimmoireWrapper {
 
     @Override
     public List<String> getAliases() {
-        return null;
+        return Arrays.asList("fire");
     }
 
     @Override

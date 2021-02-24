@@ -63,6 +63,10 @@ public class BaseConfig extends Config {
         return grimmoire;
     }
 
+    public String getPrefix(){
+        return config.getString("Prefix");
+    }
+
     public boolean isInTestingMode(){
         return config.getBoolean("Testing Mode");
     }

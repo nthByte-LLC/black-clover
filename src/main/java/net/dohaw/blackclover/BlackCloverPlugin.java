@@ -14,6 +14,7 @@ import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class BlackCloverPlugin extends JavaPlugin {
+
+    @Getter
+    private String prefix;
 
     @Getter
     private PlayerDataManager playerDataManager;
@@ -62,6 +66,8 @@ public final class BlackCloverPlugin extends JavaPlugin {
         JPUtils.registerEvents(new PlayerWatcher(this));
         registerGrimmoires();
         new ManaRegener(this).runTaskTimer(this, 0L, 20L);
+        JPUtils.registerCommand("blackclover", new BlackCloverCommand(this));
+
     }
 
     @Override
@@ -91,6 +97,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         this.t3MaxMana = baseConfig.getTierMaxMana(3);
         this.t4MaxMana = baseConfig.getTierMaxMana(4);
         this.t5MaxMana = baseConfig.getTierMaxMana(5);
+        this.prefix = baseConfig.getPrefix();
     }
 
     private void validateGrimmoireFiles(){
@@ -130,6 +137,16 @@ public final class BlackCloverPlugin extends JavaPlugin {
         manaBar.setProgress(percentageManaFull);
         manaBar.setTitle(StringUtils.colorString("&bMana: &f" + (int)manaAmount + " / " + (int)maxMana));
 
+    }
+
+    public void removeManaBar(Player player){
+        this.removeManaBar(player.getUniqueId());
+    }
+
+    public void removeManaBar(UUID uuidPlayer){
+        BossBar bossBar = manaBars.get(uuidPlayer);
+        bossBar.removeAll();
+        manaBars.remove(uuidPlayer);
     }
 
 }

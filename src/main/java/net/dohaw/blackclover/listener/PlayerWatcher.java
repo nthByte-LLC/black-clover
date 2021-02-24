@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.projectiles.ProjectileSource;
@@ -87,6 +88,16 @@ public class PlayerWatcher implements Listener {
     }
 
     @EventHandler
+    public void onGrimmoireUse(PlayerInteractEvent e){
+        ItemStack stack = e.getItem();
+        if(PDCHandler.isGrimmoire(stack)){
+            if(e.getHand() == EquipmentSlot.OFF_HAND){
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onDamagedByProjectile(EntityDamageByEntityEvent e){
 
         Entity eDamaged = e.getEntity();
@@ -103,7 +114,7 @@ public class PlayerWatcher implements Listener {
 
                 Projectable projectableSpellWrapper = (Projectable) PDCHandler.getSpellBoundToProjectile(pdDamager, proj);
                 if(projectableSpellWrapper != null){
-                    projectableSpellWrapper.onHit(eDamaged, pdDamager);
+                    projectableSpellWrapper.onHit(e, eDamaged, pdDamager);
                 }else{
                     System.out.println("NOT SPELL BOUND PROJECTILE");
                 }

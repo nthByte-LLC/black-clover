@@ -2,3 +2,18 @@ name: BlackClover
 version: ${project.version}
 main: net.dohaw.blackclover.BlackCloverPlugin
 api-version: 1.16
+
+commands:
+  blackclover:
+    description: "Base command for this plugin"
+    aliases:
+      - bc
+      - blackc
+      - blc
+      - blclover
+      - bclover
+
+permissions:
+  blackclover.change.grimmoire:
+    default: op
+

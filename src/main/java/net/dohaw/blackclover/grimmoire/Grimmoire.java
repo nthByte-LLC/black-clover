@@ -31,4 +31,14 @@ public class Grimmoire extends WrapperHolder {
         return validWrappers;
     }
 
+    public static GrimmoireWrapper getByAlias(String alias){
+        for(Wrapper wrapper : wrappers.values()){
+            GrimmoireWrapper gWrapper = (GrimmoireWrapper) wrapper;
+            if(gWrapper.getAliases().contains(alias.toLowerCase())){
+                return gWrapper;
+            }
+        }
+        return null;
+    }
+
 }

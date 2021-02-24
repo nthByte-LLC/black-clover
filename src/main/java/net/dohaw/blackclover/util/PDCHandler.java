@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,14 +39,25 @@ public class PDCHandler {
         stack.setItemMeta(meta);
     }
 
-//    public static boolean isGrimmoire(@NonNull ItemStack stack){
-//        ItemMeta meta = stack.getItemMeta();
-//        if(meta != null){
-//            PersistentDataContainer pdc = meta.getPersistentDataContainer();
-//            return pdc.has(GRIMMOIRE_TYPE_PDC_KEY, PersistentDataType.STRING);
-//        }
-//        return false;
-//    }
+    public static boolean isGrimmoire(@NonNull ItemStack stack){
+        ItemMeta meta = stack.getItemMeta();
+        if(meta != null){
+            PersistentDataContainer pdc = meta.getPersistentDataContainer();
+            return pdc.has(GRIMMOIRE_TYPE_PDC_KEY, PersistentDataType.STRING);
+        }
+        return false;
+    }
+
+    public static ItemStack getGrimmoire(Player player){
+        for(ItemStack stack : player.getInventory().getContents()){
+            if(stack != null){
+                if(isGrimmoire(stack)){
+                    return stack;
+                }
+            }
+        }
+        return null;
+    }
 
     public static SpellWrapper getSpellBoundToItem(PlayerData pd, ItemStack stack){
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();

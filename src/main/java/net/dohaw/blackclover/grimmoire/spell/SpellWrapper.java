@@ -58,6 +58,11 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
         return this.isSpellBound(stack.getItemMeta());
     }
 
+    public void markAsSpellBinding(@NonNull PersistentDataHolder pdh){
+        PersistentDataContainer pdc = pdh.getPersistentDataContainer();
+        pdc.set(nsk(), PersistentDataType.STRING, "mark");
+    }
+
     public abstract void cast(PlayerData pd);
 
     public void loadSettings(){

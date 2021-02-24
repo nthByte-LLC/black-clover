@@ -108,7 +108,7 @@ public class PlayerDataManager {
                 System.out.println("Random Tier: " + randomTier);
                 System.out.println("Grimmoire Acquired: " + randomGrimmoire.getKEY());
             }else{
-                PDCHandler.markGrimmoire(grimmoire, (GrimmoireType) randomGrimmoire.getKEY());
+                PDCHandler.markGrimmoire(grimmoire, randomGrimmoire.getKEY());
                 if(randomTier == 5 || randomTier == 4){
                     baseConfig.setWhoHasIt(player, randomTier);
                 }
@@ -139,7 +139,7 @@ public class PlayerDataManager {
      * @param player The player you want to initialize the bar for
      * @param grimmoireWrapper The grimmoire that the player has.
      */
-    private void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
+    public void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
         int maxMana = plugin.getMaxMana(grimmoireWrapper.getTier());
         BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), BarColor.BLUE, BarStyle.SOLID);
         bar.addPlayer(player);

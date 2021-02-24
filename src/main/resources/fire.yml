@@ -18,6 +18,7 @@ Spell Settings:
     Mana Used: 100
   fire_ball:
     Custom Item Properties:
+      Material: CAMPFIRE
       Hotbar Number: 1
       Display Name: "&cFire Ball"
       Lore:
