@@ -8,7 +8,8 @@ public enum SpellType {
     FIRE_BALL("fire_ball", false),
     FIRE_BLAST("fire_blast", false),
     FIRE_PROTECTION("fire_protection", false),
-    FIRE_CONTROL("fire_control",true);
+    FIRE_CONTROL("fire_control",false),
+    FIRE_STORM("fire_storm", true);
 
     @Getter
     private boolean isUltimate;

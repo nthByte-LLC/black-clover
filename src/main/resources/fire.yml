@@ -35,3 +35,12 @@ Spell Settings:
     Flame Duration: 2
     Flame Damage Per Tick: 1
     Mana Used: 100
+  fire_control:
+    Cooldown: 5
+    Mana Used: 100
+    Custom Item Properties:
+      Material: FIRE_CORAL
+      Hotbar Number: 3
+      Display Name: "&cFire Control"
+      Lore:
+        - "This is a test line"

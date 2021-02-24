@@ -5,6 +5,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.fire.FireBall;
+import net.dohaw.blackclover.grimmoire.spell.type.fire.FireControl;
 import net.dohaw.blackclover.grimmoire.spell.type.fire.FireFists;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Fire extends GrimmoireWrapper {
 
     public FireBall fireBall;
     public FireFists fireFists;
+    public FireControl fireControl;
 
     public Fire() {
         super(GrimmoireType.FIRE);
@@ -43,6 +45,9 @@ public class Fire extends GrimmoireWrapper {
 
         this.fireBall = new FireBall(config);
         this.spells.put(fireBall.getKEY(), fireBall);
+
+        this.fireControl = new FireControl(config);
+        this.spells.put(fireControl.getKEY(), fireControl);
 
     }
 

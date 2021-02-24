@@ -71,8 +71,8 @@ public class PlayerWatcher implements Listener {
 
                 if(!pd.isSpellOnCooldown(spellType)){
                     if(pd.hasSufficientManaForSpell(spellBoundToItem)){
-                        spellBoundToItem.cast(pd);
-                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToItem));
+                        boolean wasSuccessfullyCasted = spellBoundToItem.cast(e, pd);
+                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToItem, wasSuccessfullyCasted));
                     }else{
                         player.sendMessage("You don't have enough mana at the moment!");
                     }
@@ -127,13 +127,18 @@ public class PlayerWatcher implements Listener {
 
     @EventHandler
     public void onPostCast(PlayerCastSpellEvent e){
-        PlayerData pd = e.getPlayerData();
-        SpellWrapper spellCasted = e.getSpellCasted();
-        pd.getSpellsOnCooldown().add(spellCasted.getKEY());
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
-            Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
-        }, (long) (spellCasted.getCooldown() * 20));
+
+        if(e.isWasSuccessfullyCasted()){
+
+            PlayerData pd = e.getPlayerData();
+            SpellWrapper spellCasted = e.getSpellCasted();
+            pd.getSpellsOnCooldown().add(spellCasted.getKEY());
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
+                Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
+            }, (long) (spellCasted.getCooldown() * 20));
+
+        }
 
     }
 

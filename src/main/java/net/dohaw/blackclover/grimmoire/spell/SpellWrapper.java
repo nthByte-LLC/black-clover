@@ -8,6 +8,7 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.ItemStackUtil;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
@@ -63,7 +64,7 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
         pdc.set(nsk(), PersistentDataType.STRING, "mark");
     }
 
-    public abstract void cast(PlayerData pd);
+    public abstract boolean cast(Event e, PlayerData pd);
 
     public void loadSettings(){
         this.cooldown = grimmoireConfig.getNumberSetting(KEY, "Cooldown");
@@ -74,6 +75,10 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
 
     public ItemStack createSpellBoundItem() {
         return ItemStackUtil.createStack(this, grimmoireConfig.getCustomItemMaterial(KEY), grimmoireConfig.getCustomItemDisplayName(KEY), grimmoireConfig.getCustomItemLore(KEY));
+    }
+
+    protected void deductMana(PlayerData pd){
+        pd.setManaAmount((int) (pd.getManaAmount() - regenConsumed));
     }
 
 }

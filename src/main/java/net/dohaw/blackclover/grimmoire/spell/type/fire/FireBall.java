@@ -5,17 +5,16 @@ import net.dohaw.blackclover.grimmoire.spell.DamageSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.util.PDCHandler;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,13 +26,14 @@ public class FireBall extends DamageSpellWrapper implements Listener, Projectabl
     }
 
     @Override
-    public void cast(PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         CraftLivingEntity cPlayer = (CraftLivingEntity) player;
         Projectile projectile = cPlayer.launchProjectile(Snowball.class);
         this.markAsSpellBinding(projectile);
         ((CraftSnowball) projectile).getHandle().setItem(CraftItemStack.asNMSCopy(new ItemStack(Material.FIRE_CHARGE)));
         pd.setManaAmount((int) (pd.getManaAmount() - regenConsumed));
+        return true;
     }
 
     @Override

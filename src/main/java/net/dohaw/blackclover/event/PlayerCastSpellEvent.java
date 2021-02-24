@@ -18,9 +18,13 @@ public class PlayerCastSpellEvent extends Event implements Cancellable {
     @Getter
     private SpellWrapper spellCasted;
 
-    public PlayerCastSpellEvent(PlayerData playerData, SpellWrapper spellCasted){
+    @Getter
+    private boolean wasSuccessfullyCasted;
+
+    public PlayerCastSpellEvent(PlayerData playerData, SpellWrapper spellCasted, boolean wasSuccessfullyCasted){
         this.playerData = playerData;
         this.spellCasted = spellCasted;
+        this.wasSuccessfullyCasted = wasSuccessfullyCasted;
     }
 
     @Override

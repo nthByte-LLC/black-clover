@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -26,8 +27,9 @@ public class FireFists extends DamageSpellWrapper implements Listener, Activatab
     }
 
     @Override
-    public void cast(PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) {
         activateRunnable(pd);
+        return true;
     }
 
     @EventHandler
