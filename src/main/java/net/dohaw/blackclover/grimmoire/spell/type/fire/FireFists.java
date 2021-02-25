@@ -6,6 +6,7 @@ import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.Activatable;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitTask;
 
-public class FireFists extends CastSpellWrapper implements Listener, Activatable {
+public class FireFists extends CastSpellWrapper implements Listener, Activatable, DamageableSpell {
 
     protected int fireTicksPerPunch;
 
@@ -51,6 +52,13 @@ public class FireFists extends CastSpellWrapper implements Listener, Activatable
                     Entity eDamaged = e.getEntity();
 
                     int currentFireTicks = eDamaged.getFireTicks();
+                    System.out.println("CURRENT: " + currentFireTicks);
+                    System.out.println("FIRE TICKS PER: " + fireTicksPerPunch);
+
+                    if(currentFireTicks < 0){
+                        currentFireTicks = 0;
+                    }
+
                     eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
 
                     eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);

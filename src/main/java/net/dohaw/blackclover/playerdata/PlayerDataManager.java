@@ -70,10 +70,26 @@ public class PlayerDataManager {
     }
 
     /**
-     * Saves all the player data. Usually used on plugin shutdown.
+     * Pretty much only useful if you reload the plugin via plugman and it needs to reload the player data for the players that are on
      */
-    public void saveAllData(){
+    public void loadAllData(){
+        for(Player player : Bukkit.getOnlinePlayers()){
+            loadData(player);
+        }
+    }
+
+    /**
+     * Saves all the player data. Usually used on plugin shutdown.
+     * Also removes player's mana bars.
+     */
+    public void shutdown(){
         for(PlayerData pd : playerData.values()){
+            UUID uuid = pd.getUuid();
+            Map<UUID, BossBar> manaBars = plugin.getManaBars();
+            if(manaBars.containsKey(uuid)){
+                BossBar manaBar = manaBars.get(uuid);
+                manaBar.removeAll();
+            }
             pd.saveData();
         }
     }

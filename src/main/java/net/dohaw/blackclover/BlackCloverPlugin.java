@@ -68,11 +68,13 @@ public final class BlackCloverPlugin extends JavaPlugin {
         new ManaRegener(this).runTaskTimer(this, 0L, 20L);
         JPUtils.registerCommand("blackclover", new BlackCloverCommand(this));
 
+        playerDataManager.loadAllData();
+
     }
 
     @Override
     public void onDisable() {
-        playerDataManager.saveAllData();
+        playerDataManager.shutdown();
     }
 
     private void registerGrimmoires(){

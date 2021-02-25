@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.fire;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -21,7 +22,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class FireBall extends CastSpellWrapper implements Listener, Projectable {
+public class FireBall extends CastSpellWrapper implements Listener, Projectable, DamageableSpell {
 
     public FireBall(GrimmoireConfig grimmoireConfig) {
         super(SpellType.FIRE_BALL, grimmoireConfig);

@@ -1,2 +1,15 @@
 Display Name Color: "&5"
-Percentage Mana Expended: 10
+Particle: SPELL
+
+Spell Settings:
+  sand_blast:
+    Custom Item Properties:
+      Material: YELLOW_DYE
+      Hotbar Number: 0
+      Display Name: "&6Sand Blast"
+      Lore:
+        - "This is a test line"
+    Damage Scale: 1
+    # In seconds
+    Cooldown: 20
+    Mana Used: 100

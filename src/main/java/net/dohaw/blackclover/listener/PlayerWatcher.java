@@ -86,15 +86,15 @@ public class PlayerWatcher implements Listener {
 
     }
 
-    @EventHandler
-    public void onGrimmoireUse(PlayerInteractEvent e){
-        ItemStack stack = e.getItem();
-        if(PDCHandler.isGrimmoire(stack)){
-            if(e.getHand() == EquipmentSlot.OFF_HAND){
-                e.setCancelled(true);
-            }
-        }
-    }
+//    @EventHandler
+//    public void onGrimmoireUse(PlayerInteractEvent e){
+//        ItemStack stack = e.getItem();
+//        if(PDCHandler.isGrimmoire(stack)){
+//            if(e.getHand() == EquipmentSlot.OFF_HAND){
+//                e.setCancelled(true);
+//            }
+//        }
+//    }
 
     @EventHandler
     public void onDamagedByProjectile(EntityDamageByEntityEvent e){
