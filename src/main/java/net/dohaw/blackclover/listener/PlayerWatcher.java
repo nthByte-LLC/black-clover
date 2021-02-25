@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
@@ -55,7 +56,7 @@ public class PlayerWatcher implements Listener {
             ItemStack item = e.getItem();
             PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
             Player player = pd.getPlayer();
-            SpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
+            CastSpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
 
             if(spellBoundToItem != null){
 
@@ -127,15 +128,13 @@ public class PlayerWatcher implements Listener {
     public void onPostCast(PlayerCastSpellEvent e){
 
         if(e.isWasSuccessfullyCasted()){
-
             PlayerData pd = e.getPlayerData();
-            SpellWrapper spellCasted = e.getSpellCasted();
+            CastSpellWrapper spellCasted = e.getSpellCasted();
             pd.getSpellsOnCooldown().add(spellCasted.getKEY());
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
                 Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
             }, (long) (spellCasted.getCooldown() * 20));
-
         }
 
     }

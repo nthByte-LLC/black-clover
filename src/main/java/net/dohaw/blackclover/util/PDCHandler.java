@@ -3,6 +3,7 @@ package net.dohaw.blackclover.util;
 import lombok.NonNull;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.NamespacedKey;
@@ -59,21 +60,27 @@ public class PDCHandler {
         return null;
     }
 
-    public static SpellWrapper getSpellBoundToItem(PlayerData pd, ItemStack stack){
+    public static CastSpellWrapper getSpellBoundToItem(PlayerData pd, ItemStack stack){
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
         for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
-            if(spell.isSpellBoundItem(stack)){
-                return spell;
+            if(spell instanceof CastSpellWrapper){
+                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                if(cSpell.isSpellBoundItem(stack)){
+                    return cSpell;
+                }
             }
         }
         return null;
     }
 
-    public static SpellWrapper getSpellBoundToProjectile(PlayerData pd, Projectile projectile){
+    public static CastSpellWrapper getSpellBoundToProjectile(PlayerData pd, Projectile projectile){
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
         for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
-            if(spell.isSpellBound(projectile)){
-                return spell;
+            if(spell instanceof CastSpellWrapper){
+                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                if(cSpell.isSpellBound(projectile)){
+                    return cSpell;
+                }
             }
         }
         return null;

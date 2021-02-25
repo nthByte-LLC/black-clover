@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.event;
 
 import lombok.Getter;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.event.Cancellable;
@@ -16,12 +17,12 @@ public class PlayerCastSpellEvent extends Event implements Cancellable {
     private PlayerData playerData;
 
     @Getter
-    private SpellWrapper spellCasted;
+    private CastSpellWrapper spellCasted;
 
     @Getter
     private boolean wasSuccessfullyCasted;
 
-    public PlayerCastSpellEvent(PlayerData playerData, SpellWrapper spellCasted, boolean wasSuccessfullyCasted){
+    public PlayerCastSpellEvent(PlayerData playerData, CastSpellWrapper spellCasted, boolean wasSuccessfullyCasted){
         this.playerData = playerData;
         this.spellCasted = spellCasted;
         this.wasSuccessfullyCasted = wasSuccessfullyCasted;

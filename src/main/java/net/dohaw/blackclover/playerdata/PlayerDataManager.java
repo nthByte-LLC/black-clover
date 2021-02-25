@@ -6,6 +6,7 @@ import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.ProbabilityUtilities;
@@ -56,9 +57,12 @@ public class PlayerDataManager {
                 PlayerInventory inv = player.getInventory();
                 GrimmoireWrapper grimmoire = pd.getGrimmoireWrapper();
                 for(SpellWrapper spell : grimmoire.getSpells().values()){
-                    ItemStack spellBoundItem = spell.getSpellBoundItem();
-                    int hotbarSlot = spell.getHotbarSlot();
-                    inv.setItem(hotbarSlot, spellBoundItem);
+                    if(spell instanceof CastSpellWrapper){
+                        CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                        ItemStack spellBoundItem = cSpell.getSpellBoundItem();
+                        int hotbarSlot = cSpell.getHotbarSlot();
+                        inv.setItem(hotbarSlot, spellBoundItem);
+                    }
                 }
             }
         }

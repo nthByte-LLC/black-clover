@@ -2,6 +2,7 @@ package net.dohaw.blackclover;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
@@ -91,14 +92,20 @@ public class BlackCloverCommand implements CommandExecutor {
     private void removePreviousGrimmoireItems(Player player, GrimmoireWrapper wrapper){
         PlayerInventory inv = player.getInventory();
         for(SpellWrapper spell : wrapper.getSpells().values()){
-            inv.remove(spell.getSpellBoundItem());
+            if(spell instanceof CastSpellWrapper){
+                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                inv.remove(cSpell.getSpellBoundItem());
+            }
         }
     }
 
     private void giveNewGrimmoireItems(Player player, GrimmoireWrapper wrapper){
         PlayerInventory inv = player.getInventory();
         for(SpellWrapper spell : wrapper.getSpells().values()){
-            inv.setItem(spell.getHotbarSlot(), spell.getSpellBoundItem());
+            if(spell instanceof CastSpellWrapper){
+                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                inv.setItem(cSpell.getHotbarSlot(), cSpell.getSpellBoundItem());
+            }
         }
     }
 
