@@ -4,12 +4,20 @@ import lombok.Getter;
 
 public enum SpellType {
 
+    /*
+        Fire Spells
+     */
     FIRE_FISTS("fire_fists", false),
     FIRE_BALL("fire_ball", false),
     FIRE_BLAST("fire_blast", false),
     FIRE_PROTECTION("fire_protection", false),
     FIRE_CONTROL("fire_control",false),
-    FIRE_STORM("fire_storm", true);
+    FIRE_STORM("fire_storm", true),
+
+    /*
+        Sand Spells
+     */
+    SAND_BLAST("sand_blast", false);
 
     @Getter
     private boolean isUltimate;

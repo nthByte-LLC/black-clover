@@ -55,6 +55,8 @@ public class FireControl extends SpellWrapper {
 
         }
 
+        deductMana(pd);
+
         return true;
 
     }

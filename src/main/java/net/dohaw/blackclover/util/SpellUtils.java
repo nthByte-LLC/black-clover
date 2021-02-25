@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.util;
 
 import lombok.NonNull;
+import net.dohaw.corelib.helpers.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -34,6 +35,16 @@ public class SpellUtils {
 
     public static void spawnParticle(Block block, Particle particle, int count, float offsetX, float offsetY, float offsetZ){
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
+    }
+
+    public static double getRandomDamageModifier(){
+        int randomNum = MathHelper.getRandomInteger(1, 0);
+        //Additive
+        if(randomNum == 0){
+            return MathHelper.getRandomInteger(5, 1);
+        }else{
+            return MathHelper.getRandomInteger(5, 1) * -1;
+        }
     }
 
 }

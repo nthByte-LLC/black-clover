@@ -27,7 +27,15 @@ Spell Settings:
     Cooldown: 5
     Mana Used: 100
   fire_blast:
+    Custom Item Properties:
+      Material: FIRE_CHARGE
+      Hotbar Number: 4
+      Display Name: "&cFire Blast"
+      Lore:
+        - "This is the fire blast line"
     Damage Scale: 1
+    #In Blocks
+    Distance: 10
     Cooldown: 5
     Mana Used: 100
   fire_Protection:
