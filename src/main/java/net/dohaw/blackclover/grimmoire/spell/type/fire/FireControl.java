@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.grimmoire.spell.type.fire;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class FireControl extends SpellWrapper {
+public class FireControl extends CastSpellWrapper {
 
     public FireControl(GrimmoireConfig grimmoireConfig) {
         super(SpellType.FIRE_CONTROL, grimmoireConfig);

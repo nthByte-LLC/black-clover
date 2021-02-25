@@ -2,7 +2,6 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
-import net.dohaw.blackclover.grimmoire.spell.Activatable;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
@@ -22,7 +21,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.UUID;

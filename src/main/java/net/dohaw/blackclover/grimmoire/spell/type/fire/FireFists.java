@@ -4,7 +4,7 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.Activatable;
-import net.dohaw.blackclover.grimmoire.spell.DamageSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.scheduler.BukkitTask;
 
-public class FireFists extends DamageSpellWrapper implements Listener, Activatable {
+public class FireFists extends CastSpellWrapper implements Listener, Activatable {
 
     protected int fireTicksPerPunch;
 

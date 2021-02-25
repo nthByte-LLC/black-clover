@@ -5,7 +5,6 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.util.PDCHandler;
