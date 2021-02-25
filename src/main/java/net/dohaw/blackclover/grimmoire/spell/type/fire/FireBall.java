@@ -1,10 +1,12 @@
 package net.dohaw.blackclover.grimmoire.spell.type.fire;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
@@ -39,19 +41,25 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable 
     @Override
     public void onHit(EntityDamageByEntityEvent e, Entity eDamaged, PlayerData pdDamager) {
 
-        double initDmg = e.getDamage();
-        /*
-            Will be 0 if i'm masking a snowball as a projectile...
-         */
-        if (initDmg == 0) {
-            initDmg = 1;
+        SpellDamageEvent event = new SpellDamageEvent(KEY, eDamaged, pdDamager.getPlayer());
+        Bukkit.getPluginManager().callEvent(event);
+
+        if(!event.isCancelled()){
+            double initDmg = e.getDamage();
+            /*
+                Will be 0 if i'm masking a snowball as a projectile...
+             */
+            if (initDmg == 0) {
+                initDmg = 1;
+            }
+
+            double finalDmg = initDmg * damageScale;
+            e.setDamage(finalDmg);
+
+            eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+            eDamaged.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, eDamaged.getLocation(), 30, 1, 1, 1);
         }
 
-        double finalDmg = initDmg * damageScale;
-        e.setDamage(finalDmg);
-
-        eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
-        eDamaged.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, eDamaged.getLocation(), 30, 1, 1, 1);
 
     }
 

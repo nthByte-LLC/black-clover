@@ -1,6 +1,8 @@
 package net.dohaw.blackclover.util;
 
 import lombok.NonNull;
+import net.dohaw.blackclover.Wrapper;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -73,6 +75,12 @@ public class PDCHandler {
         return null;
     }
 
+    /**
+     * Gets the casted spell bound to the projectile
+     * @param pd The caster
+     * @param projectile The projectile that is marked
+     * @return The spell that is bound to the projectile
+     */
     public static CastSpellWrapper getSpellBoundToProjectile(PlayerData pd, Projectile projectile){
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
         for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
@@ -80,6 +88,41 @@ public class PDCHandler {
                 CastSpellWrapper cSpell = (CastSpellWrapper) spell;
                 if(cSpell.isSpellBound(projectile)){
                     return cSpell;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets the casted spell bound to the projectile
+     * @param projectile
+     * @return
+     */
+    public static CastSpellWrapper getSpellBoundToProjectile(Projectile projectile){
+        for(Wrapper wrapper : Grimmoire.wrappers.values()){
+            GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) wrapper;
+            for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+                if(spell instanceof CastSpellWrapper){
+                    CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                    if(cSpell.isSpellBound(projectile)){
+                        return cSpell;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    public static GrimmoireWrapper getRelatedGrimmoire(Projectile projectile){
+        for(Wrapper wrapper : Grimmoire.wrappers.values()){
+            GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) wrapper;
+            for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+                if(spell instanceof CastSpellWrapper){
+                    CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                    if(cSpell.isSpellBound(projectile)){
+                        return grimmoireWrapper;
+                    }
                 }
             }
         }

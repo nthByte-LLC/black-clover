@@ -2,6 +2,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.fire;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.Activatable;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -42,15 +43,25 @@ public class FireFists extends CastSpellWrapper implements Listener, Activatable
             PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
             if(pd.isSpellActive(this.getKEY())){
 
-                Entity eDamaged = e.getEntity();
+                SpellDamageEvent event = new SpellDamageEvent(KEY, e.getEntity(), player);
+                Bukkit.getPluginManager().callEvent(event);
 
-                int currentFireTicks = eDamaged.getFireTicks();
-                eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
+                if(!event.isCancelled()){
 
-                eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+                    Entity eDamaged = e.getEntity();
 
-                if(damageScale != 1){
-                    e.setDamage(e.getDamage() * damageScale);
+                    int currentFireTicks = eDamaged.getFireTicks();
+                    eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
+
+                    eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+
+                    if(damageScale != 1){
+                        e.setDamage(e.getDamage() * damageScale);
+                    }
+
+                }else{
+                    // Cancels regular punch damage
+                    e.setCancelled(true);
                 }
 
             }
