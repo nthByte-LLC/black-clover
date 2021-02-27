@@ -5,6 +5,7 @@ import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
@@ -43,6 +44,7 @@ public class SandBlastRunner extends BukkitRunnable {
                     LivingEntity le = (LivingEntity) e;
                     le.damage(1 * damageScale);
                     SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
+                    SpellUtils.playSound(e, Sound.BLOCK_SAND_HIT);
                 }
             }
         }else{

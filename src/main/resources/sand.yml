@@ -14,3 +14,14 @@ Spell Settings:
     Cooldown: 20
     Mana Used: 100
     Force Multiplier: 2
+  sand_grave:
+    Custom Item Properties:
+      Material: DEAD_BUSH
+      Hotbar Number: 1
+      Display Name: "&6Sand Grave"
+      Lore:
+        - "This is a test line"
+      Damage Scale: 1
+    Cast Distance: 30
+    Blocks Above Player: 10
+    Radius Ball: 4

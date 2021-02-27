@@ -17,7 +17,12 @@ public enum SpellType {
     /*
         Sand Spells
      */
-    SAND_BLAST("sand_blast", false);
+    SAND_BLAST("sand_blast", false),
+    SAND_GRAVE("sand_grave", false),
+    SINKHOLE("sinkhole", false),
+    SAND_STORM("sand_storm", false),
+    ANCIENT_RUIN("ancient_ruin", false),
+    EARTHQUAKE("earthquake", false);
 
     @Getter
     private boolean isUltimate;
