@@ -1,11 +1,13 @@
 package net.dohaw.blackclover.grimmoire.spell.type.sand;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.SandBlastRunner;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -29,8 +31,10 @@ public class SandBlast extends CastSpellWrapper implements DamageableSpell {
         World world = player.getWorld();
 
         FallingBlock sandBlock = world.spawnFallingBlock(player.getLocation().add(0, 1,0 ), Material.SAND.createBlockData());
-        Vector playerDirection = player.getLocation().getDirection().multiply(2);
-        sandBlock.setHurtEntities(true);
+        sandBlock.setDropItem(false);
+        new SandBlastRunner(player, sandBlock, damageScale).runTaskTimer(Grimmoire.instance, 0L, 1L);
+        Vector playerDirection = player.getLocation().getDirection().multiply(forceMultiplier);
+        sandBlock.setHurtEntities(false);
         sandBlock.setVelocity(playerDirection);
 
         return false;

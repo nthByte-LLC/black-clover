@@ -52,8 +52,6 @@ public class FireFists extends CastSpellWrapper implements Listener, Activatable
                     Entity eDamaged = e.getEntity();
 
                     int currentFireTicks = eDamaged.getFireTicks();
-                    System.out.println("CURRENT: " + currentFireTicks);
-                    System.out.println("FIRE TICKS PER: " + fireTicksPerPunch);
 
                     if(currentFireTicks < 0){
                         currentFireTicks = 0;

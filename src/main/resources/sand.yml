@@ -13,3 +13,4 @@ Spell Settings:
     # In seconds
     Cooldown: 20
     Mana Used: 100
+    Force Multiplier: 2
