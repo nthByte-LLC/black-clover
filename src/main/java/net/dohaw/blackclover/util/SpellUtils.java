@@ -3,13 +3,20 @@ package net.dohaw.blackclover.util;
 import lombok.NonNull;
 import net.dohaw.corelib.helpers.MathHelper;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class SpellUtils {
 
@@ -35,6 +42,21 @@ public class SpellUtils {
 
     public static void spawnParticle(Block block, Particle particle, int count, float offsetX, float offsetY, float offsetZ){
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
+    }
+
+    public static Entity getEntityInLineOfSight(Player player, int distance){
+        Location start = player.getLocation();
+        Vector dir = start.getDirection();
+        for (double i = 0; i < distance; i += 0.5) {
+            Vector currentDir = dir.clone().multiply(i);
+            Location currentLocation = start.clone().add(currentDir);
+            List<Entity> nearbyEntities = new ArrayList<>(player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1, (e) -> e instanceof LivingEntity));
+            nearbyEntities.removeIf(e -> e.getUniqueId().equals(player.getUniqueId()));
+            if(!nearbyEntities.isEmpty()){
+                return nearbyEntities.get(0);
+            }
+        }
+        return null;
     }
 
     public static double getRandomDamageModifier(){
