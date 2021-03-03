@@ -5,6 +5,7 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
@@ -148,7 +149,8 @@ public class PlayerDataManager {
      */
     public void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
         int maxMana = plugin.getMaxMana(grimmoireWrapper.getTier());
-        BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), BarColor.BLUE, BarStyle.SOLID);
+        BarColor barColor = Grimmoire.colorCodeToBarColor(grimmoireWrapper.getConfig().getDisplayNameColor());
+        BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), barColor, BarStyle.SOLID);
         bar.addPlayer(player);
         plugin.getManaBars().put(player.getUniqueId(), bar);
     }

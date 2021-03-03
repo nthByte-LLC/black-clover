@@ -14,6 +14,7 @@ public class FireStorm extends CastSpellWrapper {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
+
         return false;
     }
 
