@@ -5,6 +5,8 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
+import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.minecraft.server.v1_16_R3.BlockPosition;
 import net.minecraft.server.v1_16_R3.StructureGenerator;
@@ -13,6 +15,7 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.scheduler.BukkitTask;
 
 public class AncientRuin extends CastSpellWrapper {
 
@@ -36,12 +39,18 @@ public class AncientRuin extends CastSpellWrapper {
         BlockPosition desertTemplePosition = worldServer.a(desertTemple, bp, 100, false);
         int y = world.getHighestBlockYAt(desertTemplePosition.getX(), desertTemplePosition.getZ());
         Location location = new Location(world, desertTemplePosition.getX(), y, desertTemplePosition.getZ());
-        p.teleport(location);
+
+        BukkitTask runner = new TornadoParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.FUCHSIA, 1), true, 1, false).runTaskTimer(Grimmoire.instance, 0, 1L);
+        BukkitTask runner2 = new TornadoParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1, true).runTaskTimer(Grimmoire.instance, 0, 1L);
+        BukkitTask runner3 = new CircleParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1).runTaskTimer(Grimmoire.instance, 0, 1L);
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             SpellUtils.playSound(p, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
-            SpellUtils.spawnParticle(p, Particle.END_ROD, 30, 1, 1, 1);
-        }, 2);
+            p.teleport(location);
+            runner.cancel();
+            runner2.cancel();
+            runner3.cancel();
+        }, 35);
 
         return true;
     }
