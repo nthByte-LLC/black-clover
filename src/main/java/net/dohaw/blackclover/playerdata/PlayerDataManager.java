@@ -52,19 +52,7 @@ public class PlayerDataManager {
             initManaBar(player, pd.getGrimmoireWrapper());
             playerData.put(pd.getUuid(), pd);
         }else{
-            PlayerData pd = createData(player);
-            if(pd != null){
-                PlayerInventory inv = player.getInventory();
-                GrimmoireWrapper grimmoire = pd.getGrimmoireWrapper();
-                for(SpellWrapper spell : grimmoire.getSpells().values()){
-                    if(spell instanceof CastSpellWrapper){
-                        CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                        ItemStack spellBoundItem = cSpell.getSpellBoundItem();
-                        int hotbarSlot = cSpell.getHotbarSlot();
-                        inv.setItem(hotbarSlot, spellBoundItem);
-                    }
-                }
-            }
+            createData(player);
         }
 
     }

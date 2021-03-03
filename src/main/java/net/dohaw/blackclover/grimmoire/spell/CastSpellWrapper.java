@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.util.ItemStackUtil;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
@@ -15,8 +13,6 @@ public abstract class CastSpellWrapper extends SpellWrapper{
 
     @Getter
     protected int hotbarSlot;
-
-    protected ItemStack spellBoundItem;
 
     @Getter
     protected double cooldown;
@@ -29,7 +25,6 @@ public abstract class CastSpellWrapper extends SpellWrapper{
 
     public CastSpellWrapper(SpellType spellType, GrimmoireConfig grimmoireConfig) {
         super(spellType, grimmoireConfig);
-        this.spellBoundItem = createSpellBoundItem();
     }
 
     public boolean isSpellBound(@NonNull PersistentDataHolder pdh){
@@ -37,8 +32,8 @@ public abstract class CastSpellWrapper extends SpellWrapper{
         return pdc.has(nsk(), PersistentDataType.STRING);
     }
 
-    public boolean isSpellBoundItem(@NonNull ItemStack stack){
-        return this.isSpellBound(stack.getItemMeta());
+    public boolean isSpellBoundSlot(int slot){
+        return this.getHotbarSlot() == slot;
     }
 
     public void markAsSpellBinding(@NonNull PersistentDataHolder pdh){
@@ -46,24 +41,16 @@ public abstract class CastSpellWrapper extends SpellWrapper{
         pdc.set(nsk(), PersistentDataType.STRING, "mark");
     }
 
-    public ItemStack createSpellBoundItem() {
-        return ItemStackUtil.createStack(this, grimmoireConfig.getCustomItemMaterial(KEY), grimmoireConfig.getCustomItemDisplayName(KEY), grimmoireConfig.getCustomItemLore(KEY));
-    }
-
     @Override
     public void loadSettings() {
         super.loadSettings();
         this.regenConsumed = grimmoireConfig.getNumberSetting(KEY, "Mana Used");
         this.cooldown = grimmoireConfig.getNumberSetting(KEY, "Cooldown");
-        this.hotbarSlot = grimmoireConfig.getCustomItemHotbarNum(KEY);
+        this.hotbarSlot = grimmoireConfig.getNumberSetting(KEY, "Hotbar Number");
     }
 
     public void deductMana(PlayerData pd){
         pd.setManaAmount((int) (pd.getManaAmount() - regenConsumed));
-    }
-
-    public ItemStack getSpellBoundItem(){
-        return spellBoundItem.clone();
     }
 
     public abstract boolean cast(Event e, PlayerData pd);

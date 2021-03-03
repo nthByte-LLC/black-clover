@@ -62,12 +62,12 @@ public class PDCHandler {
         return null;
     }
 
-    public static CastSpellWrapper getSpellBoundToItem(PlayerData pd, ItemStack stack){
+    public static CastSpellWrapper getSpellBoundToSlot(PlayerData pd, int slot){
         GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
         for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
             if(spell instanceof CastSpellWrapper){
                 CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                if(cSpell.isSpellBoundItem(stack)){
+                if(cSpell.isSpellBoundSlot(slot)){
                     return cSpell;
                 }
             }

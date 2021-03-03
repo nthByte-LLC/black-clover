@@ -35,4 +35,8 @@ public enum SpellType {
         this.configKey = configKey;
     }
 
+    public String toProperName(){
+        return this.getConfigKey().replace("_", " ").toUpperCase();
+    }
+
 }

@@ -34,8 +34,9 @@ public class SandBlast extends CastSpellWrapper implements DamageableSpell {
         Vector playerDirection = player.getLocation().getDirection().multiply(forceMultiplier);
         sandBlock.setHurtEntities(false);
         sandBlock.setVelocity(playerDirection);
+        deductMana(pd);
 
-        return false;
+        return true;
     }
 
     @Override

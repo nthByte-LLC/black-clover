@@ -3,13 +3,7 @@ Particle: FLAME
 
 Spell Settings:
   fire_fists:
-    Custom Item Properties:
-      Material: TORCH
-      Hotbar Number: 0
-      Display Name: "&cFire Fists"
-      Lore:
-        - "This is a test line"
-        - "This is another test line"
+    Hotbar Number: 0
     # Damage Scale for the punch
     Damage Scale: 1
     Fire Ticks Per Punch: 5
@@ -17,22 +11,12 @@ Spell Settings:
     Cooldown: 20
     Mana Used: 100
   fire_ball:
-    Custom Item Properties:
-      Material: CAMPFIRE
-      Hotbar Number: 1
-      Display Name: "&cFire Ball"
-      Lore:
-        - "This is the fireball line"
+    Hotbar Number: 1
     Damage Scale: 1
     Cooldown: 5
     Mana Used: 100
   fire_blast:
-    Custom Item Properties:
-      Material: FIRE_CHARGE
-      Hotbar Number: 4
-      Display Name: "&cFire Blast"
-      Lore:
-        - "This is the fire blast line"
+    Hotbar Number: 2
     Damage Scale: 1
     #In Blocks
     Distance: 10
@@ -44,11 +28,6 @@ Spell Settings:
     Flame Damage Per Tick: 1
     Mana Used: 100
   fire_control:
-    Cooldown: 5
+    Cooldown: 3
     Mana Used: 100
-    Custom Item Properties:
-      Material: FIRE_CORAL
-      Hotbar Number: 3
-      Display Name: "&cFire Control"
-      Lore:
-        - "This is a test line"
+    Hotbar Number: 3

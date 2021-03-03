@@ -1,36 +1,33 @@
 package net.dohaw.blackclover.grimmoire.spell.type.sand;
 
-import com.sk89q.worldedit.EditSession;
-import com.sk89q.worldedit.MaxChangedBlocksException;
-import com.sk89q.worldedit.WorldEdit;
-import com.sk89q.worldedit.bukkit.BukkitWorld;
-import com.sk89q.worldedit.extension.factory.PatternFactory;
-import com.sk89q.worldedit.extension.factory.parser.pattern.SingleBlockPatternParser;
-import com.sk89q.worldedit.extension.input.InputParseException;
-import com.sk89q.worldedit.extension.input.ParserContext;
-import com.sk89q.worldedit.function.pattern.BlockPattern;
-import com.sk89q.worldedit.function.pattern.Pattern;
-import com.sk89q.worldedit.function.pattern.RandomPattern;
-import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.world.block.BlockStateHolder;
-import com.sk89q.worldedit.world.block.BlockType;
-import com.sk89q.worldedit.world.block.BlockTypes;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.ShapeUtils;
 import net.dohaw.blackclover.util.SpellUtils;
-import org.bukkit.Location;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.persistence.PersistentDataType;
 
-public class SandGrave extends CastSpellWrapper implements DamageableSpell {
+import java.util.ArrayList;
+import java.util.List;
 
-    private int castDistance;
-    private int radiusBall;
-    private int blocksAbovePlayer;
+public class SandGrave extends CastSpellWrapper implements DamageableSpell, Listener {
+
+    private final NamespacedKey NSK = NamespacedKey.minecraft("marked-sand-grave");
+
+    private int castDistance, radius, blocksAbovePlayer, sandStayTime;
 
     public SandGrave(GrimmoireConfig grimmoireConfig) {
         super(SpellType.SAND_GRAVE, grimmoireConfig);
@@ -42,15 +39,45 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell {
         Player player = pd.getPlayer();
         Entity entityHit = SpellUtils.getEntityInLineOfSight(player, castDistance);
         if(entityHit != null){
-            System.out.println("NOT NULL");
-            Location centerBall = entityHit.getLocation().add(0, blocksAbovePlayer + radiusBall, 0);
-            try {
-                spawnSandBall(player, centerBall);
-            } catch (MaxChangedBlocksException inputParseException) {
-                inputParseException.printStackTrace();
-            }
+
+            Location centerBlock = entityHit.getLocation().add(0, blocksAbovePlayer + radius, 0);
+            List<Location> sphereLocations = ShapeUtils.generateSphere(centerBlock, radius, false);
+            List<FallingBlock> sandBlocks = new ArrayList<>();
+            sphereLocations.forEach(loc -> {
+                FallingBlock fBlock = loc.getWorld().spawnFallingBlock(loc, Material.SAND.createBlockData());
+                fBlock.setDropItem(false);
+                fBlock.getPersistentDataContainer().set(NSK, PersistentDataType.STRING, "boo");
+                sandBlocks.add(fBlock);
+            });
+
+            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+                for(FallingBlock block : sandBlocks){
+                    block.getLocation().getBlock().setType(Material.AIR);
+                    block.remove();
+                }
+            }, sandStayTime * 20);
+
+            SpellUtils.playSound(entityHit, Sound.BLOCK_ANVIL_PLACE);
+            SpellUtils.spawnParticle(entityHit, Particle.EXPLOSION_NORMAL, 30, 0.1f, 0.1f, 0.1f);
+            SpellUtils.spawnParticle(player, Particle.SPELL, 30, 0.1f, 0.1f, 0.1f);
+            return true;
+
         }
         return false;
+    }
+
+    @EventHandler
+    public void onEntityChangeBlockEvent(EntityChangeBlockEvent e){
+        if(e.getEntityType() == EntityType.FALLING_BLOCK){
+            FallingBlock fBlock = (FallingBlock) e.getEntity();
+            if(fBlock.getMaterial() == Material.SAND){
+                System.out.println("HERE2");
+                if(fBlock.getPersistentDataContainer().has(NSK, PersistentDataType.STRING)){
+                    fBlock.getLocation().getBlock().setType(Material.SAND);
+                    e.setCancelled(true);
+                }
+            }
+        }
     }
 
     @Override
@@ -58,26 +85,8 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell {
         super.loadSettings();
         this.castDistance = grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
         this.blocksAbovePlayer = grimmoireConfig.getNumberSetting(KEY, "Blocks Above Player");
-        this.radiusBall = grimmoireConfig.getNumberSetting(KEY, "Radius Ball");
+        this.radius = grimmoireConfig.getNumberSetting(KEY, "Radius Ball");
+        this.sandStayTime = grimmoireConfig.getNumberSetting(KEY, "Sand Stay Time");
     }
-
-    public void spawnSandBall(Player p, Location center) throws MaxChangedBlocksException {
-        try (EditSession editSession = WorldEdit.getInstance().newEditSession(new BukkitWorld(p.getWorld()))) {
-            System.out.println("HERE");
-            editSession.makeSphere(BlockVector3.at(center.getX(), center.getY(), center.getZ()), BlockTypes.STONE.getDefaultState(), radiusBall, true);
-        }
-    }
-
-//    public void spawnSandBall(Player p, Location center, double density) {
-//        for (double x = -radiusBall; x < radiusBall; x += density) {
-//            for (double z = -radiusBall; z < radiusBall; z += density) {
-//                double y = Math.sqrt(radiusBall*radiusBall - x*x - z*z);
-//                Location loc1 = center.clone().subtract(-x, y, -z);
-//                Location loc2 = center.clone().add(-x, y, -z);
-//                p.getWorld().getBlockAt(loc1).setType(Material.STONE);
-//                p.getWorld().getBlockAt(loc2).setType(Material.STONE);
-//            }
-//        }
-//    }
 
 }

@@ -5,10 +5,12 @@ import net.dohaw.blackclover.event.PlayerCastSpellEvent;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
+import net.dohaw.corelib.StringUtils;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -20,8 +22,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.UUID;
@@ -51,16 +51,15 @@ public class PlayerWatcher implements Listener {
     public void onPrepareToCast(PlayerInteractEvent e){
 
         Action action = e.getAction();
-        if(action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR){
+        if(action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK){
 
-            ItemStack item = e.getItem();
             PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
             Player player = pd.getPlayer();
-            CastSpellWrapper spellBoundToItem = PDCHandler.getSpellBoundToItem(pd, item);
+            CastSpellWrapper spellBoundToSlot = PDCHandler.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
 
-            if(spellBoundToItem != null){
+            if(spellBoundToSlot != null){
 
-                SpellType spellType = spellBoundToItem.getKEY();
+                SpellType spellType = spellBoundToSlot.getKEY();
                 e.setCancelled(true);
                 if(pd.isSpellActive(spellType)){
                     if(player.isSneaking()){
@@ -69,9 +68,9 @@ public class PlayerWatcher implements Listener {
                 }
 
                 if(!pd.isSpellOnCooldown(spellType)){
-                    if(pd.hasSufficientManaForSpell(spellBoundToItem)){
-                        boolean wasSuccessfullyCasted = spellBoundToItem.cast(e, pd);
-                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToItem, wasSuccessfullyCasted));
+                    if(pd.hasSufficientManaForSpell(spellBoundToSlot)){
+                        boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
                     }else{
                         player.sendMessage("You don't have enough mana at the moment!");
                     }
@@ -128,20 +127,20 @@ public class PlayerWatcher implements Listener {
     public void onPostCast(PlayerCastSpellEvent e){
 
         if(e.isWasSuccessfullyCasted()){
+
             PlayerData pd = e.getPlayerData();
+            Player player = pd.getPlayer();
             CastSpellWrapper spellCasted = e.getSpellCasted();
+
+            String spellName = spellCasted.getKEY().toProperName();
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(StringUtils.colorString("&7" + spellName + "casted! - " + (int) spellCasted.getCooldown() + "s")));
+
             pd.getSpellsOnCooldown().add(spellCasted.getKEY());
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
                 Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
             }, (long) (spellCasted.getCooldown() * 20));
         }
-
-    }
-
-    private ItemStack ensureProperHotbar(){
-
-        return null;
 
     }
 

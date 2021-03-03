@@ -43,8 +43,6 @@ public class BlackCloverCommand implements CommandExecutor {
 
                         PlayerDataManager pdm = plugin.getPlayerDataManager();
                         PlayerData pd = pdm.getData(potentialPlayer.getUniqueId());
-                        GrimmoireWrapper previousGrimmoire = pd.getGrimmoireWrapper();
-                        removePreviousGrimmoireItems(potentialPlayer, previousGrimmoire);
 
                         pd.setGrimmoireWrapper(wrapperFromAlias);
                         pd.setMaxMana(plugin.getMaxMana(wrapperFromAlias.getTier()));
@@ -62,7 +60,6 @@ public class BlackCloverCommand implements CommandExecutor {
 
                         plugin.removeManaBar(potentialPlayer);
                         pdm.initManaBar(potentialPlayer, wrapperFromAlias);
-                        giveNewGrimmoireItems(potentialPlayer, wrapperFromAlias);
 
                         String newGrimmoireName = wrapperFromAlias.getKEY().toString();
                         if(sender instanceof Player){
@@ -87,26 +84,6 @@ public class BlackCloverCommand implements CommandExecutor {
 
 
         return false;
-    }
-
-    private void removePreviousGrimmoireItems(Player player, GrimmoireWrapper wrapper){
-        PlayerInventory inv = player.getInventory();
-        for(SpellWrapper spell : wrapper.getSpells().values()){
-            if(spell instanceof CastSpellWrapper){
-                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                inv.remove(cSpell.getSpellBoundItem());
-            }
-        }
-    }
-
-    private void giveNewGrimmoireItems(Player player, GrimmoireWrapper wrapper){
-        PlayerInventory inv = player.getInventory();
-        for(SpellWrapper spell : wrapper.getSpells().values()){
-            if(spell instanceof CastSpellWrapper){
-                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                inv.setItem(cSpell.getHotbarSlot(), cSpell.getSpellBoundItem());
-            }
-        }
     }
 
 }

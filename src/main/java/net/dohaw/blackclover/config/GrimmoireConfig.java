@@ -21,26 +21,6 @@ public class GrimmoireConfig extends Config {
         return config.getInt("Spell Settings." + spellType.getConfigKey() + "." + settingKey);
     }
 
-    public int getManaUsed(SpellType spellType){
-        return config.getInt("Spell Settings." + spellType.getConfigKey() + ".Mana Used");
-    }
-
-    public String getCustomItemDisplayName(SpellType spellType){
-        return config.getString("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Display Name");
-    }
-
-    public List<String> getCustomItemLore(SpellType spellType){
-        return config.getStringList("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Lore");
-    }
-
-    public int getCustomItemHotbarNum(SpellType spellType){
-        return config.getInt("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Hotbar Number");
-    }
-
-    public Material getCustomItemMaterial(SpellType spellType){
-        return Material.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Custom Item Properties.Material", "APPLE"));
-    }
-
     public Particle getParticle(SpellType spellType){
         return Particle.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Particle", "FLAME"));
     }
