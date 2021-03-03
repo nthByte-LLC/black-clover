@@ -16,3 +16,12 @@ Spell Settings:
     Blocks Above Player: 10
     Radius Ball: 4
     Sand Stay Time: 5
+    Cooldown: 5
+  sand_storm:
+    Hotbar Number: 2
+    Distance: 10
+    Blindness Duration: 10
+    Cooldown: 5
+  ancient_ruin:
+    Hotbar Number: 3
+    Cooldown: 5

@@ -4,8 +4,10 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.sand.AncientRuin;
 import net.dohaw.blackclover.grimmoire.spell.type.sand.SandBlast;
 import net.dohaw.blackclover.grimmoire.spell.type.sand.SandGrave;
+import net.dohaw.blackclover.grimmoire.spell.type.sand.SandStorm;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +16,8 @@ public class Sand extends GrimmoireWrapper {
 
     public SandBlast sandBlast;
     public SandGrave sandGrave;
+    public SandStorm sandStorm;
+    public AncientRuin ancientRuin;
 
     public Sand() {
         super(GrimmoireType.SAND);
@@ -42,6 +46,12 @@ public class Sand extends GrimmoireWrapper {
 
         this.sandGrave = new SandGrave(config);
         this.spells.put(SpellType.SAND_GRAVE, sandGrave);
+
+        this.sandStorm = new SandStorm(config);
+        this.spells.put(SpellType.SAND_STORM, sandStorm);
+
+        this.ancientRuin = new AncientRuin(config);
+        this.spells.put(SpellType.ANCIENT_RUIN, ancientRuin);
 
     }
 

@@ -1,12 +1,28 @@
 package net.dohaw.blackclover.grimmoire.spell.type.sand;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.util.SpellUtils;
+import net.minecraft.server.v1_16_R3.BlockPosition;
+import net.minecraft.server.v1_16_R3.CommandLocate;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class SandStorm extends CastSpellWrapper {
+
+    private int blindnessDuration;
+    private int distance;
 
     public SandStorm(GrimmoireConfig grimmoireConfig) {
         super(SpellType.SAND_STORM, grimmoireConfig);
@@ -14,7 +30,27 @@ public class SandStorm extends CastSpellWrapper {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
+        Player player = pd.getPlayer();
+        for(Entity en : player.getNearbyEntities(distance, distance, distance)){
+            if(en instanceof LivingEntity){
+                LivingEntity le = (LivingEntity) en;
+                le.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, blindnessDuration * 20, 1, false));
+                SpellUtils.spawnParticle(le, Particle.TOTEM, 30, 1, 1, 1);
+            }
+        }
+        TornadoParticleRunner runner = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1);
+        runner.runTaskTimer(Grimmoire.instance, 0L, 5L);
+        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+            runner.cancel();
+        }, 20);
 
         return true;
+    }
+
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.distance = grimmoireConfig.getNumberSetting(KEY, "Distance");
+        this.blindnessDuration = grimmoireConfig.getNumberSetting(KEY, "Blindness Duration");
     }
 }
