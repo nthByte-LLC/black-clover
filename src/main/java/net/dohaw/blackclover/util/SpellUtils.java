@@ -1,9 +1,7 @@
 package net.dohaw.blackclover.util;
 
-import lombok.NonNull;
 import net.dohaw.corelib.helpers.MathHelper;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -13,10 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class SpellUtils {
 

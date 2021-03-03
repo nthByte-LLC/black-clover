@@ -6,10 +6,11 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
+import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.ShapeUtils;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
@@ -49,6 +50,8 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell, List
                 fBlock.getPersistentDataContainer().set(NSK, PersistentDataType.STRING, "boo");
                 sandBlocks.add(fBlock);
             });
+
+            new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 2).runTaskTimer(Grimmoire.instance, 0L, 5L);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                 for(FallingBlock block : sandBlocks){
