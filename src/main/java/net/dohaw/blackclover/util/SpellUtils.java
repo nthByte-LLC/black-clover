@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,6 +35,10 @@ public class SpellUtils {
 
     public static void spawnParticle(Entity entity, Particle particle, int count, float offsetX, float offsetY, float offsetZ){
         spawnParticle(entity.getLocation(), particle, count, offsetX, offsetY, offsetZ);
+    }
+
+    public static void spawnParticle(Entity entity, Particle particle, BlockData blockData, int count, float offsetX, float offsetY, float offsetZ){
+        Objects.requireNonNull(entity.getWorld()).spawnParticle(particle, entity.getLocation(), count, offsetX, offsetY, offsetZ, blockData);
     }
 
     public static void spawnParticle(Block block, Particle particle, int count, float offsetX, float offsetY, float offsetZ){

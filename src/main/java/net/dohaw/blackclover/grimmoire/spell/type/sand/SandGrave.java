@@ -51,8 +51,6 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell, List
                 sandBlocks.add(fBlock);
             });
 
-            new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 2).runTaskTimer(Grimmoire.instance, 0L, 5L);
-
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                 for(FallingBlock block : sandBlocks){
                     block.getLocation().getBlock().setType(Material.AIR);

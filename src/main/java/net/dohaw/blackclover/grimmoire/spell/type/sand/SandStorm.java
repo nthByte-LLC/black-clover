@@ -39,10 +39,13 @@ public class SandStorm extends CastSpellWrapper {
             }
         }
         TornadoParticleRunner runner = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1);
-        runner.runTaskTimer(Grimmoire.instance, 0L, 5L);
+        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 1), true, 1.5);
+        runner.runTaskTimer(Grimmoire.instance, 0L, 1L);
+        runner2.runTaskTimer(Grimmoire.instance, 0L, 1L);
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             runner.cancel();
-        }, 20);
+            runner2.cancel();
+        }, 30);
 
         return true;
     }

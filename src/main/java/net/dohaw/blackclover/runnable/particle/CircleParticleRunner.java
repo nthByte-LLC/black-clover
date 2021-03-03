@@ -14,19 +14,19 @@ public class CircleParticleRunner extends BukkitRunnable {
     protected Entity entity;
     protected Particle particle;
     protected boolean isYIncreasing;
-    protected int radius;
+    protected double radius;
     protected double yAdditive = 0;
 
     protected Particle.DustOptions data;
 
-    public CircleParticleRunner(Entity entity, Particle particle, boolean isYIncreasing, int radius){
+    public CircleParticleRunner(Entity entity, Particle particle, boolean isYIncreasing, double radius){
         this.entity = entity;
         this.particle = particle;
         this.isYIncreasing = isYIncreasing;
         this.radius = radius;
     }
 
-    public CircleParticleRunner(Entity entity, Particle particle, Particle.DustOptions data, boolean isYIncreasing, int radius){
+    public CircleParticleRunner(Entity entity, Particle particle, Particle.DustOptions data, boolean isYIncreasing, double radius){
         this.entity = entity;
         this.particle = particle;
         this.isYIncreasing = isYIncreasing;
@@ -35,7 +35,7 @@ public class CircleParticleRunner extends BukkitRunnable {
     }
 
     @Override
-    public final void run(){
+    public void run(){
         doYIncreaseCheck();
         for (int i = 0; i < POINTS; i++) {
             doParticleIteration(i);

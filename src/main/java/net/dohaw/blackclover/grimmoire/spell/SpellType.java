@@ -19,10 +19,10 @@ public enum SpellType {
      */
     SAND_BLAST("sand_blast", false),
     SAND_GRAVE("sand_grave", false),
-    SINKHOLE("sinkhole", false),
+    QUICK_SAND("quick_sand", false),
     SAND_STORM("sand_storm", false),
     ANCIENT_RUIN("ancient_ruin", false),
-    EARTHQUAKE("earthquake", false);
+    EARTHQUAKE("earthquake", true);
 
     @Getter
     private boolean isUltimate;

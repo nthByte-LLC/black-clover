@@ -25,3 +25,9 @@ Spell Settings:
   ancient_ruin:
     Hotbar Number: 3
     Cooldown: 5
+  quick_sand:
+    Hotbar Number: 4
+    Cooldown: 5
+    Distance: 10
+    Slowness Level: 2
+    Slowness Duration: 5
