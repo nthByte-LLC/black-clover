@@ -3,6 +3,7 @@ package net.dohaw.blackclover.runnable.spells;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.type.fire.FireStorm;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -21,8 +22,11 @@ public class FireStormRunner extends BukkitRunnable {
 
     private BukkitTask particleRunner1, particleRunner2;
 
+    private FireStorm fireStorm;
+
     public FireStormRunner(Player player, FireStorm fireStorm){
         this.player = player;
+        this.fireStorm = fireStorm;
         this.numFireBalls = fireStorm.getNumFireBalls();
         this.numWaves = fireStorm.getNumFireballWaves();
         this.radius = fireStorm.getRadiusParticles();
@@ -44,14 +48,13 @@ public class FireStormRunner extends BukkitRunnable {
             fireBallLoc.setYaw(yaw);
             fireBallLoc.setPitch(0);
             Fireball entitySpawned = (Fireball) world.spawnEntity(fireBallLoc, EntityType.SMALL_FIREBALL);
+            fireStorm.markAsSpellBinding(entitySpawned);
             entitySpawned.setIsIncendiary(false);
             entitySpawned.setGravity(false);
             entitySpawned.setYield(0);
             entitySpawned.setFireTicks(0);
             yaw += yawAdditive;
         }
-
-        System.out.println("NUM ITERATIONS: " + numIterationsRan);
 
         if(numIterationsRan == numWaves){
             cancel();
@@ -64,9 +67,12 @@ public class FireStormRunner extends BukkitRunnable {
     private void initRingOfFire(){
 
         TornadoParticleRunner runner1 = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.RED, 1), true, radius, true);
-        runner1.setMaxY(3);
+        runner1.setVerticalPointSpread(0.3);
+        runner1.setVerticalPoints(10);
+
         TornadoParticleRunner runner2 = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 1), true, radius, false);
-        runner2.setMaxY(3);
+        runner2.setVerticalPointSpread(0.3);
+        runner2.setVerticalPoints(10);
 
         this.particleRunner1 = runner1.runTaskTimer(Grimmoire.instance, 0L, 1L);
         this.particleRunner2 = runner2.runTaskTimer(Grimmoire.instance, 0L, 1L);

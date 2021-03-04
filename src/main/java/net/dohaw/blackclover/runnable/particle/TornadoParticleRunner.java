@@ -8,10 +8,10 @@ import org.bukkit.entity.Entity;
 public class TornadoParticleRunner extends CircleParticleRunner{
 
     @Setter
-    protected double horizontalPointSpread = 0.2;
+    protected double verticalPointSpread = 0.2;
 
     @Setter
-    protected int horizontalPoints;
+    protected int verticalPoints;
 
     private int numIteration = 0;
     private boolean goesRight;
@@ -19,7 +19,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
     public TornadoParticleRunner(Entity entity, Particle particle, Particle.DustOptions data, boolean isYIncreasing, double radius, boolean goesRight) {
         super(entity, particle, data, isYIncreasing, radius);
         this.maxY = 3;
-        this.horizontalPoints = 10;
+        this.verticalPoints = 10;
         this.goesRight = goesRight;
     }
 
@@ -33,17 +33,16 @@ public class TornadoParticleRunner extends CircleParticleRunner{
         }
 
         double yAdditive2 = yAdditive;
-        for (int i = 0; i < horizontalPoints; i++) {
+        for (int i = 0; i < verticalPoints; i++) {
             double angle = angle(numIteration);
             if(goesRight){
                 angle *= -1;
             }
             Location point = entity.getLocation().clone().add(radius * Math.sin(angle), yAdditive2, radius * Math.cos(angle));
             entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
-            yAdditive2 -= horizontalPointSpread;
+            yAdditive2 += verticalPointSpread;
         }
         numIteration++;
-
 
     }
 

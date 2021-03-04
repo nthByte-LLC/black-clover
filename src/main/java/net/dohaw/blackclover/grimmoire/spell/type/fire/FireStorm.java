@@ -48,7 +48,7 @@ public class FireStorm extends CastSpellWrapper implements Projectable {
 
     @Override
     public void onHit(EntityDamageByEntityEvent event, Entity eDamaged, PlayerData pdDamager) {
-
+        System.out.println("HITTING");
     }
 
 }
