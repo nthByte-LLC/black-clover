@@ -1,14 +1,19 @@
 package net.dohaw.blackclover.util;
 
+import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.corelib.helpers.MathHelper;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
+import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -58,6 +63,14 @@ public class SpellUtils {
             }
         }
         return null;
+    }
+
+    public static Projectile fireProjectile(Player player, CastSpellWrapper wrapper, Material projMaterial){
+        CraftLivingEntity cPlayer = (CraftLivingEntity) player;
+        Projectile projectile = cPlayer.launchProjectile(Snowball.class);
+        wrapper.markAsSpellBinding(projectile);
+        ((CraftSnowball) projectile).getHandle().setItem(CraftItemStack.asNMSCopy(new ItemStack(Material.FIRE_CHARGE)));
+        return projectile;
     }
 
     public static double getRandomDamageModifier(){

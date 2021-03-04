@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.runnable.particle;
 
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -9,6 +10,8 @@ public class CircleParticleRunner extends BukkitRunnable {
 
     protected final int POINTS = 30;
     protected double yIncrease = 0.1;
+
+    @Setter
     protected double maxY = 1;
 
     protected Entity entity;

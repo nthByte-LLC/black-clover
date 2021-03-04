@@ -6,7 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.runnable.FireBlastRunner;
+import net.dohaw.blackclover.runnable.spells.FireBlastRunner;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 

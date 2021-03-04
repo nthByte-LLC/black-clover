@@ -6,7 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.runnable.SandBlastRunner;
+import net.dohaw.blackclover.runnable.spells.SandBlastRunner;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.FallingBlock;

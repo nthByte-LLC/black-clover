@@ -1,4 +1,4 @@
-package net.dohaw.blackclover.runnable;
+package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.SpellDamageEvent;
@@ -53,6 +53,17 @@ public class FireBlastRunner extends BukkitRunnable {
             particleSpawner.cancel();
             damager.cancel();
             SpellUtils.spawnParticle(particleLocation, Particle.EXPLOSION_LARGE, 30, 1, 1, 1);
+            for(Entity e : particleLocation.getWorld().getNearbyEntities(particleLocation, 2, 2, 2)){
+                if(e instanceof LivingEntity){
+                    LivingEntity le = (LivingEntity) e;
+                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, le, caster);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if(!event.isCancelled()){
+                        double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();
+                        le.damage(damageDone, caster);
+                    }
+                }
+            }
         }
 
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Fire extends GrimmoireWrapper {
 
-    //public FireStorm fireStorm;
+    public FireStorm fireStorm;
     public FireBlast fireBlast;
     public FireBall fireBall;
     public FireFists fireFists;
@@ -54,8 +54,8 @@ public class Fire extends GrimmoireWrapper {
         this.fireProtection = new FireProtection(config);
         this.spells.put(fireProtection.getKEY(), fireProtection);
 
-        //this.fireStorm = new FireStorm(config);
-        //this.spells.put(fireStorm.getKEY(), fireStorm);
+        this.fireStorm = new FireStorm(config);
+        this.spells.put(fireStorm.getKEY(), fireStorm);
 
     }
 

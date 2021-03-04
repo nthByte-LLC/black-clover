@@ -7,6 +7,7 @@ import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -31,10 +32,7 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable,
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        CraftLivingEntity cPlayer = (CraftLivingEntity) player;
-        Projectile projectile = cPlayer.launchProjectile(Snowball.class);
-        this.markAsSpellBinding(projectile);
-        ((CraftSnowball) projectile).getHandle().setItem(CraftItemStack.asNMSCopy(new ItemStack(Material.FIRE_CHARGE)));
+        SpellUtils.fireProjectile(player, this, Material.FIRE_CHARGE);
         pd.setManaAmount((int) (pd.getManaAmount() - regenConsumed));
         return true;
     }

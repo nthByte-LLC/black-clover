@@ -1,6 +1,8 @@
-package net.dohaw.blackclover.runnable;
+package net.dohaw.blackclover.runnable.spells;
 
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -40,11 +42,15 @@ public class SandBlastRunner extends BukkitRunnable {
         if(!block.isOnGround()){
             for(Entity e : block.getNearbyEntities(1, 1, 1)){
                 if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
-                    hurtEntities.add(e);
                     LivingEntity le = (LivingEntity) e;
-                    le.damage(1 * damageScale);
-                    SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
-                    SpellUtils.playSound(e, Sound.BLOCK_SAND_HIT);
+                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, le, caster);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if(!event.isCancelled()){
+                        hurtEntities.add(e);
+                        le.damage(1 * damageScale);
+                        SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
+                        SpellUtils.playSound(e, Sound.BLOCK_SAND_HIT);
+                    }
                 }
             }
         }else{

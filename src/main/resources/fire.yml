@@ -28,6 +28,16 @@ Spell Settings:
     Flame Damage Per Tick: 1
     Mana Used: 100
   fire_control:
+    Hotbar Number: 3
     Cooldown: 3
     Mana Used: 100
-    Hotbar Number: 3
+  fire_storm:
+    Hotbar Number: 4
+    Cooldown: 3
+    Mana Used: 100
+    Number Fireballs Spawned: 4
+    Number Fireball Waves: 3
+    # In seconds. Can be a decimal
+    Fireball Rate: 1
+    Particle Radius: 1
+
