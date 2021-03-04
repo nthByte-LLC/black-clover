@@ -5,10 +5,7 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.ProbabilityUtilities;
 import net.dohaw.corelib.StringUtils;
@@ -18,7 +15,6 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -74,7 +70,7 @@ public class PlayerDataManager {
     public void shutdown(){
         for(PlayerData pd : playerData.values()){
             UUID uuid = pd.getUuid();
-            Map<UUID, BossBar> manaBars = plugin.getManaBars();
+            Map<UUID, BossBar> manaBars = plugin.getRegenBars();
             if(manaBars.containsKey(uuid)){
                 BossBar manaBar = manaBars.get(uuid);
                 manaBar.removeAll();
@@ -122,10 +118,10 @@ public class PlayerDataManager {
                 }
             }
 
-            int maxMana = plugin.getMaxMana(randomGrimmoire.getTier());
+            int maxMana = plugin.getMaxRegen(randomGrimmoire.getTier());
             pd.setGrimmoireWrapper(randomGrimmoire);
-            pd.setMaxMana(maxMana);
-            pd.setManaAmount(0);
+            pd.setMaxRegen(maxMana);
+            pd.setRegenAmount(0);
 
             initManaBar(player, randomGrimmoire);
 
@@ -148,11 +144,11 @@ public class PlayerDataManager {
      * @param grimmoireWrapper The grimmoire that the player has.
      */
     public void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
-        int maxMana = plugin.getMaxMana(grimmoireWrapper.getTier());
+        int maxMana = plugin.getMaxRegen(grimmoireWrapper.getTier());
         BarColor barColor = Grimmoire.colorCodeToBarColor(grimmoireWrapper.getConfig().getDisplayNameColor());
         BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), barColor, BarStyle.SOLID);
         bar.addPlayer(player);
-        plugin.getManaBars().put(player.getUniqueId(), bar);
+        plugin.getRegenBars().put(player.getUniqueId(), bar);
     }
 
     /**

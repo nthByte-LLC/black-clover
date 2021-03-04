@@ -22,7 +22,17 @@ public enum SpellType {
     QUICK_SAND("quick_sand", false),
     SAND_STORM("sand_storm", false),
     ANCIENT_RUIN("ancient_ruin", false),
-    EARTHQUAKE("earthquake", true);
+    EARTHQUAKE("earthquake", true),
+
+    /*
+        Anti Spells
+     */
+    DISABLE("disable", false),
+    ANTI_SWORD("anti_sword", false),
+    REFLECTION("reflection", false),
+    DEMON_JUMP("demon_jump", false),
+    DEMON_SCRATCH("demon_scratch", false),
+    DEMON_FORM("demon_form", true);
 
     @Getter
     private boolean isUltimate;

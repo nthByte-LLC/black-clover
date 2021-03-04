@@ -6,24 +6,22 @@ import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.exception.GrimmoireWrapperNotFoundException;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.corelib.StringUtils;
-import org.bukkit.boss.BossBar;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class ManaRegener extends BukkitRunnable {
+public class Regenerator extends BukkitRunnable {
 
     private BlackCloverPlugin plugin;
     private int baseRegenAmount;
     private int t2RegenMult, t3RegenMult, t4RegenMult, t5RegenMult;
 
-    public ManaRegener(BlackCloverPlugin plugin){
+    public Regenerator(BlackCloverPlugin plugin){
         this.plugin = plugin;
         BaseConfig baseConfig = plugin.getBaseConfig();
         this.baseRegenAmount = baseConfig.getBaseRegen();
-        this.t2RegenMult = baseConfig.getTierManaRegenMultiplier(2);
-        this.t3RegenMult = baseConfig.getTierManaRegenMultiplier(3);
-        this.t4RegenMult = baseConfig.getTierManaRegenMultiplier(4);
-        this.t5RegenMult = baseConfig.getTierManaRegenMultiplier(5);
+        this.t2RegenMult = baseConfig.getTierRegenMultiplier(2);
+        this.t3RegenMult = baseConfig.getTierRegenMultiplier(3);
+        this.t4RegenMult = baseConfig.getTierRegenMultiplier(4);
+        this.t5RegenMult = baseConfig.getTierRegenMultiplier(5);
     }
 
     @SneakyThrows
@@ -32,12 +30,12 @@ public class ManaRegener extends BukkitRunnable {
 
         for(PlayerData pd : plugin.getPlayerDataManager().getPlayerData().values()){
 
-            int manaAmount = pd.getManaAmount();
+            int manaAmount = pd.getRegenAmount();
             GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
             if(grimmoireWrapper != null){
 
                 int tier = grimmoireWrapper.getTier();
-                int maxMana = pd.getMaxMana();
+                int maxMana = pd.getMaxRegen();
 
                 if(maxMana != manaAmount){
 
@@ -60,8 +58,8 @@ public class ManaRegener extends BukkitRunnable {
                         manaAmount = maxMana;
                     }
 
-                    pd.setManaAmount(manaAmount);
-                    plugin.updateManaBar(pd);
+                    pd.setRegenAmount(manaAmount);
+                    plugin.updateRegenBar(pd);
 
                 }
 

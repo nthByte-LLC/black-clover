@@ -9,7 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.listener.PlayerWatcher;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
-import net.dohaw.blackclover.runnable.ManaRegener;
+import net.dohaw.blackclover.runnable.Regenerator;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
@@ -33,10 +33,10 @@ public final class BlackCloverPlugin extends JavaPlugin {
     private PlayerDataManager playerDataManager;
 
     @Getter
-    private Map<UUID, BossBar> manaBars = new HashMap<>();
+    private Map<UUID, BossBar> regenBars = new HashMap<>();
 
     @Getter
-    private int t2MaxMana, t3MaxMana, t4MaxMana, t5MaxMana;
+    private int t2MaxRegen, t3MaxRegen, t4MaxRegen, t5MaxRegen;
 
     private static ItemStack baseGrimmoire;
 
@@ -65,7 +65,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         this.playerDataManager = new PlayerDataManager(this);
         JPUtils.registerEvents(new PlayerWatcher(this));
         registerGrimmoires();
-        new ManaRegener(this).runTaskTimer(this, 0L, 20L);
+        new Regenerator(this).runTaskTimer(this, 0L, 20L);
         JPUtils.registerCommand("blackclover", new BlackCloverCommand(this));
 
         playerDataManager.loadAllData();
@@ -95,10 +95,10 @@ public final class BlackCloverPlugin extends JavaPlugin {
     }
 
     private void loadConfigValues(){
-        this.t2MaxMana = baseConfig.getTierMaxMana(2);
-        this.t3MaxMana = baseConfig.getTierMaxMana(3);
-        this.t4MaxMana = baseConfig.getTierMaxMana(4);
-        this.t5MaxMana = baseConfig.getTierMaxMana(5);
+        this.t2MaxRegen = baseConfig.getTierMaxRegen(2);
+        this.t3MaxRegen = baseConfig.getTierMaxRegen(3);
+        this.t4MaxRegen = baseConfig.getTierMaxRegen(4);
+        this.t5MaxRegen = baseConfig.getTierMaxRegen(5);
         this.prefix = baseConfig.getPrefix();
     }
 
@@ -112,15 +112,15 @@ public final class BlackCloverPlugin extends JavaPlugin {
         JPUtils.validateFilesOrFolders(fileInfo, false);
     }
 
-    public int getMaxMana(int tier){
+    public int getMaxRegen(int tier){
         if(tier == 2){
-            return t2MaxMana;
+            return t2MaxRegen;
         }else if(tier == 3){
-            return t3MaxMana;
+            return t3MaxRegen;
         }else if(tier == 4){
-            return t4MaxMana;
+            return t4MaxRegen;
         }else{
-            return t5MaxMana;
+            return t5MaxRegen;
         }
     }
 
@@ -129,26 +129,26 @@ public final class BlackCloverPlugin extends JavaPlugin {
     }
 
 
-    public void updateManaBar(PlayerData pd){
+    public void updateRegenBar(PlayerData pd){
 
-        BossBar manaBar = manaBars.get(pd.getUuid());
-        double manaAmount = pd.getManaAmount();
-        double maxMana = pd.getMaxMana();
-        double percentageManaFull = manaAmount / maxMana;
+        BossBar regenBar = regenBars.get(pd.getUuid());
+        double regenAmount = pd.getRegenAmount();
+        double maxRegen = pd.getMaxRegen();
+        double percentageRegenFull = regenAmount / maxRegen;
 
-        manaBar.setProgress(percentageManaFull);
-        manaBar.setTitle(StringUtils.colorString("&bMana: &f" + (int)manaAmount + " / " + (int)maxMana));
+        regenBar.setProgress(percentageRegenFull);
+        regenBar.setTitle(StringUtils.colorString("&bRegen: &f" + (int)regenAmount + " / " + (int)maxRegen));
 
     }
 
-    public void removeManaBar(Player player){
-        this.removeManaBar(player.getUniqueId());
+    public void removeRegenBar(Player player){
+        this.removeRegenBar(player.getUniqueId());
     }
 
-    public void removeManaBar(UUID uuidPlayer){
-        BossBar bossBar = manaBars.get(uuidPlayer);
+    public void removeRegenBar(UUID uuidPlayer){
+        BossBar bossBar = regenBars.get(uuidPlayer);
         bossBar.removeAll();
-        manaBars.remove(uuidPlayer);
+        regenBars.remove(uuidPlayer);
     }
 
 }

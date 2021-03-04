@@ -8,33 +8,33 @@ Grimmoire Properties:
     - "&fTier: %tierNum% &f(%rarity%&f)"
     - "&fClass: %class%"
 
-# The amount of mana regen that occurs per second (Without Tier Multipliers)
-Base Mana Regen: 50
+# The amount of regen that occurs per second (Without Tier Multipliers)
+Base Regen: 50
 
 # Tier Properties
-## Base Mana
+## Base Regen
 ## Obtaining Chance
-## Mana Regen Multiplier
+## Regen Multiplier
 Tier Properties:
   Tier 2:
-    # The starting mana for a tier. (Without upgrades)
-    Max Mana: 1000
+    # The starting Regen for a tier. (Without upgrades)
+    Max Regen: 1000
     # The chance at which a player has at obtaining this tier grimmoire
     Obtaining Chance: 50
-    # It takes the "Base Mana Regen" and multiplies it by this number. That's how much the player regenerates mana per second.
-    Mana Regen Multiplier: 1
+    # It takes the "Base Regen" and multiplies it by this number. That's how much the player regenerates Regen per second.
+    Regen Multiplier: 1
   Tier 3:
-    Max Mana: 1500
+    Max Regen: 1500
     Obtaining Chance: 35
-    Mana Regen Multiplier: 1.25
+    Regen Multiplier: 1.25
   Tier 4:
-    Max Mana: 2000
+    Max Regen: 2000
     Obtaining Chance: 10
-    Mana Regen Multiplier: 2
+    Regen Multiplier: 2
   Tier 5:
-    Max Mana: 2500
+    Max Regen: 2500
     Obtaining Chance: 5
-    Mana Regen Multiplier: 5
+    Regen Multiplier: 5
 
 # Please don't touch these 2 lines
 Acquisition Info:

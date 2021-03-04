@@ -19,16 +19,16 @@ public class BaseConfig extends Config {
         return config.getInt("Tier Properties.Tier " + tier + ".Obtaining Chance");
     }
 
-    public int getTierMaxMana(int tier){
-        return config.getInt("Tier Properties.Tier " + tier + ".Max Mana");
+    public int getTierMaxRegen(int tier){
+        return config.getInt("Tier Properties.Tier " + tier + ".Max Regen");
     }
 
-    public int getTierManaRegenMultiplier(int tier){
-        return config.getInt("Tier Properties.Tier " + tier + ".Mana Regen Multiplier");
+    public int getTierRegenMultiplier(int tier){
+        return config.getInt("Tier Properties.Tier " + tier + ".Regen Multiplier");
     }
 
     public int getBaseRegen(){
-        return config.getInt("Base Mana Regen");
+        return config.getInt("Base Regen");
     }
 
     public Material getGrimmoireMaterial(){

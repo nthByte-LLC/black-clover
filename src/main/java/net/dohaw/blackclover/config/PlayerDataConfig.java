@@ -22,8 +22,8 @@ public class PlayerDataConfig extends Config {
         GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) Grimmoire.getByKey(grimmoireType);
         PlayerData pd = new PlayerData(uuid, grimmoireWrapper);
 
-        pd.setMaxMana(config.getInt("Max Mana"));
-        pd.setManaAmount(config.getInt("Mana Amount"));
+        pd.setMaxRegen(config.getInt("Max Regen"));
+        pd.setRegenAmount(config.getInt("Regen Amount"));
         pd.setConfig(this);
 
         return pd;
@@ -31,8 +31,8 @@ public class PlayerDataConfig extends Config {
     }
 
     public void saveData(PlayerData pd){
-        config.set("Max Mana", pd.getMaxMana());
-        config.set("Mana Amount", pd.getManaAmount());
+        config.set("Max Regen", pd.getMaxRegen());
+        config.set("Regen Amount", pd.getRegenAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
         saveConfig();
     }

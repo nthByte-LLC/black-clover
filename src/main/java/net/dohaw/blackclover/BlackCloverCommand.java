@@ -2,8 +2,6 @@ package net.dohaw.blackclover;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
@@ -14,7 +12,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 public class BlackCloverCommand implements CommandExecutor {
 
@@ -45,8 +42,8 @@ public class BlackCloverCommand implements CommandExecutor {
                         PlayerData pd = pdm.getData(potentialPlayer.getUniqueId());
 
                         pd.setGrimmoireWrapper(wrapperFromAlias);
-                        pd.setMaxMana(plugin.getMaxMana(wrapperFromAlias.getTier()));
-                        pd.setManaAmount(0);
+                        pd.setMaxRegen(plugin.getMaxRegen(wrapperFromAlias.getTier()));
+                        pd.setRegenAmount(0);
 
                         ItemStack grimmoire = PDCHandler.getGrimmoire(potentialPlayer);
                         if(grimmoire != null){
@@ -58,7 +55,7 @@ public class BlackCloverCommand implements CommandExecutor {
 
                         potentialPlayer.getInventory().setItemInOffHand(newGrimmoire);
 
-                        plugin.removeManaBar(potentialPlayer);
+                        plugin.removeRegenBar(potentialPlayer);
                         pdm.initManaBar(potentialPlayer, wrapperFromAlias);
 
                         String newGrimmoireName = wrapperFromAlias.getKEY().toString();

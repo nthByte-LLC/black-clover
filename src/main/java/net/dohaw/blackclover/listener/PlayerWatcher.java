@@ -68,7 +68,7 @@ public class PlayerWatcher implements Listener {
                 }
 
                 if(!pd.isSpellOnCooldown(spellType)){
-                    if(pd.hasSufficientManaForSpell(spellBoundToSlot)){
+                    if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
                         boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
                         Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
                     }else{

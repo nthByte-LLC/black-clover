@@ -16,6 +16,7 @@ public class Sand extends GrimmoireWrapper {
     public SandStorm sandStorm;
     public AncientRuin ancientRuin;
     public QuickSand quickSand;
+    public Earthquake earthquake;
 
     public Sand() {
         super(GrimmoireType.SAND);
@@ -53,6 +54,9 @@ public class Sand extends GrimmoireWrapper {
 
         this.quickSand = new QuickSand(config);
         this.spells.put(SpellType.QUICK_SAND, quickSand);
+
+        this.earthquake = new Earthquake(config);
+        this.spells.put(SpellType.EARTHQUAKE, earthquake);
 
     }
 

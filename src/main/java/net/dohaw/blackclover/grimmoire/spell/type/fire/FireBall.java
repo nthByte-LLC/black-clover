@@ -27,7 +27,7 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable,
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         SpellUtils.fireProjectile(player, this, Material.FIRE_CHARGE);
-        pd.setManaAmount((int) (pd.getManaAmount() - regenConsumed));
+        pd.setRegenAmount((int) (pd.getRegenAmount() - regenConsumed));
         return true;
     }
 

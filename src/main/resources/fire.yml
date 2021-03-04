@@ -9,32 +9,32 @@ Spell Settings:
     Fire Ticks Per Punch: 5
     # In seconds
     Cooldown: 20
-    Mana Used: 100
+    Regen Consumed: 100
   fire_ball:
     Hotbar Number: 1
     Damage Scale: 1
     Cooldown: 5
-    Mana Used: 100
+    Regen Consumed: 100
   fire_blast:
     Hotbar Number: 2
     Damage Scale: 1
     #In Blocks
     Distance: 10
     Cooldown: 5
-    Mana Used: 100
+    Regen Consumed: 100
   fire_Protection:
     Cooldown: 5
     Flame Duration: 2
     Flame Damage Per Tick: 1
-    Mana Used: 100
+    Regen Consumed: 100
   fire_control:
     Hotbar Number: 3
     Cooldown: 3
-    Mana Used: 100
+    Regen Consumed: 100
   fire_storm:
     Hotbar Number: 4
     Cooldown: 3
-    Mana Used: 100
+    Regen Consumed: 100
     Number Fireballs Spawned: 4
     Number Fireball Waves: 3
     # In seconds. Can be a decimal

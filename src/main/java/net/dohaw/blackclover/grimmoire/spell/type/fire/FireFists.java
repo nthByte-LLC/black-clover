@@ -83,12 +83,12 @@ public class FireFists extends CastSpellWrapper implements Listener, Activatable
             BlackCloverPlugin instance = Grimmoire.instance;
             PlayerData updatedData = instance.getPlayerDataManager().getData(pd.getUuid());
 
-            if(updatedData.hasSufficientManaForSpell(this)){
+            if(updatedData.hasSufficientRegenForSpell(this)){
 
-                int mana = updatedData.getManaAmount();
+                int mana = updatedData.getRegenAmount();
                 int newMana = (int) (mana - regenConsumed);
-                updatedData.setManaAmount(newMana);
-                instance.updateManaBar(updatedData);
+                updatedData.setRegenAmount(newMana);
+                instance.updateRegenBar(updatedData);
 
                 Player player = updatedData.getPlayer();
                 World world = player.getWorld();

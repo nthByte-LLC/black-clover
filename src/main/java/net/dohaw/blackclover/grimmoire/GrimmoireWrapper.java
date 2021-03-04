@@ -123,7 +123,7 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
 
         BlackCloverPlugin plugin = (BlackCloverPlugin) CoreLib.getInstance();
         String plusSign = "&2[+]&0";
-        String manaLine = plusSign + " " + plugin.getMaxMana(getTier()) + " Mana\n";
+        String manaLine = plusSign + " " + plugin.getMaxRegen(getTier()) + " Mana\n";
         firstPage += manaLine;
 
         // The spells

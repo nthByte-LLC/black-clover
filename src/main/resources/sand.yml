@@ -7,7 +7,7 @@ Spell Settings:
     Damage Scale: 1
     # In seconds
     Cooldown: 20
-    Mana Used: 100
+    Regen Consumed: 100
     Force Multiplier: 2
   sand_grave:
     Hotbar Number: 1
@@ -17,17 +17,27 @@ Spell Settings:
     Radius Ball: 4
     Sand Stay Time: 5
     Cooldown: 5
+    Regen Consumed: 100
   sand_storm:
     Hotbar Number: 2
     Distance: 10
     Blindness Duration: 10
     Cooldown: 5
+    Regen Consumed: 100
   ancient_ruin:
     Hotbar Number: 3
     Cooldown: 5
+    Regen Consumed: 100
   quick_sand:
     Hotbar Number: 4
     Cooldown: 5
     Distance: 10
     Slowness Level: 2
     Slowness Duration: 5
+    Regen Consumed: 100
+  earthquake:
+    Hotbar Number: 5
+    Radius: 5
+    Duration: 5
+    Cooldown: 5
+    Regen Consumed: 100

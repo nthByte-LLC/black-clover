@@ -1,6 +1,8 @@
 package net.dohaw.blackclover.util;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +46,31 @@ public class ShapeUtils {
         return circleBlocks;
     }
 
+    public static List<Block> getBlocksInCube(Location start, int radius){
+        List<Block> blocks = new ArrayList<>();
+        for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
+            for(double y = start.getY() - radius; y <= start.getY() + radius; y++){
+                for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
+                    Location loc = new Location(start.getWorld(), x, y, z);
+                    blocks.add(loc.getBlock());
+                }
+            }
+        }
+        return blocks;
+    }
+
+    public static List<BlockSnapshot> getBlockSnapshotsInCube(Location start, int radius){
+        List<BlockSnapshot> blocks = new ArrayList<>();
+        for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
+            for(double y = start.getY() - radius; y <= start.getY() + radius; y++){
+                for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
+                    Location loc = new Location(start.getWorld(), x, y, z);
+                    Block block = loc.getBlock();
+                    blocks.add(new BlockSnapshot(block.getBlockData(), loc));
+                }
+            }
+        }
+        return blocks;
+    }
 
 }
