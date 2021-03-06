@@ -19,4 +19,13 @@ public class BlockSnapshot {
         return new BlockSnapshot(block.getBlockData().clone(), block.getLocation().clone());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BlockSnapshot snapshot = (BlockSnapshot) o;
+        return data.equals(snapshot.data) &&
+                location.equals(snapshot.location);
+    }
+
 }

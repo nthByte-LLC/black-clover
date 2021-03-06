@@ -48,7 +48,7 @@ public class EarthquakeRunner extends BukkitRunnable {
 
         // side 2
         Location side2Start = new Location(player.getWorld(), originX + currentRadius, originY, originZ - currentRadius);
-        for(int additive = 0; additive < (currentRadius * 2); additive++){
+        for(int additive = 0; additive < (currentRadius * 2) + 1; additive++){
             Location loc = side2Start.clone().add(0, 0, additive);
             spawnFallingBlock(loc);
         }
@@ -56,11 +56,12 @@ public class EarthquakeRunner extends BukkitRunnable {
         // side 3
         // added 1 to cover up for missed corner
         Location side3Start = new Location(player.getWorld(), originX - currentRadius, originY, originZ + currentRadius);
-        for(int additive = 0; additive < ((currentRadius * 2 )+ 1); additive++){
+        for(int additive = 0; additive < (currentRadius * 2); additive++){
             Location loc = side3Start.clone().add(additive, 0, 0);
             spawnFallingBlock(loc);
         }
 
+        // side 4
         Location side4Start = new Location(player.getWorld(), originX - currentRadius, originY, originZ - currentRadius);
         for(int additive = 0; additive < (currentRadius * 2); additive++){
             Location loc = side4Start.clone().add(0, 0, additive);
@@ -84,22 +85,24 @@ public class EarthquakeRunner extends BukkitRunnable {
 
     private void spawnFallingBlock(Location locationBlockRemoving){
         BlockSnapshot snapshot = BlockSnapshot.toSnapshot(locationBlockRemoving.getBlock());
-        blocksRemoved.add(snapshot);
-        locationBlockRemoving.getBlock().setType(Material.AIR);
-        double randomYAdditive = ThreadLocalRandom.current().nextDouble(0.1, MAX_BLOCK_Y_ADDITIVE);
-        Location fallingBlockLoc = locationBlockRemoving.clone().add(0, randomYAdditive, 0);
-        FallingBlock fallingBlock = fallingBlockLoc.getWorld().spawnFallingBlock(fallingBlockLoc, snapshot.getData().getMaterial().createBlockData());
-        fallingBlock.setHurtEntities(true);
-        fallingBlocks.add(fallingBlock);
+        // some blocks get added twice so this is important to check
+        if(!blocksRemoved.contains(snapshot)){
+            blocksRemoved.add(snapshot);
+            locationBlockRemoving.getBlock().setType(Material.AIR);
+            double randomYAdditive = ThreadLocalRandom.current().nextDouble(0.1, MAX_BLOCK_Y_ADDITIVE);
+            Location fallingBlockLoc = locationBlockRemoving.clone().add(0, randomYAdditive, 0);
+            FallingBlock fallingBlock = fallingBlockLoc.getWorld().spawnFallingBlock(fallingBlockLoc, snapshot.getData().getMaterial().createBlockData());
+            fallingBlock.setHurtEntities(true);
+            fallingBlock.setDropItem(false);
+            fallingBlocks.add(fallingBlock);
+        }
     }
 
     private void finishWave(){
 
         FallingBlock fallingBlock;
         while((fallingBlock = fallingBlocks.poll()) != null){
-            if(fallingBlock.isOnGround()){
-                fallingBlock.getLocation().getBlock().setType(Material.AIR);
-            }else{
+            if(!fallingBlock.isOnGround()){
                 fallingBlock.remove();
             }
         }
