@@ -10,18 +10,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerData {
+
+    @Getter @Setter
+    private boolean canCast = true;
 
     @Getter
     private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
 
     @Getter
-    private Map<SpellType, BukkitTask> activeSpells = new HashMap<>();
+    private Map<SpellType, List<BukkitTask>> activeSpells = new HashMap<>();
 
     @Getter @Setter
     private int maxRegen, regenAmount;
@@ -71,9 +71,18 @@ public class PlayerData {
     }
 
     public void removeActiveSpell(SpellType spellType){
-        BukkitTask runnable = activeSpells.get(spellType);
-        runnable.cancel();
+        List<BukkitTask> runnables = activeSpells.get(spellType);
+        runnables.forEach(BukkitTask::cancel);
         activeSpells.remove(spellType);
+    }
+
+    public void addActiveSpellRunnable(SpellType spellType, BukkitTask task){
+        List<BukkitTask> tasks = new ArrayList<>();
+        if(activeSpells.containsKey(spellType)){
+            tasks = activeSpells.get(spellType);
+        }
+        tasks.add(task);
+        activeSpells.put(spellType, tasks);
     }
 
 }

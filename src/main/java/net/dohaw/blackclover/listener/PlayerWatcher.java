@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -59,23 +60,30 @@ public class PlayerWatcher implements Listener {
 
             if(spellBoundToSlot != null){
 
-                SpellType spellType = spellBoundToSlot.getKEY();
-                e.setCancelled(true);
-                if(pd.isSpellActive(spellType)){
-                    if(player.isSneaking()){
-                        pd.removeActiveSpell(spellType);
-                    }
-                }
+                if(pd.isCanCast()){
 
-                if(!pd.isSpellOnCooldown(spellType)){
-                    if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
-                        boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
-                        Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
-                    }else{
-                        player.sendMessage("You don't have enough mana at the moment!");
+                    SpellType spellType = spellBoundToSlot.getKEY();
+                    e.setCancelled(true);
+                    if(pd.isSpellActive(spellType)){
+                        if(player.isSneaking()){
+                            pd.removeActiveSpell(spellType);
+                            return;
+                        }
                     }
-                }else{
-                    player.sendMessage("This spell is on cooldown!");
+
+                    if(!pd.isSpellOnCooldown(spellType)){
+                        if(!pd.isSpellActive(spellType)){
+                            if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
+                                boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                                Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
+                            }else{
+                                player.sendMessage("You don't have enough mana at the moment!");
+                            }
+                        }
+                    }else{
+                        player.sendMessage("This spell is on cooldown!");
+                    }
+
                 }
 
             }else{

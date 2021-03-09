@@ -5,7 +5,14 @@ Spell Settings:
   disable:
     Hotbar Number: 0
     Base Damage: 5
-    Duration: 10
+    Duration Disable: 5
     Cooldown: 5
     Regen Consumed: 100
+  demon_jump:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Jump Potion Level: 1
+    Jump Potion Duration: 2
+    Slow Fall Potion Duration: 2
 

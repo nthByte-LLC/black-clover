@@ -1,20 +1,27 @@
 package net.dohaw.blackclover.grimmoire.spell.type.anti;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.PassiveSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
+import net.dohaw.blackclover.util.BukkitColor;
+import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Disable extends PassiveSpellWrapper implements Listener {
+public class Disable extends ActivatableSpellWrapper implements Listener {
+
+    private double durationDisable;
 
     public Disable(GrimmoireConfig grimmoireConfig) {
         super(SpellType.DISABLE, grimmoireConfig);
@@ -28,8 +35,37 @@ public class Disable extends PassiveSpellWrapper implements Listener {
             Player damaged = (Player) eDamaged;
             Player damager = (Player) eDamager;
             PlayerData damagerData = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
-
+            if(damagerData.isSpellActive(SpellType.DISABLE)){
+                SpellDamageEvent event = new SpellDamageEvent(KEY, e.getEntity(), damager);
+                Bukkit.getPluginManager().callEvent(event);
+                if(!event.isCancelled()){
+                    PlayerData damagedData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
+                    damagedData.setCanCast(false);
+                    SpellUtils.playSound(damaged, Sound.ITEM_SHIELD_BREAK);
+                    SpellUtils.spawnParticle(damaged, Particle.SPELL_WITCH, 30, 0.5f, 0.5f, 0.5f);
+                    Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+                        damagedData.setCanCast(true);
+                    }, (long) (durationDisable * 20));
+                }
+            }
         }
     }
 
+
+    @Override
+    public void doRunnableSpecifics(PlayerData caster) {
+
+        Player player = caster.getPlayer();
+        CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
+        particleRunner.setMaxY(0.4);
+
+        caster.addActiveSpellRunnable(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
+
+    }
+
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.durationDisable = grimmoireConfig.getNumberSetting(KEY, "Duration Disable");
+    }
 }

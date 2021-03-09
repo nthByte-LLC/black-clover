@@ -9,10 +9,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class CircleParticleRunner extends BukkitRunnable {
 
     protected final int POINTS = 30;
-    protected double yIncrease = 0.1;
 
     @Setter
-    protected double maxY = 1;
+    public double yIncrease = 0.1;
+
+    @Setter
+    public double maxY = 1;
 
     protected Entity entity;
     protected Particle particle;
@@ -22,6 +24,9 @@ public class CircleParticleRunner extends BukkitRunnable {
 
     protected Particle.DustOptions data;
 
+    /*
+        For when you don't want to use something with dust options like redstone
+     */
     public CircleParticleRunner(Entity entity, Particle particle, boolean isYIncreasing, double radius){
         this.entity = entity;
         this.particle = particle;
@@ -29,9 +34,12 @@ public class CircleParticleRunner extends BukkitRunnable {
         this.radius = radius;
     }
 
-    public CircleParticleRunner(Entity entity, Particle particle, Particle.DustOptions data, boolean isYIncreasing, double radius){
+    /*
+        Primarily used for redstone particles (To my knowledge)
+     */
+    public CircleParticleRunner(Entity entity, Particle.DustOptions data, boolean isYIncreasing, double radius){
         this.entity = entity;
-        this.particle = particle;
+        this.particle = Particle.REDSTONE;
         this.isYIncreasing = isYIncreasing;
         this.radius = radius;
         this.data = data;
@@ -54,7 +62,11 @@ public class CircleParticleRunner extends BukkitRunnable {
             if(yAdditive >= maxY){
                 yAdditive = 0;
             }else{
-                yAdditive += yIncrease;
+                if(yAdditive + yIncrease > maxY){
+                    yAdditive = 0;
+                }else{
+                    yAdditive += yIncrease;
+                }
             }
         }
     }

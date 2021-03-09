@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.anti.DemonJump;
 import net.dohaw.blackclover.grimmoire.spell.type.anti.Disable;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Anti extends GrimmoireWrapper {
 
     public Disable disable;
+    public DemonJump demonJump;
 
     public Anti() {
         super(GrimmoireType.ANTI);
@@ -34,8 +36,13 @@ public class Anti extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
         this.disable = new Disable(config);
         this.spells.put(SpellType.DISABLE, disable);
+
+        this.demonJump = new DemonJump(config);
+        this.spells.put(SpellType.DEMON_JUMP, demonJump);
+
     }
 
 }

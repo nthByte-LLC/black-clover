@@ -66,11 +66,11 @@ public class FireStormRunner extends BukkitRunnable {
 
     private void initRingOfFire(){
 
-        TornadoParticleRunner runner1 = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.RED, 1), true, radius, true);
+        TornadoParticleRunner runner1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.RED, 1), true, radius, true);
         runner1.setVerticalPointSpread(0.3);
         runner1.setVerticalPoints(10);
 
-        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 1), true, radius, false);
+        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, false);
         runner2.setVerticalPointSpread(0.3);
         runner2.setVerticalPoints(10);
 

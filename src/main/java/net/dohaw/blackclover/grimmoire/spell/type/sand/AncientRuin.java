@@ -40,9 +40,9 @@ public class AncientRuin extends CastSpellWrapper {
         int y = world.getHighestBlockYAt(desertTemplePosition.getX(), desertTemplePosition.getZ());
         Location location = new Location(world, desertTemplePosition.getX(), y, desertTemplePosition.getZ());
 
-        BukkitTask runner = new TornadoParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.FUCHSIA, 1), true, 1, false).runTaskTimer(Grimmoire.instance, 0, 1L);
-        BukkitTask runner2 = new TornadoParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1, true).runTaskTimer(Grimmoire.instance, 0, 1L);
-        BukkitTask runner3 = new CircleParticleRunner(p, Particle.REDSTONE, new Particle.DustOptions(Color.YELLOW, 1), true, 1).runTaskTimer(Grimmoire.instance, 0, 1L);
+        BukkitTask runner = new TornadoParticleRunner(p, new Particle.DustOptions(Color.FUCHSIA, 1), true, 1, false).runTaskTimer(Grimmoire.instance, 0, 1L);
+        BukkitTask runner2 = new TornadoParticleRunner(p, new Particle.DustOptions(Color.YELLOW, 1), true, 1, true).runTaskTimer(Grimmoire.instance, 0, 1L);
+        BukkitTask runner3 = new CircleParticleRunner(p, new Particle.DustOptions(Color.YELLOW, 1), true, 1).runTaskTimer(Grimmoire.instance, 0, 1L);
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             SpellUtils.playSound(p, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
