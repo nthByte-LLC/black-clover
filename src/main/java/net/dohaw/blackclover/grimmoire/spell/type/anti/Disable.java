@@ -14,7 +14,6 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -57,7 +56,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
 
         Player player = caster.getPlayer();
         CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
-        particleRunner.setMaxY(0.4);
+        particleRunner.setMaxYAdditive(0.4);
 
         caster.addActiveSpellRunnable(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
 

@@ -18,7 +18,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
 
     public TornadoParticleRunner(Entity entity, Particle.DustOptions data, boolean isYIncreasing, double radius, boolean goesRight) {
         super(entity, data, isYIncreasing, radius);
-        this.maxY = 3;
+        this.maxYAdditive = 3;
         this.verticalPoints = 10;
         this.goesRight = goesRight;
     }

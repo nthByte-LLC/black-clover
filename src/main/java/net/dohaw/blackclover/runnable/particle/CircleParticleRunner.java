@@ -14,7 +14,7 @@ public class CircleParticleRunner extends BukkitRunnable {
     public double yIncrease = 0.1;
 
     @Setter
-    public double maxY = 1;
+    public double maxYAdditive = 1;
 
     protected Entity entity;
     protected Particle particle;
@@ -59,10 +59,10 @@ public class CircleParticleRunner extends BukkitRunnable {
 
     protected void doYIncreaseCheck(){
         if(isYIncreasing){
-            if(yAdditive >= maxY){
+            if(yAdditive >= maxYAdditive){
                 yAdditive = 0;
             }else{
-                if(yAdditive + yIncrease > maxY){
+                if(yAdditive + yIncrease > maxYAdditive){
                     yAdditive = 0;
                 }else{
                     yAdditive += yIncrease;

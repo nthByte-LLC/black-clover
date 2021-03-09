@@ -7,7 +7,9 @@ import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -69,6 +71,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
         Player player = pd.getPlayer();
         World world = player.getWorld();
         world.spawnParticle(particle, player.getLocation(), 30, 1, 1, 1);
+        SpellUtils.playSound(player, Sound.BLOCK_FIRE_AMBIENT);
     }
 
 }
