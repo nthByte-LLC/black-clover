@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.event;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.entity.Entity;
@@ -22,13 +23,17 @@ public class SpellDamageEvent extends Event implements Cancellable {
     @Getter
     private Entity damaged;
 
+    @Getter @Setter
+    private double damage;
+
     @Getter
     private SpellType spell;
 
-    public SpellDamageEvent(SpellType spell, Entity damaged, Player damager){
+    public SpellDamageEvent(SpellType spell, double damage, Entity damaged, Player damager){
         this.spell = spell;
         this.damager = damager;
         this.damaged = damaged;
+        this.damage = damage;
     }
 
     @Override

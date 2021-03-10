@@ -36,12 +36,18 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
             PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
             if(pd.isSpellActive(this.getKEY())){
 
-                SpellDamageEvent event = new SpellDamageEvent(KEY, e.getEntity(), player);
+                double dmg = e.getDamage();
+                if(damageScale != 1){
+                    dmg *= damageScale;
+                }
+
+                SpellDamageEvent event = new SpellDamageEvent(KEY, dmg, e.getEntity(), player);
                 Bukkit.getPluginManager().callEvent(event);
 
                 if(!event.isCancelled()){
 
                     Entity eDamaged = e.getEntity();
+                    e.setDamage(event.getDamage());
 
                     int currentFireTicks = eDamaged.getFireTicks();
 
@@ -53,9 +59,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
 
                     eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
 
-                    if(damageScale != 1){
-                        e.setDamage(e.getDamage() * damageScale);
-                    }
+
 
                 }else{
                     // Cancels regular punch damage

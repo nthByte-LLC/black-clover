@@ -28,24 +28,36 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
 
     @EventHandler
     public void onPlayerHit(EntityDamageByEntityEvent e){
+
         Entity eDamaged = e.getEntity();
         Entity eDamager = e.getDamager();
         if(eDamaged instanceof Player && eDamager instanceof Player){
+
             Player damaged = (Player) eDamaged;
             Player damager = (Player) eDamager;
             PlayerData damagerData = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
             if(damagerData.isSpellActive(SpellType.DISABLE)){
-                SpellDamageEvent event = new SpellDamageEvent(KEY, e.getEntity(), damager);
+
+                SpellDamageEvent event = new SpellDamageEvent(KEY, 0,e.getEntity(), damager);
                 Bukkit.getPluginManager().callEvent(event);
                 if(!event.isCancelled()){
+
                     PlayerData damagedData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
                     damagedData.setCanCast(false);
                     SpellUtils.playSound(damaged, Sound.ITEM_SHIELD_BREAK);
                     SpellUtils.spawnParticle(damaged, Particle.SPELL_WITCH, 30, 0.5f, 0.5f, 0.5f);
+
                     Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                         damagedData.setCanCast(true);
                     }, (long) (durationDisable * 20));
+
+                    double eventDamage = event.getDamage();
+                    if(eventDamage != 0){
+                        e.setDamage(eventDamage);
+                    }
+
                 }
+
             }
         }
     }
@@ -58,7 +70,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
         CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
         particleRunner.setMaxYAdditive(0.4);
 
-        caster.addActiveSpellRunnable(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
+        caster.addActiveSpell(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
 
     }
 

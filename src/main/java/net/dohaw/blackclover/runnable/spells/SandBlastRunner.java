@@ -43,11 +43,12 @@ public class SandBlastRunner extends BukkitRunnable {
             for(Entity e : block.getNearbyEntities(1, 1, 1)){
                 if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
                     LivingEntity le = (LivingEntity) e;
-                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, le, caster);
+                    double damage = 1 * damageScale;
+                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, damage, le, caster);
                     Bukkit.getPluginManager().callEvent(event);
                     if(!event.isCancelled()){
                         hurtEntities.add(e);
-                        le.damage(1 * damageScale);
+                        le.damage(event.getDamage());
                         SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
                         SpellUtils.playSound(e, Sound.BLOCK_SAND_HIT);
                     }

@@ -34,20 +34,22 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable,
     @Override
     public void onHit(EntityDamageByEntityEvent e, Entity eDamaged, PlayerData pdDamager) {
 
-        SpellDamageEvent event = new SpellDamageEvent(KEY, eDamaged, pdDamager.getPlayer());
+        double initDmg = e.getDamage();
+        /*
+            Will be 0 if i'm masking a snowball as a projectile...
+         */
+        if (initDmg == 0) {
+            initDmg = 1;
+        }
+
+        double finalDmg = initDmg * damageScale;
+
+        SpellDamageEvent event = new SpellDamageEvent(KEY, finalDmg, eDamaged, pdDamager.getPlayer());
         Bukkit.getPluginManager().callEvent(event);
 
         if(!event.isCancelled()){
-            double initDmg = e.getDamage();
-            /*
-                Will be 0 if i'm masking a snowball as a projectile...
-             */
-            if (initDmg == 0) {
-                initDmg = 1;
-            }
 
-            double finalDmg = initDmg * damageScale;
-            e.setDamage(finalDmg);
+            e.setDamage(event.getDamage());
 
             eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
             eDamaged.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, eDamaged.getLocation(), 30, 1, 1, 1);

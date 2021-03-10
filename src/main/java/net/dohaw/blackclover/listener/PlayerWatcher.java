@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.event.SpellOffCooldownEvent;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
@@ -141,12 +142,13 @@ public class PlayerWatcher implements Listener {
             CastSpellWrapper spellCasted = e.getSpellCasted();
 
             String spellName = spellCasted.getKEY().toProperName();
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(StringUtils.colorString("&7" + spellName + "casted! - " + (int) spellCasted.getCooldown() + "s")));
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(StringUtils.colorString("&7" + spellName + " casted! - " + (int) spellCasted.getCooldown() + "s")));
 
             pd.getSpellsOnCooldown().add(spellCasted.getKEY());
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                pd.getSpellsOnCooldown().remove(spellCasted.getKEY());
-                Bukkit.broadcastMessage("NOT ON COOLDOWN ANYMORE");
+                SpellType spellType = spellCasted.getKEY();
+                pd.getSpellsOnCooldown().remove(spellType);
+                Bukkit.getServer().getPluginManager().callEvent(new SpellOffCooldownEvent(spellType, player));
             }, (long) (spellCasted.getCooldown() * 20));
         }
 

@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.grimmoire.spell;
 
 import lombok.Getter;
+import org.apache.commons.lang.StringUtils;
 
 public enum SpellType {
 
@@ -46,7 +47,7 @@ public enum SpellType {
     }
 
     public String toProperName(){
-        return this.getConfigKey().replace("_", " ").toUpperCase();
+        return StringUtils.capitalize(this.getConfigKey().replace("_", " "));
     }
 
 }

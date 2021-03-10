@@ -35,7 +35,7 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
         }, 1, 20);
 
         PlayerData updatedData = Grimmoire.instance.getPlayerDataManager().getData(pd.getUuid());
-        updatedData.addActiveSpellRunnable(KEY, runnable);
+        updatedData.addActiveSpell(KEY, runnable);
 
     }
 

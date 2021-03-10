@@ -6,9 +6,14 @@ import org.bukkit.entity.Entity;
 
 public class HelixParticleRunner extends CircleParticleRunner {
 
-    public HelixParticleRunner(Entity entity, Particle.DustOptions data, double radius) {
+    private boolean isOpposite;
+    private double y;
+
+    public HelixParticleRunner(Entity entity, Particle.DustOptions data, double radius, boolean isOpposite) {
         super(entity, data, true, radius);
         yAdditive = 0.05;
+        this.y = entity.getLocation().getY();
+        this.isOpposite = isOpposite;
     }
 
     @Override
@@ -19,11 +24,22 @@ public class HelixParticleRunner extends CircleParticleRunner {
 
     @Override
     protected void doParticleIteration(int iteration) {
-        Location entityLocation = entity.getLocation();
-        double x = radius * Math.cos(yAdditive);
-        double z = radius * Math.sin(yAdditive);
-        Location loc = entityLocation.add(x, yAdditive, z);
+
+        if(yAdditive == 0){
+            y = entity.getLocation().getY();
+        }
+        y += yAdditive;
+
+        double tempY = y;
+        if(isOpposite){
+            tempY *= -1;
+        }
+        double x = radius * Math.cos(tempY);
+        double z = radius * Math.sin(tempY);
+        Location loc = entity.getLocation().add(x, 0, z);
+        loc.setY(y);
         entity.getWorld().spawnParticle(particle, loc, 6, 0, 0, 0, 0, data);
+
     }
 
 }

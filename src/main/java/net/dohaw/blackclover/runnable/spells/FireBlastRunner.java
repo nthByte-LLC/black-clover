@@ -56,11 +56,11 @@ public class FireBlastRunner extends BukkitRunnable {
             for(Entity e : particleLocation.getWorld().getNearbyEntities(particleLocation, 2, 2, 2)){
                 if(e instanceof LivingEntity){
                     LivingEntity le = (LivingEntity) e;
-                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, le, caster);
+                    double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();
+                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, damageDone, le, caster);
                     Bukkit.getPluginManager().callEvent(event);
                     if(!event.isCancelled()){
-                        double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();
-                        le.damage(damageDone, caster);
+                        le.damage(event.getDamage(), caster);
                     }
                 }
             }
@@ -80,11 +80,11 @@ public class FireBlastRunner extends BukkitRunnable {
                 for(Entity e : entitiesInBeam){
                     if(e instanceof LivingEntity){
                         LivingEntity le = (LivingEntity) e;
-                        SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, le, caster);
+                        double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();
+                        SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, damageDone, le, caster);
                         Bukkit.getPluginManager().callEvent(event);
                         if(!event.isCancelled()){
-                            double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();
-                            le.damage(damageDone, caster);
+                            le.damage(event.getDamage(), caster);
                         }
                     }
                 }

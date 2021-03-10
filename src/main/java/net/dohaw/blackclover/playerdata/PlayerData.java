@@ -76,7 +76,7 @@ public class PlayerData {
         activeSpells.remove(spellType);
     }
 
-    public void addActiveSpellRunnable(SpellType spellType, BukkitTask task){
+    public void addActiveSpell(SpellType spellType, BukkitTask task){
         List<BukkitTask> tasks = new ArrayList<>();
         if(activeSpells.containsKey(spellType)){
             tasks = activeSpells.get(spellType);
