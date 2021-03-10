@@ -4,5 +4,11 @@ Particle: SPELL
 Spell Settings:
   wild_call:
     Hotbar Number: 0
-    Wolf Damage Per Bite: 2
     Wolf Absorption Amount: 5
+    Cooldown: 5
+  pack:
+    Hotbar Number: 1
+    Number of Wolves: 3
+    # Per wolf
+    Wolf Absorption Amount: 3
+    Cooldown: 5

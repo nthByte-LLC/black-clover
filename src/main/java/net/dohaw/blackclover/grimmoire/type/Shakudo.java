@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.shakudo.Pack;
 import net.dohaw.blackclover.grimmoire.spell.type.shakudo.WildCall;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.List;
 public class Shakudo extends GrimmoireWrapper {
 
     public WildCall wildCall;
+    public Pack pack;
 
     public Shakudo() {
         super(GrimmoireType.SHAKUDO);
@@ -37,6 +39,9 @@ public class Shakudo extends GrimmoireWrapper {
 
         this.wildCall = new WildCall(config);
         this.spells.put(SpellType.WILD_CALL, wildCall);
+
+        this.pack = new Pack(config);
+        this.spells.put(SpellType.PACK, pack);
 
     }
 

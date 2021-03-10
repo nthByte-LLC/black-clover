@@ -4,11 +4,18 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 public class ShakudoPlayerData extends PlayerData implements SpecifiableData{
+
+    @Getter @Setter
+    private List<Wolf> pack = new ArrayList<>();
 
     @Getter @Setter
     private Wolf wolf;
@@ -39,5 +46,19 @@ public class ShakudoPlayerData extends PlayerData implements SpecifiableData{
         if(wolf != null){
             wolf.remove();
         }
+        if(!pack.isEmpty()){
+            pack.forEach(Entity::remove);
+        }
     }
+
+    public void removePack(){
+        Iterator<Wolf> itr = pack.iterator();
+        while(itr.hasNext()){
+            Wolf wolf = itr.next();
+            wolf.remove();
+            itr.remove();
+        }
+        this.packCalled = false;
+    }
+
 }
