@@ -85,4 +85,10 @@ public class PlayerData {
         activeSpells.put(spellType, tasks);
     }
 
+    public void merge(PlayerData previousData){
+        this.maxRegen = previousData.maxRegen;
+        this.regenAmount = previousData.regenAmount;
+        this.config = previousData.config;
+    }
+
 }

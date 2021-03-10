@@ -6,6 +6,7 @@ public enum GrimmoireType {
     FIRE,
     SAND,
     ANTI,
+    SHAKUDO,
     WATER,
     PLANT,
     SNOW,

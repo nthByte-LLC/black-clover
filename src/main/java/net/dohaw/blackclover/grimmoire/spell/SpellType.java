@@ -33,7 +33,18 @@ public enum SpellType {
     REFLECTION("reflection", false),
     DEMON_JUMP("demon_jump", false),
     DEMON_SCRATCH("demon_scratch", false),
-    DEMON_FORM("demon_form", true);
+    DEMON_FORM("demon_form", true),
+
+    /*
+        Shakudo Spells
+     */
+    WILD_CALL("wild_call", false),
+    PACK("pack", false),
+    FANGS("fangs", false),
+    GOODIE("goodie", false),
+    TAME("tame", false),
+    GHOST_WOLF("ghost_wolf", false);
+
 
     @Getter
     private boolean isUltimate;

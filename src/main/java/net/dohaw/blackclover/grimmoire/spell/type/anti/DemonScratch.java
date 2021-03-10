@@ -63,6 +63,7 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.ANTI){
             if(pd.isSpellActive(KEY)){
                 e.setDamage(e.getDamage() * damageMultiplier);
+                System.out.println("DOUBLE THE DAMAGE2");
             }
         }
     }
@@ -90,6 +91,7 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
                 if(damagerData.getGrimmoireWrapper().getKEY() == GrimmoireType.ANTI){
                     if(damagerData.isSpellActive(KEY)){
                         e.setDamage(e.getDamage() * damageMultiplier);
+                        System.out.println("DOUBLE THE DAMAGE");
                     }
                 }
             }
