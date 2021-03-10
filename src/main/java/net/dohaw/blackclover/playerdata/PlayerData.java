@@ -50,7 +50,7 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
-    public void saveData(){
+    private void saveData(){
         config.saveData(this);
     }
 
@@ -89,6 +89,10 @@ public class PlayerData {
         this.maxRegen = previousData.maxRegen;
         this.regenAmount = previousData.regenAmount;
         this.config = previousData.config;
+    }
+
+    public void prepareDataRemoval(){
+        saveData();
     }
 
 }

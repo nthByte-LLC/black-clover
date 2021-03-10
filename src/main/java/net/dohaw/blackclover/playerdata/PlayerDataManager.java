@@ -75,7 +75,7 @@ public class PlayerDataManager {
                 BossBar manaBar = manaBars.get(uuid);
                 manaBar.removeAll();
             }
-            pd.saveData();
+            pd.prepareDataRemoval();
         }
     }
 
@@ -208,7 +208,7 @@ public class PlayerDataManager {
      */
     public void saveData(UUID uuid){
         PlayerData pd = getData(uuid);
-        pd.getConfig().saveData(pd);
+        pd.prepareDataRemoval();
     }
 
 }
