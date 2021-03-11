@@ -50,6 +50,8 @@ public class Fangs extends CastSpellWrapper implements Listener {
                 Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                     spd.setFangsEnabled(false);
                 }, duration * 20);
+                deductMana(pd);
+                return true;
 
             }else{
                 ResponderFactory rf = new ResponderFactory(pd.getPlayer());
@@ -68,7 +70,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.duration = grimmoireConfig.getNumberSetting(KEY, "Duration");
+        this.duration = (int) grimmoireConfig.getNumberSetting(KEY, "Duration");
         this.damageMultiplier = grimmoireConfig.getNumberSetting(KEY, "Damage Multiplier");
     }
 
@@ -99,6 +101,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
                         if(spd.isFangsEnabled()){
                             double newDamage = e.getDamage() * damageMultiplier;
                             e.setDamage(newDamage);
+                            SpellUtils.spawnParticle(wolf, Particle.CRIT_MAGIC, 10, 0.2f, 0.2f, 0.2f);
                             System.out.println("DOUBLED THE DAMAGE");
                         }
                     }else{

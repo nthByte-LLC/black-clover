@@ -91,7 +91,7 @@ public class Pack extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.numWolves = grimmoireConfig.getNumberSetting(KEY, "Number of Wolves");
-        this.absorptionAmount = grimmoireConfig.getNumberSetting(KEY, "Wolf Absorption Amount");
+        this.numWolves = (int) grimmoireConfig.getNumberSetting(KEY, "Number of Wolves");
+        this.absorptionAmount = (int) grimmoireConfig.getNumberSetting(KEY, "Wolf Absorption Amount");
     }
 }

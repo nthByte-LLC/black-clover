@@ -49,8 +49,8 @@ public class QuickSand extends CastSpellWrapper {
     public void loadSettings() {
         super.loadSettings();
         this.distance = grimmoireConfig.getNumberSetting(KEY, "Distance");
-        this.slownessDuration = grimmoireConfig.getNumberSetting(KEY, "Slowness Duration");
-        this.slownessLevel = grimmoireConfig.getNumberSetting(KEY, "Slowness Level") - 1;
+        this.slownessDuration = (int) grimmoireConfig.getNumberSetting(KEY, "Slowness Duration");
+        this.slownessLevel = (int) (grimmoireConfig.getNumberSetting(KEY, "Slowness Level") - 1);
     }
 
 }

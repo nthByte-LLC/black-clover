@@ -17,3 +17,7 @@ Spell Settings:
     Damage Multiplier: 2
     Cooldown: 5
     Duration: 60
+  goodie:
+    Hotbar Number: 3
+    Added Health: 2
+    Cooldown: 5

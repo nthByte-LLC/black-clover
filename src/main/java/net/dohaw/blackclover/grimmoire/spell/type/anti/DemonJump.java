@@ -44,7 +44,7 @@ public class DemonJump extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.jumpPotionLevel = grimmoireConfig.getNumberSetting(KEY, "Jump Potion Level");
+        this.jumpPotionLevel = (int) grimmoireConfig.getNumberSetting(KEY, "Jump Potion Level");
         this.jumpPotionDuration = grimmoireConfig.getNumberSetting(KEY, "Jump Potion Duration");
         this.slowFallDuration = grimmoireConfig.getNumberSetting(KEY, "Slow Fall Potion Duration");
     }

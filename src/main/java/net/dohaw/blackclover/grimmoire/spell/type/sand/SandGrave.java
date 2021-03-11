@@ -86,10 +86,10 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell, List
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.castDistance = grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
-        this.blocksAbovePlayer = grimmoireConfig.getNumberSetting(KEY, "Blocks Above Player");
-        this.radius = grimmoireConfig.getNumberSetting(KEY, "Radius Ball");
-        this.sandStayTime = grimmoireConfig.getNumberSetting(KEY, "Sand Stay Time");
+        this.castDistance = (int) grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
+        this.blocksAbovePlayer = (int) grimmoireConfig.getNumberSetting(KEY, "Blocks Above Player");
+        this.radius = (int) grimmoireConfig.getNumberSetting(KEY, "Radius Ball");
+        this.sandStayTime = (int) grimmoireConfig.getNumberSetting(KEY, "Sand Stay Time");
     }
 
 }
