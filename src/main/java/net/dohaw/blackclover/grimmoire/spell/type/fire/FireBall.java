@@ -4,20 +4,18 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
-import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class FireBall extends CastSpellWrapper implements Listener, Projectable, DamageableSpell {
+public class FireBall extends CastSpellWrapper implements Listener, DamageableSpell {
 
     public FireBall(GrimmoireConfig grimmoireConfig) {
         super(SpellType.FIRE_BALL, grimmoireConfig);
@@ -27,13 +25,14 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable,
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         SpellUtils.fireProjectile(player, this, Material.FIRE_CHARGE);
-        pd.setRegenAmount((int) (pd.getRegenAmount() - regenConsumed));
+        deductMana(pd);
         return true;
     }
 
-    @Override
-    public void onHit(EntityDamageByEntityEvent e, Entity eDamaged, PlayerData pdDamager) {
+    @EventHandler
+    public void onFireBallHit(SpellDamageEvent e){
 
+        Entity eDamaged = e.getDamaged();
         double initDmg = e.getDamage();
         /*
             Will be 0 if i'm masking a snowball as a projectile...
@@ -44,13 +43,8 @@ public class FireBall extends CastSpellWrapper implements Listener, Projectable,
 
         double finalDmg = initDmg * damageScale;
 
-        SpellDamageEvent event = new SpellDamageEvent(KEY, finalDmg, eDamaged, pdDamager.getPlayer());
-        Bukkit.getPluginManager().callEvent(event);
-
-        if(!event.isCancelled()){
-
-            e.setDamage(event.getDamage());
-
+        if(!e.isCancelled()){
+            e.setDamage(finalDmg);
             eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
             eDamaged.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, eDamaged.getLocation(), 30, 1, 1, 1);
         }

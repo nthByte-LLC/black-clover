@@ -5,11 +5,9 @@ import net.dohaw.blackclover.event.PlayerCastSpellEvent;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.event.SpellOffCooldownEvent;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
-import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
@@ -134,9 +132,16 @@ public class PlayerWatcher implements Listener {
                 PlayerDataManager pdm = plugin.getPlayerDataManager();
                 PlayerData pdDamager = pdm.getData(damager.getUniqueId());
 
-                Projectable projectableSpellWrapper = (Projectable) PDCHandler.getSpellBoundToProjectile(pdDamager, proj);
-                if(projectableSpellWrapper != null){
-                    projectableSpellWrapper.onHit(e, eDamaged, pdDamager);
+                CastSpellWrapper castSpellWrapper = PDCHandler.getSpellBoundToProjectile(pdDamager, proj);
+                if(castSpellWrapper != null){
+                    SpellDamageEvent spellDamageEvent = new SpellDamageEvent(castSpellWrapper.getKEY(), e.getDamage(), eDamaged, damager);
+                    Bukkit.getPluginManager().callEvent(spellDamageEvent);
+                    if(spellDamageEvent.isCancelled()){
+                        e.setCancelled(true);
+                    }else{
+                        System.out.println("DAMAGE PROJ: " + spellDamageEvent.getDamage());
+                        e.setDamage(spellDamageEvent.getDamage());
+                    }
                 }else{
                     System.out.println("NOT SPELL BOUND PROJECTILE");
                 }

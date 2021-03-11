@@ -4,16 +4,21 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.anti.DemonForm;
-import net.dohaw.blackclover.grimmoire.spell.type.anti.DemonJump;
-import net.dohaw.blackclover.grimmoire.spell.type.anti.DemonScratch;
-import net.dohaw.blackclover.grimmoire.spell.type.anti.Disable;
+import net.dohaw.blackclover.grimmoire.spell.type.anti.*;
+import net.dohaw.corelib.StringUtils;
+import net.dohaw.corelib.helpers.ItemStackHelper;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Anti extends GrimmoireWrapper {
 
+    private ItemStack antiMagicSword;
+
+    public Reflection reflection;
     public DemonForm demonForm;
     public Disable disable;
     public DemonJump demonJump;
@@ -21,6 +26,7 @@ public class Anti extends GrimmoireWrapper {
 
     public Anti() {
         super(GrimmoireType.ANTI);
+        createAntiMagicSword();
     }
 
     @Override
@@ -50,9 +56,25 @@ public class Anti extends GrimmoireWrapper {
         this.demonScratch = new DemonScratch(config);
         this.spells.put(SpellType.DEMON_SCRATCH, demonScratch);
 
+        this.reflection = new Reflection(config);
+        this.spells.put(SpellType.REFLECTION, reflection);
+
         this.demonForm = new DemonForm(config);
         this.spells.put(SpellType.DEMON_FORM, demonForm);
 
+    }
+
+    private void createAntiMagicSword(){
+        ItemStack sword = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta meta = sword.getItemMeta();
+        meta.setDisplayName(StringUtils.colorString("&8Anti-Magic-Sword"));
+        sword.setItemMeta(meta);
+        ItemStackHelper.addGlowToItem(sword);
+        this.antiMagicSword = sword;
+    }
+
+    public ItemStack getAntiMagicSword(){
+        return antiMagicSword.clone();
     }
 
 }

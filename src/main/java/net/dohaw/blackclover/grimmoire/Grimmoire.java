@@ -21,7 +21,7 @@ public class Grimmoire extends WrapperHolder {
 
     public static final GrimmoireWrapper FIRE = new Fire();
     public static final GrimmoireWrapper SAND = new Sand();
-    public static final GrimmoireWrapper ANTI = new Anti();
+    public static final Anti ANTI = new Anti();
     public static final GrimmoireWrapper SHAKUDO = new Shakudo();
 
     public static List<GrimmoireWrapper> getByTier(int tier){

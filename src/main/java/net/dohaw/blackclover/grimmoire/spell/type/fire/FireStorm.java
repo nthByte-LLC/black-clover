@@ -4,15 +4,12 @@ import lombok.Getter;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.FireStormRunner;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class FireStorm extends CastSpellWrapper implements Projectable {
+public class FireStorm extends CastSpellWrapper {
 
     @Getter
     private double radiusParticles;
@@ -44,11 +41,6 @@ public class FireStorm extends CastSpellWrapper implements Projectable {
         this.numFireballWaves = grimmoireConfig.getIntegerSetting(KEY, "Number Fireball Waves");
         this.fireballFrequency = grimmoireConfig.getDoubleSetting(KEY, "Fireball Rate");
         this.radiusParticles = grimmoireConfig.getDoubleSetting(KEY, "Particle Radius");
-    }
-
-    @Override
-    public void onHit(EntityDamageByEntityEvent event, Entity eDamaged, PlayerData pdDamager) {
-        System.out.println("HITTING");
     }
 
 }
