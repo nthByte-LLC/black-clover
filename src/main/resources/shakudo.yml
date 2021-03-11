@@ -12,3 +12,8 @@ Spell Settings:
     # Per wolf
     Wolf Absorption Amount: 3
     Cooldown: 5
+  fangs:
+    Hotbar Number: 2
+    Damage Multiplier: 2
+    Cooldown: 5
+    Duration: 60

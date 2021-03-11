@@ -21,10 +21,13 @@ public class ShakudoPlayerData extends PlayerData implements SpecifiableData{
     private Wolf wolf;
 
     @Getter @Setter
-    private boolean singularWolfSpawned = false;
+    private boolean singularWolfSpawned;
 
     @Getter @Setter
-    private boolean packCalled = false;
+    private boolean packCalled;
+
+    @Getter @Setter
+    private boolean fangsEnabled;
 
     public ShakudoPlayerData(UUID uuid) {
         super(uuid, Grimmoire.SHAKUDO );
