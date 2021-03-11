@@ -55,18 +55,26 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         return true;
     }
 
+    /*
+        Doubles any anti spell damage. (Currently no anti spells do any damage, but this is future proofing.)
+     */
     @EventHandler
     public void onSpellDamage(SpellDamageEvent e){
         Player damager = e.getDamager();
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
-        if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.ANTI){
-            if(pd.isSpellActive(KEY)){
-                e.setDamage(e.getDamage() * damageMultiplier);
-                System.out.println("DOUBLE THE DAMAGE2");
+        if(e.getSpell() != KEY){
+            if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.ANTI){
+                if(pd.isSpellActive(KEY)){
+                    e.setDamage(e.getDamage() * damageMultiplier);
+                    System.out.println("DOUBLE THE DAMAGE2");
+                }
             }
         }
     }
 
+    /*
+        Whenever you do non-spell damage to someone (i.e. with a sweeping attack or bow) it'll increase your damage
+     */
     @EventHandler
     public void onDoDamage(EntityDamageByEntityEvent e){
 
@@ -89,8 +97,15 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
                 PlayerData damagerData = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
                 if(damagerData.getGrimmoireWrapper().getKEY() == GrimmoireType.ANTI){
                     if(damagerData.isSpellActive(KEY)){
-                        e.setDamage(e.getDamage() * damageMultiplier);
-                        System.out.println("DOUBLE THE DAMAGE");
+
+                        double newDamage = e.getDamage() * damageMultiplier;
+                        SpellDamageEvent spellDamageEvent = new SpellDamageEvent(KEY, newDamage, eDamaged, damager);
+                        Bukkit.getPluginManager().callEvent(spellDamageEvent);
+                        if(!spellDamageEvent.isCancelled()){
+                            e.setDamage(e.getDamage() * damageMultiplier);
+                            System.out.println("DOUBLE THE DAMAGE");
+                        }
+
                     }
                 }
             }

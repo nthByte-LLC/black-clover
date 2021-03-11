@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.shakudo;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.FangsCastedEvent;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -99,10 +100,16 @@ public class Fangs extends CastSpellWrapper implements Listener {
                     if(pd instanceof ShakudoPlayerData){
                         ShakudoPlayerData spd = (ShakudoPlayerData) pd;
                         if(spd.isFangsEnabled()){
+
                             double newDamage = e.getDamage() * damageMultiplier;
-                            e.setDamage(newDamage);
-                            SpellUtils.spawnParticle(wolf, Particle.CRIT_MAGIC, 10, 0.2f, 0.2f, 0.2f);
-                            System.out.println("DOUBLED THE DAMAGE");
+                            SpellDamageEvent spellDamageEvent = new SpellDamageEvent(KEY, newDamage, e.getEntity(), pd.getPlayer());
+                            Bukkit.getPluginManager().callEvent(spellDamageEvent);
+                            if(!spellDamageEvent.isCancelled()){
+                                e.setDamage(spellDamageEvent.getDamage());
+                                SpellUtils.spawnParticle(wolf, Particle.CRIT_MAGIC, 10, 0.2f, 0.2f, 0.2f);
+                                System.out.println("DOUBLED THE DAMAGE");
+                            }
+
                         }
                     }else{
                         try {

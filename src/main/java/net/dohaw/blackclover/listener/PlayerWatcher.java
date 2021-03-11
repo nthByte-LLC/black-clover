@@ -2,18 +2,23 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.event.SpellOffCooldownEvent;
-import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.Projectable;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
+import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.PDCHandler;
+import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -103,6 +108,16 @@ public class PlayerWatcher implements Listener {
 //            }
 //        }
 //    }
+
+    @EventHandler
+    public void onCancelSpellDamage(SpellDamageEvent e){
+        if(e.isCancelled()){
+            Entity damaged = e.getDamaged();
+            SpellUtils.playSound(damaged, Sound.ITEM_SHIELD_BLOCK);
+            SpellUtils.spawnParticle(damaged, Particle.BLOCK_CRACK, Material.COAL_BLOCK.createBlockData(), 10, 1, 1, 1);
+            System.out.println("SPELL HAS BEEN NEGATED");
+        }
+    }
 
     @EventHandler
     public void onDamagedByProjectile(EntityDamageByEntityEvent e){

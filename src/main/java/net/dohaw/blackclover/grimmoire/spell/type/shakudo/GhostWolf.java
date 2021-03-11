@@ -1,12 +1,15 @@
 package net.dohaw.blackclover.grimmoire.spell.type.shakudo;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.SpellDamageEvent;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.BlockUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -66,10 +69,25 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
 
         Entity eDamager = e.getDamager();
         if(eDamager instanceof Wolf && eDamager.getPersistentDataContainer().has(NSK, PersistentDataType.STRING)){
-            e.setDamage(biteDamage);
-            eDamager.remove();
-            SpellUtils.spawnParticle(eDamager, Particle.SQUID_INK, 30, 1, 1, 1);
-            SpellUtils.playSound(eDamager, Sound.BLOCK_BEACON_DEACTIVATE);
+
+            AnimalTamer tamer = ((Wolf) eDamager).getOwner();
+            assert tamer != null;
+            PlayerData tamerData = Grimmoire.instance.getPlayerDataManager().getData(tamer.getUniqueId());
+            // Could be null on the off chance that they log out of the game before the ghost wolf bites its target.
+            if(tamerData != null){
+
+                SpellDamageEvent spellDamageEvent = new SpellDamageEvent(KEY, biteDamage, e.getEntity(), tamerData.getPlayer());
+                Bukkit.getPluginManager().callEvent(spellDamageEvent);
+                if(!spellDamageEvent.isCancelled()){
+                    e.setDamage(spellDamageEvent.getDamage());
+                    eDamager.remove();
+                    SpellUtils.spawnParticle(eDamager, Particle.SQUID_INK, 30, 1, 1, 1);
+                    SpellUtils.playSound(eDamager, Sound.BLOCK_BEACON_DEACTIVATE);
+                }
+
+
+            }
+
         }
 
     }
