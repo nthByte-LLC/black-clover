@@ -21,3 +21,7 @@ Spell Settings:
     Hotbar Number: 3
     Added Health: 2
     Cooldown: 5
+  tame:
+    Hotbar Number: 4
+    Cast Distance: 20
+    Cooldown: 5

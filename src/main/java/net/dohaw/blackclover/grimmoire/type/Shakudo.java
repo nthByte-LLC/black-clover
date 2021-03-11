@@ -4,16 +4,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.shakudo.Fangs;
-import net.dohaw.blackclover.grimmoire.spell.type.shakudo.Goodie;
-import net.dohaw.blackclover.grimmoire.spell.type.shakudo.Pack;
-import net.dohaw.blackclover.grimmoire.spell.type.shakudo.WildCall;
+import net.dohaw.blackclover.grimmoire.spell.type.shakudo.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Shakudo extends GrimmoireWrapper {
 
+    public Tame tame;
     public Goodie goodie;
     public Fangs fangs;
     public WildCall wildCall;
@@ -52,6 +50,9 @@ public class Shakudo extends GrimmoireWrapper {
 
         this.goodie = new Goodie(config);
         this.spells.put(SpellType.GOODIE, goodie);
+
+        this.tame = new Tame(config);
+        this.spells.put(SpellType.TAME, tame);
 
     }
 
