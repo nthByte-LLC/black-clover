@@ -8,6 +8,14 @@ Spell Settings:
     Duration Disable: 5
     Cooldown: 5
     Regen Consumed: 100
+  anti_sword:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    # How many times they can use it before it disappears.
+    Number of Uses: 1
+    # How long they keep the sword in seconds
+    Usage Time: 30
   demon_jump:
     Hotbar Number: 2
     Cooldown: 5

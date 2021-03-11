@@ -26,24 +26,24 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.time.LocalDateTime;
 
-public class Reflection extends CastSpellWrapper implements Listener {
+public class AntiSword extends CastSpellWrapper implements Listener {
 
-    private final NamespacedKey NSK_TIME_MARK = NamespacedKey.minecraft("reflection-time-mark");
-    private final NamespacedKey NSK_USES_MARK = NamespacedKey.minecraft("reflection-uses-mark");
+    private final NamespacedKey NSK_TIME_MARK = NamespacedKey.minecraft("antisword-time-mark");
+    private final NamespacedKey NSK_USES_MARK = NamespacedKey.minecraft("antisword-uses-mark");
     private int timeUsage, uses;
 
-    public Reflection(GrimmoireConfig grimmoireConfig) {
-        super(SpellType.REFLECTION, grimmoireConfig);
+    public AntiSword(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.ANTI_SWORD, grimmoireConfig);
     }
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
 
-        ItemStack antiMagicSword = Grimmoire.ANTI.getReflectionSword();
+        ItemStack antiMagicSword = Grimmoire.ANTI.getAntiSword();
         Player player = pd.getPlayer();
         PlayerInventory playerInv = player.getInventory();
         if(playerInv.contains(antiMagicSword)){
-           playerInv.remove(antiMagicSword);
+            playerInv.remove(antiMagicSword);
         }
 
         LocalDateTime timeGiven = LocalDateTime.now();
@@ -75,7 +75,7 @@ public class Reflection extends CastSpellWrapper implements Listener {
         this.uses = grimmoireConfig.getIntegerSetting(KEY, "Number of Uses");
     }
 
-    @EventHandler (priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onTakeSpellDamage(SpellDamageEvent e){
 
         Entity eDamaged = e.getDamaged();
@@ -89,7 +89,7 @@ public class Reflection extends CastSpellWrapper implements Listener {
                 if(mainHandMeta != null){
 
                     PersistentDataContainer mainHandPDC = mainHand.getItemMeta().getPersistentDataContainer();
-                    // checks to see if it's a reflection sword
+                    // checks to see if it's a antisword sword
                     if(mainHandPDC.has(NSK_TIME_MARK, PersistentDataType.STRING)){
 
                         String dateAndTimeStr = mainHandPDC.get(NSK_TIME_MARK, PersistentDataType.STRING);
@@ -104,12 +104,8 @@ public class Reflection extends CastSpellWrapper implements Listener {
                         }else{
 
                             System.out.println("WE HERE");
-                            // reflects the damage back to the caster and cancels the event
+                            // absorbs the damage
                             int currentNumUses = mainHandPDC.get(NSK_USES_MARK, PersistentDataType.INTEGER) + 1;
-                            Player damager = e.getDamager();
-                            SpellUtils.spawnParticle(damager, Particle.SPELL_WITCH, 10, 1, 1, 1);
-                            SpellUtils.playSound(damager, Sound.BLOCK_ANVIL_PLACE);
-                            damager.damage(e.getDamage(), player);
                             e.setCancelled(true);
 
                             if(currentNumUses == uses){

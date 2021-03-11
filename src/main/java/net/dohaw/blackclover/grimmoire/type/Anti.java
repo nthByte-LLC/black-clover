@@ -16,8 +16,10 @@ import java.util.List;
 
 public class Anti extends GrimmoireWrapper {
 
+    private ItemStack reflectionSword;
     private ItemStack antiMagicSword;
 
+    public AntiSword antiSword;
     public Reflection reflection;
     public DemonForm demonForm;
     public Disable disable;
@@ -27,6 +29,7 @@ public class Anti extends GrimmoireWrapper {
     public Anti() {
         super(GrimmoireType.ANTI);
         createAntiMagicSword();
+        createReflectionSword();
     }
 
     @Override
@@ -62,19 +65,37 @@ public class Anti extends GrimmoireWrapper {
         this.demonForm = new DemonForm(config);
         this.spells.put(SpellType.DEMON_FORM, demonForm);
 
+        this.antiSword = new AntiSword(config);
+        this.spells.put(SpellType.ANTI_SWORD, antiSword);
+
+    }
+
+    private void createReflectionSword(){
+        ItemStack sword = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta meta = sword.getItemMeta();
+        meta.setDisplayName(StringUtils.colorString("&8Reflection Sword"));
+        sword.setItemMeta(meta);
+        ItemStackHelper.addGlowToItem(sword);
+        this.reflectionSword = sword;
     }
 
     private void createAntiMagicSword(){
-        ItemStack sword = new ItemStack(Material.NETHERITE_SWORD);
+        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
         ItemMeta meta = sword.getItemMeta();
-        meta.setDisplayName(StringUtils.colorString("&8Anti-Magic-Sword"));
+        meta.setDisplayName(StringUtils.colorString("&8Anti Magic Sword"));
         sword.setItemMeta(meta);
         ItemStackHelper.addGlowToItem(sword);
         this.antiMagicSword = sword;
     }
 
-    public ItemStack getAntiMagicSword(){
+    public ItemStack getReflectionSword(){
+        return reflectionSword.clone();
+    }
+
+    public ItemStack getAntiSword(){
         return antiMagicSword.clone();
     }
+
+
 
 }
