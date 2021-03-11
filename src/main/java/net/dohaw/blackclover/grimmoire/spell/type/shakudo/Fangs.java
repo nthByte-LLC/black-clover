@@ -14,6 +14,7 @@ import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.AnimalTamer;
@@ -135,7 +136,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     }
 
     public void startWolfParticleRunner(Wolf wolf){
-        BukkitTask particleRunner = new CircleParticleRunner(wolf, new Particle.DustOptions(BukkitColor.darkGrey, 2), false, 1).runTaskTimer(Grimmoire.instance, 0L, 3L);
+        BukkitTask particleRunner = new CircleParticleRunner(wolf, new Particle.DustOptions(Color.WHITE, 2), false, 1).runTaskTimer(Grimmoire.instance, 0L, 3L);
         BukkitTask deathChecker = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             if(!wolf.isValid()){
                 particleRunner.cancel();

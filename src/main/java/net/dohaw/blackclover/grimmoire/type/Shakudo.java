@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Shakudo extends GrimmoireWrapper {
 
+    public GhostWolf ghostWolf;
     public Tame tame;
     public Goodie goodie;
     public Fangs fangs;
@@ -53,6 +54,9 @@ public class Shakudo extends GrimmoireWrapper {
 
         this.tame = new Tame(config);
         this.spells.put(SpellType.TAME, tame);
+
+        this.ghostWolf = new GhostWolf(config);
+        this.spells.put(SpellType.GHOST_WOLF, ghostWolf);
 
     }
 

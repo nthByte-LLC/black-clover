@@ -14,4 +14,9 @@ public class BlockUtil {
         return loc.getWorld().getBlockAt(newX, loc.getBlockY(), newZ);
     }
 
+    public static Location getBlockInFront(Entity entity, int numBlocksInFront){
+        Location entityLocation = entity.getLocation();
+        return entityLocation.add(entityLocation.getDirection().multiply(numBlocksInFront));
+    }
+
 }

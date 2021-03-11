@@ -25,3 +25,9 @@ Spell Settings:
     Hotbar Number: 4
     Cast Distance: 20
     Cooldown: 5
+  ghost_wolf:
+    Hotbar Number: 5
+    Cast Distance: 20
+    Cooldown: 5
+    # 2 damage per heart
+    Bite Damage: 10
