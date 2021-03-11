@@ -77,6 +77,6 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.durationDisable = grimmoireConfig.getNumberSetting(KEY, "Duration Disable");
+        this.durationDisable = grimmoireConfig.getIntegerSetting(KEY, "Duration Disable");
     }
 }

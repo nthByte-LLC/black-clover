@@ -29,7 +29,7 @@ public class FireBlast extends CastSpellWrapper implements DamageableSpell {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.distance = (int) grimmoireConfig.getNumberSetting(KEY, "Distance");
+        this.distance = grimmoireConfig.getIntegerSetting(KEY, "Distance");
     }
 
 }

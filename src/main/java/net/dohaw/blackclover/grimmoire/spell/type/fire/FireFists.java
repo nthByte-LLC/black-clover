@@ -23,7 +23,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
 
     public FireFists(GrimmoireConfig grimmoireConfig) {
         super(SpellType.FIRE_FISTS, grimmoireConfig);
-        this.fireTicksPerPunch = (int) grimmoireConfig.getNumberSetting(this.getKEY(), "Fire Ticks Per Punch");
+        this.fireTicksPerPunch = grimmoireConfig.getIntegerSetting(this.getKEY(), "Fire Ticks Per Punch");
     }
 
     @EventHandler

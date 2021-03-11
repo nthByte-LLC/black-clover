@@ -42,6 +42,6 @@ public class SandBlast extends CastSpellWrapper implements DamageableSpell {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.forceMultiplier = grimmoireConfig.getNumberSetting(KEY, "Force Multiplier");
+        this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");
     }
 }

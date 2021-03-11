@@ -43,7 +43,7 @@ public class Goodie extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.addedHealth = grimmoireConfig.getNumberSetting(KEY, "Added Health");
+        this.addedHealth = grimmoireConfig.getDoubleSetting(KEY, "Added Health");
     }
 
     private void giveHealth(Wolf wolf){

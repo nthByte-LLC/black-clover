@@ -40,10 +40,10 @@ public class FireStorm extends CastSpellWrapper implements Projectable {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.numFireBalls = (int) grimmoireConfig.getNumberSetting(KEY, "Number Fireballs Spawned");
-        this.numFireballWaves = (int) grimmoireConfig.getNumberSetting(KEY, "Number Fireball Waves");
-        this.fireballFrequency = grimmoireConfig.getNumberSetting(KEY, "Fireball Rate");
-        this.radiusParticles = grimmoireConfig.getNumberSetting(KEY, "Particle Radius");
+        this.numFireBalls = grimmoireConfig.getIntegerSetting(KEY, "Number Fireballs Spawned");
+        this.numFireballWaves = grimmoireConfig.getIntegerSetting(KEY, "Number Fireball Waves");
+        this.fireballFrequency = grimmoireConfig.getDoubleSetting(KEY, "Fireball Rate");
+        this.radiusParticles = grimmoireConfig.getDoubleSetting(KEY, "Particle Radius");
     }
 
     @Override

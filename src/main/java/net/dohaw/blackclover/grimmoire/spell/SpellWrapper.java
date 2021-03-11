@@ -29,7 +29,7 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
     public void loadSettings(){
         this.particle = grimmoireConfig.getParticle(KEY);
         if(this instanceof DamageableSpell){
-            this.damageScale = grimmoireConfig.getNumberSetting(KEY, "Damage Scale");
+            this.damageScale = grimmoireConfig.getIntegerSetting(KEY, "Damage Scale");
         }
     }
 

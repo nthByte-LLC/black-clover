@@ -10,7 +10,6 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.ShakudoPlayerData;
 import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
-import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Bukkit;
@@ -71,8 +70,8 @@ public class Fangs extends CastSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.duration = (int) grimmoireConfig.getNumberSetting(KEY, "Duration");
-        this.damageMultiplier = grimmoireConfig.getNumberSetting(KEY, "Damage Multiplier");
+        this.duration = (int) grimmoireConfig.getIntegerSetting(KEY, "Duration");
+        this.damageMultiplier = grimmoireConfig.getIntegerSetting(KEY, "Damage Multiplier");
     }
 
     @EventHandler
@@ -119,16 +118,20 @@ public class Fangs extends CastSpellWrapper implements Listener {
 
     @EventHandler
     public void onSpawnWolves(PlayerCastSpellEvent e){
+
         SpellType spellType = e.getSpellCasted().getKEY();
-        ShakudoPlayerData spd = (ShakudoPlayerData) e.getPlayerData();
-        if(spd.isFangsEnabled()){
-            if(spellType == SpellType.PACK){
-                if(spd.isPackCalled()){
-                    spd.getPack().forEach(this::startWolfParticleRunner);
-                }
-            }else if(spellType == SpellType.WILD_CALL){
-                if(spd.isSingularWolfSpawned()){
-                    startWolfParticleRunner(spd.getWolf());
+        PlayerData pd = e.getPlayerData();
+        if(pd instanceof ShakudoPlayerData){
+            ShakudoPlayerData spd = (ShakudoPlayerData) e.getPlayerData();
+            if(spd.isFangsEnabled()){
+                if(spellType == SpellType.PACK){
+                    if(spd.isPackCalled()){
+                        spd.getPack().forEach(this::startWolfParticleRunner);
+                    }
+                }else if(spellType == SpellType.WILD_CALL){
+                    if(spd.isSingularWolfSpawned()){
+                        startWolfParticleRunner(spd.getWolf());
+                    }
                 }
             }
         }

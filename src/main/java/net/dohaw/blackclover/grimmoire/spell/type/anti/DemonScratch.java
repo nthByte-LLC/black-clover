@@ -2,7 +2,6 @@ package net.dohaw.blackclover.grimmoire.spell.type.anti;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.SpellDamageEvent;
-import net.dohaw.blackclover.event.SpellOffCooldownEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -102,7 +101,7 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.damageMultiplier = grimmoireConfig.getNumberSetting(KEY, "Damage Multiplier");
-        this.duration = grimmoireConfig.getNumberSetting(KEY, "Duration");
+        this.damageMultiplier = grimmoireConfig.getIntegerSetting(KEY, "Damage Multiplier");
+        this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
 }

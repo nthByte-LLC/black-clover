@@ -7,8 +7,6 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.SpellUtils;
-import net.minecraft.server.v1_16_R3.BlockPosition;
-import net.minecraft.server.v1_16_R3.CommandLocate;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Particle;
@@ -53,7 +51,7 @@ public class SandStorm extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.distance = (int) grimmoireConfig.getNumberSetting(KEY, "Distance");
-        this.blindnessDuration = (int) grimmoireConfig.getNumberSetting(KEY, "Blindness Duration");
+        this.distance = grimmoireConfig.getIntegerSetting(KEY, "Distance");
+        this.blindnessDuration = grimmoireConfig.getIntegerSetting(KEY, "Blindness Duration");
     }
 }

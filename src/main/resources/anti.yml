@@ -21,3 +21,14 @@ Spell Settings:
     Regen Consumed: 100
     Damage Multiplier: 2
     Duration: 60
+  demon_form:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration: 60
+    Speed Potion Level: 3
+    Speed Potion Duration: 60
+    Strength Potion Level: 3
+    Strength Potion Duration: 60
+    Jump Potion Level: 3
+    Jump Potion Duration: 60

@@ -8,15 +8,12 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.ShakudoPlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
-import org.bukkit.DyeColor;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerInteractEvent;
 
 public class WildCall extends CastSpellWrapper {
 
@@ -29,6 +26,7 @@ public class WildCall extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
 
+        System.out.println("CASTING");
         if(pd instanceof ShakudoPlayerData){
 
             Player player = pd.getPlayer();
@@ -78,6 +76,6 @@ public class WildCall extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.absorptionAmount = (int) grimmoireConfig.getNumberSetting(KEY, "Absorption Amount");
+        this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Absorption Amount");
     }
 }

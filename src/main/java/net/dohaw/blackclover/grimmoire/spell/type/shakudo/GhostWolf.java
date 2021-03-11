@@ -31,11 +31,11 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
+
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
         ResponderFactory rf = new ResponderFactory(player);
         if(entityInSight != null){
-            System.out.println("ENTITY: " + entityInSight);
             if(entityInSight instanceof LivingEntity) {
 
                 LivingEntity livingEntityInSight = (LivingEntity) entityInSight;
@@ -77,7 +77,7 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.castDistance = (int) grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
-        this.biteDamage = (int) grimmoireConfig.getNumberSetting(KEY, "Bite Damage");
+        this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
+        this.biteDamage = grimmoireConfig.getIntegerSetting(KEY, "Bite Damage");
     }
 }

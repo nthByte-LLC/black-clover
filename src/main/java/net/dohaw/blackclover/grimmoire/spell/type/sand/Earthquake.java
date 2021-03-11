@@ -32,7 +32,7 @@ public class Earthquake extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.radius = (int) grimmoireConfig.getNumberSetting(KEY, "Radius");
-        this.duration = grimmoireConfig.getNumberSetting(KEY, "Duration");
+        this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
+        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 }

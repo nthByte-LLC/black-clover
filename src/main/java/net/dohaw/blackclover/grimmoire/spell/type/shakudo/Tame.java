@@ -6,8 +6,6 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
-import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
-import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Bukkit;
@@ -64,7 +62,7 @@ public class Tame extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.castDistance = (int) grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
+        this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
 
 }

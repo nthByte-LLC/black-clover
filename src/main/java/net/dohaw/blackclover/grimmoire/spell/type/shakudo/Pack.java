@@ -11,7 +11,6 @@ import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
@@ -91,7 +90,7 @@ public class Pack extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.numWolves = (int) grimmoireConfig.getNumberSetting(KEY, "Number of Wolves");
-        this.absorptionAmount = (int) grimmoireConfig.getNumberSetting(KEY, "Wolf Absorption Amount");
+        this.numWolves = grimmoireConfig.getIntegerSetting(KEY, "Number of Wolves");
+        this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Wolf Absorption Amount");
     }
 }

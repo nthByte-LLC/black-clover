@@ -17,7 +17,11 @@ public class GrimmoireConfig extends Config {
         return config.getString("Display Name Color");
     }
 
-    public double getNumberSetting(SpellType spellType, String settingKey){
+    public int getIntegerSetting(SpellType spellType, String settingKey){
+        return config.getInt("Spell Settings." + spellType.getConfigKey() + "." + settingKey);
+    }
+
+    public double getDoubleSetting(SpellType spellType, String settingKey){
         return config.getDouble("Spell Settings." + spellType.getConfigKey() + "." + settingKey);
     }
 

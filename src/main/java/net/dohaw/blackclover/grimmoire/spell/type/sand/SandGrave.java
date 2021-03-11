@@ -6,8 +6,6 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
-import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.ShapeUtils;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
@@ -86,10 +84,10 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell, List
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.castDistance = (int) grimmoireConfig.getNumberSetting(KEY, "Cast Distance");
-        this.blocksAbovePlayer = (int) grimmoireConfig.getNumberSetting(KEY, "Blocks Above Player");
-        this.radius = (int) grimmoireConfig.getNumberSetting(KEY, "Radius Ball");
-        this.sandStayTime = (int) grimmoireConfig.getNumberSetting(KEY, "Sand Stay Time");
+        this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
+        this.blocksAbovePlayer = grimmoireConfig.getIntegerSetting(KEY, "Blocks Above Player");
+        this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius Ball");
+        this.sandStayTime = grimmoireConfig.getIntegerSetting(KEY, "Sand Stay Time");
     }
 
 }
