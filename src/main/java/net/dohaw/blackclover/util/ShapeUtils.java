@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.util;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
@@ -57,6 +58,12 @@ public class ShapeUtils {
             }
         }
         return blocks;
+    }
+
+    public static List<Material> getMaterialsInCube(Location start, int radius){
+        List<Material> materials = new ArrayList<>();
+
+        return materials;
     }
 
     public static List<BlockSnapshot> getBlockSnapshotsInCube(Location start, int radius){

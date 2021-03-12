@@ -2,7 +2,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.shakudo;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.FangsCastedEvent;
-import net.dohaw.blackclover.event.PlayerCastSpellEvent;
+import net.dohaw.blackclover.event.PostCastSpellEvent;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
@@ -124,7 +124,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     }
 
     @EventHandler
-    public void onSpawnWolves(PlayerCastSpellEvent e){
+    public void onSpawnWolves(PostCastSpellEvent e){
 
         SpellType spellType = e.getSpellCasted().getKEY();
         PlayerData pd = e.getPlayerData();

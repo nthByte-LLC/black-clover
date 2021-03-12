@@ -56,10 +56,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
                     }
 
                     eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
-
                     eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
-
-
 
                 }else{
                     // Cancels regular punch damage

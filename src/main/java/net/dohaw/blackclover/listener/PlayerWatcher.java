@@ -1,9 +1,8 @@
 package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
-import net.dohaw.blackclover.event.PlayerCastSpellEvent;
-import net.dohaw.blackclover.event.SpellDamageEvent;
-import net.dohaw.blackclover.event.SpellOffCooldownEvent;
+import net.dohaw.blackclover.event.*;
+import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -71,6 +70,9 @@ public class PlayerWatcher implements Listener {
                     if(pd.isSpellActive(spellType)){
                         if(player.isSneaking()){
                             pd.removeActiveSpell(spellType);
+                            // This event is called just in case we want to do anything to the player after we remove the active spell
+                            PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
+                            Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);
                             return;
                         }
                     }
@@ -78,8 +80,13 @@ public class PlayerWatcher implements Listener {
                     if(!pd.isSpellOnCooldown(spellType)){
                         if(!pd.isSpellActive(spellType)){
                             if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
+                                // This event is called just in case you want to do anything before you start the activatable spell runnables (We do that in the Water Control spell)
+                                if(spellBoundToSlot instanceof ActivatableSpellWrapper){
+                                    PreStartActiveSpellEvent preStartActiveSpellEvent = new PreStartActiveSpellEvent(spellType, player);
+                                    Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
+                                }
                                 boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
-                                Bukkit.getPluginManager().callEvent(new PlayerCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
+                                Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
                             }else{
                                 player.sendMessage("You don't have enough mana at the moment!");
                             }
@@ -153,7 +160,7 @@ public class PlayerWatcher implements Listener {
     }
 
     @EventHandler
-    public void onPostCast(PlayerCastSpellEvent e){
+    public void onPostCast(PostCastSpellEvent e){
 
         if(e.isWasSuccessfullyCasted()){
 

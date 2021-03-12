@@ -8,7 +8,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerCastSpellEvent extends Event implements Cancellable {
+public class PostCastSpellEvent extends Event implements Cancellable {
 
     private boolean isCancelled = false;
     private static final HandlerList HANDLERS_LIST = new HandlerList();
@@ -22,7 +22,7 @@ public class PlayerCastSpellEvent extends Event implements Cancellable {
     @Getter
     private boolean wasSuccessfullyCasted;
 
-    public PlayerCastSpellEvent(PlayerData playerData, CastSpellWrapper spellCasted, boolean wasSuccessfullyCasted){
+    public PostCastSpellEvent(PlayerData playerData, CastSpellWrapper spellCasted, boolean wasSuccessfullyCasted){
         this.playerData = playerData;
         this.spellCasted = spellCasted;
         this.wasSuccessfullyCasted = wasSuccessfullyCasted;

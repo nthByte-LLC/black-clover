@@ -1,0 +1,19 @@
+Display Name Color: "&9"
+
+Spell Settings:
+  water_control:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Water Checking Radius: 10
+    Strength Potion Level: 2
+    Resistance Potion Level: 2
+  healing:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+    # For Target Healing
+    Cast Distance: 10
+    # 2 health points is 1 heart
+    Self Heal Amount: 3
+    Target Heal Amount: 3

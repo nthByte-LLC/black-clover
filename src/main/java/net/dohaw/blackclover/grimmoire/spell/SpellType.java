@@ -43,7 +43,17 @@ public enum SpellType {
     FANGS("fangs", false),
     GOODIE("goodie", false),
     TAME("tame", false),
-    GHOST_WOLF("ghost_wolf", false);
+    GHOST_WOLF("ghost_wolf", true),
+
+    /*
+        Water spells
+     */
+    WATER_CONTROL("water_control", false),
+    DROWNED("drowned", false),
+    OCTOPUS("octopus", false),
+    WATER_BUBBLE("water_bubble", false),
+    HEALING("healing", false),
+    WATER_WALL("water_wall", true);
 
 
     @Getter

@@ -4,10 +4,7 @@ import lombok.Setter;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.WrapperHolder;
-import net.dohaw.blackclover.grimmoire.type.Anti;
-import net.dohaw.blackclover.grimmoire.type.Fire;
-import net.dohaw.blackclover.grimmoire.type.Sand;
-import net.dohaw.blackclover.grimmoire.type.Shakudo;
+import net.dohaw.blackclover.grimmoire.type.*;
 import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 
@@ -23,6 +20,7 @@ public class Grimmoire extends WrapperHolder {
     public static final GrimmoireWrapper SAND = new Sand();
     public static final Anti ANTI = new Anti();
     public static final GrimmoireWrapper SHAKUDO = new Shakudo();
+    public static final GrimmoireWrapper WATER = new Water();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();
