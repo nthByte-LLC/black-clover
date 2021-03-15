@@ -63,8 +63,6 @@ public class Pack extends CastSpellWrapper {
                     spd.setSingularWolfSpawned(false);
                 }
 
-                deductMana(spd);
-
                 return true;
 
             }else{

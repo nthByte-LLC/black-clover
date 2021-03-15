@@ -30,7 +30,6 @@ public class FireStorm extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         new FireStormRunner(pd.getPlayer(), this).runTaskTimer(Grimmoire.instance, 0L, (long) (fireballFrequency * 20));
-        deductMana(pd);
         return true;
     }
 

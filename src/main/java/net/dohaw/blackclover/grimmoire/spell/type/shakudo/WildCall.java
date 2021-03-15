@@ -59,7 +59,6 @@ public class WildCall extends CastSpellWrapper {
                 return false;
             }
 
-            deductMana(spd);
             return true;
 
         }else{

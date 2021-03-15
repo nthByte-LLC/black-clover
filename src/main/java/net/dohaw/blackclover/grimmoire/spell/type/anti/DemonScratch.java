@@ -46,7 +46,6 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         pd.addActiveSpell(KEY, helix2);
 
         SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
-        deductMana(pd);
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             pd.removeActiveSpell(KEY);

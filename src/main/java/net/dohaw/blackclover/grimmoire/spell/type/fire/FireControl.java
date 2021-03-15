@@ -56,8 +56,6 @@ public class FireControl extends CastSpellWrapper {
 
         }
 
-        deductMana(pd);
-
         return true;
 
     }

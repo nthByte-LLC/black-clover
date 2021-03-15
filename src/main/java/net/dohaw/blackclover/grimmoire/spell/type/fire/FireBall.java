@@ -25,7 +25,6 @@ public class FireBall extends CastSpellWrapper implements Listener, DamageableSp
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         SpellUtils.fireProjectile(player, this, Material.FIRE_CHARGE);
-        deductMana(pd);
         return true;
     }
 

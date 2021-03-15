@@ -51,7 +51,6 @@ public class Fangs extends CastSpellWrapper implements Listener {
                 Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                     spd.setFangsEnabled(false);
                 }, duration * 20);
-                deductMana(pd);
                 return true;
 
             }else{

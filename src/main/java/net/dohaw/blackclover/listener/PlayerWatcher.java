@@ -86,6 +86,9 @@ public class PlayerWatcher implements Listener {
                                     Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
                                 }
                                 boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                                if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
+                                    spellBoundToSlot.deductMana(pd);
+                                }
                                 Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
                             }else{
                                 player.sendMessage("You don't have enough mana at the moment!");

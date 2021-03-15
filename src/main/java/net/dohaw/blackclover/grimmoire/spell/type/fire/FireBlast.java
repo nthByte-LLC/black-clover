@@ -22,7 +22,6 @@ public class FireBlast extends CastSpellWrapper implements DamageableSpell {
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         new FireBlastRunner(player, distance, damageScale).runTaskTimer(Grimmoire.instance, 0L, 2L);
-        deductMana(pd);
         return true;
     }
 

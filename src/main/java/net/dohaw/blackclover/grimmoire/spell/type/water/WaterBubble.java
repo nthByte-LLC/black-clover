@@ -11,8 +11,8 @@ public class WaterBubble extends CastSpellWrapper {
 
     private int radius;
 
-    public WaterBubble(SpellType spellType, GrimmoireConfig grimmoireConfig) {
-        super(spellType, grimmoireConfig);
+    public WaterBubble(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.WATER_BUBBLE, grimmoireConfig);
     }
 
     @Override
@@ -25,4 +25,5 @@ public class WaterBubble extends CastSpellWrapper {
         super.loadSettings();
         this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
     }
+
 }
