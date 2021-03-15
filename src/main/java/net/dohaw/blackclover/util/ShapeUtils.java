@@ -60,6 +60,21 @@ public class ShapeUtils {
         return blocks;
     }
 
+    public static List<Block> getHollowCube(Location start, int radius){
+        List<Block> blocks = new ArrayList<>();
+        for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
+            for(double y = start.getY() - radius; y <= start.getY() + radius; y++){
+                for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
+                    if(x == 0 || y == 0 || z == 0 || x == (radius - 1) || y == (radius - 1) || z == (radius - 1)){
+                        Location loc = new Location(start.getWorld(), x, y, z);
+                        blocks.add(loc.getBlock());
+                    }
+                }
+            }
+        }
+        return blocks;
+    }
+
     public static List<Material> getMaterialsInCube(Location start, int radius){
         List<Material> materials = new ArrayList<>();
 

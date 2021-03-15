@@ -15,6 +15,13 @@ Spell Settings:
     Absorption Amount: 5
     Movement Speed Additive: 3
     Cast Distance: 20
+  water_bubble:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    # In seconds
+    Duration: 60
+    Radius: 5
   healing:
     Hotbar Number: 4
     Cooldown: 5
