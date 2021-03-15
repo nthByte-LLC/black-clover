@@ -46,7 +46,7 @@ public abstract class CastSpellWrapper extends SpellWrapper{
         super.loadSettings();
         this.regenConsumed = grimmoireConfig.getIntegerSetting(KEY, "Regen Consumed");
         this.cooldown = grimmoireConfig.getIntegerSetting(KEY, "Cooldown");
-        this.hotbarSlot = (int) grimmoireConfig.getIntegerSetting(KEY, "Hotbar Number");
+        this.hotbarSlot = grimmoireConfig.getIntegerSetting(KEY, "Hotbar Number");
     }
 
     public void deductMana(PlayerData pd){

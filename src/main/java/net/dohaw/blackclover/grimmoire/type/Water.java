@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.water.Drowned;
 import net.dohaw.blackclover.grimmoire.spell.type.water.Healing;
 import net.dohaw.blackclover.grimmoire.spell.type.water.WaterControl;
 
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class Water extends GrimmoireWrapper {
 
+    public Drowned drowned;
     public Healing healing;
     public WaterControl waterControl;
 
@@ -42,6 +44,9 @@ public class Water extends GrimmoireWrapper {
 
         this.healing = new Healing(config);
         this.spells.put(SpellType.HEALING, healing);
+
+        this.drowned = new Drowned(config);
+        this.spells.put(SpellType.DROWNED, drowned);
 
     }
 

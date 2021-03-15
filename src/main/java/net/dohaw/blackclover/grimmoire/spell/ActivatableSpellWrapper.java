@@ -22,12 +22,9 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
             PlayerData updatedData = instance.getPlayerDataManager().getData(pd.getUuid());
 
             if(updatedData.hasSufficientRegenForSpell(this)){
-
                 deductMana(updatedData);
                 instance.updateRegenBar(updatedData);
-
                 doRunnableSpecifics(updatedData);
-
             }else{
                 updatedData.removeActiveSpell(this.KEY);
             }

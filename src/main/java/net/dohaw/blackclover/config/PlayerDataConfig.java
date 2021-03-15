@@ -1,11 +1,13 @@
 package net.dohaw.blackclover.config;
 
+import net.dohaw.blackclover.grimmoire.type.Water;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.playerdata.ShakudoPlayerData;
 import net.dohaw.blackclover.playerdata.SpecifiableData;
+import net.dohaw.blackclover.playerdata.WaterPlayerData;
 import net.dohaw.corelib.Config;
 
 import java.io.File;
@@ -34,8 +36,10 @@ public class PlayerDataConfig extends Config {
 
         PlayerData newData;
         if(hasSpecialPlayerData.contains(grimmoireType)){
-            if(grimmoireType == GrimmoireType.SHAKUDO){
+            if(grimmoireType == GrimmoireType.SHAKUDO) {
                 newData = new ShakudoPlayerData(pd.getUuid());
+            }else if(grimmoireType == GrimmoireType.WATER){
+                newData = new WaterPlayerData(pd.getUuid());
             }else{
                 // If it gets to here, then there's a conflict between what's in the list and what is being checked in the if statement chain.
                 return pd;

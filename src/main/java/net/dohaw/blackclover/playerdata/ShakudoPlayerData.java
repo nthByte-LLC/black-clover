@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-public class ShakudoPlayerData extends PlayerData implements SpecifiableData{
+public class ShakudoPlayerData extends PlayerData {
 
     @Getter @Setter
     private List<Wolf> pack = new ArrayList<>();
@@ -31,16 +31,6 @@ public class ShakudoPlayerData extends PlayerData implements SpecifiableData{
 
     public ShakudoPlayerData(UUID uuid) {
         super(uuid, Grimmoire.SHAKUDO );
-    }
-
-    @Override
-    public void saveSpecifiedData(FileConfiguration config) {
-
-    }
-
-    @Override
-    public void loadSpecifiedData(FileConfiguration config) {
-
     }
 
     @Override

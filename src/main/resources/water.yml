@@ -8,6 +8,13 @@ Spell Settings:
     Water Checking Radius: 10
     Strength Potion Level: 2
     Resistance Potion Level: 2
+  drowned:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Absorption Amount: 5
+    Movement Speed Additive: 3
+    Cast Distance: 20
   healing:
     Hotbar Number: 4
     Cooldown: 5
@@ -17,3 +24,4 @@ Spell Settings:
     # 2 health points is 1 heart
     Self Heal Amount: 3
     Target Heal Amount: 3
+
