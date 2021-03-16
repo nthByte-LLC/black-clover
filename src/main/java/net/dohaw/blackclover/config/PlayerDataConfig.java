@@ -1,10 +1,9 @@
 package net.dohaw.blackclover.config;
 
-import net.dohaw.blackclover.grimmoire.type.Water;
-import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.ShakudoPlayerData;
 import net.dohaw.blackclover.playerdata.SpecifiableData;
 import net.dohaw.blackclover.playerdata.WaterPlayerData;
@@ -17,7 +16,7 @@ import java.util.UUID;
 
 public class PlayerDataConfig extends Config {
 
-    private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(GrimmoireType.SHAKUDO);
+    private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(GrimmoireType.SHAKUDO, GrimmoireType.WATER);
 
     public PlayerDataConfig(File file){
         super(file);
@@ -46,8 +45,11 @@ public class PlayerDataConfig extends Config {
             }
             // merges the values over such as max regen, regen amount, etc
             newData.merge(pd);
-            // Can do this because it's always going to be a class that implements this unless there is human error.
-            ((SpecifiableData) newData).loadSpecifiedData(config);
+
+            // this is currently always false but keeping it here for future purposes...
+            if(newData instanceof SpecifiableData){
+                ((SpecifiableData) newData).loadSpecifiedData(config);
+            }
             return newData;
         }
 

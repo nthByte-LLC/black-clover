@@ -2,6 +2,8 @@ package net.dohaw.blackclover.playerdata;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import org.bukkit.entity.Drowned;
 
 import java.util.UUID;
@@ -15,7 +17,7 @@ public class WaterPlayerData extends PlayerData {
     private Drowned drowned;
 
     public WaterPlayerData(UUID uuid) {
-        super(uuid);
+        super(uuid, Grimmoire.WATER);
     }
 
     public boolean isDrownedSummoned(){

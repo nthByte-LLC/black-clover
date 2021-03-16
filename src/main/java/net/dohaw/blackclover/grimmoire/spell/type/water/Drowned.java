@@ -10,6 +10,7 @@ import net.dohaw.blackclover.util.BlockUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -18,8 +19,16 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.persistence.PersistentDataType;
 
-public class Drowned extends CastSpellWrapper {
+public class Drowned extends CastSpellWrapper implements Listener {
+
+    // pdc value contains who spawned the drowned.
+    private final NamespacedKey NSK_MARK = NamespacedKey.minecraft("summoned-drowned");
 
     private double movementSpeedAdditive;
     private int absorptionAmount;
@@ -36,17 +45,19 @@ public class Drowned extends CastSpellWrapper {
             WaterPlayerData wpd = (WaterPlayerData) pd;
             Player player = pd.getPlayer();
             ResponderFactory rf = new ResponderFactory(player);
-            Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
 
-            if(entityInSight != null){
+            if(!wpd.isDrownedSummoned()){
 
-                if(entityInSight instanceof LivingEntity){
+                Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
 
-                    LivingEntity leInSight = (LivingEntity) entityInSight;
-                    if(!wpd.isDrownedSummoned()){
+                if(entityInSight != null){
 
+                    if(entityInSight instanceof LivingEntity){
+
+                        LivingEntity leInSight = (LivingEntity) entityInSight;
                         Location blockInFront = BlockUtil.getBlockInFront(player, 1);
                         org.bukkit.entity.Drowned drowned = (org.bukkit.entity.Drowned) player.getWorld().spawnEntity(blockInFront.add(0, 1, 0), EntityType.DROWNED);
+                        drowned.getPersistentDataContainer().set(NSK_MARK, PersistentDataType.STRING, player.getName());
                         drowned.setAbsorptionAmount(absorptionAmount);
                         drowned.setTarget(leInSight);
 
@@ -59,21 +70,26 @@ public class Drowned extends CastSpellWrapper {
                         wpd.setDrowned(drowned);
 
                     }else{
-                        if(player.isSneaking()){
-                            wpd.removeDrowned();
-                        }else{
-                            rf.sendMessage("You already have a drowned spawned!");
-                        }
+                        rf.sendMessage("This is not a valid entity!");
                         return false;
                     }
 
                 }else{
-                    rf.sendMessage("This is not a valid entity!");
+                    rf.sendMessage("There is no entity within reasonable distance of you!");
                     return false;
                 }
 
+
             }else{
-                rf.sendMessage("There is no entity within reasonable distance of you!");
+                if(player.isSneaking()){
+                    if(wpd.isDrownedSummoned()){
+                        wpd.removeDrowned();
+                    }else{
+                        rf.sendMessage("You don't have a drowned summoned!");
+                    }
+                }else{
+                    rf.sendMessage("You already have a drowned spawned!");
+                }
                 return false;
             }
 
@@ -95,6 +111,34 @@ public class Drowned extends CastSpellWrapper {
         this.movementSpeedAdditive = grimmoireConfig.getDoubleSetting(KEY, "Movement Speed Additive");
         this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Absorption Amount");
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
+    }
+
+    /*
+        Prevents drowns from burning in the sunlight.
+     */
+    @EventHandler
+    public void onDrownedBurn(EntityCombustEvent e){
+        Entity entity = e.getEntity();
+        if(entity.getPersistentDataContainer().has(NSK_MARK, PersistentDataType.STRING)){
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onTargetSummoner(EntityTargetLivingEntityEvent e){
+        Entity entity = e.getEntity();
+        if(entity.getPersistentDataContainer().has(NSK_MARK, PersistentDataType.STRING)){
+            LivingEntity target = e.getTarget();
+            if(target instanceof Player){
+                String summonerName = entity.getPersistentDataContainer().get(NSK_MARK, PersistentDataType.STRING);
+                // if they are trying to target the person that summoned them, then it cancels it.
+                if(target.getName().equalsIgnoreCase(summonerName)){
+                    e.setCancelled(true);
+                }
+            }
+
+        }
+
     }
 
 }
