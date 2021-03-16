@@ -4,7 +4,10 @@ import lombok.Setter;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.WrapperHolder;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.grimmoire.type.*;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 
@@ -38,6 +41,19 @@ public class Grimmoire extends WrapperHolder {
             GrimmoireWrapper gWrapper = (GrimmoireWrapper) wrapper;
             if(gWrapper.getAliases().contains(alias.toLowerCase())){
                 return gWrapper;
+            }
+        }
+        return null;
+    }
+
+    public static CastSpellWrapper getSpellBoundToSlot(PlayerData pd, int slot){
+        GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
+        for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
+            if(spell instanceof CastSpellWrapper){
+                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
+                if(cSpell.isSpellBoundSlot(slot)){
+                    return cSpell;
+                }
             }
         }
         return null;

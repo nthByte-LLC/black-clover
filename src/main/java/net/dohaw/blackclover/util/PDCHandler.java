@@ -62,18 +62,7 @@ public class PDCHandler {
         return null;
     }
 
-    public static CastSpellWrapper getSpellBoundToSlot(PlayerData pd, int slot){
-        GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
-        for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
-            if(spell instanceof CastSpellWrapper){
-                CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                if(cSpell.isSpellBoundSlot(slot)){
-                    return cSpell;
-                }
-            }
-        }
-        return null;
-    }
+
 
     /**
      * Gets the casted spell bound to the projectile

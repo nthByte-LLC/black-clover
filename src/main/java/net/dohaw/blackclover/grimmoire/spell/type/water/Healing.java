@@ -6,6 +6,8 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,7 +19,7 @@ public class Healing extends CastSpellWrapper {
     private int selfHealAmount;
 
     public Healing(GrimmoireConfig grimmoireConfig) {
-        super(SpellType.WATER_CONTROL, grimmoireConfig);
+        super(SpellType.HEALING, grimmoireConfig);
     }
 
     @Override
@@ -60,6 +62,8 @@ public class Healing extends CastSpellWrapper {
             newPlayerHealth = 20;
         }
         player.setHealth(newPlayerHealth);
+        SpellUtils.playSound(player, Sound.ENTITY_VILLAGER_CELEBRATE);
+        SpellUtils.spawnParticle(player, Particle.VILLAGER_HAPPY, 30, 0.5f, 0.5f, 0.5f);
     }
 
 }

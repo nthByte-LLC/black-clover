@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.*;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -59,7 +60,7 @@ public class PlayerWatcher implements Listener {
 
             PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
             Player player = pd.getPlayer();
-            CastSpellWrapper spellBoundToSlot = PDCHandler.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
+            CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
 
             if(spellBoundToSlot != null){
 
