@@ -29,7 +29,7 @@ public class WaterControl extends ActivatableSpellWrapper implements Listener {
             SpellUtils.playSound(player, Sound.ENTITY_BOAT_PADDLE_WATER);
             SpellUtils.spawnParticle(player, Particle.FALLING_WATER, 30, 1, 1, 1);
         }else{
-            SpellUtils.spawnParticle(player, Particle.BLOCK_DUST, Material.SAND.createBlockData(), 30, 30, 1, 1);
+            SpellUtils.spawnParticle(player, Particle.BLOCK_DUST, Material.SAND.createBlockData(), 30, 0.5f, 0.5f, 0.5f);
         }
     }
 
