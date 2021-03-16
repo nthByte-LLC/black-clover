@@ -22,6 +22,10 @@ public class CircleParticleRunner extends BukkitRunnable {
     protected double radius;
     protected double yAdditive = 0;
 
+    // If you want the circle to start higher up, use this.
+    @Setter
+    protected double startYAdditive = 0;
+
     protected Particle.DustOptions data;
 
     /*
@@ -73,7 +77,7 @@ public class CircleParticleRunner extends BukkitRunnable {
 
     protected void doParticleIteration(int iteration){
         double angle = angle(iteration);
-        Location point = entity.getLocation().clone().add(radius * Math.sin(angle), yAdditive, radius * Math.cos(angle));
+        Location point = entity.getLocation().clone().add(0, startYAdditive, 0).add(radius * Math.sin(angle), yAdditive, radius * Math.cos(angle));
         if(data != null){
             entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
         }else{

@@ -9,6 +9,9 @@ import java.util.UUID;
 public class WaterPlayerData extends PlayerData {
 
     @Getter @Setter
+    private boolean usingOctopus;
+
+    @Getter @Setter
     private Drowned drowned;
 
     public WaterPlayerData(UUID uuid) {

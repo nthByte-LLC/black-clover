@@ -22,6 +22,11 @@ Spell Settings:
     # In seconds
     Duration: 60
     Radius: 5
+  octopus:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration: 60
   healing:
     Hotbar Number: 4
     Cooldown: 5

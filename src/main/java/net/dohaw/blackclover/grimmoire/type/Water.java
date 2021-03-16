@@ -4,16 +4,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.water.Drowned;
-import net.dohaw.blackclover.grimmoire.spell.type.water.Healing;
-import net.dohaw.blackclover.grimmoire.spell.type.water.WaterBubble;
-import net.dohaw.blackclover.grimmoire.spell.type.water.WaterControl;
+import net.dohaw.blackclover.grimmoire.spell.type.water.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Water extends GrimmoireWrapper {
 
+    public Octopus octopus;
     public WaterBubble waterBubble;
     public Drowned drowned;
     public Healing healing;
@@ -52,6 +50,9 @@ public class Water extends GrimmoireWrapper {
 
         this.waterBubble = new WaterBubble(config);
         this.spells.put(SpellType.WATER_BUBBLE, waterBubble);
+
+        this.octopus = new Octopus(config);
+        this.spells.put(SpellType.OCTOPUS, octopus);
 
     }
 
