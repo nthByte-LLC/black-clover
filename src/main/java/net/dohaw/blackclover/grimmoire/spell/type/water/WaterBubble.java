@@ -63,7 +63,6 @@ public class WaterBubble extends CastSpellWrapper implements Listener {
     public void onBlockChange(BlockFromToEvent e){
         for(List<Block> outline : outlineOfWaterBubbles.values()){
             if(outline.contains(e.getBlock()) || outline.contains(e.getToBlock())){
-                System.out.println("CANCELING");
                 e.setCancelled(true);
             }
         }
