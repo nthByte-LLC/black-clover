@@ -13,11 +13,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 
 import java.util.*;
 
-public class WaterBubble extends CastSpellWrapper {
+public class WaterBubble extends CastSpellWrapper implements Listener {
 
     private Map<UUID, List<Block>> outlineOfWaterBubbles = new HashMap<>();
 
@@ -61,7 +62,8 @@ public class WaterBubble extends CastSpellWrapper {
     @EventHandler
     public void onBlockChange(BlockFromToEvent e){
         for(List<Block> outline : outlineOfWaterBubbles.values()){
-            if(outline.contains(e.getBlock())){
+            if(outline.contains(e.getBlock()) || outline.contains(e.getToBlock())){
+                System.out.println("CANCELING");
                 e.setCancelled(true);
             }
         }

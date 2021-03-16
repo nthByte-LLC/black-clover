@@ -62,10 +62,10 @@ public class ShapeUtils {
 
     public static List<Block> getHollowCube(Location start, int radius){
         List<Block> blocks = new ArrayList<>();
-        for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
-            for(double y = start.getY() - radius; y <= start.getY() + radius; y++){
-                for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
-                    if(x == 0 || y == 0 || z == 0 || x == (radius - 1) || y == (radius - 1) || z == (radius - 1)){
+        for(double x = start.getBlockX() - radius; x <= start.getBlockX() + radius; x++){
+            for(double y = start.getBlockY() - radius; y <= start.getBlockY() + radius; y++){
+                for(double z = start.getBlockZ() - radius; z <= start.getBlockZ() + radius; z++){
+                    if(x == ((start.getBlockX() + radius) - 1) || y == ((start.getBlockY() + radius) - 1) || z == ((start.getBlockZ() + radius) - 1) || x == (start.getBlockX() - radius) || y == (start.getBlockY() - radius) || z == (start.getBlockZ() - radius)){
                         Location loc = new Location(start.getWorld(), x, y, z);
                         blocks.add(loc.getBlock());
                     }
@@ -73,12 +73,6 @@ public class ShapeUtils {
             }
         }
         return blocks;
-    }
-
-    public static List<Material> getMaterialsInCube(Location start, int radius){
-        List<Material> materials = new ArrayList<>();
-
-        return materials;
     }
 
     public static List<BlockSnapshot> getBlockSnapshotsInCube(Location start, int radius){
