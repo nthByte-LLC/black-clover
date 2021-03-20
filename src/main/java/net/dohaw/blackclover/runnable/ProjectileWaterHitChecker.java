@@ -20,8 +20,9 @@ public class ProjectileWaterHitChecker extends BukkitRunnable {
         }else{
             Block currentBlock = projectile.getLocation().getBlock();
             if(currentBlock.getType() == Material.WATER){
-                if(currentBlock.hasMetadata("water-wall")){
+                if(currentBlock.hasMetadata("water-wall-mark")){
                     projectile.remove();
+                    this.cancel();
                 }
             }
         }
