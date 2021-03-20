@@ -14,12 +14,16 @@ import org.bukkit.event.Event;
 
 public class Healing extends CastSpellWrapper {
 
-    private int castDistance;
-    private int targetHealAmount;
-    private int selfHealAmount;
+    protected int castDistance;
+    protected int targetHealAmount;
+    protected int selfHealAmount;
 
     public Healing(GrimmoireConfig grimmoireConfig) {
         super(SpellType.HEALING, grimmoireConfig);
+    }
+
+    public Healing(SpellType spellType, GrimmoireConfig grimmoireConfig){
+        super(spellType, grimmoireConfig);
     }
 
     @Override

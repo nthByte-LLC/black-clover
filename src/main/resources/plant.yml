@@ -1,0 +1,31 @@
+Display Name Color: "&2"
+
+Spell Settings:
+  leaf_knives:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+  leaf_wall:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  healing_leaves:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Cast Distance: 5
+    # 1 heart is 2 health points
+    Self Heal Amount: 2
+    Target Heal Amount: 2
+  leaf_ladder:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  leaf_armor:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  absorbtion:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

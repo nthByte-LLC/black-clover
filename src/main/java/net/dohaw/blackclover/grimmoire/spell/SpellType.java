@@ -53,7 +53,17 @@ public enum SpellType {
     OCTOPUS("octopus", false),
     WATER_BUBBLE("water_bubble", false),
     HEALING("healing", false),
-    WATER_WALL("water_wall", true);
+    WATER_WALL("water_wall", true),
+
+    /*
+        Plant spells
+     */
+    LEAF_KNIVES("leaf_knives", false),
+    LEAF_WALL("leaf_wall", false),
+    HEALING_LEAVES("healing_leaves", false),
+    LEAF_LADDER("leaf_ladder", false),
+    LEAF_ARMOR("leaf_armor", false),
+    ABSORBTION("absorbtion", true);
 
 
     @Getter
