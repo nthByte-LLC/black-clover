@@ -19,4 +19,18 @@ public class BlockUtil {
         return entityLocation.add(entityLocation.getDirection().multiply(numBlocksInFront));
     }
 
+    public static Location getRightBlock(Location loc, int numBlocks){
+        Location rightDirectionLocation = loc.clone();
+        // shifts direction to the right
+        rightDirectionLocation.setYaw(rightDirectionLocation.getYaw() + 90);
+        return loc.add(rightDirectionLocation.getDirection().multiply(numBlocks));
+    }
+
+    public static Location getLeftBlock(Location loc, int numBlocks){
+        Location leftDirectionLocation = loc.clone();
+        // shifts direction to the left
+        leftDirectionLocation.setYaw(leftDirectionLocation.getYaw() - 90);
+        return loc.add(leftDirectionLocation.getDirection().multiply(numBlocks));
+    }
+
 }

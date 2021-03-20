@@ -47,9 +47,9 @@ public class PlayerDataConfig extends Config {
             newData.merge(pd);
 
             // this is currently always false but keeping it here for future purposes...
-            if(newData instanceof SpecifiableData){
-                ((SpecifiableData) newData).loadSpecifiedData(config);
-            }
+//            if(newData instanceof SpecifiableData){
+//                ((SpecifiableData) newData).loadSpecifiedData(config);
+//            }
             return newData;
         }
 
@@ -61,11 +61,11 @@ public class PlayerDataConfig extends Config {
         config.set("Max Regen", pd.getMaxRegen());
         config.set("Regen Amount", pd.getRegenAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
-        if(pd instanceof SpecifiableData){
-            SpecifiableData spd = (SpecifiableData) pd;
-            spd.saveSpecifiedData(config);
-            System.out.println("SAVING SPECIFIED DATA");
-        }
+//        if(pd instanceof SpecifiableData){
+//            SpecifiableData spd = (SpecifiableData) pd;
+//            spd.saveSpecifiedData(config);
+//            System.out.println("SAVING SPECIFIED DATA");
+//        }
         saveConfig();
     }
 

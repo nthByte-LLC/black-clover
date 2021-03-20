@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
+import net.dohaw.blackclover.runnable.ProjectileWaterHitChecker;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
@@ -24,6 +25,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -183,6 +185,12 @@ public class PlayerWatcher implements Listener {
             }, (long) (spellCasted.getCooldown() * 20));
         }
 
+    }
+
+    @EventHandler
+    public void onProjLaunch(ProjectileLaunchEvent e){
+        Projectile projectile = e.getEntity();
+        new ProjectileWaterHitChecker(projectile).runTaskTimer(plugin, 0L, 2L);
     }
 
 }

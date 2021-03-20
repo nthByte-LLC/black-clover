@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Water extends GrimmoireWrapper {
 
+    public WaterWall waterWall;
     public Octopus octopus;
     public WaterBubble waterBubble;
     public Drowned drowned;
@@ -53,6 +54,9 @@ public class Water extends GrimmoireWrapper {
 
         this.octopus = new Octopus(config);
         this.spells.put(SpellType.OCTOPUS, octopus);
+
+        this.waterWall = new WaterWall(config);
+        this.spells.put(SpellType.WATER_WALL, waterWall);
 
     }
 

@@ -1,0 +1,24 @@
+package net.dohaw.blackclover.grimmoire.spell.type.water;
+
+import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.spells.WaterWallRotator;
+import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+
+public class WaterWall extends CastSpellWrapper implements Listener {
+
+    public WaterWall(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.WATER_WALL, grimmoireConfig);
+    }
+
+    @Override
+    public boolean cast(Event e, PlayerData pd) {
+        new WaterWallRotator(pd.getPlayer()).runTaskTimer(Grimmoire.instance, 0L, 20L);
+        return false;
+    }
+
+}
