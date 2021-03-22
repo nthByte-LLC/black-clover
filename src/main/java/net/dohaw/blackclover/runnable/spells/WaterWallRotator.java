@@ -40,7 +40,7 @@ public class WaterWallRotator extends BukkitRunnable implements Listener {
         waterWallBlocks.clear();
 
         // Gets the first block placed.
-        Location locationInFront = BlockUtil.getBlockInFront(caster, 2);
+        Location locationInFront = BlockUtil.getLocationInFront(caster, 2);
         if(locationInFront.getBlock().getType() == Material.AIR){
             waterWallBlocks.add(locationInFront);
             markBlock(locationInFront.getBlock());

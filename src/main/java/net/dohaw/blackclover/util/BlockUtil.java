@@ -2,9 +2,7 @@ package net.dohaw.blackclover.util;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 
 public class BlockUtil {
 
@@ -14,9 +12,12 @@ public class BlockUtil {
         return loc.getWorld().getBlockAt(newX, loc.getBlockY(), newZ);
     }
 
-    public static Location getBlockInFront(Entity entity, int numBlocksInFront){
-        Location entityLocation = entity.getLocation();
-        return entityLocation.add(entityLocation.getDirection().multiply(numBlocksInFront));
+    public static Location getLocationInFront(Entity entity, int numBlocksInFront){
+        return getLocationInFront(entity.getLocation(), numBlocksInFront);
+    }
+
+    public static Location getLocationInFront(Location location, int numBlocksInFront){
+        return location.add(location.getDirection().multiply(numBlocksInFront));
     }
 
     public static Location getRightBlock(Location loc, int numBlocks){

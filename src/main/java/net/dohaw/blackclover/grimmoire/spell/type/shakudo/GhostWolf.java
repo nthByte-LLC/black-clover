@@ -42,7 +42,7 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
             if(entityInSight instanceof LivingEntity) {
 
                 LivingEntity livingEntityInSight = (LivingEntity) entityInSight;
-                Wolf wolf = (Wolf) player.getWorld().spawnEntity(BlockUtil.getBlockInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
+                Wolf wolf = (Wolf) player.getWorld().spawnEntity(BlockUtil.getLocationInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
                 wolf.setInvisible(true);
                 wolf.setGlowing(true);
                 wolf.setTarget(livingEntityInSight);

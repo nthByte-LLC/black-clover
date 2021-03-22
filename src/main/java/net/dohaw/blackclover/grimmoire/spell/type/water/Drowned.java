@@ -55,7 +55,7 @@ public class Drowned extends CastSpellWrapper implements Listener {
                     if(entityInSight instanceof LivingEntity){
 
                         LivingEntity leInSight = (LivingEntity) entityInSight;
-                        Location blockInFront = BlockUtil.getBlockInFront(player, 1);
+                        Location blockInFront = BlockUtil.getLocationInFront(player, 1);
                         org.bukkit.entity.Drowned drowned = (org.bukkit.entity.Drowned) player.getWorld().spawnEntity(blockInFront.add(0, 1, 0), EntityType.DROWNED);
                         drowned.getPersistentDataContainer().set(NSK_MARK, PersistentDataType.STRING, player.getName());
                         drowned.setAbsorptionAmount(absorptionAmount);
