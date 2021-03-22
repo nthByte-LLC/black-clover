@@ -5,12 +5,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.plant.HealingLeaves;
+import net.dohaw.blackclover.grimmoire.spell.type.plant.LeafKnives;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Plant extends GrimmoireWrapper {
 
+    public LeafKnives leafKnives;
     public HealingLeaves healingLeaves;
 
     public Plant() {
@@ -37,6 +39,9 @@ public class Plant extends GrimmoireWrapper {
 
         this.healingLeaves = new HealingLeaves(config);
         this.spells.put(SpellType.HEALING_LEAVES, healingLeaves);
+
+        this.leafKnives = new LeafKnives(config);
+        this.spells.put(SpellType.LEAF_KNIVES, leafKnives);
 
     }
 

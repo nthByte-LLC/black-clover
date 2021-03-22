@@ -5,6 +5,10 @@ Spell Settings:
     Hotbar Number: 0
     Cooldown: 5
     Regen Consumed: 100
+    # 2 health points is 1 heart. By default, it does 1 heart of damage.
+    Damage: 2
+    Cast Distance: 10
+    Knockback: 0.5
   leaf_wall:
     Hotbar Number: 1
     Cooldown: 5

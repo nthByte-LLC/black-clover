@@ -46,6 +46,10 @@ public class SpellUtils {
         Objects.requireNonNull(entity.getWorld()).spawnParticle(particle, entity.getLocation(), count, offsetX, offsetY, offsetZ, blockData);
     }
 
+    public static void spawnParticle(Location loc, Particle particle, Particle.DustOptions data, int count, float offsetX, float offsetY, float offsetZ){
+        Objects.requireNonNull(loc.getWorld()).spawnParticle(particle, loc, count, offsetX, offsetY, offsetZ, data);
+    }
+
     public static void spawnParticle(Block block, Particle particle, int count, float offsetX, float offsetY, float offsetZ){
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
     }
