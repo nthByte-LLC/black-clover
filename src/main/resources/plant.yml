@@ -30,6 +30,12 @@ Spell Settings:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    # How long this spell lasts overall
+    Duration: 3600
+    # How often the player is healing
+    Healing Interval: 60
+    # 2 points is 1 heart
+    Healing Amount: 2
   absorbtion:
     Hotbar Number: 5
     Cooldown: 5

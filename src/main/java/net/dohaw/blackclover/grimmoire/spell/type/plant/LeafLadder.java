@@ -6,21 +6,13 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.LeafLadderRunner;
-import net.dohaw.blackclover.util.BlockUtil;
 import net.dohaw.corelib.ResponderFactory;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Directional;
-import org.bukkit.block.data.MultipleFacing;
-import org.bukkit.block.data.type.Ladder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class LeafLadder extends CastSpellWrapper {
 
@@ -49,6 +41,7 @@ public class LeafLadder extends CastSpellWrapper {
             rf.sendMessage("You haven't punched any block!");
             return false;
         }
+
         return true;
     }
 
