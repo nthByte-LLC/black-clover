@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
@@ -85,6 +86,19 @@ public class SpellUtils {
         }else{
             return MathHelper.getRandomInteger(5, 1) * -1;
         }
+    }
+
+    public static double alterHealth(LivingEntity livingEntity, double amount){
+        double health = livingEntity.getHealth();
+        double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        double newHealth = health + amount;
+        if(newHealth > 20 || newHealth < 0){
+            livingEntity.setHealth(maxHealth);
+        }else{
+            livingEntity.setHealth(newHealth);
+        }
+        // changed health amount
+        return (health + Math.abs(amount)) - health;
     }
 
 }

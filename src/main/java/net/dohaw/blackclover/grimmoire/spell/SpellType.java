@@ -63,7 +63,17 @@ public enum SpellType {
     HEALING_LEAVES("healing_leaves", false),
     LEAF_LADDER("leaf_ladder", false),
     LEAF_ARMOR("leaf_armor", false),
-    ABSORBTION("absorbtion", true);
+    ABSORPTION("absorption", true),
+
+    /*
+        Snow spells
+     */
+    SNOW_BALL("snow_ball", false),
+    SNOW_MAN("snow_man", false),
+    ICE_SPIKE("ice_spike", false),
+    FREEZE("freeze", false),
+    SKATING("skating", false),
+    ICE_AGE("ice_age", true);
 
 
     @Getter

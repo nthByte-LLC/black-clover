@@ -13,6 +13,10 @@ Spell Settings:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    Duration: 2
+    Width: 6
+    Height: 3
+    Leaf Material: OAK_LEAVES
   healing_leaves:
     Hotbar Number: 2
     Cooldown: 5
@@ -36,7 +40,11 @@ Spell Settings:
     Healing Interval: 60
     # 2 points is 1 heart
     Healing Amount: 2
-  absorbtion:
+  absorption:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Duration: 60
+    Steal Interval: 10
+    Steal Amount: 1
+    Cast Distance: 15

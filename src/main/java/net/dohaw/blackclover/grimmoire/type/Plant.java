@@ -4,16 +4,15 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.plant.HealingLeaves;
-import net.dohaw.blackclover.grimmoire.spell.type.plant.LeafArmor;
-import net.dohaw.blackclover.grimmoire.spell.type.plant.LeafKnives;
-import net.dohaw.blackclover.grimmoire.spell.type.plant.LeafLadder;
+import net.dohaw.blackclover.grimmoire.spell.type.plant.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Plant extends GrimmoireWrapper {
 
+    public LeafWall leafWall;
+    public Absorption absorption;
     public LeafArmor leafArmor;
     public LeafLadder leafLadder;
     public LeafKnives leafKnives;
@@ -52,6 +51,12 @@ public class Plant extends GrimmoireWrapper {
 
         this.leafArmor = new LeafArmor(config);
         this.spells.put(SpellType.LEAF_ARMOR, leafArmor);
+
+        this.absorption = new Absorption(config);
+        this.spells.put(SpellType.ABSORPTION, absorption);
+
+        this.leafWall = new LeafWall(config);
+        this.spells.put(SpellType.LEAF_WALL, leafWall);
 
     }
 

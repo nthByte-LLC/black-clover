@@ -25,6 +25,10 @@ public class GrimmoireConfig extends Config {
         return config.getDouble("Spell Settings." + spellType.getConfigKey() + "." + settingKey);
     }
 
+    public String getStringSetting(SpellType spellType, String settingKey){
+        return config.getString("Spell Settings." + spellType.getConfigKey() + "." + settingKey);
+    }
+
     public Particle getParticle(SpellType spellType){
         return Particle.valueOf(config.getString("Spell Settings." + spellType.getConfigKey() + ".Particle", "FLAME"));
     }

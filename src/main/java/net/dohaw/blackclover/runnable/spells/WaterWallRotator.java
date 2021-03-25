@@ -58,9 +58,9 @@ public class WaterWallRotator extends BukkitRunnable implements Listener {
             for(int z = 1; z <= 2; z++){
                 Location firstColumnBlock = locationInFront.clone();
                 if(z % 2 == 0){
-                    firstColumnBlock = BlockUtil.getRightBlock(firstColumnBlock, x);
+                    firstColumnBlock = BlockUtil.getLocationToRight(firstColumnBlock, x);
                 }else{
-                    firstColumnBlock = BlockUtil.getLeftBlock(firstColumnBlock, x);
+                    firstColumnBlock = BlockUtil.getLocationToLeft(firstColumnBlock, x);
                 }
 
                 // Fills in the columns.
