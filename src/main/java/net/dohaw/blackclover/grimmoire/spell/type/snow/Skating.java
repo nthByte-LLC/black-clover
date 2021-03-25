@@ -52,10 +52,12 @@ public class Skating extends CastSpellWrapper implements Listener {
 
     @EventHandler
     public void onSkate(PlayerMoveEvent e){
+
         Player player = e.getPlayer();
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
         if(LocationUtil.hasMoved(e.getTo(), e.getFrom())){
             if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.SNOW){
+
                 SnowPlayerData spd = (SnowPlayerData) pd;
                 if(spd.isSkating()){
 
@@ -69,8 +71,10 @@ public class Skating extends CastSpellWrapper implements Listener {
                     }
 
                 }
+
             }
         }
+
     }
 
     @Override

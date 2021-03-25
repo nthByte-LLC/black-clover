@@ -23,9 +23,6 @@ import java.util.*;
 
 public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
 
-    private HashSet<UUID> frozenPlayers = new HashSet<>();
-    private HashSet<UUID> invulnerablePlayers = new HashSet<>();
-
     private double invulnerableDuration, freezeDuration, castTime, radius;
 
     public Freeze(GrimmoireConfig grimmoireConfig) {
@@ -51,9 +48,8 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
             Bukkit.getServer().getPluginManager().callEvent(new StopTimedCastSpellEvent(player, KEY, StopTimedCastSpellEvent.Cause.COMPLETE_CAST));
 
             Collection<Entity> entitiesInRange = player.getNearbyEntities(radius, radius, radius);
-            List<UUID> currentSpellFrozenPlayers = new ArrayList<>();
-            List<UUID> currentSpellInvulnerablePlayers = new ArrayList<>();
-
+            List<UUID> frozenPlayers = new ArrayList<>();
+            List<UUID> invulnerablePlayers = new ArrayList<>();
             for(Entity en : entitiesInRange){
                 // we don't want the caster.
                 if(en.getUniqueId().equals(player.getUniqueId())){
@@ -61,30 +57,32 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
                 }
                 if(en instanceof Player){
                     Player playerAffected = (Player) en;
-                    UUID playerAffectedUUID = playerAffected.getUniqueId();
-                    // if they aren't already frozen, then add them to the list of the current spell's frozen players.
-                    if(!frozenPlayers.contains(playerAffectedUUID)){
-                        currentSpellFrozenPlayers.add(playerAffected.getUniqueId());
+                    PlayerData playerAffectedData = Grimmoire.instance.getPlayerDataManager().getData(playerAffected.getUniqueId());
+                    if(!playerAffectedData.isInVulnerable()){
+                        playerAffectedData.setInVulnerable(true);
+                        invulnerablePlayers.add(playerAffected.getUniqueId());
                     }
-                    // same thing here
-                    if(!invulnerablePlayers.contains(playerAffectedUUID)){
-                        currentSpellInvulnerablePlayers.add(playerAffected.getUniqueId());
+                    if(!playerAffectedData.isFrozen()){
+                        playerAffectedData.setFrozen(true);
+                        frozenPlayers.add(playerAffected.getUniqueId());
                     }
-                    // i don't need to run a #contains check because hashsets don't add duplicate entries.
-                    frozenPlayers.add(playerAffected.getUniqueId());
-                    invulnerablePlayers.add(playerAffected.getUniqueId());
-
                 }
             }
 
             // makes the players vulnerable again
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                currentSpellInvulnerablePlayers.forEach(uuid -> invulnerablePlayers.remove(uuid));
+                for(UUID uuid : invulnerablePlayers){
+                    PlayerData opData = Grimmoire.instance.getPlayerDataManager().getData(uuid);
+                    opData.setInVulnerable(false);
+                }
             }, (long) (invulnerableDuration * 20));
 
             // allows the player to move again
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                currentSpellFrozenPlayers.forEach(uuid -> frozenPlayers.remove(uuid));
+                for(UUID uuid : frozenPlayers){
+                    PlayerData opData = Grimmoire.instance.getPlayerDataManager().getData(uuid);
+                    opData.setFrozen(false);
+                }
             }, (long) (freezeDuration * 20));
 
         }, (long) (castTime * 20));
@@ -92,30 +90,6 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
         return true;
     }
 
-    // Freezes players
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e){
-
-        Location from = e.getFrom();
-        Location to = e.getTo();
-        if(frozenPlayers.contains(e.getPlayer().getUniqueId())){
-            if(LocationUtil.hasMoved(to, from)){
-                e.setCancelled(true);
-            }
-        }
-
-    }
-
-    // makes player invulnerable
-    @EventHandler
-    public void onPlayerTakeDamager(EntityDamageEvent e){
-        Entity entity = e.getEntity();
-        if(entity instanceof Player){
-            if(invulnerablePlayers.contains(entity.getUniqueId())){
-                e.setCancelled(true);
-            }
-        }
-    }
 
     @Override
     public void loadSettings() {

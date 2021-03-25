@@ -10,15 +10,13 @@ import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ProjectileWaterHitChecker;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -27,10 +25,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitTask;
@@ -265,6 +265,35 @@ public class PlayerWatcher implements Listener {
         casterData.stopTimedCast();
         if(cause == StopTimedCastSpellEvent.Cause.CANCELED_BY_DAMAGE){
             casterData.getSpellsOnCooldown().remove(spell);
+        }
+    }
+
+    // Freezes players
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent e){
+
+        Location from = e.getFrom();
+        Location to = e.getTo();
+        Player player = e.getPlayer();
+        PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        if(pd.isFrozen()){
+            if(LocationUtil.hasMoved(to, from)){
+                e.setCancelled(true);
+            }
+        }
+
+    }
+
+    // makes player invulnerable
+    @EventHandler
+    public void onPlayerTakeDamager(EntityDamageEvent e){
+        Entity entity = e.getEntity();
+        if(entity instanceof Player){
+            Player player = (Player) entity;
+            PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+            if(pd.isInVulnerable()){
+                e.setCancelled(true);
+            }
         }
     }
 
