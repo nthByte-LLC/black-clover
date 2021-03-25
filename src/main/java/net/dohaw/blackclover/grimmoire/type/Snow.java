@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.snow.Freeze;
 import net.dohaw.blackclover.grimmoire.spell.type.snow.IceSpike;
 import net.dohaw.blackclover.grimmoire.spell.type.snow.Snowball;
 import net.dohaw.blackclover.grimmoire.spell.type.snow.Snowman;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class Snow extends GrimmoireWrapper {
 
+    public Freeze freeze;
     public IceSpike iceSpike;
     public Snowball snowball;
     public Snowman snowman;
@@ -47,6 +49,9 @@ public class Snow extends GrimmoireWrapper {
 
         this.iceSpike = new IceSpike(config);
         this.spells.put(SpellType.ICE_SPIKE, iceSpike);
+
+        this.freeze = new Freeze(config);
+        this.spells.put(SpellType.FREEZE, freeze);
 
     }
 
