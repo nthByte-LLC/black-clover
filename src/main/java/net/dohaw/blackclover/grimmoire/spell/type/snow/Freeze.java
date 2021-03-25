@@ -7,15 +7,14 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
-import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.*;
@@ -36,12 +35,17 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
 
         Player player = pd.getPlayer();
 
-        TornadoParticleRunner pr1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 0.5f), true, 1, false);
-        TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 0.5f), true, 1, true);
-        pd.addSpellRunnable(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 2L), pr2.runTaskTimer(Grimmoire.instance, 0L, 2L));
+        TornadoParticleRunner pr1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 1), true, radius, false);
+        pr1.setVerticalPointSpread(0.1);
+        TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, true);
+        pr2.setVerticalPointSpread(0.1);
+        pd.addSpellRunnable(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 1L), pr2.runTaskTimer(Grimmoire.instance, 0L, 1L));
+        SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
 
+            SpellUtils.playSound(player, Sound.BLOCK_ANVIL_PLACE);
+            SpellUtils.spawnParticle(player, Particle.FLASH, 10, 1, 1, 1);
             pd.stopTimedCast();
             Collection<Entity> entitiesInRange = player.getNearbyEntities(radius, radius, radius);
             List<UUID> currentSpellFrozenPlayers = new ArrayList<>();
@@ -54,10 +58,19 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
                 }
                 if(en instanceof Player){
                     Player playerAffected = (Player) en;
+                    UUID playerAffectedUUID = playerAffected.getUniqueId();
+                    // if they aren't already frozen, then add them to the list of the current spell's frozen players.
+                    if(!frozenPlayers.contains(playerAffectedUUID)){
+                        currentSpellFrozenPlayers.add(playerAffected.getUniqueId());
+                    }
+                    // same thing here
+                    if(!invulnerablePlayers.contains(playerAffectedUUID)){
+                        currentSpellInvulnerablePlayers.add(playerAffected.getUniqueId());
+                    }
+                    // i don't need to run a #contains check because hashsets don't add duplicate entries.
                     frozenPlayers.add(playerAffected.getUniqueId());
                     invulnerablePlayers.add(playerAffected.getUniqueId());
-                    currentSpellInvulnerablePlayers.add(playerAffected.getUniqueId());
-                    currentSpellFrozenPlayers.add(playerAffected.getUniqueId());
+
                 }
             }
 
@@ -92,13 +105,24 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
 
     }
 
+    // makes player invulnerable
+    @EventHandler
+    public void onPlayerTakeDamager(EntityDamageEvent e){
+        Entity entity = e.getEntity();
+        if(entity instanceof Player){
+            if(invulnerablePlayers.contains(entity.getUniqueId())){
+                e.setCancelled(true);
+            }
+        }
+    }
+
     @Override
     public void loadSettings() {
         super.loadSettings();
         this.castTime = grimmoireConfig.getDoubleSetting(KEY, "Cast Time");
         this.radius = grimmoireConfig.getDoubleSetting(KEY, "Radius");
-        this.invulnerableDuration = grimmoireConfig.getDoubleSetting(KEY, "Invulnerable Duration");
-        this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Freeze Duration");
+        this.invulnerableDuration = grimmoireConfig.getDoubleSetting(KEY, "Duration Invulnerable");
+        this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Duration Freeze");
     }
 
 }

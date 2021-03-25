@@ -82,7 +82,7 @@ public class PlayerData {
         return spellRunnables.containsKey(spellType);
     }
 
-    public void removeActiveSpell(SpellType spellType){
+    public void stopSpellRunnables(SpellType spellType){
         List<BukkitTask> runnables = spellRunnables.get(spellType);
         runnables.forEach(BukkitTask::cancel);
         spellRunnables.remove(spellType);
@@ -100,7 +100,11 @@ public class PlayerData {
     public void stopTimedCast(){
         this.castStartHealth = 0;
         this.isCurrentlyCasting = false;
+        if(spellRunnables.containsKey(spellCurrentlyCasting)){
+            stopSpellRunnables(spellCurrentlyCasting);
+        }
         this.spellCurrentlyCasting = null;
+
     }
 
     public void merge(PlayerData previousData){

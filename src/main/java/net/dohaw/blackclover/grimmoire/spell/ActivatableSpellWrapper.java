@@ -26,7 +26,7 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
                 instance.updateRegenBar(updatedData);
                 doRunnableSpecifics(updatedData);
             }else{
-                updatedData.removeActiveSpell(this.KEY);
+                updatedData.stopSpellRunnables(this.KEY);
             }
 
         }, 1, 20);

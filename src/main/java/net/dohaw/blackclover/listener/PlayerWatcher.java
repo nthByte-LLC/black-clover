@@ -78,7 +78,7 @@ public class PlayerWatcher implements Listener {
                     e.setCancelled(true);
                     if(pd.isSpellActive(spellType)){
                         if(player.isSneaking()){
-                            pd.removeActiveSpell(spellType);
+                            pd.stopSpellRunnables(spellType);
                             // This event is called just in case we want to do anything to the player after we remove the active spell
                             PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
                             Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);

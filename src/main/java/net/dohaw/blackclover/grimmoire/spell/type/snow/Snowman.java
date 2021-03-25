@@ -15,12 +15,15 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.projectiles.ProjectileSource;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -76,6 +79,7 @@ public class Snowman extends CastSpellWrapper implements Listener {
     public void onTargetOwner(EntityTargetEvent e){
         Entity entity = e.getEntity();
         if(entity.getType() == EntityType.SNOWMAN){
+            System.out.println("SNOWMAN IS TARGETTING!");
             if(entity.getPersistentDataContainer().has(OWNER_NSK, PersistentDataType.STRING)){
                 Entity target = e.getTarget();
                 if(target != null){
@@ -87,6 +91,36 @@ public class Snowman extends CastSpellWrapper implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void onHitSnowman(EntityDamageByEntityEvent e){
+
+        Entity damaged = e.getEntity();
+        if(damaged.getType() == EntityType.SNOWMAN && damaged.getPersistentDataContainer().has(OWNER_NSK, PersistentDataType.STRING)){
+
+            UUID snowmanOwner = UUID.fromString(Objects.requireNonNull(damaged.getPersistentDataContainer().get(OWNER_NSK, PersistentDataType.STRING)));
+            Entity eDamager = e.getDamager();
+            Player damager = null;
+
+            if(eDamager instanceof Player){
+                damager = (Player) eDamager;
+            }else if(eDamager instanceof Projectile) {
+                Projectile proj = (Projectile) eDamager;
+                ProjectileSource shooter = proj.getShooter();
+                if (shooter instanceof Player) {
+                    damager = (Player) shooter;
+                }
+            }
+
+            if(damager != null){
+                // cancels the damager if you are the snowman's owner.
+                if(damager.getUniqueId().equals(snowmanOwner)){
+                    e.setCancelled(true);
+                }
+            }
+
         }
     }
 
