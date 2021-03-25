@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.grimmoire.spell.type.snow;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.StopTimedCastSpellEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -46,7 +47,8 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
 
             SpellUtils.playSound(player, Sound.BLOCK_ANVIL_PLACE);
             SpellUtils.spawnParticle(player, Particle.FLASH, 10, 1, 1, 1);
-            pd.stopTimedCast();
+            Bukkit.getServer().getPluginManager().callEvent(new StopTimedCastSpellEvent(player, KEY, StopTimedCastSpellEvent.Cause.COMPLETE_CAST));
+
             Collection<Entity> entitiesInRange = player.getNearbyEntities(radius, radius, radius);
             List<UUID> currentSpellFrozenPlayers = new ArrayList<>();
             List<UUID> currentSpellInvulnerablePlayers = new ArrayList<>();

@@ -72,7 +72,7 @@ public class PlayerWatcher implements Listener {
 
             if(spellBoundToSlot != null){
 
-                if(pd.isCanCast()){
+                if(pd.isCanCast() && !pd.isCurrentlyCasting()){
 
                     SpellType spellType = spellBoundToSlot.getKEY();
                     e.setCancelled(true);
@@ -101,9 +101,8 @@ public class PlayerWatcher implements Listener {
                                 }
 
                                 if(spellBoundToSlot instanceof TimeCastable){
-                                    pd.setCurrentlyCasting(true);
-                                    pd.setCastStartHealth(player.getHealth());
-                                    pd.setSpellCurrentlyCasting(spellType);
+                                    StartTimedCastSpellEvent event = new StartTimedCastSpellEvent(player, spellType);
+                                    Bukkit.getPluginManager().callEvent(event);
                                 }
 
                                 Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
@@ -233,8 +232,9 @@ public class PlayerWatcher implements Listener {
     }
 
     @EventHandler (priority = EventPriority.HIGH)
-    public void onSpellDamageWhileCast(SpellDamageEvent e){
-        Entity eDamaged = e.getDamaged();
+    public void onSpellDamageWhileCast(EntityDamageByEntityEvent e){
+
+        Entity eDamaged = e.getEntity();
         if(eDamaged instanceof Player){
             Player damaged = (Player) eDamaged;
             PlayerData damagedPlayerData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
@@ -249,13 +249,22 @@ public class PlayerWatcher implements Listener {
                 // when they lose 5 hearts from their initial health amount from when they started casting, then stop the casting.
                 if(stopCastHealthTreshold >= damaged.getHealth()){
                     SpellType spell = damagedPlayerData.getSpellCurrentlyCasting();
-                    damagedPlayerData.setCurrentlyCasting(false);
-                    damagedPlayerData.setCastStartHealth(0);
-                    damagedPlayerData.getSpellsOnCooldown().remove(spell);
                     Bukkit.getServer().getPluginManager().callEvent(new StopTimedCastSpellEvent(damaged, spell, StopTimedCastSpellEvent.Cause.CANCELED_BY_DAMAGE));
                 }
 
             }
+        }
+    }
+
+    @EventHandler
+    public void onStopTimedCastSpell(StopTimedCastSpellEvent e){
+        StopTimedCastSpellEvent.Cause cause = e.getCause();
+        Player caster = e.getCaster();
+        SpellType spell = e.getSpell();
+        PlayerData casterData = plugin.getPlayerDataManager().getData(caster.getUniqueId());
+        casterData.stopTimedCast();
+        if(cause == StopTimedCastSpellEvent.Cause.CANCELED_BY_DAMAGE){
+            casterData.getSpellsOnCooldown().remove(spell);
         }
     }
 

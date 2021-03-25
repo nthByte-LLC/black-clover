@@ -5,6 +5,7 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.spells.HealthStealer;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -58,10 +59,7 @@ public class Absorption extends CastSpellWrapper {
                 },0, 1);
 
                 // steals the health from the target and gives it to the caster.
-                BukkitTask healthStealer = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-                    double alteredHealth = SpellUtils.alterHealth(le, -stealAmount);
-                    SpellUtils.alterHealth(player, alteredHealth);
-                }, 0, (long) stealInterval);
+                BukkitTask healthStealer = new HealthStealer(player, le, stealAmount, particleLineDrawer).runTaskTimer(Grimmoire.instance,0, (long) stealInterval);
 
                 Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                     healthStealer.cancel();

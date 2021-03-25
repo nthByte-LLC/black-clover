@@ -2,7 +2,6 @@ package net.dohaw.blackclover.event;
 
 import lombok.Getter;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

@@ -92,8 +92,10 @@ public class SpellUtils {
         double health = livingEntity.getHealth();
         double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         double newHealth = health + amount;
-        if(newHealth > 20 || newHealth < 0){
+        if(newHealth > 20) {
             livingEntity.setHealth(maxHealth);
+        }else if(newHealth <= 0){
+            livingEntity.setHealth(0);
         }else{
             livingEntity.setHealth(newHealth);
         }
