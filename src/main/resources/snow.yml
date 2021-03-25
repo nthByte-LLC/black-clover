@@ -7,3 +7,29 @@ Spell Settings:
     Regen Consumed: 100
     # 2 damage points is 1 heart
     Damage: 2
+  snow_man:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  ice_spike:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Damage: 3
+  freeze:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration Freeze: 10
+    Duration Invulnerable: 10
+    Cast Time: 2.5
+    Radius: 10
+  skating:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  ice_age:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Velocity Scale: 1

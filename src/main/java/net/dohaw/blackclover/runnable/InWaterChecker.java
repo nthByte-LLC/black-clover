@@ -20,7 +20,7 @@ public class InWaterChecker extends BukkitRunnable {
 
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
         if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.WATER){
-            if(pd.getActiveSpells().containsKey(SpellType.WATER_CONTROL)){
+            if(pd.getSpellRunnables().containsKey(SpellType.WATER_CONTROL)){
                 boolean isInWater = player.getLocation().getBlock().isLiquid();
                 if(isInWater){
                     player.setRemainingAir(player.getMaximumAir());

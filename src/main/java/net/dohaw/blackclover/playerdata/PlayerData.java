@@ -14,6 +14,18 @@ import java.util.*;
 
 public class PlayerData {
 
+    /*
+        For spells that have a cast time like "Freeze" from the Snow grimmoire
+     */
+    @Getter @Setter
+    private boolean isCurrentlyCasting;
+
+    @Getter @Setter
+    private double castStartHealth;
+
+    @Getter @Setter
+    private SpellType spellCurrentlyCasting;
+
     @Getter @Setter
     private boolean canCast = true;
 
@@ -21,7 +33,7 @@ public class PlayerData {
     private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
 
     @Getter
-    private Map<SpellType, List<BukkitTask>> activeSpells = new HashMap<>();
+    private Map<SpellType, List<BukkitTask>> spellRunnables = new HashMap<>();
 
     @Getter @Setter
     private int maxRegen, regenAmount;
@@ -67,22 +79,28 @@ public class PlayerData {
     }
 
     public boolean isSpellActive(SpellType spellType){
-        return activeSpells.containsKey(spellType);
+        return spellRunnables.containsKey(spellType);
     }
 
     public void removeActiveSpell(SpellType spellType){
-        List<BukkitTask> runnables = activeSpells.get(spellType);
+        List<BukkitTask> runnables = spellRunnables.get(spellType);
         runnables.forEach(BukkitTask::cancel);
-        activeSpells.remove(spellType);
+        spellRunnables.remove(spellType);
     }
 
-    public void addActiveSpell(SpellType spellType, BukkitTask task){
+    public void addSpellRunnable(SpellType spellType, BukkitTask ...task){
         List<BukkitTask> tasks = new ArrayList<>();
-        if(activeSpells.containsKey(spellType)){
-            tasks = activeSpells.get(spellType);
+        if(spellRunnables.containsKey(spellType)){
+            tasks = spellRunnables.get(spellType);
         }
-        tasks.add(task);
-        activeSpells.put(spellType, tasks);
+        tasks.addAll(Arrays.asList(task));
+        spellRunnables.put(spellType, tasks);
+    }
+
+    public void stopTimedCast(){
+        this.castStartHealth = 0;
+        this.isCurrentlyCasting = false;
+        this.spellCurrentlyCasting = null;
     }
 
     public void merge(PlayerData previousData){

@@ -56,6 +56,7 @@ public class Snowman extends CastSpellWrapper implements Listener {
                     SpellUtils.playSound(player, Sound.BLOCK_SNOW_BREAK);
                 }else{
                     player.sendMessage("You already have a snowman spawned!");
+                    return false;
                 }
             }
         }else{
@@ -64,6 +65,7 @@ public class Snowman extends CastSpellWrapper implements Listener {
             } catch (UnexpectedPlayerData unexpectedPlayerData) {
                 unexpectedPlayerData.printStackTrace();
             }
+            return false;
         }
 
         return true;

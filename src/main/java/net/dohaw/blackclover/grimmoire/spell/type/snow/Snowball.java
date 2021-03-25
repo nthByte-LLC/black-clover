@@ -25,10 +25,11 @@ public class Snowball extends CastSpellWrapper implements Listener {
         return true;
     }
 
+    // Sets the snowball damage if the event isn't cancelled
     @EventHandler
     public void onProjectileDamage(SpellDamageEvent e){
         if(e.getSpell() == KEY){
-            if(e.isCancelled()){
+            if(!e.isCancelled()){
                 e.setDamage(damage);
             }
         }
@@ -39,4 +40,5 @@ public class Snowball extends CastSpellWrapper implements Listener {
         super.loadSettings();
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
+
 }

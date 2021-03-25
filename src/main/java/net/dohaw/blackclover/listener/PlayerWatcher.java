@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ProjectileWaterHitChecker;
@@ -22,15 +23,20 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerWatcher implements Listener {
@@ -88,10 +94,18 @@ public class PlayerWatcher implements Listener {
                                     PreStartActiveSpellEvent preStartActiveSpellEvent = new PreStartActiveSpellEvent(spellType, player);
                                     Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
                                 }
+
                                 boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
                                 if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
                                     spellBoundToSlot.deductMana(pd);
                                 }
+
+                                if(spellBoundToSlot instanceof TimeCastable){
+                                    pd.setCurrentlyCasting(true);
+                                    pd.setCastStartHealth(player.getHealth());
+                                    pd.setSpellCurrentlyCasting(spellType);
+                                }
+
                                 Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
                             }else{
                                 player.sendMessage("You don't have enough mana at the moment!");
@@ -191,6 +205,58 @@ public class PlayerWatcher implements Listener {
     public void onProjLaunch(ProjectileLaunchEvent e){
         Projectile projectile = e.getEntity();
         new ProjectileWaterHitChecker(projectile).runTaskTimer(plugin, 0L, 2L);
+    }
+
+    @EventHandler
+    public void onStartCastSpell(StartTimedCastSpellEvent e){
+        Player player = e.getCaster();
+        PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        pd.setCurrentlyCasting(true);
+        pd.setCastStartHealth(player.getHealth());
+    }
+
+    /*
+        Removes the tasks that are associated with the spell on death.
+     */
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent e){
+        PlayerData pd = plugin.getPlayerDataManager().getData(e.getEntity().getUniqueId());
+        Map<SpellType, List<BukkitTask>> spellTasks = pd.getSpellRunnables();
+        for (SpellType spell : spellTasks.keySet()) {
+            List<BukkitTask> tasks = spellTasks.remove(spell);
+            tasks.forEach(BukkitTask::cancel);
+        }
+        // if they die while casting, then we just stop casting.
+        if(pd.isCurrentlyCasting()){
+            pd.stopTimedCast();
+        }
+    }
+
+    @EventHandler (priority = EventPriority.HIGH)
+    public void onSpellDamageWhileCast(SpellDamageEvent e){
+        Entity eDamaged = e.getDamaged();
+        if(eDamaged instanceof Player){
+            Player damaged = (Player) eDamaged;
+            PlayerData damagedPlayerData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
+            if(damagedPlayerData.isCurrentlyCasting()){
+
+                final int CAST_HEALTH_DIFF = 10;
+                double stopCastHealthTreshold = damagedPlayerData.getCastStartHealth() - CAST_HEALTH_DIFF;
+                if(stopCastHealthTreshold < 0){
+                    stopCastHealthTreshold = 0;
+                }
+
+                // when they lose 5 hearts from their initial health amount from when they started casting, then stop the casting.
+                if(stopCastHealthTreshold >= damaged.getHealth()){
+                    SpellType spell = damagedPlayerData.getSpellCurrentlyCasting();
+                    damagedPlayerData.setCurrentlyCasting(false);
+                    damagedPlayerData.setCastStartHealth(0);
+                    damagedPlayerData.getSpellsOnCooldown().remove(spell);
+                    Bukkit.getServer().getPluginManager().callEvent(new StopTimedCastSpellEvent(damaged, spell, StopTimedCastSpellEvent.Cause.CANCELED_BY_DAMAGE));
+                }
+
+            }
+        }
     }
 
 }

@@ -70,7 +70,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
         CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
         particleRunner.setMaxYAdditive(0.4);
 
-        caster.addActiveSpell(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
+        caster.addSpellRunnable(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
 
     }
 

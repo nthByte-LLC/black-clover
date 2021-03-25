@@ -8,14 +8,10 @@ import org.bukkit.event.HandlerList;
 
 public class CreatePlayerDataEvent extends Event {
 
-    private boolean isCancelled = false;
     private static final HandlerList HANDLERS_LIST = new HandlerList();
 
     @Getter
     private PlayerData playerData;
-
-    @Getter
-    private SpellWrapper spellCasted;
 
     public CreatePlayerDataEvent(PlayerData playerData){
         this.playerData = playerData;
