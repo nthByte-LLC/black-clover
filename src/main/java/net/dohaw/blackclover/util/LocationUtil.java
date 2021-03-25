@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
-public class BlockUtil {
+public class LocationUtil {
 
     public static Block getBlockToSide(Location loc){
         final int newZ = (int) (loc.getZ() + ( 1 * Math.sin(Math.toRadians(loc.getYaw()))));
@@ -32,6 +32,13 @@ public class BlockUtil {
         // shifts direction to the left
         leftDirectionLocation.setYaw(leftDirectionLocation.getYaw() - 90);
         return loc.clone().add(leftDirectionLocation.getDirection().multiply(numBlocks));
+    }
+
+    public static boolean hasMoved(Location to, Location from){
+        if(to != null){
+            return from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ();
+        }
+        return false;
     }
 
 }

@@ -1,7 +1,7 @@
 package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.util.BlockUtil;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.corelib.JPUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,7 +40,7 @@ public class WaterWallRotator extends BukkitRunnable implements Listener {
         waterWallBlocks.clear();
 
         // Gets the first block placed.
-        Location locationInFront = BlockUtil.getLocationInFront(caster, 2);
+        Location locationInFront = LocationUtil.getLocationInFront(caster, 2);
         if(locationInFront.getBlock().getType() == Material.AIR){
             waterWallBlocks.add(locationInFront);
             markBlock(locationInFront.getBlock());
@@ -58,9 +58,9 @@ public class WaterWallRotator extends BukkitRunnable implements Listener {
             for(int z = 1; z <= 2; z++){
                 Location firstColumnBlock = locationInFront.clone();
                 if(z % 2 == 0){
-                    firstColumnBlock = BlockUtil.getLocationToRight(firstColumnBlock, x);
+                    firstColumnBlock = LocationUtil.getLocationToRight(firstColumnBlock, x);
                 }else{
-                    firstColumnBlock = BlockUtil.getLocationToLeft(firstColumnBlock, x);
+                    firstColumnBlock = LocationUtil.getLocationToLeft(firstColumnBlock, x);
                 }
 
                 // Fills in the columns.

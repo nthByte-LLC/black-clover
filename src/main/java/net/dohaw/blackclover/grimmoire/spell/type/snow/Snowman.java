@@ -6,7 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.SnowPlayerData;
-import net.dohaw.blackclover.util.BlockUtil;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -43,7 +43,7 @@ public class Snowman extends CastSpellWrapper implements Listener {
             SnowPlayerData spd = (SnowPlayerData) pd;
             if(!spd.isSnowmanSpawned()){
 
-                Location snowmanLocation = BlockUtil.getLocationInFront(player, 1).add(0, 1, 0);
+                Location snowmanLocation = LocationUtil.getLocationInFront(player, 1).add(0, 1, 0);
                 org.bukkit.entity.Snowman snowman = (org.bukkit.entity.Snowman) player.getWorld().spawnEntity(snowmanLocation, EntityType.SNOWMAN);
 
                 SpellUtils.spawnParticle(snowmanLocation, Particle.SNOWBALL, 30, 0.5f, 0.5f, 0.5f);

@@ -5,7 +5,7 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.util.BlockUtil;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -30,9 +30,9 @@ public class LeafWall extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Location locInFront = BlockUtil.getLocationInFront(player, 2).add(0, 1, 0);
+        Location locInFront = LocationUtil.getLocationInFront(player, 2).add(0, 1, 0);
         int leftAmount = width % 2 == 0 ? width / 2 : (width - 1) / 2;
-        Location startingWallLocation = BlockUtil.getLocationToLeft(locInFront, leftAmount);
+        Location startingWallLocation = LocationUtil.getLocationToLeft(locInFront, leftAmount);
         Location currentWallLocation = startingWallLocation.clone();
         List<Location> leafLocations = new ArrayList<>();
 
@@ -48,7 +48,7 @@ public class LeafWall extends CastSpellWrapper {
                 currentWallLocation = currentWallLocation.add(0, 1, 0);
 
             }
-            currentWallLocation = BlockUtil.getLocationToRight(startingWallLocation, x + 1);
+            currentWallLocation = LocationUtil.getLocationToRight(startingWallLocation, x + 1);
         }
 
         SpellUtils.playSound(locInFront, Sound.BLOCK_GRASS_BREAK);

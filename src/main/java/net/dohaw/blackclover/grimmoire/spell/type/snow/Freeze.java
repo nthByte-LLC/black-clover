@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -98,10 +99,8 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
         Location from = e.getFrom();
         Location to = e.getTo();
         if(frozenPlayers.contains(e.getPlayer().getUniqueId())){
-            if(to != null){
-                if(from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ()){
-                    e.setCancelled(true);
-                }
+            if(LocationUtil.hasMoved(to, from)){
+                e.setCancelled(true);
             }
         }
 

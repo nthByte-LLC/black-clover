@@ -6,7 +6,7 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.util.BlockUtil;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
 import org.bukkit.Bukkit;
@@ -42,7 +42,7 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
             if(entityInSight instanceof LivingEntity) {
 
                 LivingEntity livingEntityInSight = (LivingEntity) entityInSight;
-                Wolf wolf = (Wolf) player.getWorld().spawnEntity(BlockUtil.getLocationInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
+                Wolf wolf = (Wolf) player.getWorld().spawnEntity(LocationUtil.getLocationInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
                 wolf.setInvisible(true);
                 wolf.setGlowing(true);
                 wolf.setTarget(livingEntityInSight);
