@@ -5,12 +5,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.ash.AshBomb;
+import net.dohaw.blackclover.grimmoire.spell.type.ash.AshPunch;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Ash extends GrimmoireWrapper {
 
+    public AshPunch ashPunch;
     public AshBomb ashBomb;
 
     public Ash() {
@@ -37,6 +39,9 @@ public class Ash extends GrimmoireWrapper {
 
         this.ashBomb = new AshBomb(config);
         this.spells.put(SpellType.ASH_BOMB, ashBomb);
+
+        this.ashPunch = new AshPunch(config);
+        this.spells.put(SpellType.ASH_PUNCH, ashPunch);
 
     }
 }

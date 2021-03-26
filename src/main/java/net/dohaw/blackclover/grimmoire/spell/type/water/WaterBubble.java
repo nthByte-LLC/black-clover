@@ -37,7 +37,10 @@ public class WaterBubble extends CastSpellWrapper implements Listener {
         // Gets the blocks within the cube and sets them as air to create a air bubble
         // Gets the snapshot object so that we do a material check later down the road (In the runTaskLater runnable)
         List<BlockSnapshot> cubeBlocks = ShapeUtils.getBlockSnapshotsInCube(player.getLocation(), radius);
-        cubeBlocks.forEach(snapshot -> snapshot.getLocation().getBlock().setType(Material.AIR));
+        cubeBlocks.removeIf(snapshot -> !snapshot.getLocation().getBlock().isLiquid());
+        cubeBlocks.forEach(snapshot -> {
+            snapshot.getLocation().getBlock().setType(Material.AIR);
+        });
         outlineOfWaterBubbles.put(player.getUniqueId(), cubeOutline);
         // Replaces the air that was set earlier back to water.
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {

@@ -103,4 +103,23 @@ public class SpellUtils {
         return (health + Math.abs(amount)) - health;
     }
 
+    /*
+        Valid meaning the target isn't null and it's an instance of LivingEntity
+     */
+    //TODO: Need to refractor code to where they're all using this method instead of hardcoding this every single time.
+    public static boolean isTargetValid(Player player, int castDistance){
+        Entity entityInSight = getEntityInLineOfSight(player, castDistance);
+        if(entityInSight != null){
+            if(entityInSight instanceof LivingEntity){
+                return true;
+            }else{
+                player.sendMessage("This is not a valid entity!");
+                return false;
+            }
+        }else{
+            player.sendMessage("There is not entity within a reasonable distance from you!");
+            return false;
+        }
+    }
+
 }

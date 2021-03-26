@@ -6,6 +6,7 @@ import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.ProbabilityUtilities;
 import net.dohaw.corelib.StringUtils;
@@ -15,6 +16,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,6 +31,21 @@ public class PlayerDataManager {
 
     public PlayerDataManager(BlackCloverPlugin plugin){
         this.plugin = plugin;
+        /*
+            Removes entries that have no tasks or have all their tasks canceled.
+         */
+        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            for(PlayerData data : playerData.values()){
+                Map<SpellType, List<BukkitTask>> spellTasks = data.getSpellRunnables();
+                for(Map.Entry<SpellType, List<BukkitTask>> entry : spellTasks.entrySet()){
+                    List<BukkitTask> tasks = entry.getValue();
+                    tasks.removeIf(BukkitTask::isCancelled);
+                    System.out.println("SPELL: " + entry.getKey());
+                    System.out.println("TASKS: " +tasks.toString());
+                }
+                spellTasks.entrySet().removeIf(e -> e.getValue().isEmpty());
+            }
+        }, 0, 1200L);
     }
 
     public PlayerData getData(UUID uuid){

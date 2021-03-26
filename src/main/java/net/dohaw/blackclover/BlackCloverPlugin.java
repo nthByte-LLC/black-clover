@@ -65,7 +65,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         this.playerDataManager = new PlayerDataManager(this);
         JPUtils.registerEvents(new PlayerWatcher(this));
         registerGrimmoires();
-        new Regenerator(this).runTaskTimer(this, 0L, 20L);
+        new Regenerator(this).runTaskTimer(this, 0L, 10L);
         JPUtils.registerCommand("blackclover", new BlackCloverCommand(this));
 
         playerDataManager.loadAllData();

@@ -67,6 +67,9 @@ public class Octopus extends CastSpellWrapper implements Listener {
         return true;
     }
 
+    /*
+        If the player is using Octopus, they cancel all damage except if it's to an anti spell.
+     */
     @EventHandler
     public void onSpellDamage(SpellDamageEvent e){
 
@@ -75,12 +78,15 @@ public class Octopus extends CastSpellWrapper implements Listener {
 
             Player damagedPlayer = (Player) eDamaged;
             Player damagerPlayer = e.getDamager();
-            GrimmoireType damagerGrimmoire = Grimmoire.instance.getPlayerDataManager().getData(damagerPlayer.getUniqueId()).getGrimmoireWrapper().getKEY();
-            WaterPlayerData damagedPlayerData = (WaterPlayerData) Grimmoire.instance.getPlayerDataManager().getData(damagedPlayer.getUniqueId());
+            PlayerData damagedPlayerData = Grimmoire.instance.getPlayerDataManager().getData(damagedPlayer.getUniqueId());
 
-            if(damagedPlayerData.isUsingOctopus()){
-                if(damagerGrimmoire != GrimmoireType.ANTI){
-                    e.setCancelled(true);
+            if(damagedPlayerData instanceof WaterPlayerData){
+                WaterPlayerData wpd = (WaterPlayerData) damagedPlayerData;
+                if(wpd.isUsingOctopus()){
+                    GrimmoireType damagerGrimmoire = Grimmoire.instance.getPlayerDataManager().getData(damagerPlayer.getUniqueId()).getGrimmoireWrapper().getKEY();
+                    if(damagerGrimmoire != GrimmoireType.ANTI){
+                        e.setCancelled(true);
+                    }
                 }
             }
 
