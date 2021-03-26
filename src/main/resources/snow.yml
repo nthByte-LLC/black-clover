@@ -32,6 +32,9 @@ Spell Settings:
     Regen Consumed: 100
     Duration: 10
   ice_age:
-    Hotbar Number: 1
+    Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 8
+    Radius: 25
+    Duration: 10

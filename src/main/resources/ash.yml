@@ -1,0 +1,27 @@
+Display Name Color: "&0"
+
+Spell Settings:
+  ash_bomb:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+  ash_punch:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  ash_flight:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  ash_form:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  ash_beam:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  smoke_bomb:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

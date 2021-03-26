@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Snow extends GrimmoireWrapper {
 
+    public IceAge iceAge;
     public Skating skating;
     public Freeze freeze;
     public IceSpike iceSpike;
@@ -53,6 +54,9 @@ public class Snow extends GrimmoireWrapper {
 
         this.skating = new Skating(config);
         this.spells.put(SpellType.SKATING, skating);
+
+        this.iceAge = new IceAge(config);
+        this.spells.put(SpellType.ICE_AGE, iceAge);
 
     }
 

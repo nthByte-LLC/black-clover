@@ -73,7 +73,17 @@ public enum SpellType {
     ICE_SPIKE("ice_spike", false),
     FREEZE("freeze", false),
     SKATING("skating", false),
-    ICE_AGE("ice_age", true);
+    ICE_AGE("ice_age", true),
+
+    /*
+        Ash spells
+     */
+    ASH_BOMB("ash_bomb", false),
+    ASH_PUNCH("ash_punch", false),
+    ASH_FLIGHT("ash_flight", false),
+    ASH_FORM("ash_form", false),
+    ASH_BEAM("ash_beam", false),
+    SMOKE_BOMB("smoke_bomb", true);
 
 
     @Getter
