@@ -106,10 +106,7 @@ public class PlayerData {
     public void stopTimedCast(){
         this.castStartHealth = 0;
         this.isCurrentlyCasting = false;
-        System.out.println("STOP TIMED CAST");
-        System.out.println("MAP: " + spellRunnables.toString());
         if(spellRunnables.containsKey(spellCurrentlyCasting)){
-            System.out.println("SPELL RUNNABLE CONTAINS SPELL");
             stopSpellRunnables(spellCurrentlyCasting);
         }
         this.spellCurrentlyCasting = null;

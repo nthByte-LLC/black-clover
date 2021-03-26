@@ -95,14 +95,14 @@ public class PlayerWatcher implements Listener {
                                     Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
                                 }
 
-                                boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
-                                if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
-                                    spellBoundToSlot.deductMana(pd);
-                                }
-
                                 if(spellBoundToSlot instanceof TimeCastable){
                                     StartTimedCastSpellEvent event = new StartTimedCastSpellEvent(player, spellType);
                                     Bukkit.getPluginManager().callEvent(event);
+                                }
+
+                                boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                                if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
+                                    spellBoundToSlot.deductMana(pd);
                                 }
 
                                 Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
@@ -212,6 +212,7 @@ public class PlayerWatcher implements Listener {
         PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
         pd.setCurrentlyCasting(true);
         pd.setCastStartHealth(player.getHealth());
+        pd.setSpellCurrentlyCasting(e.getSpell());
     }
 
     /*
