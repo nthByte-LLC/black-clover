@@ -3,12 +3,15 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.ash.AshBomb;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Ash extends GrimmoireWrapper {
+
+    public AshBomb ashBomb;
 
     public Ash() {
         super(GrimmoireType.ASH);
@@ -31,6 +34,9 @@ public class Ash extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
+        this.ashBomb = new AshBomb(config);
+        this.spells.put(SpellType.ASH_BOMB, ashBomb);
 
     }
 }
