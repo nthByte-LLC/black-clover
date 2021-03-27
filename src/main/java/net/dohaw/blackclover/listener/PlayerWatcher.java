@@ -72,7 +72,7 @@ public class PlayerWatcher implements Listener {
 
             if(spellBoundToSlot != null){
 
-                if(pd.isCanCast() && !pd.isCurrentlyCasting()){
+                if(pd.canCast() && !pd.isCurrentlyCasting()){
 
                     SpellType spellType = spellBoundToSlot.getKEY();
                     e.setCancelled(true);

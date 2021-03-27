@@ -26,7 +26,7 @@ public class PlayerData {
     @Getter @Setter
     private SpellType spellCurrentlyCasting;
 
-    @Getter @Setter
+    @Setter
     private boolean canCast = true;
 
     @Getter @Setter
@@ -90,8 +90,17 @@ public class PlayerData {
 
     public void stopSpellRunnables(SpellType spellType){
         List<BukkitTask> runnables = spellRunnables.get(spellType);
-        runnables.forEach(BukkitTask::cancel);
-        spellRunnables.remove(spellType);
+        if(runnables != null){
+            runnables.forEach(BukkitTask::cancel);
+            spellRunnables.remove(spellType);
+        }
+    }
+
+    public void stopAllRunnables(){
+        spellRunnables.forEach((k , l) -> {
+            l.forEach(BukkitTask::cancel);
+        });
+        spellRunnables.clear();
     }
 
     public void addSpellRunnable(SpellType spellType, BukkitTask ...task){
@@ -116,6 +125,16 @@ public class PlayerData {
         this.maxRegen = previousData.maxRegen;
         this.regenAmount = previousData.regenAmount;
         this.config = previousData.config;
+    }
+
+    public boolean canCast(){
+        if(!(this instanceof AshPlayerData)){
+            return canCast;
+        }else{
+            // players in ash form can't cast.
+            AshPlayerData apd = (AshPlayerData) this;
+            return canCast && !apd.isInAshForm();
+        }
     }
 
     public void prepareDataRemoval(){

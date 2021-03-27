@@ -44,6 +44,12 @@ public class BlackCloverCommand implements CommandExecutor {
                         pd.setGrimmoireWrapper(wrapperFromAlias);
                         pd.setMaxRegen(plugin.getMaxRegen(wrapperFromAlias.getTier()));
                         pd.setRegenAmount(0);
+                        pd.stopAllRunnables();
+                        // changes the grimmoire, saves, and reloads the data. Reloading the data is crucial so that it can load the proper PlayerData object.
+                        pdm.saveData(potentialPlayer.getUniqueId());
+                        pdm.removeDataFromMemory(potentialPlayer.getUniqueId());
+                        plugin.removeRegenBar(potentialPlayer);
+                        pdm.loadData(potentialPlayer);
 
                         ItemStack grimmoire = PDCHandler.getGrimmoire(potentialPlayer);
                         if(grimmoire != null){
@@ -54,9 +60,6 @@ public class BlackCloverCommand implements CommandExecutor {
                         wrapperFromAlias.adaptItemStack(newGrimmoire);
 
                         potentialPlayer.getInventory().setItemInOffHand(newGrimmoire);
-
-                        plugin.removeRegenBar(potentialPlayer);
-                        pdm.initManaBar(potentialPlayer, wrapperFromAlias);
 
                         String newGrimmoireName = wrapperFromAlias.getKEY().toString();
                         if(sender instanceof Player){

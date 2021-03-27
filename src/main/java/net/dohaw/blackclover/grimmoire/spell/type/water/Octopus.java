@@ -40,15 +40,13 @@ public class Octopus extends CastSpellWrapper implements Listener {
 
                 TornadoParticleRunner particleRunner = new TornadoParticleRunner(player, new Particle.DustOptions(Color.BLUE, 1), false, 1.5, false);
                 TornadoParticleRunner particleRunner1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 1), false, 1.5, true);
+                wpd.addSpellRunnable(KEY, particleRunner1.runTaskTimer(Grimmoire.instance, 0L, 1L), particleRunner.runTaskTimer(Grimmoire.instance, 0L, 1L));
 
-                particleRunner1.runTaskTimer(Grimmoire.instance, 0L, 1L);
-                particleRunner.runTaskTimer(Grimmoire.instance, 0L, 1L);
                 SpellUtils.playSound(player, Sound.ENTITY_PLAYER_SPLASH_HIGH_SPEED);
 
                 wpd.setUsingOctopus(true);
                 Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                   particleRunner.cancel();
-                   particleRunner1.cancel();
+                   wpd.stopSpellRunnables(KEY);
                    wpd.setUsingOctopus(false);
                 }, (long) (duration * 20));
 

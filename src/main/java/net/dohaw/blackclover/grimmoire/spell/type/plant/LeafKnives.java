@@ -44,11 +44,12 @@ public class LeafKnives extends CastSpellWrapper {
                 Location loc = le.getLocation().clone();
 
                 // values that make it positive or negative
-                double xMultiplier = ThreadLocalRandom.current().nextInt(2) == 1 ? 1 : -1;
-                double zMultiplier = ThreadLocalRandom.current().nextInt(2) == 1 ? 1 : -1;
+                ThreadLocalRandom tlr = ThreadLocalRandom.current();
+                double xMultiplier = tlr.nextInt(2) == 1 ? 1 : -1;
+                double zMultiplier = tlr.nextInt(2) == 1 ? 1 : -1;
 
-                double xAdditive = ThreadLocalRandom.current().nextDouble(0.5, 3) * xMultiplier;
-                double zAdditive = ThreadLocalRandom.current().nextDouble(0.5, 3) * zMultiplier;
+                double xAdditive = tlr.nextDouble(0.5, 3) * xMultiplier;
+                double zAdditive = tlr.nextDouble(0.5, 3) * zMultiplier;
 
                 Location point1 = loc.clone().add(xAdditive, 3, zAdditive);
                 Location controlPoint = loc.clone().add(xAdditive, 0,0);
