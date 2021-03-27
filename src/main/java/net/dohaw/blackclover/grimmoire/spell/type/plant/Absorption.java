@@ -5,19 +5,17 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.runnable.particle.LineParticleRunner;
+import net.dohaw.blackclover.runnable.particle.EntityLineParticleRunner;
 import net.dohaw.blackclover.runnable.spells.HealthStealer;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.util.Vector;
 
 public class Absorption extends CastSpellWrapper {
 
@@ -43,7 +41,7 @@ public class Absorption extends CastSpellWrapper {
                 LivingEntity le = (LivingEntity) entityInSight;
 
                 // particle line drawer
-                BukkitTask particleLineDrawer = new LineParticleRunner(player, le, new Particle.DustOptions(Color.GREEN, 0.5f), 0.05).runTaskTimer(Grimmoire.instance, 0L, 1L);
+                BukkitTask particleLineDrawer = new EntityLineParticleRunner(player, le, new Particle.DustOptions(Color.GREEN, 0.5f), 0.05).runTaskTimer(Grimmoire.instance, 0L, 1L);
 
                 // steals the health from the target and gives it to the caster.
                 BukkitTask healthStealer = new HealthStealer(player, le, stealAmount, particleLineDrawer).runTaskTimer(Grimmoire.instance,0, (long) stealInterval);

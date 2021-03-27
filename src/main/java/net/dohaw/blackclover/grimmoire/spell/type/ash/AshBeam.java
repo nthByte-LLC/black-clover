@@ -8,12 +8,13 @@ import org.bukkit.event.Event;
 
 public class AshBeam extends CastSpellWrapper {
 
-    public AshBeam(SpellType spellType, GrimmoireConfig grimmoireConfig) {
-        super(spellType, grimmoireConfig);
+    public AshBeam(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.ASH_BEAM, grimmoireConfig);
     }
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
+
         return false;
     }
 }

@@ -3,49 +3,49 @@ package net.dohaw.blackclover.runnable.particle;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+/**
+ * Draws particles from one location to another.
+ */
 public class LineParticleRunner extends BukkitRunnable {
 
-    private Particle.DustOptions dustOptions;
-    private Entity startEntity, target;
-    private double spread;
-    private double count = 0;
+    protected Location start, end;
+    protected Particle.DustOptions dustOptions;
+    protected double spread, count;
 
-    public LineParticleRunner(Entity startEntity, Entity target, Particle.DustOptions dustOptions, double spread){
-        this.startEntity = startEntity;
-        this.target = target;
+    public LineParticleRunner(Location start, Location end, Particle.DustOptions dustOptions, double spread){
+        this.start = start;
+        this.end = end;
         this.dustOptions = dustOptions;
         this.spread = spread;
     }
 
-    @Override
-    public void run() {
+    public void updateLocations(){}
 
-        if(startEntity.isDead() || target.isDead()){
-            cancel();
-        }
+    protected Location getParticleLocation(){
+        Vector dir = end.clone().subtract(start).toVector();
+        Vector currentDir = dir.clone().multiply(count);
+        return start.clone().add(currentDir);
+    }
 
+    public void drawLine(){
         Location particleLoc = getParticleLocation();
-        boolean isWithinABlock = particleLoc.distance(target.getLocation()) <= 1;
+        boolean isWithinABlock = particleLoc.distance(end) <= 1;
         while(!isWithinABlock){
             SpellUtils.spawnParticle(particleLoc, Particle.REDSTONE, dustOptions, 30, 0, 0, 0);
             count += spread;
             particleLoc = getParticleLocation();
-            isWithinABlock = particleLoc.distance(target.getLocation()) <= 1;
+            isWithinABlock = particleLoc.distance(end) <= 1;
         }
         count = 0;
-
     }
 
-    private Location getParticleLocation(){
-        Location start = startEntity.getLocation();
-        Location end = target.getLocation();
-        Vector dir = end.clone().subtract(start).toVector();
-        Vector currentDir = dir.clone().multiply(count);
-        return start.clone().add(currentDir);
+    @Override
+    public void run() {
+        updateLocations();
+        drawLine();
     }
 
 }
