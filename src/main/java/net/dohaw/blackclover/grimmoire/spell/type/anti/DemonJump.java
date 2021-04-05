@@ -36,16 +36,17 @@ public class DemonJump extends CastSpellWrapper {
         runner.runTaskTimer(Grimmoire.instance, 1L, 10L);
         SpellUtils.playSound(player, Sound.ENTITY_SLIME_JUMP);
         // Lets the runner run for a certain amount of time and then cancels it.
+        // TODO: Set the duration
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, runner::cancel, 50L);
-        return false;
+        return true;
     }
-
 
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.jumpPotionLevel = (int) grimmoireConfig.getIntegerSetting(KEY, "Jump Potion Level");
+        this.jumpPotionLevel = grimmoireConfig.getIntegerSetting(KEY, "Jump Potion Level");
         this.jumpPotionDuration = grimmoireConfig.getIntegerSetting(KEY, "Jump Potion Duration");
         this.slowFallDuration = grimmoireConfig.getIntegerSetting(KEY, "Slow Fall Potion Duration");
     }
+
 }

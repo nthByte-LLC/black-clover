@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
@@ -84,8 +85,19 @@ public class PlayerData {
         return spellsOnCooldown.contains(spellType);
     }
 
+    /**
+     * If the spell has runnables running for it (Particle stuff for the most part). Usually, spell runnables will cancel themselves when they're done. If they're not done, they won't be canceled
+     */
     public boolean isSpellActive(SpellType spellType){
-        return spellRunnables.containsKey(spellType);
+        if(spellRunnables.containsKey(spellType)){
+            List<BukkitTask> runnables = spellRunnables.get(spellType);
+            for(BukkitTask task : runnables){
+                if(!task.isCancelled()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void stopSpellRunnables(SpellType spellType){

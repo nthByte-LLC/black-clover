@@ -32,7 +32,7 @@ public class PlayerDataManager {
     public PlayerDataManager(BlackCloverPlugin plugin){
         this.plugin = plugin;
         /*
-            Removes entries that have no tasks or have all their tasks canceled.
+            Removes entries that have no tasks or have all their tasks canceled. Usually, tasks deal with this on their own but just in case there's some lingering tasks, we deal with it here.
          */
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             for(PlayerData data : playerData.values()){

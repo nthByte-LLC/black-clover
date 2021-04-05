@@ -35,8 +35,9 @@ public class AshPunch extends CastSpellWrapper {
         if(isTargetValid){
             BukkitTask task = new AshPunchRunner(pd, (LivingEntity) entityInSight, damage).runTaskTimer(Grimmoire.instance, 0L, 1L);
             pd.addSpellRunnable(KEY, task);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override

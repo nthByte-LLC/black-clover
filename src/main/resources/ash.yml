@@ -27,6 +27,8 @@ Spell Settings:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    # Block Distance
+    Beam Distance: 10
   smoke_bomb:
     Hotbar Number: 5
     Cooldown: 5
