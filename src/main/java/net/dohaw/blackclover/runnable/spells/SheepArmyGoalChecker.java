@@ -1,10 +1,17 @@
 package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.spell.type.cotton.SheepArmy;
+import net.dohaw.blackclover.pathfinder.PathfinderGoalFollowEntity;
 import net.dohaw.blackclover.playerdata.CottonPlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
+import net.minecraft.server.v1_16_R3.EntityInsentient;
+import net.minecraft.server.v1_16_R3.EntityLiving;
+import net.minecraft.server.v1_16_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_16_R3.PathfinderGoalSelector;
 import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Sheep;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -45,6 +52,7 @@ public class SheepArmyGoalChecker extends BukkitRunnable {
                     target.setVelocity(sheepDir);
                     sheep.remove();
                     SpellUtils.spawnParticle(sheep, Particle.EXPLOSION_NORMAL, 20, 1, 1, 1);
+                    SpellUtils.playSound(sheep, Sound.ENTITY_GENERIC_EXPLODE);
                     target.damage(spell.getDamage(), sheep);
                     target.playEffect(EntityEffect.HURT_EXPLOSION);
                 }

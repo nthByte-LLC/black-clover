@@ -3,18 +3,17 @@ package net.dohaw.blackclover.grimmoire.spell.type.cotton;
 import lombok.Getter;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.CottonPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.SheepArmyGoalChecker;
 import net.dohaw.blackclover.util.AttributeHelper;
+import net.dohaw.blackclover.util.EntityUtil;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Sheep;
@@ -59,11 +58,12 @@ public class SheepArmy extends CastSpellWrapper {
                     List<Sheep> army = new ArrayList<>();
                     for(int i = 0; i < numSheep; i++){
                         org.bukkit.entity.Sheep sheep = (org.bukkit.entity.Sheep) world.spawnEntity(sheepSpawn, EntityType.SHEEP);
-                        sheep.setTarget((LivingEntity)entityInSight);
+                        sheep.setColor(DyeColor.WHITE);
+                        EntityUtil.makeEntityFollow(sheep, (LivingEntity) entityInSight);
                         army.add(sheep);
-                        AttributeHelper.alterAttribute(sheep, Attribute.GENERIC_MOVEMENT_SPEED, movementSpeedAdditive);
+                        //AttributeHelper.alterAttribute(sheep, Attribute.GENERIC_MOVEMENT_SPEED, movementSpeedAdditive);
                     }
-                    new SheepArmyGoalChecker(army, cpd, (LivingEntity) entityInSight, this);
+                    new SheepArmyGoalChecker(army, cpd, (LivingEntity) entityInSight, this).runTaskTimer(Grimmoire.instance, 0L, 5L);
 
                     cpd.setArmy(army);
                     return true;
