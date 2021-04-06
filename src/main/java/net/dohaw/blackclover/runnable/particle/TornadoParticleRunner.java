@@ -26,6 +26,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
     @Override
     public void run(){
 
+        super.run();
         doYIncreaseCheck();
 
         if(numIteration >= POINTS){

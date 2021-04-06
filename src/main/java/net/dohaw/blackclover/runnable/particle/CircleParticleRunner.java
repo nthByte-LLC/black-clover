@@ -6,7 +6,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class CircleParticleRunner extends BukkitRunnable {
+public class CircleParticleRunner extends EntityRunner {
 
     protected final int POINTS = 30;
 
@@ -32,6 +32,7 @@ public class CircleParticleRunner extends BukkitRunnable {
         For when you don't want to use something with dust options like redstone
      */
     public CircleParticleRunner(Entity entity, Particle particle, boolean isYIncreasing, double radius){
+        super(entity);
         this.entity = entity;
         this.particle = particle;
         this.isYIncreasing = isYIncreasing;
@@ -42,6 +43,7 @@ public class CircleParticleRunner extends BukkitRunnable {
         Primarily used for redstone particles (To my knowledge)
      */
     public CircleParticleRunner(Entity entity, Particle.DustOptions data, boolean isYIncreasing, double radius){
+        super(entity);
         this.entity = entity;
         this.particle = Particle.REDSTONE;
         this.isYIncreasing = isYIncreasing;
@@ -51,6 +53,7 @@ public class CircleParticleRunner extends BukkitRunnable {
 
     @Override
     public void run(){
+        super.run();
         doYIncreaseCheck();
         for (int i = 0; i < POINTS; i++) {
             doParticleIteration(i);

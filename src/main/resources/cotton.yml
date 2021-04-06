@@ -33,3 +33,7 @@ Spell Settings:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Cast Distance: 10
+    Damage: 2
+    # How far away the sheep has to be to do damage to the target
+    Damage Distance: 1.5

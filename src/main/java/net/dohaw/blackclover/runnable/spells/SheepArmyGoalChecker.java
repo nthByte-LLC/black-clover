@@ -3,6 +3,7 @@ package net.dohaw.blackclover.runnable.spells;
 import net.dohaw.blackclover.grimmoire.spell.type.cotton.SheepArmy;
 import net.dohaw.blackclover.playerdata.CottonPlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Sheep;
@@ -45,6 +46,7 @@ public class SheepArmyGoalChecker extends BukkitRunnable {
                     sheep.remove();
                     SpellUtils.spawnParticle(sheep, Particle.EXPLOSION_NORMAL, 20, 1, 1, 1);
                     target.damage(spell.getDamage(), sheep);
+                    target.playEffect(EntityEffect.HURT_EXPLOSION);
                 }
             }
 

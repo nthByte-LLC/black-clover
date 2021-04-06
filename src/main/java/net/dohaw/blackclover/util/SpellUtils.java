@@ -1,7 +1,10 @@
 package net.dohaw.blackclover.util;
 
+import net.dohaw.blackclover.BlackCloverPlugin;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.corelib.helpers.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -53,6 +56,15 @@ public class SpellUtils {
 
     public static void spawnParticle(Block block, Particle particle, int count, float offsetX, float offsetY, float offsetZ){
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
+    }
+
+    public static void startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, boolean yIncrease, double radius, boolean goesRight){
+        new TornadoParticleRunner(entity, dustOptions, yIncrease, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
+    }
+
+    public static void startDoubleTornadoParticles(Entity entity, Particle.DustOptions data1, Particle.DustOptions data2, boolean yIncrease, double radius){
+        startTornadoParticles(entity, data1, yIncrease, radius, true);
+        startTornadoParticles(entity, data2, yIncrease, radius, false);
     }
 
     public static Entity getEntityInLineOfSight(Player player, int distance){

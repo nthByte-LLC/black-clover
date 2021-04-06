@@ -19,6 +19,9 @@ public class CottonPlayerData extends PlayerData{
     private Sheep singleSheep;
 
     @Getter @Setter
+    private Sheep goldenSheep;
+
+    @Getter @Setter
     private List<Sheep> army = new ArrayList<>();
 
     public CottonPlayerData(UUID uuid) {
@@ -29,6 +32,10 @@ public class CottonPlayerData extends PlayerData{
         return singleSheep != null;
     }
 
+    public boolean isGoldenSheepSpawned(){
+        return goldenSheep != null;
+    }
+
     public boolean isArmySpawned(){
         return !army.isEmpty();
     }
@@ -37,6 +44,13 @@ public class CottonPlayerData extends PlayerData{
         if(singleSheep != null){
             singleSheep.remove();
             singleSheep = null;
+        }
+    }
+
+    public void removeGoldenSheep(){
+        if(goldenSheep != null){
+            goldenSheep.remove();
+            goldenSheep = null;
         }
     }
 

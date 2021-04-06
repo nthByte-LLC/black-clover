@@ -24,9 +24,8 @@ public class WildCall extends CastSpellWrapper {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
-        System.out.println("CASTING");
         if(pd instanceof ShakudoPlayerData){
 
             Player player = pd.getPlayer();
@@ -47,6 +46,8 @@ public class WildCall extends CastSpellWrapper {
                     spd.removePack();
                 }
 
+                return true;
+
             }else{
                 if(player.isSneaking()){
                     spd.getWolf().remove();
@@ -56,18 +57,12 @@ public class WildCall extends CastSpellWrapper {
                     ResponderFactory rf = new ResponderFactory(player);
                     rf.sendMessage("You already have a wolf spawned in!");
                 }
-                return false;
             }
 
             return true;
 
         }else{
-            try {
-                throw new UnexpectedPlayerData();
-            } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                unexpectedPlayerData.printStackTrace();
-            }
-            return false;
+            throw new UnexpectedPlayerData();
         }
 
     }
