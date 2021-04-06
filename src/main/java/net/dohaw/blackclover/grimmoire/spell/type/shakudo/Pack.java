@@ -91,4 +91,5 @@ public class Pack extends CastSpellWrapper {
         this.numWolves = grimmoireConfig.getIntegerSetting(KEY, "Number of Wolves");
         this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Wolf Absorption Amount");
     }
+
 }

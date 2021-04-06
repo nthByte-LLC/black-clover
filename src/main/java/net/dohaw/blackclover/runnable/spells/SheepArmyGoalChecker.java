@@ -14,14 +14,14 @@ import java.util.List;
 /**
  * Checks whether the sheep has reached it's target. If so, this cancels and the sheep explodes
  */
-public class SheekGoalChecker extends BukkitRunnable {
+public class SheepArmyGoalChecker extends BukkitRunnable {
 
     private SheepArmy spell;
     private CottonPlayerData caster;
     private List<Sheep> army;
     private LivingEntity target;
 
-    public SheekGoalChecker(List<Sheep> army, CottonPlayerData caster, LivingEntity target, SheepArmy spell){
+    public SheepArmyGoalChecker(List<Sheep> army, CottonPlayerData caster, LivingEntity target, SheepArmy spell){
         this.army = army;
         this.target = target;
         this.caster = caster;

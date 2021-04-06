@@ -7,12 +7,15 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.CottonPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.runnable.spells.SheepArmyGoalChecker;
+import net.dohaw.blackclover.util.AttributeHelper;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.Event;
@@ -22,9 +25,12 @@ import java.util.List;
 
 public class SheepArmy extends CastSpellWrapper {
 
+
     @Getter
     private double explosionDistance;
     private int castDistance, numSheep;
+
+    private double movementSpeedAdditive;
 
     @Getter
     private int damage;
@@ -55,9 +61,12 @@ public class SheepArmy extends CastSpellWrapper {
                         org.bukkit.entity.Sheep sheep = (org.bukkit.entity.Sheep) world.spawnEntity(sheepSpawn, EntityType.SHEEP);
                         sheep.setTarget((LivingEntity)entityInSight);
                         army.add(sheep);
+                        AttributeHelper.alterAttribute(sheep, Attribute.GENERIC_MOVEMENT_SPEED, movementSpeedAdditive);
                     }
+                    new SheepArmyGoalChecker(army, cpd, (LivingEntity) entityInSight, this);
 
                     cpd.setArmy(army);
+                    return true;
 
                 }
 
@@ -83,5 +92,6 @@ public class SheepArmy extends CastSpellWrapper {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.explosionDistance = grimmoireConfig.getDoubleSetting(KEY, "Explosion Distance");
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
+        this.movementSpeedAdditive = grimmoireConfig.getDoubleSetting(KEY, "Movement Speed Additive");
     }
 }

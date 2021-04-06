@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.cotton.Bed;
 import net.dohaw.blackclover.grimmoire.spell.type.cotton.LifeNet;
+import net.dohaw.blackclover.grimmoire.spell.type.cotton.Sheep;
 import net.dohaw.blackclover.grimmoire.spell.type.cotton.SheepArmy;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class Cotton extends GrimmoireWrapper {
     public LifeNet lifeNet;
     public Bed bed;
     public SheepArmy sheepArmy;
+    public Sheep sheep;
 
     public Cotton() {
         super(GrimmoireType.COTTON);
@@ -47,6 +49,9 @@ public class Cotton extends GrimmoireWrapper {
 
         this.sheepArmy = new SheepArmy(config);
         this.spells.put(SpellType.SHEEP_ARMY, sheepArmy);
+
+        this.sheep = new Sheep(config);
+        this.spells.put(SpellType.SHEEP, sheep);
 
     }
 

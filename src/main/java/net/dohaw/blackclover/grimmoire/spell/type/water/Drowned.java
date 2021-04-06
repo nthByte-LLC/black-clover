@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.WaterPlayerData;
+import net.dohaw.blackclover.util.AttributeHelper;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
@@ -39,7 +40,7 @@ public class Drowned extends CastSpellWrapper implements Listener {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
         if(pd instanceof WaterPlayerData){
 
             WaterPlayerData wpd = (WaterPlayerData) pd;
@@ -61,47 +62,35 @@ public class Drowned extends CastSpellWrapper implements Listener {
                         drowned.setAbsorptionAmount(absorptionAmount);
                         drowned.setTarget(leInSight);
 
-                        double movementSpeedBase = drowned.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue();
-                        drowned.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(movementSpeedBase + movementSpeedAdditive);
+                        AttributeHelper.alterAttribute(drowned, Attribute.GENERIC_MOVEMENT_SPEED, movementSpeedAdditive);
 
                         SpellUtils.spawnParticle(drowned, Particle.WATER_BUBBLE, 30, 1, 1, 1);
                         SpellUtils.playSound(drowned, Sound.ENTITY_DROWNED_AMBIENT_WATER);
 
                         wpd.setDrowned(drowned);
+                        return true;
 
                     }else{
                         rf.sendMessage("This is not a valid entity!");
-                        return false;
                     }
 
                 }else{
                     rf.sendMessage("There is no entity within reasonable distance of you!");
-                    return false;
                 }
-
 
             }else{
                 if(player.isSneaking()){
-                    if(wpd.isDrownedSummoned()){
-                        wpd.removeDrowned();
-                    }else{
-                        rf.sendMessage("You don't have a drowned summoned!");
-                    }
+                    wpd.removeDrowned();
                 }else{
                     rf.sendMessage("You already have a drowned spawned!");
                 }
-                return false;
             }
 
         }else{
-            try {
-                throw new UnexpectedPlayerData();
-            } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                unexpectedPlayerData.printStackTrace();
-            }
+            throw new UnexpectedPlayerData();
         }
 
-        return true;
+        return false;
     }
 
 

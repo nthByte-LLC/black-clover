@@ -34,8 +34,10 @@ public class CottonPlayerData extends PlayerData{
     }
 
     public void removeSheep(){
-        singleSheep.remove();
-        singleSheep = null;
+        if(singleSheep != null){
+            singleSheep.remove();
+            singleSheep = null;
+        }
     }
 
     public void removeArmy(){
@@ -47,4 +49,10 @@ public class CottonPlayerData extends PlayerData{
         }
     }
 
+    @Override
+    public void prepareDataRemoval() {
+        removeSheep();
+        removeArmy();
+        super.prepareDataRemoval();
+    }
 }
