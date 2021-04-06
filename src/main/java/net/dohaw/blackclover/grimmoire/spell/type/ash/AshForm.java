@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.AshPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Particle;
@@ -22,6 +23,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.List;
 
 public class AshForm extends CastSpellWrapper implements Listener {
 
@@ -42,14 +46,12 @@ public class AshForm extends CastSpellWrapper implements Listener {
             apd.setInAshForm(true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, (int) (durationInvisiblity * 20), 1, false));
 
-            TornadoParticleRunner pr1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.BLACK, 1), true, 1, false);
-            TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.BLACK, 1), true, 1, true);
-            pd.addSpellRunnable(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 1L), pr2.runTaskTimer(Grimmoire.instance, 0L, 1L));
+            BukkitTask[] tornadoParticles = SpellUtils.startDoubleTornadoParticles(player, new Particle.DustOptions(Color.BLACK, 1), new Particle.DustOptions(Color.BLACK, 1), true,1);
+            pd.addSpellRunnables(KEY, tornadoParticles);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                System.out.println("HERE");
-               pd.stopSpellRunnables(KEY);
-               apd.setInAshForm(false);
+                pd.stopSpellRunnables(KEY);
+                apd.setInAshForm(false);
             }, (long) (durationInvisiblity * 20));
 
         }else{

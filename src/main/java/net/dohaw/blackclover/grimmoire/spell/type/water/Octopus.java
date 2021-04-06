@@ -9,7 +9,6 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.WaterPlayerData;
-import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
@@ -40,7 +39,7 @@ public class Octopus extends CastSpellWrapper implements Listener {
 
                 TornadoParticleRunner particleRunner = new TornadoParticleRunner(player, new Particle.DustOptions(Color.BLUE, 1), false, 1.5, false);
                 TornadoParticleRunner particleRunner1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 1), false, 1.5, true);
-                wpd.addSpellRunnable(KEY, particleRunner1.runTaskTimer(Grimmoire.instance, 0L, 1L), particleRunner.runTaskTimer(Grimmoire.instance, 0L, 1L));
+                wpd.addSpellRunnables(KEY, particleRunner1.runTaskTimer(Grimmoire.instance, 0L, 1L), particleRunner.runTaskTimer(Grimmoire.instance, 0L, 1L));
 
                 SpellUtils.playSound(player, Sound.ENTITY_PLAYER_SPLASH_HIGH_SPEED);
 

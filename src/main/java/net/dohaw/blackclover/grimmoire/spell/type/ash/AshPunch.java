@@ -28,7 +28,7 @@ public class AshPunch extends CastSpellWrapper {
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
         if(entityInSight != null){
             BukkitTask task = new AshPunchRunner(pd, (LivingEntity) entityInSight, damage).runTaskTimer(Grimmoire.instance, 0L, 1L);
-            pd.addSpellRunnable(KEY, task);
+            pd.addSpellRunnables(KEY, task);
             return true;
         }
         return false;

@@ -43,8 +43,6 @@ public class SheepArmyGoalChecker extends BukkitRunnable {
         if(sheepAlive != 0 && target.isValid()){
 
             for(Sheep sheep : army){
-                // repeatedly sets the target so that they don't stray off course
-                sheep.setTarget(target);
                 double distanceFromTarget = sheep.getLocation().distance(target.getLocation());
                 if(distanceFromTarget <= spell.getExplosionDistance()){
                     Vector sheepDir = sheep.getLocation().clone().getDirection();

@@ -10,6 +10,9 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Sheep;
 
+/**
+ * Checks whether the golden sheep is close to it's target. If so, then it does damage
+ */
 public class BatteringRamGoalChecker extends EntityRunner {
 
     private LivingEntity target;
@@ -28,7 +31,6 @@ public class BatteringRamGoalChecker extends EntityRunner {
     @Override
     public void run() {
 
-        super.run();
         double distance = sheep.getLocation().distance(target.getLocation());
         if (distance > 20) cancel();
 
@@ -45,4 +47,9 @@ public class BatteringRamGoalChecker extends EntityRunner {
 
     }
 
+    @Override
+    public synchronized void cancel() throws IllegalStateException {
+        super.cancel();
+        caster.removeGoldenSheep();
+    }
 }

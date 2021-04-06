@@ -118,7 +118,7 @@ public class PlayerData {
         spellRunnables.clear();
     }
 
-    public void addSpellRunnable(SpellType spellType, BukkitTask ...task){
+    public void addSpellRunnables(SpellType spellType, BukkitTask ...task){
         List<BukkitTask> tasks = new ArrayList<>();
         if(spellRunnables.containsKey(spellType)){
             tasks = spellRunnables.get(spellType);

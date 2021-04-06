@@ -8,16 +8,12 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
-import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.*;
 
@@ -38,7 +34,7 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
         pr1.setVerticalPointSpread(0.1);
         TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, true);
         pr2.setVerticalPointSpread(0.1);
-        pd.addSpellRunnable(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 1L), pr2.runTaskTimer(Grimmoire.instance, 0L, 1L));
+        pd.addSpellRunnables(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 1L), pr2.runTaskTimer(Grimmoire.instance, 0L, 1L));
         SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {

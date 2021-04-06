@@ -20,7 +20,7 @@ public class AshBeam extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        pd.addSpellRunnable(KEY, new AshBeamRunner(player, beamDistance, 2).runTaskTimer(Grimmoire.instance, 0L, 3L));
+        pd.addSpellRunnables(KEY, new AshBeamRunner(player, beamDistance, 2).runTaskTimer(Grimmoire.instance, 0L, 3L));
         return true;
     }
 

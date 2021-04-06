@@ -18,9 +18,11 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,13 +60,15 @@ public class SpellUtils {
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
     }
 
-    public static void startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, boolean yIncrease, double radius, boolean goesRight){
-        new TornadoParticleRunner(entity, dustOptions, yIncrease, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
+    public static BukkitTask startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, boolean yIncrease, double radius, boolean goesRight){
+        return new TornadoParticleRunner(entity, dustOptions, yIncrease, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
     }
 
-    public static void startDoubleTornadoParticles(Entity entity, Particle.DustOptions data1, Particle.DustOptions data2, boolean yIncrease, double radius){
-        startTornadoParticles(entity, data1, yIncrease, radius, true);
-        startTornadoParticles(entity, data2, yIncrease, radius, false);
+    public static BukkitTask[] startDoubleTornadoParticles(Entity entity, Particle.DustOptions data1, Particle.DustOptions data2, boolean yIncrease, double radius){
+        BukkitTask[] arr = new BukkitTask[2];
+        arr[0] = startTornadoParticles(entity, data1, yIncrease, radius, true);
+        arr[1] = startTornadoParticles(entity, data2, yIncrease, radius, false);
+        return arr;
     }
 
     public static Entity getEntityInLineOfSight(Player player, int distance){

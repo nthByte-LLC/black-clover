@@ -42,8 +42,7 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         Player player = pd.getPlayer();
         BukkitTask helix = new HelixParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 2), 1, false).runTaskTimer(Grimmoire.instance, 0L, 3L);
         BukkitTask helix2 = new HelixParticleRunner(player, new Particle.DustOptions(Color.RED, 2), 1, true).runTaskTimer(Grimmoire.instance, 0L, 3L);
-        pd.addSpellRunnable(KEY, helix);
-        pd.addSpellRunnable(KEY, helix2);
+        pd.addSpellRunnables(KEY, helix, helix2);
 
         SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
 

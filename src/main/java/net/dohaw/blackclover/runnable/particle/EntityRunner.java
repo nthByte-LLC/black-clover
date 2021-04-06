@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.runnable.particle;
 
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,16 +14,18 @@ public abstract class EntityRunner extends BukkitRunnable {
 
     public EntityRunner(Entity ...reliedEntities){
         this.reliedEntities = reliedEntities;
-    }
-
-    @Override
-    public void run() {
-        for (Entity reliedEntity : reliedEntities) {
-            if(!reliedEntity.isValid()){
-                cancel();
-                break;
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                for (Entity reliedEntity : reliedEntities) {
+                    if(!reliedEntity.isValid()){
+                        EntityRunner.this.cancel();
+                        this.cancel();
+                        break;
+                    }
+                }
             }
-        }
+        }.runTaskTimer(Grimmoire.instance, 1L, 20L);
     }
 
 }
