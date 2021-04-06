@@ -35,11 +35,12 @@ public class AshFlight extends CastSpellWrapper {
         if(targetBlock != null){
 
             SpellUtils.playSound(player, Sound.ENTITY_ENDER_DRAGON_FLAP);
-            SpellUtils.spawnParticle(player, Particle.ASH, 30, 1, 1, 1);
+            SpellUtils.spawnParticle(player, Particle.SQUID_INK, 20, 1, 1, 1);
 
             ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(targetBlock.getLocation().add(0, 1, 0), EntityType.ARMOR_STAND);
             stand.setVisible(false);
 
+            // Creates the cloud under the location that the player is going to land on.
             BukkitTask particleTask = new CircleParticleRunner(stand, new Particle.DustOptions(Color.BLACK, 3), false, 1).runTaskTimer(Grimmoire.instance, 0L, 3L);
             Bukkit.getScheduler().runTask(Grimmoire.instance, () -> {
                stand.remove();
@@ -60,4 +61,5 @@ public class AshFlight extends CastSpellWrapper {
         this.maxFlightDistance = grimmoireConfig.getIntegerSetting(KEY, "Max Flight Distance");
         this.heightGain = grimmoireConfig.getIntegerSetting(KEY, "Height Gain");
     }
+
 }

@@ -114,6 +114,12 @@ public class PlayerWatcher implements Listener {
                         player.sendMessage("This spell is on cooldown!");
                     }
 
+                }else{
+                    if (!pd.canCast()){
+                        player.sendMessage("You can't cast right now!");
+                    }else{
+                        player.sendMessage("You are currently casting a spell!");
+                    }
                 }
 
             }else{
@@ -200,6 +206,10 @@ public class PlayerWatcher implements Listener {
 
     }
 
+    /**
+     * Need this runner to run for the Water Wall
+     * @see net.dohaw.blackclover.grimmoire.spell.type.water.WaterWall
+     */
     @EventHandler
     public void onProjLaunch(ProjectileLaunchEvent e){
         Projectile projectile = e.getEntity();
@@ -230,6 +240,9 @@ public class PlayerWatcher implements Listener {
         if(pd.isCurrentlyCasting()){
             pd.stopTimedCast();
         }
+        pd.setFrozen(false);
+        pd.setCanCast(true);
+        pd.setCanAttack(true);
     }
 
     @EventHandler (priority = EventPriority.HIGH)
@@ -237,8 +250,15 @@ public class PlayerWatcher implements Listener {
 
         Entity eDamaged = e.getEntity();
         if(eDamaged instanceof Player){
+
             Player damaged = (Player) eDamaged;
             PlayerData damagedPlayerData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
+            // Doesn't allow player's to do sweeping damage.
+            if(!damagedPlayerData.isCanAttack()){
+                e.setCancelled(true);
+                return;
+            }
+
             if(damagedPlayerData.isCurrentlyCasting()){
 
                 final int CAST_HEALTH_DIFF = 10;
@@ -254,6 +274,7 @@ public class PlayerWatcher implements Listener {
                 }
 
             }
+
         }
     }
 

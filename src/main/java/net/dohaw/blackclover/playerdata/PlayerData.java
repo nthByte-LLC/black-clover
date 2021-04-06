@@ -36,6 +36,9 @@ public class PlayerData {
     @Getter @Setter
     private boolean isInVulnerable;
 
+    @Getter @Setter
+    private boolean canAttack;
+
     @Getter
     private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
 

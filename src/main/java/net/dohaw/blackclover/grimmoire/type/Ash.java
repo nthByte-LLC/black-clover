@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Ash extends GrimmoireWrapper {
 
+    public SmokeBomb smokeBomb;
     public AshFlight ashFlight;
     public AshBeam ashBeam;
     public AshForm ashForm;
@@ -53,6 +54,9 @@ public class Ash extends GrimmoireWrapper {
 
         this.ashFlight = new AshFlight(config);
         this.spells.put(SpellType.ASH_FLIGHT, ashFlight);
+
+        this.smokeBomb = new SmokeBomb(config);
+        this.spells.put(SpellType.SMOKE_BOMB, smokeBomb);
 
     }
 }
