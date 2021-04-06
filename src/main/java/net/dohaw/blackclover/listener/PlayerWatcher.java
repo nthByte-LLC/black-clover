@@ -2,6 +2,7 @@ package net.dohaw.blackclover.listener;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.*;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -100,7 +101,14 @@ public class PlayerWatcher implements Listener {
                                     Bukkit.getPluginManager().callEvent(event);
                                 }
 
-                                boolean wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                                boolean wasSuccessfullyCasted;
+                                try{
+                                    wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
+                                } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                                    unexpectedPlayerData.printStackTrace();
+                                    wasSuccessfullyCasted = false;
+                                }
+
                                 if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
                                     spellBoundToSlot.deductMana(pd);
                                 }

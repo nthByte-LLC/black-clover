@@ -103,7 +103,6 @@ public class AntiSword extends CastSpellWrapper implements Listener {
                             player.getInventory().remove(mainHand);
                         }else{
 
-                            System.out.println("WE HERE");
                             // absorbs the damage
                             int currentNumUses = mainHandPDC.get(NSK_USES_MARK, PersistentDataType.INTEGER) + 1;
                             e.setCancelled(true);

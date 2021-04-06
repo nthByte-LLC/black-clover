@@ -32,7 +32,7 @@ public class AshForm extends CastSpellWrapper implements Listener {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
         if(pd instanceof AshPlayerData){
 
@@ -53,12 +53,7 @@ public class AshForm extends CastSpellWrapper implements Listener {
             }, (long) (durationInvisiblity * 20));
 
         }else{
-            try {
-                throw new UnexpectedPlayerData();
-            } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                unexpectedPlayerData.printStackTrace();
-            }
-            return false;
+            throw new UnexpectedPlayerData();
         }
 
         return true;

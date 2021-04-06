@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell;
 import lombok.Getter;
 import lombok.NonNull;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.event.Event;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -54,6 +55,6 @@ public abstract class CastSpellWrapper extends SpellWrapper{
         pd.setRegenAmount((int) (pd.getRegenAmount() - regenConsumed));
     }
 
-    public abstract boolean cast(Event e, PlayerData pd);
+    public abstract boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData;
 
 }

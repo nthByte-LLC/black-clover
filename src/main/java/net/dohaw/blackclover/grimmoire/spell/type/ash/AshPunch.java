@@ -6,12 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.AshPunchRunner;
-import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
-import net.minecraft.server.v1_16_R3.BlockUtil;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -31,8 +26,7 @@ public class AshPunch extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
-        boolean isTargetValid = SpellUtils.isTargetValid(player, castDistance);
-        if(isTargetValid){
+        if(entityInSight != null){
             BukkitTask task = new AshPunchRunner(pd, (LivingEntity) entityInSight, damage).runTaskTimer(Grimmoire.instance, 0L, 1L);
             pd.addSpellRunnable(KEY, task);
             return true;

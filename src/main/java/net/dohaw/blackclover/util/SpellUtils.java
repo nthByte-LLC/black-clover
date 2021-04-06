@@ -107,8 +107,7 @@ public class SpellUtils {
         Valid meaning the target isn't null and it's an instance of LivingEntity
      */
     //TODO: Need to refractor code to where they're all using this method instead of hardcoding this every single time.
-    public static boolean isTargetValid(Player player, int castDistance){
-        Entity entityInSight = getEntityInLineOfSight(player, castDistance);
+    public static boolean isTargetValid(Player player, Entity entityInSight){
         if(entityInSight != null){
             if(entityInSight instanceof LivingEntity){
                 return true;
