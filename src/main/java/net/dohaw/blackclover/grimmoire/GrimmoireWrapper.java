@@ -134,7 +134,7 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
             boolean isUlt = spell.getKEY().isUltimate();
 
             if(isUlt){
-                 spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
+                spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
             }else{
                 spellLine = plusSign + " Spell: " + spellName + "\n";
             }

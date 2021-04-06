@@ -83,8 +83,17 @@ public enum SpellType {
     ASH_FLIGHT("ash_flight", false),
     ASH_FORM("ash_form", false),
     ASH_BEAM("ash_beam", false),
-    SMOKE_BOMB("smoke_bomb", true);
+    SMOKE_BOMB("smoke_bomb", true),
 
+    /*
+        Cotton spells
+     */
+    BED("bed", false),
+    LIFE_NET("life_net", false),
+    SHEEP_ARMY("sheep_army", false),
+    SHEEP("sheep", false),
+    TENT("tent", false),
+    BATTERING_RAM("battering_ram", true);
 
     @Getter
     private boolean isUltimate;

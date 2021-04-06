@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class PlayerDataConfig extends Config {
 
-    private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(GrimmoireType.SHAKUDO, GrimmoireType.WATER, GrimmoireType.SNOW, GrimmoireType.ASH);
+    private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(GrimmoireType.SHAKUDO, GrimmoireType.WATER, GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON);
 
     public PlayerDataConfig(File file){
         super(file);
@@ -33,13 +33,15 @@ public class PlayerDataConfig extends Config {
         PlayerData newData;
         if(hasSpecialPlayerData.contains(grimmoireType)){
             if(grimmoireType == GrimmoireType.SHAKUDO) {
-                newData = new ShakudoPlayerData(pd.getUuid());
+                newData = new ShakudoPlayerData(uuid);
             }else if(grimmoireType == GrimmoireType.WATER) {
-                newData = new WaterPlayerData(pd.getUuid());
+                newData = new WaterPlayerData(uuid);
             }else if(grimmoireType == GrimmoireType.SNOW) {
-                newData = new SnowPlayerData(pd.getUuid());
-            }else if(grimmoireType == GrimmoireType.ASH){
-                newData = new AshPlayerData(pd.getUuid());
+                newData = new SnowPlayerData(uuid);
+            }else if(grimmoireType == GrimmoireType.ASH) {
+                newData = new AshPlayerData(uuid);
+            }else if(grimmoireType == GrimmoireType.COTTON){
+                newData = new CottonPlayerData(uuid);
             }else{
                 // If it gets to here, then there's a conflict between what's in the list and what is being checked in the if statement chain.
                 return pd;

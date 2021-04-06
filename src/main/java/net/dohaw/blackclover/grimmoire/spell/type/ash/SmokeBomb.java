@@ -80,7 +80,7 @@ public class SmokeBomb extends CastSpellWrapper {
             pd.setInVulnerable(false);
         }, duration * 20);
 
-        return false;
+        return true;
     }
 
     @Override
