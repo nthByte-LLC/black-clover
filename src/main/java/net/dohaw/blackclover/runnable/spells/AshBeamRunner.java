@@ -20,26 +20,25 @@ public class AshBeamRunner extends BeamParticleRunner {
     private HashSet<UUID> inBeam = new HashSet<>();
 
     public AshBeamRunner(Entity start, double distanceBeam, double damage) {
-        super(start, distanceBeam, new Particle.DustOptions(Color.BLACK, 1.5f), 0.5, false);
+        super(start, distanceBeam, new Particle.DustOptions(Color.BLACK, 1f), 0.2, false);
         this.damage = damage;
         startDamager();
     }
 
     @Override
-    public void run() {
-        super.run();
-    }
-
-    @Override
     public void doEndOfBeamSpecifics() {
-        System.out.println("WE ARE AT THE END OF THE BEAM");
+        if(particleLocations.size() != 0){
+            Location lastLocation = particleLocations.get(particleLocations.size() - 1);
+            SpellUtils.spawnParticle(lastLocation,Particle.FLASH, 10, 1, 1, 1);
+            SpellUtils.playSound(lastLocation, Sound.ENTITY_GENERIC_EXPLODE);
+        }
     }
 
     @Override
     public void doParticleLocationSpecifics(Location particleLoc) {
 
         // People in current beam
-        Collection<Entity> nearbyEntities = particleLoc.getWorld().getNearbyEntities(particleLoc, 1, 1, 1);
+        Collection<Entity> nearbyEntities = particleLoc.getWorld().getNearbyEntities(particleLoc, 0.5, 0.5, 0.5);
         // so that we don't target the caster.
         nearbyEntities.removeIf(e -> e.getUniqueId().equals(entity.getUniqueId()));
         List<UUID> inCurrentBeam = new ArrayList<>();
@@ -51,7 +50,7 @@ public class AshBeamRunner extends BeamParticleRunner {
                 UUID uuid = le.getUniqueId();
                 if(!inBeam.contains(uuid)){
 
-                    SpellDamageEvent event = new SpellDamageEvent(SpellType.ASH_BEAM, damage, le, (Player) start);
+                    SpellDamageEvent event = new SpellDamageEvent(SpellType.ASH_BEAM, damage, le, (Player) entity);
                     Bukkit.getPluginManager().callEvent(event);
 
                     if(!event.isCancelled()){

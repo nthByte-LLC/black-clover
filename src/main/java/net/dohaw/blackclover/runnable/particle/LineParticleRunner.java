@@ -19,7 +19,6 @@ public class LineParticleRunner extends BukkitRunnable {
     public LineParticleRunner(Location start, Location end, Particle.DustOptions dustOptions, double spread){
         this.start = start;
         this.end = end;
-        end.getBlock().setType(Material.GOLD_BLOCK);
         this.dustOptions = dustOptions;
         this.spread = spread;
     }

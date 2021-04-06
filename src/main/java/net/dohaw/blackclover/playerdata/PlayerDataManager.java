@@ -40,12 +40,11 @@ public class PlayerDataManager {
                 for(Map.Entry<SpellType, List<BukkitTask>> entry : spellTasks.entrySet()){
                     List<BukkitTask> tasks = entry.getValue();
                     tasks.removeIf(BukkitTask::isCancelled);
-                    System.out.println("SPELL: " + entry.getKey());
-                    System.out.println("TASKS: " +tasks.toString());
                 }
                 spellTasks.entrySet().removeIf(e -> e.getValue().isEmpty());
             }
         }, 0, 1200L);
+
     }
 
     public PlayerData getData(UUID uuid){

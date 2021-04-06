@@ -58,7 +58,7 @@ public class BeamParticleRunner extends LineParticleRunner{
                 particleLocations.add(particleLoc.clone());
                 count += spread;
                 particleLocations.forEach(loc -> {
-                    SpellUtils.spawnParticle(loc, Particle.REDSTONE, dustOptions, 30, 0.5f, 0.5f, 0.5f);
+                    SpellUtils.spawnParticle(loc, Particle.REDSTONE, dustOptions, 30, 0.3f, 0.3f, 0.3f);
                     doParticleLocationSpecifics(loc);
                 });
             }else{
@@ -70,7 +70,7 @@ public class BeamParticleRunner extends LineParticleRunner{
                     cancel();
                 }
             }
-        }, 0L, 7L);
+        }, 0L, 5L);
     }
 
     @Override
