@@ -1,7 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.rock;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -39,4 +38,5 @@ public class Rock extends CastSpellWrapper {
         this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
+
 }
