@@ -74,6 +74,11 @@ public class Fangs extends CastSpellWrapper implements Listener {
         this.damageMultiplier = grimmoireConfig.getIntegerSetting(KEY, "Damage Multiplier");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     @EventHandler
     public void onFangsCast(FangsCastedEvent e){
 

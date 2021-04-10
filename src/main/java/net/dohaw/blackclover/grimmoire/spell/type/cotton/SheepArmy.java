@@ -94,4 +94,9 @@ public class SheepArmy extends CastSpellWrapper {
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
         this.movementSpeedAdditive = grimmoireConfig.getDoubleSetting(KEY, "Movement Speed Additive");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

@@ -60,4 +60,8 @@ public class FireControl extends CastSpellWrapper {
 
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

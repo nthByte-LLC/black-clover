@@ -55,4 +55,9 @@ public class IceSpike extends CastSpellWrapper implements Listener {
         this.velocityScale = grimmoireConfig.getDoubleSetting(KEY, "Velocity Scale");
         this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

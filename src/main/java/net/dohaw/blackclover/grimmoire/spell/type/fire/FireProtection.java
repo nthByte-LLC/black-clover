@@ -63,4 +63,8 @@ public class FireProtection extends PassiveSpellWrapper implements Listener {
 
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

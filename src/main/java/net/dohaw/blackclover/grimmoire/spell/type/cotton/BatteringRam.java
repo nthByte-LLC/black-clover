@@ -86,4 +86,9 @@ public class BatteringRam extends CastSpellWrapper {
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
         this.damageDistance = grimmoireConfig.getDoubleSetting(KEY, "Damage Distance");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

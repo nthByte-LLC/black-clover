@@ -102,6 +102,11 @@ public class Drowned extends CastSpellWrapper implements Listener {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     /*
         Prevents drowns from burning in the sunlight.
      */

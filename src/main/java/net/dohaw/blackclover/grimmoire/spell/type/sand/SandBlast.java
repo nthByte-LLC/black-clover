@@ -32,4 +32,9 @@ public class SandBlast extends CastSpellWrapper {
         this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

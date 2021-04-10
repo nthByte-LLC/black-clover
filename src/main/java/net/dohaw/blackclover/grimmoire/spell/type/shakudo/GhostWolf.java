@@ -98,4 +98,9 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.biteDamage = grimmoireConfig.getIntegerSetting(KEY, "Bite Damage");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

@@ -96,4 +96,9 @@ public class Octopus extends CastSpellWrapper implements Listener {
         super.loadSettings();
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

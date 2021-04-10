@@ -92,4 +92,9 @@ public class Pack extends CastSpellWrapper {
         this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Wolf Absorption Amount");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

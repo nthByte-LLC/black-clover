@@ -41,4 +41,9 @@ public class Snowball extends CastSpellWrapper implements Listener {
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

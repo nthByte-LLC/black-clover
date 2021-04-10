@@ -130,4 +130,9 @@ public class LeafKnives extends CastSpellWrapper {
         this.knockback = grimmoireConfig.getDoubleSetting(KEY, "Knockback");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

@@ -49,4 +49,9 @@ public class DemonJump extends CastSpellWrapper {
         this.slowFallDuration = grimmoireConfig.getIntegerSetting(KEY, "Slow Fall Potion Duration");
     }
 
+    @Override
+    public void prepareShutdown() {
+        
+    }
+
 }

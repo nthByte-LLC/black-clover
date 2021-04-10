@@ -74,4 +74,9 @@ public class AshBomb extends CastSpellWrapper {
         this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
         this.durationBlindness = grimmoireConfig.getDoubleSetting(KEY, "Duration Blindness");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

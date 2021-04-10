@@ -90,4 +90,9 @@ public class SandGrave extends CastSpellWrapper implements DamageableSpell, List
         this.sandStayTime = grimmoireConfig.getIntegerSetting(KEY, "Sand Stay Time");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

@@ -40,4 +40,9 @@ public class AshPunch extends CastSpellWrapper {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

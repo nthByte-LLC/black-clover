@@ -44,4 +44,9 @@ public class Stone extends CastSpellWrapper {
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

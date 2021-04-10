@@ -140,4 +140,9 @@ public class IceAge extends CastSpellWrapper implements Listener {
         this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

@@ -99,6 +99,11 @@ public class AshForm extends CastSpellWrapper implements Listener {
         this.durationInvisiblity = grimmoireConfig.getDoubleSetting(KEY, "Duration Invisibility");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     private void ashFormCheck(Player damager, Cancellable e){
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
         if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.ASH){

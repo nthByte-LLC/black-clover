@@ -42,4 +42,9 @@ public class FireStorm extends CastSpellWrapper {
         this.radiusParticles = grimmoireConfig.getDoubleSetting(KEY, "Particle Radius");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

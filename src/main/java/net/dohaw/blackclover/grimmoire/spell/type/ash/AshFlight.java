@@ -62,4 +62,9 @@ public class AshFlight extends CastSpellWrapper {
         this.heightGain = grimmoireConfig.getIntegerSetting(KEY, "Height Gain");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

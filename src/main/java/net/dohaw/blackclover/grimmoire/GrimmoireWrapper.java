@@ -35,6 +35,12 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         initSpells();
     }
 
+    public void prepareShutdown(){
+        for(SpellWrapper spell : spells.values()){
+            spell.prepareShutdown();
+        }
+    }
+
     /**
      * Other names for this grimmoire. Usually for identifying a grimmoire within all the grimmoires via a command alias.
      * @return The aliases/nicknames

@@ -21,4 +21,9 @@ public class HealingLeaves extends Healing {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

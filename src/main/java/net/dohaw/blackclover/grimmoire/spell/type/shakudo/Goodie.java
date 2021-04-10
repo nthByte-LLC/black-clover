@@ -46,6 +46,11 @@ public class Goodie extends CastSpellWrapper {
         this.addedHealth = grimmoireConfig.getDoubleSetting(KEY, "Added Health");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     private void giveHealth(Wolf wolf){
         double wolfHealth = wolf.getHealth();
         double newHealth = wolfHealth + addedHealth;

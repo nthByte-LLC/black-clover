@@ -117,4 +117,9 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         this.damageMultiplier = grimmoireConfig.getIntegerSetting(KEY, "Damage Multiplier");
         this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

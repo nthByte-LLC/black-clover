@@ -50,4 +50,8 @@ public class FireBall extends CastSpellWrapper implements Listener, DamageableSp
 
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

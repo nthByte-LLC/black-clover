@@ -62,6 +62,11 @@ public class WaterBubble extends CastSpellWrapper implements Listener {
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     @EventHandler
     public void onBlockChange(BlockFromToEvent e){
         for(List<Block> outline : outlineOfWaterBubbles.values()){

@@ -36,4 +36,9 @@ public class Pebble extends CastSpellWrapper {
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

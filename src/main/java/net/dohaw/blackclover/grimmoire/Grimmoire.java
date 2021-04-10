@@ -84,4 +84,17 @@ public class Grimmoire extends WrapperHolder {
         }
     }
 
+    /*
+     * Need to do this because most spells rely on Bukkit#getScheduler#runTaskLater. If the server crashes or is shut down when this task hasn't ran,
+     * the effects of the spell don't get removed (For instance, if a spell places a wall, the wall would not get removed because the server shut down while the task still needed to run)
+     */
+    public static void prepareShutdown(){
+        for(Wrapper wrapper : wrappers.values()){
+            if(wrapper instanceof GrimmoireWrapper){
+                GrimmoireWrapper gWrapper = (GrimmoireWrapper) wrapper;
+                gWrapper.prepareShutdown();
+            }
+        }
+    }
+
 }

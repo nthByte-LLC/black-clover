@@ -86,4 +86,9 @@ public class LifeNet extends CastSpellWrapper implements Listener {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

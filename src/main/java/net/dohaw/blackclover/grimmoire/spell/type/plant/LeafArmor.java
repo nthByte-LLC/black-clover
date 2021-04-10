@@ -99,6 +99,11 @@ public class LeafArmor extends CastSpellWrapper implements Listener {
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     // Doesn't allow them to remove the armor.
     @EventHandler
     public void onClickArmorSlot(InventoryClickEvent e){

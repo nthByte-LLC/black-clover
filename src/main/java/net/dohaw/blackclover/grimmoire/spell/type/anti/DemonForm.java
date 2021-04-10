@@ -79,4 +79,9 @@ public class DemonForm extends CastSpellWrapper {
         this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
 }

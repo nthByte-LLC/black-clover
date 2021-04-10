@@ -29,4 +29,9 @@ public class AshBeam extends CastSpellWrapper {
         super.loadSettings();
         this.beamDistance = grimmoireConfig.getDoubleSetting(KEY, "Beam Distance");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

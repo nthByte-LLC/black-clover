@@ -75,4 +75,8 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
         SpellUtils.playSound(player, Sound.BLOCK_FIRE_AMBIENT);
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

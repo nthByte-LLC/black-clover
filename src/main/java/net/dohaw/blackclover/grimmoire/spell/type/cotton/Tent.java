@@ -95,4 +95,8 @@ public class Tent extends CastSpellWrapper {
 
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
 }

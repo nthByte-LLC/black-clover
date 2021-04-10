@@ -75,6 +75,11 @@ public class AntiSword extends CastSpellWrapper implements Listener {
         this.uses = grimmoireConfig.getIntegerSetting(KEY, "Number of Uses");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onTakeSpellDamage(SpellDamageEvent e){
 

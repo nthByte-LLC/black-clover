@@ -33,4 +33,6 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
         }
     }
 
+    public abstract void prepareShutdown();
+
 }

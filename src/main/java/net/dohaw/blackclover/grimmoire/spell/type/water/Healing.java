@@ -59,6 +59,11 @@ public class Healing extends CastSpellWrapper {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
 
+    @Override
+    public void prepareShutdown() {
+
+    }
+
     private void heal(Player player, int additive){
         double playerHealth = player.getHealth();
         double newPlayerHealth = playerHealth + additive;

@@ -72,4 +72,9 @@ public class WildCall extends CastSpellWrapper {
         super.loadSettings();
         this.absorptionAmount = grimmoireConfig.getIntegerSetting(KEY, "Absorption Amount");
     }
+
+    @Override
+    public void prepareShutdown() {
+
+    }
 }
