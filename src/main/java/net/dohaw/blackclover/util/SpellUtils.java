@@ -179,7 +179,7 @@ public class SpellUtils {
     public static List<Location> makeWall(Location origin, Material material, int width, int height, boolean isSurroundingOrigin){
 
         int leftMoveAmount = width % 3 == 0 ? width / 3 : (width / 3) + 1;
-        int blocksForward = isSurroundingOrigin ? width - 2 : 2;
+        int blocksForward = isSurroundingOrigin ? (int) Math.floor(width / 2.0) : 2;
         Location startWallLocation = LocationUtil.getLocationToLeft(LocationUtil.getAbsoluteLocationInFront(origin, blocksForward), leftMoveAmount);
         Location currentWallLocation = startWallLocation.clone();
         List<Location> wallLocations = new ArrayList<>();
