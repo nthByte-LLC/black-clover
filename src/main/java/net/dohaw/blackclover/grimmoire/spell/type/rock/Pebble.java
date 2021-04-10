@@ -23,7 +23,7 @@ public class Pebble extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        SpellUtils.fireFallingBlock(player, KEY, Material.CRACKED_STONE_BRICKS, forceMultiplier, damage, true);
+        SpellUtils.spawnFallingBlock(player, KEY, Material.CRACKED_STONE_BRICKS, forceMultiplier, damage, true);
         SpellUtils.playSound(player, Sound.BLOCK_STONE_PLACE);
         SpellUtils.spawnParticle(player, Particle.BLOCK_CRACK, Material.STONE.createBlockData(), 20, 1, 1, 1);
         return true;

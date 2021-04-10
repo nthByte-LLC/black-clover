@@ -148,7 +148,7 @@ public class SpellUtils {
      * Spawns in a falling block with velocity
      * @param withIntertia If true, the falling block will give the player intertia upon hit
      */
-    public static void fireFallingBlock(Player caster, SpellType spell, Material fallingBlockMat, double forceMultiplier, double damage, boolean withIntertia){
+    public static void spawnFallingBlock(Player caster, SpellType spell, Material fallingBlockMat, double forceMultiplier, double damage, boolean withIntertia){
         Location casterLocation = caster.getLocation();
         FallingBlock fBlock = caster.getWorld().spawnFallingBlock(casterLocation.clone().add(0, 1,0 ), fallingBlockMat.createBlockData());
         fBlock.setDropItem(false);
@@ -158,7 +158,7 @@ public class SpellUtils {
         fBlock.setVelocity(fallingBlockVelcity);
     }
 
-    public static void fireFallingBlocks(Player caster, SpellType spell, List<FallingBlock> fallingBlocks, double forceMultiplier, double damage, boolean withIntertia){
+    public static void spawnFallingBlocks(Player caster, SpellType spell, List<FallingBlock> fallingBlocks, double forceMultiplier, double damage, boolean withIntertia){
         Vector fallingBlockVelcity = caster.getLocation().getDirection().multiply(forceMultiplier);
         fallingBlocks.forEach(block -> {
             block.setDropItem(false);

@@ -28,7 +28,7 @@ public class Rock extends CastSpellWrapper {
         Player player = pd.getPlayer();
         Location startRock = player.getLocation().add(0, 5, 0);
         List<FallingBlock> fallingBlocks = ShapeUtils.createFallingBlockCube(startRock, Material.CRACKED_STONE_BRICKS, 3, 3, 3);
-        SpellUtils.fireFallingBlocks(player, KEY, fallingBlocks, forceMultiplier, damage, true);
+        SpellUtils.spawnFallingBlocks(player, KEY, fallingBlocks, forceMultiplier, damage, true);
         return true;
     }
 

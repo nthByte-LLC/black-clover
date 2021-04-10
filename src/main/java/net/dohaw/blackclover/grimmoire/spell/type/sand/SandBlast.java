@@ -21,7 +21,7 @@ public class SandBlast extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        SpellUtils.fireFallingBlock(player, KEY, Material.SAND, forceMultiplier, damage, true);
+        SpellUtils.spawnFallingBlock(player, KEY, Material.SAND, forceMultiplier, damage, true);
         deductMana(pd);
         return true;
     }

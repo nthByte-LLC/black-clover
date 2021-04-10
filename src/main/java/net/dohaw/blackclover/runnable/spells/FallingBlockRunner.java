@@ -20,7 +20,7 @@ public class FallingBlockRunner extends BukkitRunnable {
 
     private HashSet<Entity> hurtEntities = new HashSet<>();
     private Player caster;
-    private FallingBlock block;
+    protected FallingBlock block;
     private double damage;
     private SpellType spell;
     private BukkitTask intertiaEnforcer;
@@ -43,30 +43,41 @@ public class FallingBlockRunner extends BukkitRunnable {
     public void run() {
 
         if(!block.isOnGround()){
-            for(Entity e : block.getNearbyEntities(0.5, 0.5, 0.5)){
-                if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
-                    LivingEntity le = (LivingEntity) e;
-                    boolean isDamaged = SpellUtils.doSpellDamage(le, caster, spell, damage);
-                    if(isDamaged){
-                        hurtEntities.add(e);
-                        SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
-                        SpellUtils.playSound(e, Sound.BLOCK_ROOTS_HIT);
-                    }
-                }
-            }
+            checkBlockNearbyEntities(block);
         }else{
-            SpellUtils.playSound(block, Sound.BLOCK_STONE_FALL);
-            SpellUtils.spawnParticle(block, Particle.BLOCK_DUST, Material.STONE.createBlockData(), 30, 1, 1, 1);
             cancel();
         }
 
     }
 
+    protected void checkBlockNearbyEntities(FallingBlock block){
+        for(Entity e : block.getNearbyEntities(1, 1, 1)){
+            if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
+                LivingEntity le = (LivingEntity) e;
+                boolean isDamaged = SpellUtils.doSpellDamage(le, caster, spell, damage);
+                if(isDamaged){
+                    hurtEntities.add(e);
+                    SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
+                    SpellUtils.playSound(e, Sound.BLOCK_ROOTS_HIT);
+                }
+            }
+        }
+    }
+
     @Override
     public synchronized void cancel() throws IllegalStateException {
-        intertiaEnforcer.cancel();
-        block.remove();
-        block.getLocation().getBlock().setType(Material.AIR);
+
+        SpellUtils.playSound(block, Sound.BLOCK_STONE_FALL);
+        SpellUtils.spawnParticle(block, Particle.BLOCK_DUST, Material.STONE.createBlockData(), 30, 1, 1, 1);
+        if(intertiaEnforcer != null){
+            intertiaEnforcer.cancel();
+        }
+
+        if(block != null){
+            block.remove();
+            block.getLocation().getBlock().setType(Material.AIR);
+        }
+
         super.cancel();
     }
 }

@@ -39,3 +39,8 @@ Spell Settings:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 10
+    Cast Distance: 10
+    Height: 5
+    Width: 5
+    Force Multiplier: 2

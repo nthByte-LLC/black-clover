@@ -30,7 +30,7 @@ public class Stone extends CastSpellWrapper {
         Player player = pd.getPlayer();
         List<FallingBlock> fallingBlocks = ShapeUtils.createFallingBlockCube(player.getLocation().add(0, 3, 0), Material.CRACKED_STONE_BRICKS, 2, 2, 2);
 
-        SpellUtils.fireFallingBlocks(player, KEY, fallingBlocks, forceMultiplier, damage, true);
+        SpellUtils.spawnFallingBlocks(player, KEY, fallingBlocks, forceMultiplier, damage, true);
         SpellUtils.playSound(player, Sound.BLOCK_STONE_PLACE);
         SpellUtils.spawnParticle(player, Particle.BLOCK_CRACK, Material.STONE.createBlockData(), 20, 1, 1, 1);
 
