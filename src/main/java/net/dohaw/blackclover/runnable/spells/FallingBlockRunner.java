@@ -46,7 +46,7 @@ public class FallingBlockRunner extends BukkitRunnable {
             for(Entity e : block.getNearbyEntities(0.5, 0.5, 0.5)){
                 if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
                     LivingEntity le = (LivingEntity) e;
-                    boolean isDamaged = SpellUtils.damageEntity(le, caster, spell, damage);
+                    boolean isDamaged = SpellUtils.doSpellDamage(le, caster, spell, damage);
                     if(isDamaged){
                         hurtEntities.add(e);
                         SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
@@ -55,6 +55,8 @@ public class FallingBlockRunner extends BukkitRunnable {
                 }
             }
         }else{
+            SpellUtils.playSound(block, Sound.BLOCK_STONE_FALL);
+            SpellUtils.spawnParticle(block, Particle.BLOCK_DUST, Material.STONE.createBlockData(), 30, 1, 1, 1);
             cancel();
         }
 

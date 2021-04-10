@@ -69,10 +69,13 @@ public class SpellUtils {
         return arr;
     }
 
-    public static Entity getEntityInLineOfSight(Player player, int distance){
+    /**
+     * Gets the first entity in the line of sight of the player
+     */
+    public static Entity getEntityInLineOfSight(Player player, int maxDistance){
         Location start = player.getLocation();
         Vector dir = start.getDirection();
-        for (double i = 0; i < distance; i += 0.5) {
+        for (double i = 0; i < maxDistance; i += 0.5) {
             Vector currentDir = dir.clone().multiply(i);
             Location currentLocation = start.clone().add(currentDir);
             List<Entity> nearbyEntities = new ArrayList<>(player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1, (e) -> e instanceof LivingEntity));
@@ -88,7 +91,7 @@ public class SpellUtils {
         CraftLivingEntity cPlayer = (CraftLivingEntity) player;
         Projectile projectile = cPlayer.launchProjectile(Snowball.class);
         wrapper.markAsSpellBinding(projectile);
-        ((CraftSnowball) projectile).getHandle().setItem(CraftItemStack.asNMSCopy(new ItemStack(Material.FIRE_CHARGE)));
+        ((CraftSnowball) projectile).getHandle().setItem(CraftItemStack.asNMSCopy(new ItemStack(projMaterial)));
         return projectile;
     }
 
@@ -102,6 +105,12 @@ public class SpellUtils {
         }
     }
 
+    /**
+     * Alters a entities health.
+     * @param livingEntity The entity we are altering health for
+     * @param amount The amount of health to alter. A positive number will increase the entities health. A negative number will decrease it.
+     * @return The absolute valued amount of health we have altered.
+     */
     public static double alterHealth(LivingEntity livingEntity, double amount){
         double health = livingEntity.getHealth();
         double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
@@ -117,11 +126,15 @@ public class SpellUtils {
         return (health + Math.abs(amount)) - health;
     }
 
-    public static boolean damageEntity(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
+    /**
+     * Damages the entity and also fires the spell damage event.
+     */
+    public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
         SpellDamageEvent event = new SpellDamageEvent(spell, damage, damagedEntity, damager);
         Bukkit.getPluginManager().callEvent(event);
         if(!event.isCancelled()){
             alterHealth(damagedEntity, damage);
+            damagedEntity.playEffect(EntityEffect.HURT);
             return true;
         }
         return false;
@@ -146,9 +159,9 @@ public class SpellUtils {
         fallingBlocks.forEach(block -> {
             block.setDropItem(false);
             block.setHurtEntities(false);
-            block.setVelocity(fallingBlockVelcity.clone());
+            block.setVelocity(fallingBlockVelcity);
         });
-        new MultiFallingBlockRunner(caster, fallingBlocks.get(0), spell, damage, withIntertia).runTaskTimer(Grimmoire.instance, 0L, 1L);
+        new MultiFallingBlockRunner(caster, fallingBlocks.get(0), fallingBlocks, spell, damage, withIntertia).runTaskTimer(Grimmoire.instance, 0L, 1L);
     }
 
     /*

@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Rock extends GrimmoireWrapper {
 
+    public net.dohaw.blackclover.grimmoire.spell.type.rock.Rock rock;
     public Stone stone;
     public Pebble pebble;
 
@@ -42,6 +43,9 @@ public class Rock extends GrimmoireWrapper {
 
         this.stone = new Stone(config);
         this.spells.put(SpellType.STONE, stone);
+
+        this.rock = new net.dohaw.blackclover.grimmoire.spell.type.rock.Rock(config);
+        this.spells.put(SpellType.ROCK, rock);
 
     }
 
