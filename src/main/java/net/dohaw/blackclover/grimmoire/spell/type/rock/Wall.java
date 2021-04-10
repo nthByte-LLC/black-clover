@@ -11,6 +11,7 @@ import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -33,8 +34,7 @@ public class Wall extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        List<Location> wallLocations = SpellUtils.makeWall(player.getLocation(), Material.CRACKED_STONE_BRICKS, wallWidth, wallHeight);
-
+        List<Location> wallLocations = SpellUtils.makeWall(player.getLocation(), Material.CRACKED_STONE_BRICKS, wallWidth, wallHeight, false);
         allWallLocations.add(wallLocations);
 
         //Sets the blocks back to air

@@ -50,6 +50,10 @@ public class SpellUtils {
         Objects.requireNonNull(entity.getWorld()).spawnParticle(particle, entity.getLocation(), count, offsetX, offsetY, offsetZ, blockData);
     }
 
+    public static void spawnParticle(Location loc, Particle particle, BlockData blockData, int count, float offsetX, float offsetY, float offsetZ){
+        Objects.requireNonNull(loc.getWorld()).spawnParticle(particle, loc, count, offsetX, offsetY, offsetZ, blockData);
+    }
+
     public static void spawnParticle(Location loc, Particle particle, Particle.DustOptions data, int count, float offsetX, float offsetY, float offsetZ){
         Objects.requireNonNull(loc.getWorld()).spawnParticle(particle, loc, count, offsetX, offsetY, offsetZ, data);
     }
@@ -169,14 +173,19 @@ public class SpellUtils {
      * @param material The material of wall.
      * @param width The width of the wall.
      * @param height The height of the wall.
+     * @param isSurroundingOrigin Defines whether you are spawning in multiple walls to surround the origin location
      * @return The block locations of the blocks in the wall.
      */
-    public static List<Location> makeWall(Location origin, Material material, int width, int height){
+    public static List<Location> makeWall(Location origin, Material material, int width, int height, boolean isSurroundingOrigin){
 
         int leftMoveAmount = width % 3 == 0 ? width / 3 : (width / 3) + 1;
-        Location startWallLocation = LocationUtil.getLocationToLeft(LocationUtil.getAbsoluteLocationInFront(origin, 2), leftMoveAmount);
+        int blocksForward = isSurroundingOrigin ? width - 2 : 2;
+        Location startWallLocation = LocationUtil.getLocationToLeft(LocationUtil.getAbsoluteLocationInFront(origin, blocksForward), leftMoveAmount);
         Location currentWallLocation = startWallLocation.clone();
         List<Location> wallLocations = new ArrayList<>();
+
+        SpellUtils.playSound(startWallLocation, Sound.BLOCK_ANVIL_PLACE);
+        SpellUtils.spawnParticle(startWallLocation, Particle.BLOCK_CRACK, material.createBlockData(), 30, 1, 1, 1);
         for(int x = 0; x < width; x++){
 
             for(int y = 0; y < height; y++){

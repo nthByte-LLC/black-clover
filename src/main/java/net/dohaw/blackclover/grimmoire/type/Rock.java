@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.rock.Fortress;
 import net.dohaw.blackclover.grimmoire.spell.type.rock.Pebble;
 import net.dohaw.blackclover.grimmoire.spell.type.rock.Stone;
 import net.dohaw.blackclover.grimmoire.spell.type.rock.Wall;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class Rock extends GrimmoireWrapper {
 
+    public Fortress fortress;
     public Wall wall;
     public net.dohaw.blackclover.grimmoire.spell.type.rock.Rock rock;
     public Stone stone;
@@ -51,6 +53,9 @@ public class Rock extends GrimmoireWrapper {
 
         this.wall = new Wall(config);
         this.spells.put(SpellType.WALL, wall);
+
+        this.fortress = new Fortress(config);
+        this.spells.put(SpellType.FORTRESS, fortress);
 
     }
 
