@@ -7,6 +7,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.BlockSnapshot;
 import net.dohaw.blackclover.util.LocationUtil;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,30 +33,7 @@ public class Wall extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        int leftMoveAmount = wallWidth % 3 == 0 ? wallWidth / 3 : (wallWidth / 3) + 1;
-        Location startWallLocation = LocationUtil.getLocationToLeft(LocationUtil.getAbsoluteLocationInFront(player, 2), leftMoveAmount);
-        Location currentWallLocation = startWallLocation.clone();
-        List<Location> wallLocations = new ArrayList<>();
-
-        for(int x = 0; x < wallWidth; x++){
-
-            for(int y = 0; y < wallHeight; y++){
-                // This will only run false for the first iteration
-                if(x != 0 || y != 0){
-                    currentWallLocation = LocationUtil.getLocationToRight(currentWallLocation, x).add(0, y, 0);
-                }
-
-                Material currentWallLocationMat = currentWallLocation.getBlock().getType();
-                // We are only replacing blocks that are air
-                if(currentWallLocationMat == Material.AIR){
-                    wallLocations.add(currentWallLocation.clone());
-                    currentWallLocation.getBlock().setType(Material.CRACKED_STONE_BRICKS);
-                }
-                // sets it back to the bottom left position after every iteration
-                currentWallLocation = startWallLocation.clone();
-
-            }
-        }
+        List<Location> wallLocations = SpellUtils.makeWall(player.getLocation(), Material.CRACKED_STONE_BRICKS, wallWidth, wallHeight);
 
         allWallLocations.add(wallLocations);
 

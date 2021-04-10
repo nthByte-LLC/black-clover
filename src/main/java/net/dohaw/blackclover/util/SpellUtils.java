@@ -164,6 +164,39 @@ public class SpellUtils {
         new MultiFallingBlockRunner(caster, fallingBlocks.get(0), fallingBlocks, spell, damage, withIntertia).runTaskTimer(Grimmoire.instance, 0L, 1L);
     }
 
+    /**
+     * @param origin The origin location. This could be a player location
+     * @param material The material of wall.
+     * @param width The width of the wall.
+     * @param height The height of the wall.
+     * @return The block locations of the blocks in the wall.
+     */
+    public static List<Location> makeWall(Location origin, Material material, int width, int height){
+
+        int leftMoveAmount = width % 3 == 0 ? width / 3 : (width / 3) + 1;
+        Location startWallLocation = LocationUtil.getLocationToLeft(LocationUtil.getAbsoluteLocationInFront(origin, 2), leftMoveAmount);
+        Location currentWallLocation = startWallLocation.clone();
+        List<Location> wallLocations = new ArrayList<>();
+        for(int x = 0; x < width; x++){
+
+            for(int y = 0; y < height; y++){
+
+                currentWallLocation = LocationUtil.getLocationToRight(currentWallLocation, x).add(0, y, 0);
+                Material currentWallLocationMat = currentWallLocation.getBlock().getType();
+                // We are only replacing blocks that are air
+                if(currentWallLocationMat == Material.AIR){
+                    wallLocations.add(currentWallLocation.clone());
+                    currentWallLocation.getBlock().setType(material);
+                }
+                // sets it back to the bottom left position after every iteration
+                currentWallLocation = startWallLocation.clone();
+
+            }
+        }
+
+        return wallLocations;
+    }
+
     /*
         Valid meaning the target isn't null and it's an instance of LivingEntity
      */

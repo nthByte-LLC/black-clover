@@ -20,13 +20,17 @@ public class LocationUtil {
      * Absolute meaning, if the player were looking straight forward, it would get the block in front of the player.
      * This differs from #getLocationInFront because if you were to look up, it gets the location in front of you and pointing in that direction.
      * This method gets the location as if the player were looking straight forward, disregarding any pitch.
-     * @return
      */
     public static Location getAbsoluteLocationInFront(Entity entity, double numBlocksInFront){
-        Location entityLocation = entity.getLocation().clone();
+        Location entityLocation = entity.getLocation();
         // makes them level-faced forward
         entityLocation.setPitch(0);
         return getLocationInFront(entityLocation, numBlocksInFront);
+    }
+
+    public static Location getAbsoluteLocationInFront(Location location, double numBlocksInFront){
+        location.setPitch(0);
+        return getLocationInFront(location, numBlocksInFront);
     }
 
     public static Location getLocationInFront(Location location, double numBlocksInFront){
