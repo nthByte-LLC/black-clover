@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.FallingBlock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +59,20 @@ public class ShapeUtils {
             }
         }
         return blocks;
+    }
+
+    public static List<FallingBlock> createFallingBlockCube(Location start, Material fallingBlockMaterial, int xDimension, int yDimension, int zDimension){
+        List<FallingBlock> fallingBlocks = new ArrayList<>();
+        for(double x = start.getX(); x < start.getX() + xDimension; x++){
+            for(double y = start.getY(); y < start.getY() + yDimension; y++){
+                for(double z = start.getZ(); z < start.getZ() + zDimension; z++){
+                    Location loc = new Location(start.getWorld(), x, y, z);
+                    fallingBlocks.add(start.getWorld().spawnFallingBlock(loc, fallingBlockMaterial.createBlockData()));
+                }
+            }
+        }
+        System.out.println("FALLING BLOCKS SIZE: " + fallingBlocks.size());
+        return fallingBlocks;
     }
 
     public static List<Block> getHollowCube(Location start, int radius){

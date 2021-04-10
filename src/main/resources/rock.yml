@@ -1,0 +1,31 @@
+Display Name Color: "&5"
+
+Spell Settings:
+  pebble:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Force Multiplier: 2
+    Damage: 2
+  stone:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Force Multiplier: 2
+    Damage: 2
+  rock:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  wall:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  fortress:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  metroid:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

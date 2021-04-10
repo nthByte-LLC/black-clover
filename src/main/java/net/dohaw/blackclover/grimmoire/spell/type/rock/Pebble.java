@@ -1,4 +1,4 @@
-package net.dohaw.blackclover.grimmoire.spell.type.sand;
+package net.dohaw.blackclover.grimmoire.spell.type.rock;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -6,23 +6,26 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
-public class SandBlast extends CastSpellWrapper {
+public class Pebble extends CastSpellWrapper {
 
     private double forceMultiplier;
-    private double damage;
+    private int damage;
 
-    public SandBlast(GrimmoireConfig grimmoireConfig) {
-        super(SpellType.SAND_BLAST, grimmoireConfig);
+    public Pebble(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.PEBBLE, grimmoireConfig);
     }
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        SpellUtils.fireFallingBlock(player, KEY, Material.SAND, forceMultiplier, damage, true);
-        deductMana(pd);
+        SpellUtils.fireFallingBlock(player, KEY, Material.CRACKED_STONE_BRICKS, forceMultiplier, damage, true);
+        SpellUtils.playSound(player, Sound.BLOCK_STONE_PLACE);
+        SpellUtils.spawnParticle(player, Particle.BLOCK_CRACK, Material.STONE.createBlockData(), 20, 1, 1, 1);
         return true;
     }
 
@@ -32,4 +35,5 @@ public class SandBlast extends CastSpellWrapper {
         this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
     }
+
 }

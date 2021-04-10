@@ -16,6 +16,7 @@ public class Cotton extends GrimmoireWrapper {
     public SheepArmy sheepArmy;
     public Sheep sheep;
     public BatteringRam batteringRam;
+    public Tent tent;
 
     public Cotton() {
         super(GrimmoireType.COTTON);
@@ -53,6 +54,9 @@ public class Cotton extends GrimmoireWrapper {
 
         this.batteringRam = new BatteringRam(config);
         this.spells.put(SpellType.BATTERING_RAM, batteringRam);
+
+        this.tent = new Tent(config);
+        this.spells.put(SpellType.TENT, tent);
 
     }
 

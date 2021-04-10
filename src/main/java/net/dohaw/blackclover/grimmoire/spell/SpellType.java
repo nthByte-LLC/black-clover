@@ -93,7 +93,18 @@ public enum SpellType {
     SHEEP_ARMY("sheep_army", false),
     SHEEP("sheep", false),
     TENT("tent", false),
-    BATTERING_RAM("battering_ram", true);
+    BATTERING_RAM("battering_ram", true),
+
+    /*
+        Rock spells
+     */
+    PEBBLE("pebble", false),
+    STONE("stone", false),
+    ROCK("rock", false),
+    WALL("wall", false),
+    FORTRESS("fortress", false),
+    METROID("metroid", true);
+
 
     @Getter
     private boolean isUltimate;

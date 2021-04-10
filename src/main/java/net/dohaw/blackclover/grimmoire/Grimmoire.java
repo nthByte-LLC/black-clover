@@ -28,6 +28,7 @@ public class Grimmoire extends WrapperHolder {
     public static final GrimmoireWrapper SNOW = new Snow();
     public static final GrimmoireWrapper ASH = new Ash();
     public static final GrimmoireWrapper COTTON = new Cotton();
+    public static final GrimmoireWrapper ROCK = new Rock();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

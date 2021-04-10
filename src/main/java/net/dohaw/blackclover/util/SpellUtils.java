@@ -1,15 +1,14 @@
 package net.dohaw.blackclover.util;
 
-import net.dohaw.blackclover.BlackCloverPlugin;
+import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.runnable.spells.FallingBlockRunner;
+import net.dohaw.blackclover.runnable.spells.MultiFallingBlockRunner;
 import net.dohaw.corelib.helpers.MathHelper;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
@@ -22,7 +21,6 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -108,7 +106,7 @@ public class SpellUtils {
         double health = livingEntity.getHealth();
         double maxHealth = livingEntity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         double newHealth = health + amount;
-        if(newHealth > 20) {
+        if(newHealth > maxHealth) {
             livingEntity.setHealth(maxHealth);
         }else if(newHealth <= 0){
             livingEntity.setHealth(0);
@@ -117,6 +115,40 @@ public class SpellUtils {
         }
         // changed health amount
         return (health + Math.abs(amount)) - health;
+    }
+
+    public static boolean damageEntity(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
+        SpellDamageEvent event = new SpellDamageEvent(spell, damage, damagedEntity, damager);
+        Bukkit.getPluginManager().callEvent(event);
+        if(!event.isCancelled()){
+            alterHealth(damagedEntity, damage);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Spawns in a falling block with velocity
+     * @param withIntertia If true, the falling block will give the player intertia upon hit
+     */
+    public static void fireFallingBlock(Player caster, SpellType spell, Material fallingBlockMat, double forceMultiplier, double damage, boolean withIntertia){
+        Location casterLocation = caster.getLocation();
+        FallingBlock fBlock = caster.getWorld().spawnFallingBlock(casterLocation.clone().add(0, 1,0 ), fallingBlockMat.createBlockData());
+        fBlock.setDropItem(false);
+        new FallingBlockRunner(caster, fBlock, spell, damage,withIntertia).runTaskTimer(Grimmoire.instance, 0L, 1L);
+        Vector fallingBlockVelcity = casterLocation.getDirection().multiply(forceMultiplier);
+        fBlock.setHurtEntities(false);
+        fBlock.setVelocity(fallingBlockVelcity);
+    }
+
+    public static void fireFallingBlocks(Player caster, SpellType spell, List<FallingBlock> fallingBlocks, double forceMultiplier, double damage, boolean withIntertia){
+        Vector fallingBlockVelcity = caster.getLocation().getDirection().multiply(forceMultiplier);
+        fallingBlocks.forEach(block -> {
+            block.setDropItem(false);
+            block.setHurtEntities(false);
+            block.setVelocity(fallingBlockVelcity.clone());
+        });
+        new MultiFallingBlockRunner(caster, fallingBlocks.get(0), spell, damage, withIntertia).runTaskTimer(Grimmoire.instance, 0L, 1L);
     }
 
     /*

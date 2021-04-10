@@ -1,6 +1,5 @@
 package net.dohaw.blackclover.runnable.spells;
 
-import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.SpellUtils;
@@ -17,49 +16,55 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashSet;
 
-public class SandBlastRunner extends BukkitRunnable {
+public class FallingBlockRunner extends BukkitRunnable {
 
     private HashSet<Entity> hurtEntities = new HashSet<>();
     private Player caster;
     private FallingBlock block;
-    private double damageScale;
-    private BukkitTask teleporter;
+    private double damage;
+    private SpellType spell;
+    private BukkitTask intertiaEnforcer;
 
-    public SandBlastRunner(Player caster, FallingBlock block, double damageScale){
+    public FallingBlockRunner(Player caster, FallingBlock block, SpellType spell, double damage, boolean hasIntertia){
         this.caster = caster;
         this.block = block;
-        this.damageScale = damageScale;
-        this.teleporter = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-            for(Entity e : hurtEntities){
-                e.teleport(block);
-            }
-        }, 0L, 1L);
+        this.damage = damage;
+        this.spell = spell;
+        if(hasIntertia) {
+            this.intertiaEnforcer = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
+                for (Entity e : hurtEntities) {
+                    e.teleport(block);
+                }
+            }, 0L, 1L);
+        }
     }
 
     @Override
     public void run() {
 
         if(!block.isOnGround()){
-            for(Entity e : block.getNearbyEntities(1, 1, 1)){
+            for(Entity e : block.getNearbyEntities(0.5, 0.5, 0.5)){
                 if(e instanceof LivingEntity && !hurtEntities.contains(e) && !caster.getUniqueId().equals(e.getUniqueId())){
                     LivingEntity le = (LivingEntity) e;
-                    double damage = 1 * damageScale;
-                    SpellDamageEvent event = new SpellDamageEvent(SpellType.FIRE_BLAST, damage, le, caster);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if(!event.isCancelled()){
+                    boolean isDamaged = SpellUtils.damageEntity(le, caster, spell, damage);
+                    if(isDamaged){
                         hurtEntities.add(e);
-                        le.damage(event.getDamage());
                         SpellUtils.spawnParticle(e, Particle.END_ROD, 30, 0.1f, 0.1f, 0.1f);
-                        SpellUtils.playSound(e, Sound.BLOCK_SAND_HIT);
+                        SpellUtils.playSound(e, Sound.BLOCK_ROOTS_HIT);
                     }
                 }
             }
         }else{
-            teleporter.cancel();
-            block.getLocation().getBlock().setType(Material.AIR);
-            this.cancel();
+            cancel();
         }
 
     }
 
+    @Override
+    public synchronized void cancel() throws IllegalStateException {
+        intertiaEnforcer.cancel();
+        block.remove();
+        block.getLocation().getBlock().setType(Material.AIR);
+        super.cancel();
+    }
 }

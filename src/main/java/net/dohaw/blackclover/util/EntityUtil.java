@@ -10,6 +10,9 @@ import org.bukkit.entity.LivingEntity;
 
 public class EntityUtil {
 
+    /**
+     * Uses custom pathfinder goals to make an entity follow a target entity
+     */
     public static void makeEntityFollow(LivingEntity entity, LivingEntity target) {
         EntityLiving entityLiving = ((CraftLivingEntity)entity).getHandle();
         EntityLiving targetLiving = ((CraftLivingEntity)target).getHandle();
@@ -24,5 +27,7 @@ public class EntityUtil {
             throw new IllegalArgumentException(entityLiving.getClass().getSimpleName() + " is not an instance of an EntityInsentient.");
         }
     }
+
+
 
 }

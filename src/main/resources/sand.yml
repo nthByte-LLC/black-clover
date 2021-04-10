@@ -4,7 +4,7 @@ Particle: SPELL
 Spell Settings:
   sand_blast:
     Hotbar Number: 0
-    Damage Scale: 1
+    Damage: 2
     # In seconds
     Cooldown: 20
     Regen Consumed: 100
