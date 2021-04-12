@@ -242,7 +242,7 @@ public class PlayerWatcher implements Listener {
         pd.setSpellCurrentlyCasting(e.getSpell());
     }
 
-    /*
+    /**
         Removes the tasks that are associated with the spell on death.
      */
     @EventHandler
@@ -316,7 +316,7 @@ public class PlayerWatcher implements Listener {
         Player player = e.getPlayer();
         PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
         if(pd.isFrozen()){
-            if(LocationUtil.hasMoved(to, from)){
+            if(LocationUtil.hasMoved(to, from, true)){
                 e.setCancelled(true);
             }
         }

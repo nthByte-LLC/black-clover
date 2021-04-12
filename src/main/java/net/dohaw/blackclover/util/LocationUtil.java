@@ -51,9 +51,13 @@ public class LocationUtil {
         return loc.clone().add(leftDirectionLocation.getDirection().multiply(dist));
     }
 
-    public static boolean hasMoved(Location to, Location from){
+    public static boolean hasMoved(Location to, Location from, boolean checkY){
         if(to != null){
-            return from.getX() != to.getX() || from.getY() != to.getY() || from.getZ() != to.getZ();
+            boolean hasMovedHorizontally = from.getX() != to.getX() || from.getZ() != to.getZ();
+            if(hasMovedHorizontally && checkY){
+                return from.getY() != to.getY();
+            }
+            return hasMovedHorizontally;
         }
         return false;
     }

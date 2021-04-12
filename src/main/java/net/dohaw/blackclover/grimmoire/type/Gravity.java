@@ -21,6 +21,7 @@ import java.util.List;
 
 public class Gravity extends GrimmoireWrapper implements Listener {
 
+    public net.dohaw.blackclover.grimmoire.spell.type.gravity.Gravity gravity;
     public Float floatSpell;
     public AddWeight addWeight;
     public RemoveWeight removeWeight;
@@ -59,6 +60,9 @@ public class Gravity extends GrimmoireWrapper implements Listener {
 
         this.floatSpell = new Float(config);
         this.spells.put(SpellType.FLOAT, floatSpell);
+
+        this.gravity = new net.dohaw.blackclover.grimmoire.spell.type.gravity.Gravity(config);
+        this.spells.put(SpellType.GRAVITY, gravity);
 
     }
 
