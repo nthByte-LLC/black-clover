@@ -77,10 +77,16 @@ public class PlayerWatcher implements Listener {
 
                     SpellType spellType = spellBoundToSlot.getKEY();
                     e.setCancelled(true);
+                    // Deactivate all spell effects and runnables
                     if(pd.isSpellActive(spellType) && player.isSneaking()){
 
                         ActivatableSpellWrapper apw = (ActivatableSpellWrapper) spellBoundToSlot;
-                        apw.deactiveSpell(pd);
+                        try {
+                            apw.deactiveSpell(pd);
+                        } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                            unexpectedPlayerData.printStackTrace();
+                        }
+
                         pd.stopSpellRunnables(spellType);
 
                         // This event is called just in case we want to do anything to the player after we remove the active spell

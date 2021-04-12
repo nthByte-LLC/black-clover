@@ -13,9 +13,11 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -29,15 +31,15 @@ public class Float extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public void doRunnableTick(PlayerData caster) {
+    public boolean cast(Event e, PlayerData pd) {
 
-        if(caster instanceof GravityPlayerData){
+        if(pd instanceof GravityPlayerData){
 
-            Player player = caster.getPlayer();
+            Player player = pd.getPlayer();
             player.setAllowFlight(true);
             player.setFlying(true);
 
-            GravityPlayerData gpd = (GravityPlayerData) caster;
+            GravityPlayerData gpd = (GravityPlayerData) pd;
             gpd.setFloating(true);
             gpd.setFloatY(player.getLocation().getY() + floatHeight);
 
@@ -45,7 +47,11 @@ public class Float extends ActivatableSpellWrapper implements Listener {
             SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
         }
 
+        return super.cast(e, pd);
     }
+
+    @Override
+    public void doRunnableTick(PlayerData caster) { }
 
     @Override
     public void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData {
@@ -80,9 +86,6 @@ public class Float extends ActivatableSpellWrapper implements Listener {
                 if(pd instanceof GravityPlayerData){
                     GravityPlayerData gpd = (GravityPlayerData) pd;
                     if(gpd.isFloating()){
-                        Vector velocity = player.getVelocity();
-                        velocity.setY(0);
-                        player.setVelocity(velocity);
                         to.setY(gpd.getFloatY());
                         player.teleport(to);
                     }
