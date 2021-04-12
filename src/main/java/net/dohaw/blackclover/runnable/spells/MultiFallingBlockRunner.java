@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class MultiFallingBlockRunner extends FallingBlockRunner{

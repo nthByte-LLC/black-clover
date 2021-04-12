@@ -77,14 +77,17 @@ public class PlayerWatcher implements Listener {
 
                     SpellType spellType = spellBoundToSlot.getKEY();
                     e.setCancelled(true);
-                    if(pd.isSpellActive(spellType)){
-                        if(player.isSneaking()){
-                            pd.stopSpellRunnables(spellType);
-                            // This event is called just in case we want to do anything to the player after we remove the active spell
-                            PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
-                            Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);
-                            return;
-                        }
+                    if(pd.isSpellActive(spellType) && player.isSneaking()){
+
+                        ActivatableSpellWrapper apw = (ActivatableSpellWrapper) spellBoundToSlot;
+                        apw.deactiveSpell(pd);
+                        pd.stopSpellRunnables(spellType);
+
+                        // This event is called just in case we want to do anything to the player after we remove the active spell
+                        PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
+                        Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);
+                        return;
+
                     }
 
                     if(!pd.isSpellOnCooldown(spellType)){

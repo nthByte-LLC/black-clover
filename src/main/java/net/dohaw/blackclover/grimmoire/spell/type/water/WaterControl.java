@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.grimmoire.spell.type.water;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -21,7 +22,7 @@ public class WaterControl extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public void doRunnableSpecifics(PlayerData caster) {
+    public void doRunnableTick(PlayerData caster) {
         Player player = caster.getPlayer();
         if(isNearWater(player)){
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,  21, resistanceLevel - 1));
@@ -31,6 +32,11 @@ public class WaterControl extends ActivatableSpellWrapper implements Listener {
         }else{
             SpellUtils.spawnParticle(player, Particle.BLOCK_DUST, Material.SAND.createBlockData(), 30, 0.5f, 0.5f, 0.5f);
         }
+    }
+
+    @Override
+    public void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData {
+
     }
 
     @Override

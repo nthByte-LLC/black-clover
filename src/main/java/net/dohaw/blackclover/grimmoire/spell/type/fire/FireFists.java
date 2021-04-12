@@ -4,7 +4,6 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
@@ -17,8 +16,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class FireFists extends ActivatableSpellWrapper implements Listener, DamageableSpell {
+public class FireFists extends ActivatableSpellWrapper implements Listener{
 
+    private double damageScale;
     protected int fireTicksPerPunch;
 
     public FireFists(GrimmoireConfig grimmoireConfig) {
@@ -68,7 +68,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
 
     }
 
-    public void doRunnableSpecifics(PlayerData pd){
+    public void doRunnableTick(PlayerData pd){
         Player player = pd.getPlayer();
         World world = player.getWorld();
         world.spawnParticle(particle, player.getLocation(), 30, 1, 1, 1);
@@ -76,7 +76,18 @@ public class FireFists extends ActivatableSpellWrapper implements Listener, Dama
     }
 
     @Override
+    public void deactiveSpell(PlayerData caster) {
+
+    }
+
+    @Override
     public void prepareShutdown() {
 
+    }
+
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.damageScale = grimmoireConfig.getDoubleSetting(KEY, "Damage Scale");
     }
 }

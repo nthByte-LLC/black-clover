@@ -3,7 +3,6 @@ package net.dohaw.blackclover.grimmoire.spell.type.sand;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.DamageableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.ShapeUtils;
@@ -22,7 +21,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SandGrave extends CastSpellWrapper implements DamageableSpell, Listener {
+public class SandGrave extends CastSpellWrapper implements Listener {
 
     private final NamespacedKey NSK = NamespacedKey.minecraft("marked-sand-grave");
 

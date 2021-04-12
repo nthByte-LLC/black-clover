@@ -8,8 +8,6 @@ import org.bukkit.Particle;
 
 public abstract class SpellWrapper extends Wrapper<SpellType> {
 
-    @Getter
-    protected double damageScale;
 
     @Getter
     protected Particle particle;
@@ -26,12 +24,7 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
         return NamespacedKey.minecraft(KEY.getConfigKey());
     }
 
-    public void loadSettings(){
-        this.particle = grimmoireConfig.getParticle(KEY);
-        if(this instanceof DamageableSpell){
-            this.damageScale = grimmoireConfig.getIntegerSetting(KEY, "Damage Scale");
-        }
-    }
+    public void loadSettings(){ }
 
     public abstract void prepareShutdown();
 

@@ -2,6 +2,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.anti;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.SpellDamageEvent;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -64,13 +65,18 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
 
 
     @Override
-    public void doRunnableSpecifics(PlayerData caster) {
+    public void doRunnableTick(PlayerData caster) {
 
         Player player = caster.getPlayer();
         CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
         particleRunner.setMaxYAdditive(0.4);
 
         caster.addSpellRunnables(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));
+
+    }
+
+    @Override
+    public void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData {
 
     }
 

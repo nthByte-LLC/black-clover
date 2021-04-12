@@ -2,6 +2,7 @@ package net.dohaw.blackclover.grimmoire.spell;
 
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.Bukkit;
@@ -24,7 +25,7 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
             if(updatedData.hasSufficientRegenForSpell(this)){
                 deductMana(updatedData);
                 instance.updateRegenBar(updatedData);
-                doRunnableSpecifics(updatedData);
+                doRunnableTick(updatedData);
             }else{
                 updatedData.stopSpellRunnables(this.KEY);
             }
@@ -42,6 +43,8 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
         return true;
     }
 
-    public abstract void doRunnableSpecifics(PlayerData caster);
+    public abstract void doRunnableTick(PlayerData caster);
+
+    public abstract void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData;
 
 }

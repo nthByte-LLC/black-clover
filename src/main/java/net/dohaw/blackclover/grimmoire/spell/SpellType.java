@@ -103,8 +103,17 @@ public enum SpellType {
     ROCK("rock", false),
     WALL("wall", false),
     FORTRESS("fortress", false),
-    METROID("metroid", true);
+    METROID("metroid", true),
 
+    /*
+        Gravity Magic
+     */
+    LEVITATE("levitate", false),
+    REMOVE_WEIGHT("remove_weight", false),
+    ADD_WEIGHT("add_weight", false),
+    FLOAT("float", false),
+    GRAVITY("gravity", false),
+    ZERO_GRAVITY("zero_gravity", false);
 
     @Getter
     private boolean isUltimate;

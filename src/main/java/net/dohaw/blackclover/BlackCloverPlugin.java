@@ -90,9 +90,15 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.ASH);
         Grimmoire.registerWrapper(Grimmoire.COTTON);
         Grimmoire.registerWrapper(Grimmoire.ROCK);
+        Grimmoire.registerWrapper(Grimmoire.GRAVITY);
         for(Wrapper wrapper : Grimmoire.wrappers.values()){
             if(wrapper instanceof GrimmoireWrapper){
+
                 GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) wrapper;
+                if(grimmoireWrapper instanceof Listener){
+                    JPUtils.registerEvents((Listener) grimmoireWrapper);
+                }
+
                 for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
                     if(spell instanceof Listener){
                         JPUtils.registerEvents((Listener) spell);
