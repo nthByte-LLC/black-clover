@@ -7,11 +7,13 @@ import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.poison.Antidote;
 import net.dohaw.blackclover.grimmoire.spell.type.poison.BadBeath;
+import net.dohaw.blackclover.grimmoire.spell.type.poison.Plague;
 import net.dohaw.blackclover.grimmoire.spell.type.poison.Shock;
 import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public class Poison extends GrimmoireWrapper {
 
+    public Plague plague;
     public Antidote antidote;
     public net.dohaw.blackclover.grimmoire.spell.type.poison.Poison poison;
     public BadBeath badBeath;
@@ -60,10 +63,19 @@ public class Poison extends GrimmoireWrapper {
         this.antidote = new Antidote(config);
         this.spells.put(SpellType.ANTIDOTE, antidote);
 
+        this.plague = new Plague(config);
+        this.spells.put(SpellType.PLAGUE, plague);
+
     }
 
-    public void spawnPoisonParticles(LivingEntity target, double duration){
+    /**
+     * Spawns the poison particles for an entity and plays a sound.
+     * @param target The target that is getting the poison
+     * @param duration How long the poison goes on for
+     */
+    public void startPoisonEffect(LivingEntity target, double duration){
 
+        SpellUtils.playSound(target, Sound.BLOCK_CROP_BREAK);
         Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             if(target.hasPotionEffect(PotionEffectType.POISON)){
@@ -71,9 +83,7 @@ public class Poison extends GrimmoireWrapper {
             }
         }, 20L, 20L);
 
-        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-            task.cancel();
-        }, (long) (duration * 20));
+        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, task::cancel, (long) (duration * 20));
 
     }
 

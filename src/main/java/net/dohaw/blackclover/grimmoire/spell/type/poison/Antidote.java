@@ -18,6 +18,9 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * Takes the poison off a target.
+ */
 public class Antidote extends CastSpellWrapper {
 
     private int castDistance;
@@ -32,10 +35,17 @@ public class Antidote extends CastSpellWrapper {
         Player player = pd.getPlayer();
         Entity targetEntity = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, targetEntity)){
+
             LivingEntity target = (LivingEntity) targetEntity;
-            target.removePotionEffect(PotionEffectType.POISON);
-            BukkitTask runner = new CircleParticleRunner(target, Particle.SPELL, true, 1).runTaskTimer(Grimmoire.instance, 0L, 1L);
-            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, runner::cancel, 10L);
+            if(target.hasPotionEffect(PotionEffectType.POISON)){
+                BukkitTask runner = new CircleParticleRunner(target, Particle.SPELL, true, 1).runTaskTimer(Grimmoire.instance, 0L, 1L);
+                target.removePotionEffect(PotionEffectType.POISON);
+                Bukkit.getScheduler().runTaskLater(Grimmoire.instance, runner::cancel, 10L);
+                return true;
+            }else{
+                player.sendMessage("This player does not have any poison!");
+            }
+
         }
 
         return false;
@@ -51,4 +61,5 @@ public class Antidote extends CastSpellWrapper {
         super.loadSettings();
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
+
 }

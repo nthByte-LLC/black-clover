@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitTask;
 
 public class BadBeath extends CastSpellWrapper {
 
@@ -35,7 +34,7 @@ public class BadBeath extends CastSpellWrapper {
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (duration * 20), poisonLevel - 1));
 
             SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
-            Grimmoire.POISON.spawnPoisonParticles(target, duration);
+            Grimmoire.POISON.startPoisonEffect(target, duration);
 
             return true;
         }

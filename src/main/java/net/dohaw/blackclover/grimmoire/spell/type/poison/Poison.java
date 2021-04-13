@@ -37,6 +37,7 @@ public class Poison extends CastSpellWrapper {
         if(SpellUtils.isTargetValid(player, targetEntity)){
 
             LivingEntity target = (LivingEntity) targetEntity;
+
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (poisonDuration * 20), poisonLevel - 1));
             target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) (slownessDuration * 20), slownessLevel - 1));
 
@@ -44,8 +45,15 @@ public class Poison extends CastSpellWrapper {
             Particle.DustOptions dustOptions2 = new Particle.DustOptions(BukkitColor.VIOLET, 2);
 
             BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-                SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
-                SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions2, 30, 0.5f, 0.5f, 0.5f);
+
+                if(target.hasPotionEffect(PotionEffectType.POISON)){
+                    SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
+                }
+
+                if(target.hasPotionEffect(PotionEffectType.SLOW)){
+                    SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions2, 30, 0.5f, 0.5f, 0.5f);
+                }
+
             }, 20L, 20L);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, task::cancel, (long) (poisonDuration * 20));

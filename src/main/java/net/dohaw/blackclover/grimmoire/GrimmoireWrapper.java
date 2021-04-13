@@ -5,6 +5,7 @@ import lombok.NonNull;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.corelib.CoreLib;
@@ -35,9 +36,12 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         initSpells();
     }
 
+    //TODO: Implement PersistableSpell in spells that have persistable data. Also get rid of the SpellWrapper#prepareShutdown method entirely.
     public void shutdown(){
         for(SpellWrapper spell : spells.values()){
-            spell.prepareShutdown();
+            if(spell instanceof PersistableSpell){
+                ((PersistableSpell) spell).shutdown();
+            }
         }
     }
 
