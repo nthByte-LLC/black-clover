@@ -5,6 +5,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -27,15 +28,13 @@ public class RemoveWeight extends CastSpellWrapper {
         Player player = pd.getPlayer();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (int) (duration * 20), levelSpeed));
         player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, (int) (duration * 20), levelWeakness));
-        SpellUtils.spawnParticle(player, Particle.REDSTONE, Material.REDSTONE_BLOCK.createBlockData(), 30, 1, 1, 1);
+        SpellUtils.spawnParticle(player.getLocation(), Particle.REDSTONE, new Particle.DustOptions(Color.PURPLE, 1), 30, 1, 1, 1);
         SpellUtils.playSound(player, Sound.BLOCK_PUMPKIN_CARVE);
         return true;
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
+    public void prepareShutdown() { }
 
     @Override
     public void loadSettings() {
