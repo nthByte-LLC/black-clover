@@ -55,7 +55,7 @@ public class Skating extends CastSpellWrapper implements Listener {
 
         Player player = e.getPlayer();
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
-        if(LocationUtil.hasMoved(e.getTo(), e.getFrom())){
+        if(LocationUtil.hasMoved(e.getTo(), e.getFrom(), true)){
             if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.SNOW){
 
                 SnowPlayerData spd = (SnowPlayerData) pd;

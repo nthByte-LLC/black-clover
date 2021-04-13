@@ -16,6 +16,16 @@ import java.util.*;
 public class PlayerData {
 
     /*
+        Whether the player is floating with the Float spell in the Gravity grimmoire.
+     */
+    @Getter @Setter
+    private boolean isFloating;
+
+    // The y level at which they started floating
+    @Getter @Setter
+    private double floatY;
+
+    /*
         For spells that have a cast time like "Freeze" from the Snow grimmoire
      */
     @Getter @Setter
