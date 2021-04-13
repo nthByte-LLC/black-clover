@@ -5,10 +5,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.poison.Antidote;
-import net.dohaw.blackclover.grimmoire.spell.type.poison.BadBeath;
-import net.dohaw.blackclover.grimmoire.spell.type.poison.Plague;
-import net.dohaw.blackclover.grimmoire.spell.type.poison.Shock;
+import net.dohaw.blackclover.grimmoire.spell.type.poison.*;
 import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
@@ -23,6 +20,7 @@ import java.util.List;
 
 public class Poison extends GrimmoireWrapper {
 
+    public Venom venom;
     public Plague plague;
     public Antidote antidote;
     public net.dohaw.blackclover.grimmoire.spell.type.poison.Poison poison;
@@ -65,6 +63,9 @@ public class Poison extends GrimmoireWrapper {
 
         this.plague = new Plague(config);
         this.spells.put(SpellType.PLAGUE, plague);
+
+        this.venom = new Venom(config);
+        this.spells.put(SpellType.VENOM, venom);
 
     }
 

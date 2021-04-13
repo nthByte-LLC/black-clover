@@ -20,24 +20,24 @@ import java.util.List;
 public class BeamParticleRunner extends LineParticleRunner{
 
     /*
-        Whether the beam should be redrawn after it reaches its destination
+        Whether the beam should keep drawing itself
      */
-    private boolean repeatable;
+    private boolean isPersistent;
 
     protected List<Location> particleLocations = new ArrayList<>();
     protected Entity entity;
     protected BukkitTask beamDrawer;
 
-    public BeamParticleRunner(Entity start, Location end, Particle.DustOptions dustOptions, double spread, boolean repeatable) {
+    public BeamParticleRunner(Entity start, Location end, Particle.DustOptions dustOptions, double spread, boolean isPersistent) {
         super(start.getLocation(), end, dustOptions, spread);
-        this.repeatable = repeatable;
+        this.isPersistent = isPersistent;
         this.entity = start;
         initBeamDrawer();
     }
 
-    public BeamParticleRunner(Entity start, double distanceBeam, Particle.DustOptions dustOptions, double spread, boolean repeatable){
+    public BeamParticleRunner(Entity start, double distanceBeam, Particle.DustOptions dustOptions, double spread, boolean isPersistent){
         super(start.getLocation(), LocationUtil.getLocationInFront(start, distanceBeam).add(0,1 , 0), dustOptions, spread);
-        this.repeatable = repeatable;
+        this.isPersistent = isPersistent;
         this.entity = start;
         initBeamDrawer();
     }
@@ -62,11 +62,11 @@ public class BeamParticleRunner extends LineParticleRunner{
                     doParticleLocationSpecifics(loc);
                 });
             }else{
-                doEndOfBeamSpecifics();
-                if(repeatable){
+                if(isPersistent){
                     count = 0;
                     particleLocations.clear();
                 }else{
+                    doEndOfBeamSpecifics();
                     cancel();
                 }
             }
@@ -96,7 +96,9 @@ public class BeamParticleRunner extends LineParticleRunner{
 
     @Override
     public synchronized void cancel() throws IllegalStateException {
-        super.cancel();
+        System.out.println("STOPPING BEAM DRAWER");
         this.beamDrawer.cancel();
+        super.cancel();
     }
+
 }

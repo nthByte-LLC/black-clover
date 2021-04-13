@@ -43,3 +43,7 @@ Spell Settings:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Beam Stay Time: 30
+    Beam Range: 10
+    Poison Level: 1
+    Poison Duration: 60
