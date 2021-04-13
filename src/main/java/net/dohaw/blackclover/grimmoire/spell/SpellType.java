@@ -106,7 +106,7 @@ public enum SpellType {
     METROID("metroid", true),
 
     /*
-        Gravity Magic
+        Gravity spells
      */
     LEVITATE("levitate", false),
     REMOVE_WEIGHT("remove_weight", false),
@@ -116,7 +116,7 @@ public enum SpellType {
     ZERO_GRAVITY("zero_gravity", true),
 
     /*
-        Poison Magic
+        Poison spells
      */
     SHOCK("shock", false),
     BAD_BREATH("bad_breath", false),

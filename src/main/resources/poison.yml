@@ -2,3 +2,39 @@ Display Name Color: "&2"
 
 Spell Settings:
   shock:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Cast Distance: 10
+    Poison Level: 1
+    Poison Duration: 10
+    # How much instant damage is dealt
+    Damage: 5
+  bad_breath:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration: 30
+    Poison Level: 3
+    Cast Distance: 10
+  poison:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Poison Level: 10
+    Poison Duration: 10
+    Slowness Level: 2
+    Slowness Duration: 10
+    Cast Distance: 10
+  antidote:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  plague:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  venom:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

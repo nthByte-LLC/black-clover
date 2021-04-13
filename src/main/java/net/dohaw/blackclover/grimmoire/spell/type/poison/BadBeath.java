@@ -1,7 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.poison;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -16,37 +15,31 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
-public class Shock extends CastSpellWrapper {
+public class BadBeath extends CastSpellWrapper {
 
-    private double poisonDuration;
-    private int damage;
+    private double duration;
     private int poisonLevel;
     private int castDistance;
 
-    public Shock(GrimmoireConfig grimmoireConfig) {
-        super(SpellType.SHOCK, grimmoireConfig);
+    public BadBeath(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.BAD_BREATH, grimmoireConfig);
     }
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
-
         Player player = pd.getPlayer();
-        Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
-        if(SpellUtils.isTargetValid(player, entityInSight)){
-            
-            LivingEntity target = (LivingEntity) entityInSight;
-            target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (poisonDuration * 20), poisonLevel - 1));
-            SpellUtils.doSpellDamage(target, player, KEY, damage);
-            SpellUtils.spawnParticle(target, Particle.CRIT_MAGIC, 30, 1, 1, 1);
-            SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
+        Entity targetEntity = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        if(SpellUtils.isTargetValid(player, targetEntity)){
 
-            Grimmoire.POISON.spawnPoisonParticles(target, poisonDuration);
+            LivingEntity target = (LivingEntity) targetEntity;
+            target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (duration * 20), poisonLevel - 1));
+
+            SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
+            Grimmoire.POISON.spawnPoisonParticles(target, duration);
 
             return true;
         }
-
         return false;
-
     }
 
     @Override
@@ -57,8 +50,7 @@ public class Shock extends CastSpellWrapper {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
-        this.poisonDuration = grimmoireConfig.getDoubleSetting(KEY, "Poison Duration");
+        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
         this.poisonLevel = grimmoireConfig.getIntegerSetting(KEY, "Poison Level");
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
