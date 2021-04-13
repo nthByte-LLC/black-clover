@@ -39,9 +39,9 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
     //TODO: Implement PersistableSpell in spells that have persistable data. Also get rid of the SpellWrapper#prepareShutdown method entirely.
     public void shutdown(){
         for(SpellWrapper spell : spells.values()){
-            if(spell instanceof PersistableSpell){
-                ((PersistableSpell) spell).shutdown();
-            }
+//            if(spell instanceof PersistableSpell){
+//                ((PersistableSpell) spell).shutdown();
+//            }
         }
     }
 

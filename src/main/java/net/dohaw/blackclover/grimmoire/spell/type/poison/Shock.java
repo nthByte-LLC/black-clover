@@ -34,12 +34,13 @@ public class Shock extends CastSpellWrapper {
         if(SpellUtils.isTargetValid(player, entityInSight)){
 
             LivingEntity target = (LivingEntity) entityInSight;
-            Grimmoire.POISON.startPoisonEffect(target, poisonDuration);
 
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (poisonDuration * 20), poisonLevel - 1));
             SpellUtils.doSpellDamage(target, player, KEY, damage);
             SpellUtils.spawnParticle(target, Particle.CRIT_MAGIC, 30, 1, 1, 1);
             SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
+
+            Grimmoire.POISON.startPoisonEffect(target);
 
 
             return true;

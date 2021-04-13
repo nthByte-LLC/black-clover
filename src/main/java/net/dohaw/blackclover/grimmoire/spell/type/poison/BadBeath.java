@@ -34,7 +34,7 @@ public class BadBeath extends CastSpellWrapper {
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (duration * 20), poisonLevel - 1));
 
             SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
-            Grimmoire.POISON.startPoisonEffect(target, duration);
+            Grimmoire.POISON.startPoisonEffect(target);
 
             return true;
         }

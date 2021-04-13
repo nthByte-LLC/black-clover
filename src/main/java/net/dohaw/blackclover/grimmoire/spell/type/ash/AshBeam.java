@@ -34,4 +34,5 @@ public class AshBeam extends CastSpellWrapper {
     public void prepareShutdown() {
 
     }
+
 }

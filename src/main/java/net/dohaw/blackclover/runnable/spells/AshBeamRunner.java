@@ -54,7 +54,6 @@ public class AshBeamRunner extends BeamDamager {
             SpellUtils.playSound(entityInBeam, Sound.BLOCK_BONE_BLOCK_BREAK);
         }
 
-
     }
 
 }

@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.event.SpellDamageEvent;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.LocationUtil;
@@ -75,6 +76,7 @@ public class VenomBeamRunner extends BeamDamager{
 
     private void applyPoison(LivingEntity le){
         le.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (poisonDuration * 20), poisonLevel - 1));
+        Grimmoire.POISON.startPoisonEffect(le);
     }
 
 }

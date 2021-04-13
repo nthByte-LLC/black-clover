@@ -13,6 +13,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
@@ -72,19 +73,21 @@ public class Poison extends GrimmoireWrapper {
     /**
      * Spawns the poison particles for an entity and plays a sound.
      * @param target The target that is getting the poison
-     * @param duration How long the poison goes on for
      */
-    public void startPoisonEffect(LivingEntity target, double duration){
+    public void startPoisonEffect(LivingEntity target){
 
         SpellUtils.playSound(target, Sound.BLOCK_CROP_BREAK);
         Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
-        BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-            if(target.hasPotionEffect(PotionEffectType.POISON)){
-                SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if(target.hasPotionEffect(PotionEffectType.POISON)){
+                    SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
+                }else{
+                    cancel();
+                }
             }
-        }, 20L, 20L);
-
-        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, task::cancel, (long) (duration * 20));
+        }.runTaskTimer(Grimmoire.instance, 0L, 20L);
 
     }
 

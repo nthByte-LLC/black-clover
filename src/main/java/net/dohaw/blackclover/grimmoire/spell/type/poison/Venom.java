@@ -6,10 +6,11 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.VenomBeamRunner;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.scheduler.BukkitTask;
 
 public class Venom extends CastSpellWrapper {
 
@@ -26,12 +27,13 @@ public class Venom extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        BukkitTask beam = new VenomBeamRunner(player, beamRange, poisonLevel, poisonDuration).runTaskTimer(Grimmoire.instance, 0L, 3L);
-        pd.addSpellRunnables(KEY, beam);
-        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-            System.out.println("STOPPING!");
-            pd.stopSpellRunnables(KEY);
-        }, (long) (beamStayTime * 20));
+        VenomBeamRunner beam = new VenomBeamRunner(player, beamRange, poisonLevel, poisonDuration);
+        beam.runTaskTimer(Grimmoire.instance, 0L, 3L);
+        SpellUtils.playSound(player, Sound.AMBIENT_CAVE);
+        //TODO: This works for AshBeam but not this class for whatever reason. Fix this. The current solution is temporary
+        //pd.addSpellRunnables(KEY, beam);
+
+        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, beam::cancel, (long) (beamStayTime * 20));
 
         return true;
     }

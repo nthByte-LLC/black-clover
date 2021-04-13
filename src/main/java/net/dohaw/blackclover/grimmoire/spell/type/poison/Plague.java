@@ -56,7 +56,7 @@ public class Plague extends CastSpellWrapper {
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, hungerParticleSpawner::cancel, (long) (hungerDuration * 20));
 
-            Grimmoire.POISON.startPoisonEffect(target, poisonDuration);
+            Grimmoire.POISON.startPoisonEffect(target);
             SpellUtils.playSound(target, Sound.ENTITY_HOGLIN_CONVERTED_TO_ZOMBIFIED);
             SpellUtils.spawnParticle(target, Particle.SPELL_MOB_AMBIENT, 30, 1, 1, 1);
 
