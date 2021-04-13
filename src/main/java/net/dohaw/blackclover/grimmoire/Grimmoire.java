@@ -8,7 +8,6 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.grimmoire.type.*;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import org.bukkit.ChatColor;
 import org.bukkit.boss.BarColor;
 
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public class Grimmoire extends WrapperHolder {
     public static final GrimmoireWrapper COTTON = new Cotton();
     public static final GrimmoireWrapper ROCK = new Rock();
     public static final Gravity GRAVITY = new Gravity();
+    public static final GrimmoireWrapper POISON = new Poison();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();
@@ -89,11 +89,11 @@ public class Grimmoire extends WrapperHolder {
      * Need to do this because most spells rely on Bukkit#getScheduler#runTaskLater. If the server crashes or is shut down when this task hasn't ran,
      * the effects of the spell don't get removed (For instance, if a spell places a wall, the wall would not get removed because the server shut down while the task still needed to run)
      */
-    public static void prepareShutdown(){
+    public static void shutdown(){
         for(Wrapper wrapper : wrappers.values()){
             if(wrapper instanceof GrimmoireWrapper){
                 GrimmoireWrapper gWrapper = (GrimmoireWrapper) wrapper;
-                gWrapper.prepareShutdown();
+                gWrapper.shutdown();
             }
         }
     }

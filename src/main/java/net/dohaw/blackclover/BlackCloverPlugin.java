@@ -75,7 +75,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         playerDataManager.shutdown();
-        Grimmoire.prepareShutdown();
+        Grimmoire.shutdown();
     }
 
     private void registerGrimmoires(){
@@ -91,6 +91,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.COTTON);
         Grimmoire.registerWrapper(Grimmoire.ROCK);
         Grimmoire.registerWrapper(Grimmoire.GRAVITY);
+        Grimmoire.registerWrapper(Grimmoire.POISON);
         for(Wrapper wrapper : Grimmoire.wrappers.values()){
             if(wrapper instanceof GrimmoireWrapper){
 

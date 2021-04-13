@@ -35,7 +35,7 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         initSpells();
     }
 
-    public void prepareShutdown(){
+    public void shutdown(){
         for(SpellWrapper spell : spells.values()){
             spell.prepareShutdown();
         }

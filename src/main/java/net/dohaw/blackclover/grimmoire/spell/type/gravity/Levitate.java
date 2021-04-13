@@ -32,12 +32,8 @@ public class Levitate extends CastSpellWrapper {
         }else{
             Entity targetEntity = SpellUtils.getEntityInLineOfSight(player, castDistance);
             if(SpellUtils.isTargetValid(player, targetEntity)){
-                if(targetEntity instanceof Player){
-                    giveEffects((Player) targetEntity);
-                    return true;
-                }else{
-                    targetEntity.sendMessage("This is not a valid target. You can only use this spell on players!");
-                }
+                giveEffects((LivingEntity) targetEntity);
+                return true;
             }
         }
 
@@ -47,11 +43,11 @@ public class Levitate extends CastSpellWrapper {
     @Override
     public void prepareShutdown() { }
 
-    private void giveEffects(Player player){
-        player.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, (int) (duration * 20), 0));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, (int) (duration * 20), 0));
-        SpellUtils.playSound(player, Sound.ENTITY_ENDER_DRAGON_FLAP);
-        SpellUtils.spawnParticle(player, Particle.END_ROD, 30, 1, 1, 1);
+    private void giveEffects(LivingEntity le){
+        le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, (int) (duration * 20), 0));
+        le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, (int) (duration * 20), 0));
+        SpellUtils.playSound(le, Sound.ENTITY_ENDER_DRAGON_FLAP);
+        SpellUtils.spawnParticle(le, Particle.END_ROD, 30, 1, 1, 1);
     }
 
     @Override

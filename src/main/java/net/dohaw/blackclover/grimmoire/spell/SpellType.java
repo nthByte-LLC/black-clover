@@ -113,7 +113,17 @@ public enum SpellType {
     ADD_WEIGHT("add_weight", false),
     FLOAT("float", false),
     GRAVITY("gravity", false),
-    ZERO_GRAVITY("zero_gravity", false);
+    ZERO_GRAVITY("zero_gravity", true),
+
+    /*
+        Poison Magic
+     */
+    SHOCK("shock", false),
+    BAD_BREATH("bad_breath", false),
+    POISON("poison", false),
+    ANTIDOTE("antidote", false),
+    PLAGUE("plague", false),
+    VENOM("venom", true);
 
     @Getter
     private boolean isUltimate;
