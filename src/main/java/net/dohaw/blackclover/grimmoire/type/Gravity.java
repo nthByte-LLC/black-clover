@@ -5,10 +5,8 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.gravity.AddWeight;
+import net.dohaw.blackclover.grimmoire.spell.type.gravity.*;
 import net.dohaw.blackclover.grimmoire.spell.type.gravity.Float;
-import net.dohaw.blackclover.grimmoire.spell.type.gravity.Levitate;
-import net.dohaw.blackclover.grimmoire.spell.type.gravity.RemoveWeight;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -21,6 +19,7 @@ import java.util.List;
 
 public class Gravity extends GrimmoireWrapper implements Listener {
 
+    public ZeroGravity zeroGravity;
     public net.dohaw.blackclover.grimmoire.spell.type.gravity.Gravity gravity;
     public Float floatSpell;
     public AddWeight addWeight;
@@ -64,8 +63,14 @@ public class Gravity extends GrimmoireWrapper implements Listener {
         this.gravity = new net.dohaw.blackclover.grimmoire.spell.type.gravity.Gravity(config);
         this.spells.put(SpellType.GRAVITY, gravity);
 
+        this.zeroGravity = new ZeroGravity(config);
+        this.spells.put(SpellType.ZERO_GRAVITY, zeroGravity);
+
     }
 
+    /*
+        Players with the Gravity grimmoire do not take fall damage
+     */
     @EventHandler
     public void onTakeFallDamage(EntityDamageEvent e){
         Entity entity = e.getEntity();
@@ -79,6 +84,5 @@ public class Gravity extends GrimmoireWrapper implements Listener {
             }
         }
     }
-
 
 }

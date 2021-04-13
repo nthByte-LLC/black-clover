@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.gravity;
 
+import lombok.Getter;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
@@ -21,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Float extends ActivatableSpellWrapper implements Listener {
 
+    @Getter
     private double floatHeight;
 
     public Float(GrimmoireConfig grimmoireConfig) {
@@ -29,16 +31,7 @@ public class Float extends ActivatableSpellWrapper implements Listener {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
-
-        Player player = pd.getPlayer();
-        player.setAllowFlight(true);
-        player.setFlying(true);
-        pd.setFloating(true);
-        pd.setFloatY(player.getLocation().getY() + floatHeight);
-
-        SpellUtils.spawnParticle(player, Particle.END_ROD, 30, 1, 1, 1);
-        SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
-
+        initFloat(pd);
         return super.cast(e, pd);
     }
 
@@ -56,6 +49,19 @@ public class Float extends ActivatableSpellWrapper implements Listener {
 
     }
 
+    public void initFloat(PlayerData playerData){
+
+        Player player = playerData.getPlayer();
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        playerData.setFloating(true);
+        playerData.setFloatY(player.getLocation().getY() + floatHeight);
+
+        SpellUtils.spawnParticle(player, Particle.END_ROD, 30, 1, 1, 1);
+        SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
+
+    }
+
     @Override
     public void prepareShutdown() { }
 
@@ -69,11 +75,9 @@ public class Float extends ActivatableSpellWrapper implements Listener {
         PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
         Location to = e.getTo();
         if(to != null){
-            if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.GRAVITY){
-                if(pd.isFloating()){
-                    to.setY(pd.getFloatY());
-                    player.teleport(to);
-                }
+            if(pd.isFloating()){
+                to.setY(pd.getFloatY());
+                player.teleport(to);
             }
         }
 
