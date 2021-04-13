@@ -31,7 +31,7 @@ public class Gravity extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, entityInSight)){
             if(entityInSight instanceof Player){
 

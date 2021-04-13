@@ -1,7 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.poison;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -10,7 +9,6 @@ import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -35,24 +33,22 @@ public class Poison extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Entity targetEntity = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity targetEntity = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, targetEntity)){
 
             LivingEntity target = (LivingEntity) targetEntity;
             target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, (int) (poisonDuration * 20), poisonLevel - 1));
             target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) (slownessDuration * 20), slownessLevel - 1));
 
-            Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.darkGreen, 1);
-            Particle.DustOptions dustOptions2 = new Particle.DustOptions(BukkitColor.darkGrey, 1);
-            Location targetLocation = target.getLocation();
+            Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
+            Particle.DustOptions dustOptions2 = new Particle.DustOptions(BukkitColor.VIOLET, 2);
+
             BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-                SpellUtils.spawnParticle(targetLocation, Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
-                SpellUtils.spawnParticle(targetLocation, Particle.REDSTONE, dustOptions2, 30, 0.5f, 0.5f, 0.5f);
+                SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
+                SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions2, 30, 0.5f, 0.5f, 0.5f);
             }, 20L, 20L);
 
-            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                task.cancel();
-            }, (long) (poisonDuration * 20));
+            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, task::cancel, (long) (poisonDuration * 20));
 
             return true;
         }

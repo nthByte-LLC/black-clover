@@ -49,7 +49,7 @@ public class Drowned extends CastSpellWrapper implements Listener {
 
             if(!wpd.isDrownedSummoned()){
 
-                Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+                Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
 
                 if(entityInSight != null){
 

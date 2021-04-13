@@ -4,7 +4,9 @@ import org.bukkit.Color;
 
 public class BukkitColor {
 
-    public static Color darkGrey = Color.fromBGR(96, 96, 96);
-    public static Color darkGreen = Color.fromRGB(51, 102, 0);
+    public static final Color DARK_GREY = Color.fromBGR(96, 96, 96);
+    public static final Color DARK_GREEN = Color.fromRGB(51, 102, 0);
+    public static final Color CYAN = Color.fromRGB(52, 232, 235);
+    public static final Color VIOLET = Color.fromRGB(128, 0, 255);
 
 }

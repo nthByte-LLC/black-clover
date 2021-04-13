@@ -41,7 +41,7 @@ public class BatteringRam extends CastSpellWrapper {
 
             if(!cpd.isGoldenSheepSpawned()){
 
-                Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+                Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
                 if(SpellUtils.isTargetValid(player, entityInSight)){
 
                     Location sheepSpawnLocation = LocationUtil.getLocationInFront(player, 1).add(0, 1, 0);

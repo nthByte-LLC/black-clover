@@ -28,7 +28,7 @@ public class BadBeath extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        Entity targetEntity = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity targetEntity = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, targetEntity)){
 
             LivingEntity target = (LivingEntity) targetEntity;

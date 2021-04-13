@@ -10,8 +10,6 @@ import net.dohaw.blackclover.grimmoire.spell.type.poison.Shock;
 import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
-import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitTask;
@@ -60,7 +58,7 @@ public class Poison extends GrimmoireWrapper {
 
     public void spawnPoisonParticles(LivingEntity target, double duration){
 
-        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.darkGreen, 1.5f);
+        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
         BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             SpellUtils.spawnParticle(target.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
         }, 20L, 20L);
@@ -68,6 +66,7 @@ public class Poison extends GrimmoireWrapper {
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             task.cancel();
         }, (long) (duration * 20));
+
     }
 
 }

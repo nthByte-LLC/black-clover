@@ -34,7 +34,7 @@ public class Absorption extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(entityInSight != null){
             if(entityInSight instanceof LivingEntity){
 

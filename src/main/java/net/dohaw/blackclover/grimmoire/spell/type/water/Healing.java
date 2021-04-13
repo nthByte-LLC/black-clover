@@ -33,7 +33,7 @@ public class Healing extends CastSpellWrapper {
         if(player.isSneaking()){
             heal(player, selfHealAmount);
         }else{
-            Entity entityInLineOfSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+            Entity entityInLineOfSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
             ResponderFactory rf = new ResponderFactory(player);
             if(entityInLineOfSight != null){
                 if(entityInLineOfSight instanceof Player){

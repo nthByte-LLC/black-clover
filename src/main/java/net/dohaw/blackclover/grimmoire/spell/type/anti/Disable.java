@@ -68,7 +68,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
     public void doRunnableTick(PlayerData caster) {
 
         Player player = caster.getPlayer();
-        CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.darkGrey, 1), true, 1);
+        CircleParticleRunner particleRunner = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.DARK_GREY, 1), true, 1);
         particleRunner.setMaxYAdditive(0.4);
 
         caster.addSpellRunnables(KEY, particleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L));

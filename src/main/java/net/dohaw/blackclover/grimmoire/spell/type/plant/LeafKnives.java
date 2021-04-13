@@ -33,7 +33,7 @@ public class LeafKnives extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         ResponderFactory rf = new ResponderFactory(player);
         if(entityInSight != null){
             if(entityInSight instanceof LivingEntity){

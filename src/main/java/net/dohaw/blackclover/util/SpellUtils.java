@@ -16,6 +16,8 @@ import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.event.Event;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -74,20 +76,29 @@ public class SpellUtils {
     }
 
     /**
-     * Gets the first entity in the line of sight of the player
+     * Gets the first entity in the line of sight of the player.
+     * If the event passed from the spell is of a EntityDamageByEntityEvent, then just get the entity that was hurt.
      */
-    public static Entity getEntityInLineOfSight(Player player, int maxDistance){
-        Location start = player.getLocation();
-        Vector dir = start.getDirection();
-        for (double i = 0; i < maxDistance; i += 0.5) {
-            Vector currentDir = dir.clone().multiply(i);
-            Location currentLocation = start.clone().add(currentDir);
-            List<Entity> nearbyEntities = new ArrayList<>(player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1, (e) -> e instanceof LivingEntity));
-            nearbyEntities.removeIf(e -> e.getUniqueId().equals(player.getUniqueId()));
-            if(!nearbyEntities.isEmpty()){
-                return nearbyEntities.get(0);
+    public static Entity getEntityInLineOfSight(Event e, Player player, int maxDistance){
+
+        if(e instanceof EntityDamageByEntityEvent){
+            return ((EntityDamageByEntityEvent) e).getEntity();
+        }else{
+
+            Location start = player.getLocation();
+            Vector dir = start.getDirection();
+            for (double i = 0; i < maxDistance; i += 0.5) {
+                Vector currentDir = dir.clone().multiply(i);
+                Location currentLocation = start.clone().add(currentDir);
+                List<Entity> nearbyEntities = new ArrayList<>(player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1, (entity) -> entity instanceof LivingEntity));
+                nearbyEntities.removeIf(entity -> entity.getUniqueId().equals(player.getUniqueId()));
+                if(!nearbyEntities.isEmpty()){
+                    return nearbyEntities.get(0);
+                }
             }
+
         }
+
         return null;
     }
 

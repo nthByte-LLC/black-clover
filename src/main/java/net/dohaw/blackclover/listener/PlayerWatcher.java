@@ -21,9 +21,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -66,82 +64,7 @@ public class PlayerWatcher implements Listener {
 
         Action action = e.getAction();
         if(action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK){
-
-            PlayerData pd = plugin.getPlayerDataManager().getData(e.getPlayer().getUniqueId());
-            Player player = pd.getPlayer();
-            CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
-
-            if(spellBoundToSlot != null){
-
-                if(pd.canCast() && !pd.isCurrentlyCasting()){
-
-                    SpellType spellType = spellBoundToSlot.getKEY();
-                    e.setCancelled(true);
-                    // Deactivate all spell effects and runnables
-                    if(pd.isSpellActive(spellType) && player.isSneaking()){
-
-                        ActivatableSpellWrapper apw = (ActivatableSpellWrapper) spellBoundToSlot;
-                        try {
-                            apw.deactiveSpell(pd);
-                        } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                            unexpectedPlayerData.printStackTrace();
-                        }
-
-                        pd.stopSpellRunnables(spellType);
-
-                        // This event is called just in case we want to do anything to the player after we remove the active spell
-                        PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
-                        Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);
-                        return;
-
-                    }
-
-                    if(!pd.isSpellOnCooldown(spellType)){
-                        if(!pd.isSpellActive(spellType)){
-                            if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
-                                // This event is called just in case you want to do anything before you start the activatable spell runnables (We do that in the Water Control spell)
-                                if(spellBoundToSlot instanceof ActivatableSpellWrapper){
-                                    PreStartActiveSpellEvent preStartActiveSpellEvent = new PreStartActiveSpellEvent(spellType, player);
-                                    Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
-                                }
-
-                                if(spellBoundToSlot instanceof TimeCastable){
-                                    StartTimedCastSpellEvent event = new StartTimedCastSpellEvent(player, spellType);
-                                    Bukkit.getPluginManager().callEvent(event);
-                                }
-
-                                boolean wasSuccessfullyCasted;
-                                try{
-                                    wasSuccessfullyCasted = spellBoundToSlot.cast(e, pd);
-                                } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                                    unexpectedPlayerData.printStackTrace();
-                                    wasSuccessfullyCasted = false;
-                                }
-
-                                if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
-                                    spellBoundToSlot.deductMana(pd);
-                                }
-
-                                Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
-                            }else{
-                                player.sendMessage("You don't have enough mana at the moment!");
-                            }
-                        }
-                    }else{
-                        player.sendMessage("This spell is on cooldown!");
-                    }
-
-                }else{
-                    if (!pd.canCast()){
-                        player.sendMessage("You can't cast right now!");
-                    }else{
-                        player.sendMessage("You are currently casting a spell!");
-                    }
-                }
-
-            }else{
-                System.out.println("NOT SPELL BOUND");
-            }
+            castPotentialSpell(e, e.getPlayer());
         }
 
     }
@@ -173,6 +96,7 @@ public class PlayerWatcher implements Listener {
         Entity eDamager = e.getDamager();
 
         if(eDamager instanceof Projectile){
+
             Projectile proj = (Projectile) eDamager;
             ProjectileSource projSource = proj.getShooter();
             if(projSource instanceof Player){
@@ -219,6 +143,7 @@ public class PlayerWatcher implements Listener {
                 pd.getSpellsOnCooldown().remove(spellType);
                 Bukkit.getServer().getPluginManager().callEvent(new SpellOffCooldownEvent(spellType, player));
             }, (long) (spellCasted.getCooldown() * 20));
+
         }
 
     }
@@ -334,6 +259,99 @@ public class PlayerWatcher implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
+
+    /*
+        When you punch a player, the PlayerInteractEvent does not run and the spell will not get cast. This casts a potential spell if they punch an entity
+     */
+    @EventHandler
+    public void onPunchEntity(EntityDamageByEntityEvent e){
+
+        Entity eDamager = e.getDamager();
+        if(eDamager instanceof Player){
+            Player player = (Player) eDamager;
+            castPotentialSpell(e, player);
+        }
+
+    }
+
+    private void castPotentialSpell(Cancellable e, Player player){
+
+        PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
+
+        if(spellBoundToSlot != null){
+
+            if(pd.canCast() && !pd.isCurrentlyCasting()){
+
+                SpellType spellType = spellBoundToSlot.getKEY();
+                e.setCancelled(true);
+                // Deactivate all spell effects and runnables
+                if(pd.isSpellActive(spellType) && player.isSneaking()){
+
+                    ActivatableSpellWrapper apw = (ActivatableSpellWrapper) spellBoundToSlot;
+                    try {
+                        apw.deactiveSpell(pd);
+                    } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                        unexpectedPlayerData.printStackTrace();
+                    }
+
+                    pd.stopSpellRunnables(spellType);
+
+                    // This event is called just in case we want to do anything to the player after we remove the active spell
+                    PostStopActiveSpellEvent stopActiveSpellEvent = new PostStopActiveSpellEvent(spellType, player, player, PostStopActiveSpellEvent.Cause.SELF_STOP);
+                    Bukkit.getPluginManager().callEvent(stopActiveSpellEvent);
+                    return;
+
+                }
+
+                if(!pd.isSpellOnCooldown(spellType)){
+                    if(!pd.isSpellActive(spellType)){
+                        if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
+                            // This event is called just in case you want to do anything before you start the activatable spell runnables (We do that in the Water Control spell)
+                            if(spellBoundToSlot instanceof ActivatableSpellWrapper){
+                                PreStartActiveSpellEvent preStartActiveSpellEvent = new PreStartActiveSpellEvent(spellType, player);
+                                Bukkit.getPluginManager().callEvent(preStartActiveSpellEvent);
+                            }
+
+                            if(spellBoundToSlot instanceof TimeCastable){
+                                StartTimedCastSpellEvent event = new StartTimedCastSpellEvent(player, spellType);
+                                Bukkit.getPluginManager().callEvent(event);
+                            }
+
+                            boolean wasSuccessfullyCasted;
+                            try{
+                                wasSuccessfullyCasted = spellBoundToSlot.cast((Event) e, pd);
+                            } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                                unexpectedPlayerData.printStackTrace();
+                                wasSuccessfullyCasted = false;
+                            }
+
+                            if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
+                                spellBoundToSlot.deductMana(pd);
+                            }
+
+                            Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
+                        }else{
+                            player.sendMessage("You don't have enough mana at the moment!");
+                        }
+                    }
+                }else{
+                    player.sendMessage("This spell is on cooldown!");
+                }
+
+            }else{
+                if (!pd.canCast()){
+                    player.sendMessage("You can't cast right now!");
+                }else{
+                    player.sendMessage("You are currently casting a spell!");
+                }
+            }
+
+        }else{
+            System.out.println("NOT SPELL BOUND");
+        }
+
     }
 
 }

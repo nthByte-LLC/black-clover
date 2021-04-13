@@ -25,7 +25,7 @@ public class AshPunch extends CastSpellWrapper {
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
-        Entity entityInSight = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(entityInSight != null){
             BukkitTask task = new AshPunchRunner(pd, (LivingEntity) entityInSight, damage).runTaskTimer(Grimmoire.instance, 0L, 1L);
             pd.addSpellRunnables(KEY, task);

@@ -32,7 +32,7 @@ public class Levitate extends CastSpellWrapper {
             giveEffects(player);
             return true;
         }else{
-            Entity targetEntity = SpellUtils.getEntityInLineOfSight(player, castDistance);
+            Entity targetEntity = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
             if(SpellUtils.isTargetValid(player, targetEntity)){
                 assert targetEntity != null;
                 giveEffects((LivingEntity) targetEntity);

@@ -35,7 +35,7 @@ public class SandGrave extends CastSpellWrapper implements Listener {
     public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
-        Entity entityHit = SpellUtils.getEntityInLineOfSight(player, castDistance);
+        Entity entityHit = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(entityHit != null){
 
             Location centerBlock = entityHit.getLocation().add(0, blocksAbovePlayer + radius, 0);
