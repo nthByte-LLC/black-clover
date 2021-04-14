@@ -10,6 +10,7 @@ import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -44,6 +45,7 @@ public class Poison extends CastSpellWrapper {
             Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
             Particle.DustOptions dustOptions2 = new Particle.DustOptions(BukkitColor.VIOLET, 2);
 
+            SpellUtils.playSound(target, Sound.BLOCK_DISPENSER_DISPENSE);
             BukkitTask task = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
 
                 if(target.hasPotionEffect(PotionEffectType.POISON)){

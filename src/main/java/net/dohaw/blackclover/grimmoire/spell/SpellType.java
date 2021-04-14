@@ -123,7 +123,17 @@ public enum SpellType {
     POISON("poison", false),
     ANTIDOTE("antidote", false),
     PLAGUE("plague", false),
-    VENOM("venom", true);
+    VENOM("venom", true),
+
+    /*
+        Fungus spells
+     */
+    SOUP("soup", false),
+    SPAWN_FUNGUS("spawn_fungus", false),
+    GROWTH("growth", false),
+    FUNGUS_FIELD("fungus_field", false),
+    PHOTOSYNTHESIS("photosynthesis", false),
+    FUNGUS_MEAL("fungus_meal", true);
 
     @Getter
     private boolean isUltimate;
