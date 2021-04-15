@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -56,7 +57,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener{
                     }
 
                     eDamaged.setFireTicks(currentFireTicks + fireTicksPerPunch);
-                    eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+                    SpellUtils.spawnParticle(eDamaged, Particle.FLAME, 30, 1, 1, 1);
 
                 }else{
                     // Cancels regular punch damage
@@ -70,8 +71,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener{
 
     public void doRunnableTick(PlayerData pd){
         Player player = pd.getPlayer();
-        World world = player.getWorld();
-        world.spawnParticle(particle, player.getLocation(), 30, 1, 1, 1);
+        SpellUtils.spawnParticle(player, Particle.FLAME, 30, 1, 1, 1);
         SpellUtils.playSound(player, Sound.BLOCK_FIRE_AMBIENT);
     }
 

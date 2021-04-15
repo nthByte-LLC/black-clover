@@ -144,7 +144,6 @@ public final class BlackCloverPlugin extends JavaPlugin {
         return baseGrimmoire.clone();
     }
 
-
     public void updateRegenBar(PlayerData pd){
 
         BossBar regenBar = regenBars.get(pd.getUuid());
@@ -153,7 +152,17 @@ public final class BlackCloverPlugin extends JavaPlugin {
         double percentageRegenFull = regenAmount / maxRegen;
 
         regenBar.setProgress(percentageRegenFull);
-        regenBar.setTitle(StringUtils.colorString("&bRegen: &f" + (int)regenAmount + " / " + (int)maxRegen));
+
+        GrimmoireType grimmoire = pd.getGrimmoireWrapper().getKEY();
+        String title;
+        if(grimmoire == GrimmoireType.ANTI){
+            title = "&c&lSouls: ";
+        }else{
+            title = "&b&lMana: ";
+        }
+        title += "&f" + (int)regenAmount + " / " + (int)maxRegen;
+
+        regenBar.setTitle(StringUtils.colorString(title));
 
     }
 

@@ -3,7 +3,6 @@ package net.dohaw.blackclover.grimmoire.spell.type.fire;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Material;
@@ -47,7 +46,7 @@ public class FireControl extends CastSpellWrapper {
                     Block blockAbove = blockRightClicked.getRelative(BlockFace.UP);
                     blockAbove.setType(Material.FIRE);
                     SpellUtils.playSound(blockRightClicked, Sound.BLOCK_FIRE_AMBIENT);
-                    SpellUtils.spawnParticle(blockRightClicked, particle, 10, 0.5f, 0.5f, 0.5f);
+                    SpellUtils.spawnParticle(blockRightClicked, Particle.FLAME, 10, 0.5f, 0.5f, 0.5f);
                 }else{
                     return false;
                 }

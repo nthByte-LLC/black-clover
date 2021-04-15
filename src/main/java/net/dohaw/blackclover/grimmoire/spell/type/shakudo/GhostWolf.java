@@ -9,10 +9,7 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.ResponderFactory;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -20,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GhostWolf extends CastSpellWrapper implements Listener {
 
@@ -37,28 +35,35 @@ public class GhostWolf extends CastSpellWrapper implements Listener {
 
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
-        ResponderFactory rf = new ResponderFactory(player);
-        if(entityInSight != null){
-            if(entityInSight instanceof LivingEntity) {
+        if(SpellUtils.isTargetValid(player, entityInSight)) {
 
-                LivingEntity livingEntityInSight = (LivingEntity) entityInSight;
-                Wolf wolf = (Wolf) player.getWorld().spawnEntity(LocationUtil.getLocationInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
-                wolf.setInvisible(true);
-                wolf.setGlowing(true);
-                wolf.setTarget(livingEntityInSight);
-                // Marks the wolf as a ghost wolf
-                PersistentDataContainer pdc = wolf.getPersistentDataContainer();
-                pdc.set(NSK, PersistentDataType.STRING, "marker");
+            System.out.println("TYPE: " + entityInSight.getType());
+            LivingEntity livingEntityInSight = (LivingEntity) entityInSight;
+            Wolf wolf = (Wolf) player.getWorld().spawnEntity(LocationUtil.getLocationInFront(player, 1).add(0, 1, 0), EntityType.WOLF);
+            wolf.setInvisible(true);
+            wolf.setGlowing(true);
+            wolf.setOwner(player);
+            wolf.setTarget(livingEntityInSight);
+            // Marks the wolf as a ghost wolf
+            PersistentDataContainer pdc = wolf.getPersistentDataContainer();
+            pdc.set(NSK, PersistentDataType.STRING, "marker");
 
-                SpellUtils.spawnParticle(wolf, Particle.END_ROD, 30, 1, 1, 1);
-                SpellUtils.playSound(wolf, Sound.ENTITY_WOLF_HOWL);
+            SpellUtils.spawnParticle(wolf, Particle.END_ROD, 30, 1, 1, 1);
+            SpellUtils.playSound(wolf, Sound.ENTITY_WOLF_HOWL);
 
-                return true;
-            }else{
-                rf.sendMessage("This is not a valid entity!");
-            }
-        }else{
-            rf.sendMessage("No entity has been found at a reasonable distance!");
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    if(wolf.isValid()){
+                        SpellUtils.spawnParticle(wolf.getLocation(), Particle.REDSTONE, new Particle.DustOptions(Color.WHITE, 1), 30, 1, 1, 1);
+                    }else{
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(Grimmoire.instance, 0L, 10L);
+
+            return true;
+
         }
 
         return false;

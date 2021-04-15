@@ -47,7 +47,7 @@ public class FireBall extends CastSpellWrapper implements Listener {
 
             if(!e.isCancelled()){
                 e.setDamage(finalDmg);
-                eDamaged.getWorld().spawnParticle(particle, eDamaged.getLocation(), 30, 1, 1, 1);
+                eDamaged.getWorld().spawnParticle(Particle.FLAME, eDamaged.getLocation(), 30, 1, 1, 1);
                 eDamaged.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, eDamaged.getLocation(), 30, 1, 1, 1);
             }
 

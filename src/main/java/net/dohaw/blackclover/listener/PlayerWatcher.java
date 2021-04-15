@@ -27,10 +27,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -261,6 +258,21 @@ public class PlayerWatcher implements Listener {
         }
     }
 
+    @EventHandler
+    public void onSwitchHotbarSlot(PlayerItemHeldEvent e){
+
+        int slot = e.getNewSlot();
+        Player player = e.getPlayer();
+        PlayerData playerData = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(playerData, slot);
+
+        if(spellBoundToSlot != null){
+            String properName = spellBoundToSlot.getKEY().toProperName();
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(StringUtils.colorString("&f&l" + properName)));
+        }
+
+    }
+
     /*
         When you punch a player, the PlayerInteractEvent does not run and the spell will not get cast. This casts a potential spell if they punch an entity
      */
@@ -308,6 +320,7 @@ public class PlayerWatcher implements Listener {
                 if(!pd.isSpellOnCooldown(spellType)){
                     if(!pd.isSpellActive(spellType)){
                         if(pd.hasSufficientRegenForSpell(spellBoundToSlot)){
+
                             // This event is called just in case you want to do anything before you start the activatable spell runnables (We do that in the Water Control spell)
                             if(spellBoundToSlot instanceof ActivatableSpellWrapper){
                                 PreStartActiveSpellEvent preStartActiveSpellEvent = new PreStartActiveSpellEvent(spellType, player);
