@@ -8,7 +8,7 @@ Spell Settings:
     Cast Distance: 10
     # Default amount for mushroom stew is 6. See food values here https://minecraft.fandom.com/wiki/Food
     Feed Amount: 6
-  spawn_fungus:
+  morph:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100

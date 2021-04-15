@@ -129,7 +129,7 @@ public enum SpellType {
         Fungus spells
      */
     SOUP("soup", false),
-    SPAWN_FUNGUS("spawn_fungus", false),
+    MORPH("morph", false),
     GROWTH("growth", false),
     FUNGUS_FIELD("fungus_field", false),
     PHOTOSYNTHESIS("photosynthesis", false),
