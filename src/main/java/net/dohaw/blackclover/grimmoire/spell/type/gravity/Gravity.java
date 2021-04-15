@@ -32,22 +32,18 @@ public class Gravity extends CastSpellWrapper {
 
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
-        if(SpellUtils.isTargetValid(player, entityInSight)){
-            if(entityInSight instanceof Player){
+        if(SpellUtils.isTargetValid(player, entityInSight, Player.class)){
 
-                Player target = (Player) entityInSight;
-                target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, (int) (duration * 20), 9));
+            Player target = (Player) entityInSight;
+            target.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, (int) (duration * 20), 9));
 
-                PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target.getUniqueId());
-                targetPlayerData.setFrozen(true);
-                SpellUtils.playSound(entityInSight, Sound.BLOCK_ANVIL_PLACE);
-                SpellUtils.spawnParticle(entityInSight, Particle.VILLAGER_ANGRY, 30, 1, 1, 1);
+            PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target.getUniqueId());
+            targetPlayerData.setFrozen(true);
+            SpellUtils.playSound(entityInSight, Sound.BLOCK_ANVIL_PLACE);
+            SpellUtils.spawnParticle(entityInSight, Particle.VILLAGER_ANGRY, 30, 1, 1, 1);
 
-                return true;
+            return true;
 
-            }else{
-                player.sendMessage("This is not a valid player to target!");
-            }
         }
         return false;
 

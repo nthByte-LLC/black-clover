@@ -221,9 +221,9 @@ public class SpellUtils {
         Valid meaning the target isn't null and it's an instance of LivingEntity
      */
     //TODO: Need to refractor code to where they're all using this method instead of hardcoding this every single time.
-    public static boolean isTargetValid(Player player, Entity entityInSight){
+    public static boolean isTargetValid(Player player, Entity entityInSight, Class<?> targetType){
         if(entityInSight != null){
-            if(entityInSight instanceof LivingEntity){
+            if(targetType.isInstance(entityInSight)){
                 return true;
             }else{
                 player.sendMessage("This is not a valid entity!");
@@ -233,6 +233,10 @@ public class SpellUtils {
             player.sendMessage("There is not entity within a reasonable distance from you!");
             return false;
         }
+    }
+
+    public static boolean isTargetValid(Player player, Entity entityInSight){
+        return isTargetValid(player, entityInSight, LivingEntity.class);
     }
 
     public static Vector calculateVelocity(Vector from, Vector to, int heightGain)

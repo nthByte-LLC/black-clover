@@ -3,11 +3,15 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.fungus.Soup;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Fungus extends GrimmoireWrapper {
+
+    public Soup soup;
 
     public Fungus() {
         super(GrimmoireType.FUNGUS);
@@ -30,6 +34,9 @@ public class Fungus extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
+        this.soup = new Soup(config);
+        this.spells.put(SpellType.SOUP, soup);
 
     }
 
