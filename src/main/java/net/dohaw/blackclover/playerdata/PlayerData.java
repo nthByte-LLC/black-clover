@@ -15,6 +15,9 @@ import java.util.*;
 
 public class PlayerData {
 
+    @Getter @Setter
+    private boolean willTakeFallDamage = true;
+
     /*
         Whether the player is floating with the Float spell in the Gravity grimmoire.
      */
