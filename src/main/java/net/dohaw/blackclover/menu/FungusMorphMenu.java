@@ -116,8 +116,8 @@ public class FungusMorphMenu extends Menu implements Listener {
                 // We make a cactus
                 for(int i = 0; i < 3; i++){
                     Location cactusBlockLocation = morphLocation.clone().add(0, i, 0);
-                    Block currentBlock = cactusBlockLocation.add(0, i, 0).getBlock();
-                    currentBlock.setType(Material.CACTUS);
+                    Block currentBlock = cactusBlockLocation.getBlock();
+                    currentBlock.setType(Material.CACTUS, false);
                     cactusBlockLocations.add(cactusBlockLocation);
                 }
                 data.setCactusBlockLocations(cactusBlockLocations);

@@ -11,10 +11,11 @@ import java.util.List;
 
 public class MorphStructureRemovalSession {
 
+    final int MAX_BLOCK_CHANGES = 2500;
+
     private Location morphLocation;
     private TreeType treeType;
 
-    private final BlockFace[] VALID_BLOCK_FACES = {BlockFace.UP, BlockFace.DOWN, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH};
     private Material trunkMaterial, foliageMaterial;
     private int count;
 
@@ -24,23 +25,22 @@ public class MorphStructureRemovalSession {
     }
 
     /**
-     * Destroys whatever they morphed in. This could be a red mushroom, oak tree, spruce tree, etc
+     * Destroys whatever they morphed in. This could be a red mushroom, oak tree, spruce tree, etc. Utilities the flood fill algorithm
      */
     private void findMorphStructureBlocks(Location location){
 
-        final int MAX_BLOCK_CHANGES = 500;
 
         if(count < MAX_BLOCK_CHANGES){
 
-            location.getBlock().setType(Material.AIR);
+            Block block = location.getBlock();
+            block.setType(Material.AIR);
 
             List<Block> currentBlocksChanging = new ArrayList<>();
-            for(BlockFace face : VALID_BLOCK_FACES){
-                Block blockRelative = location.getBlock().getRelative(face);
+            for(BlockFace face : BlockFace.values()){
+                Block blockRelative = block.getRelative(face);
                 if(blockRelative.getType() == foliageMaterial || blockRelative.getType() == trunkMaterial){
                     currentBlocksChanging.add(blockRelative);
                     count++;
-                    System.out.println("COUNT: " + count);
                 }
             }
 
@@ -57,7 +57,9 @@ public class MorphStructureRemovalSession {
             case RED_MUSHROOM:
                 this.foliageMaterial = Material.RED_MUSHROOM_BLOCK;
                 this.trunkMaterial = Material.MUSHROOM_STEM;
+                break;
             case BROWN_MUSHROOM:
+                this.trunkMaterial = Material.MUSHROOM_STEM;
                 this.foliageMaterial = Material.BROWN_MUSHROOM_BLOCK;
                 break;
             case TREE:
@@ -81,15 +83,22 @@ public class MorphStructureRemovalSession {
 
     private void destroyCacti(){
 
+        for (int i = 0; i < 3; i++) {
+
+        }
+
     }
 
+    /**
+     * Beings removing the morph structure
+     */
     public void startRemovalProcess(){
         setFoliageAndTrunkMaterials();
         if(treeType != TreeType.CHORUS_PLANT){
-            long startTime = System.currentTimeMillis();
+            //long startTime = System.currentTimeMillis();
             findMorphStructureBlocks(morphLocation);
-            long endTime = System.currentTimeMillis();
-            System.out.println("Took " + (endTime - startTime) + " ns");
+//            long endTime = System.currentTimeMillis();
+//            System.out.println("Took " + (endTime - startTime) + " ns");
         }else{
             destroyCacti();
         }

@@ -11,10 +11,7 @@ import net.dohaw.blackclover.menu.FungusMorphMenu;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.TreeType;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -95,6 +92,7 @@ public class Morph extends CastSpellWrapper implements Listener {
         player.setInvisible(false);
         fpd.setFrozen(false);
         fpd.setMorphed(false);
+        fpd.setCanCast(true);
 
         ItemStack[] contents = fpd.getItemsBeforeMorphing();
         player.getInventory().setContents(contents);
