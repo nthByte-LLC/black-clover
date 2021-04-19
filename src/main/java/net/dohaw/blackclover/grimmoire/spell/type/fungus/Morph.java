@@ -11,6 +11,7 @@ import net.dohaw.blackclover.menu.FungusMorphMenu;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -48,9 +49,15 @@ public class Morph extends CastSpellWrapper implements Listener {
                 if(isSneaking){
                     player.sendMessage("You aren't morphed right now!");
                 }else{
-                    FungusMorphMenu fungusMorphMenu = new FungusMorphMenu(Grimmoire.instance);
-                    fungusMorphMenu.initializeItems(player);
-                    fungusMorphMenu.openInventory(player);
+                    Material underPlayerMaterial = player.getLocation().subtract(0, 1, 0).getBlock().getType();
+                    boolean isOnGround = underPlayerMaterial.isSolid();
+                    if(isOnGround){
+                        FungusMorphMenu fungusMorphMenu = new FungusMorphMenu(Grimmoire.instance);
+                        fungusMorphMenu.initializeItems(player);
+                        fungusMorphMenu.openInventory(player);
+                    }else{
+                        player.sendMessage("You can only morph on the ground!");
+                    }
                 }
             }
 
