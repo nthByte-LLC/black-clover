@@ -3,6 +3,7 @@ package net.dohaw.blackclover.menu;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.menus.Menu;
 import org.bukkit.*;
@@ -63,7 +64,11 @@ public class FungusMorphMenu extends Menu implements Listener {
         }
 
         TreeType treeType = getTreeTypeClicked(slotClicked);
-        morphPlayer(player, treeType);
+        if(treeType == null){
+            player.closeInventory();
+        }else{
+            morphPlayer(player, treeType);
+        }
 
     }
 
@@ -97,20 +102,44 @@ public class FungusMorphMenu extends Menu implements Listener {
         if(treeType != null){
 
             FungusPlayerData data = (FungusPlayerData) Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
-            player.setInvisible(true);
-            data.setCanAttack(false);
-            data.setFrozen(true);
-            data.setCanCast(false);
+            boolean hasPhysicallyMorphed = true;
 
             if(treeType != TreeType.CHORUS_PLANT){
                 World world = player.getWorld();
-                world.generateTree(playerLocation, treeType);
+                Location frontOfPlayer = LocationUtil.getAbsoluteLocationInFront(player, 1);
+                hasPhysicallyMorphed = world.generateTree(frontOfPlayer, treeType);
             }else{
+
+                List<Location> cactusBlockLocations = new ArrayList<>();
                 // We make a cactus
                 for(int i = 0; i < 3; i++){
-                    Block currentBlock = playerLocation.clone().add(0, i, 0).getBlock();
+                    Location cactusBlockLocation = playerLocation.clone().add(0, i, 0);
+                    Block currentBlock = cactusBlockLocation.add(0, i, 0).getBlock();
                     currentBlock.setType(Material.CACTUS);
+                    cactusBlockLocations.add(cactusBlockLocation);
                 }
+                data.setCactusBlockLocations(cactusBlockLocations);
+
+            }
+
+            if(hasPhysicallyMorphed){
+
+                player.closeInventory();
+
+                Inventory playerInventory = player.getInventory();
+                ItemStack[] contents = playerInventory.getContents();
+                data.setItemsBeforeMorphing(contents);
+                playerInventory.clear();
+
+                player.setInvisible(true);
+                data.setTypeMorph(treeType);
+                data.setMorphed(true);
+                data.setFrozen(true);
+                data.setCanCast(false);
+
+            }else{
+                player.sendMessage("There isn't sufficient space to morph here!");
+                player.closeInventory();
             }
 
         }

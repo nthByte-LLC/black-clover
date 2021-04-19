@@ -25,7 +25,6 @@ public class BlackCloverCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         ResponderFactory rf = new ResponderFactory(sender, plugin.getPrefix());
-
         if(args.length == 3){
 
             if(args[0].equalsIgnoreCase("setgrim") && sender.hasPermission("blackclover.change.grimmoire")){

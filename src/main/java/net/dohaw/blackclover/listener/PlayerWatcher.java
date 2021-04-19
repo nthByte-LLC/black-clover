@@ -4,10 +4,12 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.*;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
+import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ProjectileWaterHitChecker;
@@ -294,9 +296,9 @@ public class PlayerWatcher implements Listener {
 
         if(spellBoundToSlot != null){
 
-            if(pd.canCast() && !pd.isCurrentlyCasting()){
+            SpellType spellType = spellBoundToSlot.getKEY();
+            if(canCast(pd, spellType) && !pd.isCurrentlyCasting()){
 
-                SpellType spellType = spellBoundToSlot.getKEY();
                 e.setCancelled(true);
                 // Deactivate all spell effects and runnables
                 if(pd.isSpellActive(spellType) && player.isSneaking()){
@@ -356,7 +358,7 @@ public class PlayerWatcher implements Listener {
             }else{
                 if (!pd.canCast()){
                     player.sendMessage("You can't cast right now!");
-                }else{
+                }else if(pd.isCurrentlyCasting()){
                     player.sendMessage("You are currently casting a spell!");
                 }
             }
@@ -365,6 +367,18 @@ public class PlayerWatcher implements Listener {
             System.out.println("NOT SPELL BOUND");
         }
 
+    }
+
+    private boolean canCast(PlayerData pd, SpellType spell){
+        GrimmoireType grimmoireType = pd.getGrimmoireWrapper().getKEY();
+        if(grimmoireType == GrimmoireType.FUNGUS){
+            FungusPlayerData fpd = (FungusPlayerData) pd;
+            // allows a player to cast while they're morphed, but only the morph spell
+            if(fpd.isMorphed() && spell == SpellType.MORPH){
+                return true;
+            }
+        }
+        return pd.canCast();
     }
 
 }

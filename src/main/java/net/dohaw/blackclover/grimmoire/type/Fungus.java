@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.fungus.Morph;
 import net.dohaw.blackclover.grimmoire.spell.type.fungus.Soup;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class Fungus extends GrimmoireWrapper {
 
+    public Morph morph;
     public Soup soup;
 
     public Fungus() {
@@ -37,6 +39,9 @@ public class Fungus extends GrimmoireWrapper {
 
         this.soup = new Soup(config);
         this.spells.put(SpellType.SOUP, soup);
+
+        this.morph = new Morph(config);
+        this.spells.put(SpellType.MORPH, morph);
 
     }
 
