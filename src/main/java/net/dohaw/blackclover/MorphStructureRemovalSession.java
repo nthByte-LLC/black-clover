@@ -84,7 +84,8 @@ public class MorphStructureRemovalSession {
     private void destroyCacti(){
 
         for (int i = 0; i < 3; i++) {
-
+            Block cactusBlock = morphLocation.clone().add(0, i, 0).getBlock();
+            cactusBlock.setType(Material.AIR);
         }
 
     }

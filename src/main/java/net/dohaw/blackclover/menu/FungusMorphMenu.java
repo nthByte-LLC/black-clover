@@ -107,9 +107,6 @@ public class FungusMorphMenu extends Menu implements Listener {
             if(treeType != TreeType.CHORUS_PLANT){
                 World world = player.getWorld();
                 hasPhysicallyMorphed = world.generateTree(morphLocation, treeType);
-                // Teleports player behind the morphed structure
-                Location playerTPLocation = LocationUtil.getAbsoluteLocationInBack(morphLocation.clone(), 2);
-                player.teleport(playerTPLocation);
             }else{
 
                 List<Location> cactusBlockLocations = new ArrayList<>();
@@ -123,6 +120,10 @@ public class FungusMorphMenu extends Menu implements Listener {
                 data.setCactusBlockLocations(cactusBlockLocations);
 
             }
+
+            // Teleports player behind the morphed structure
+            Location playerTPLocation = LocationUtil.getAbsoluteLocationInBack(morphLocation.clone(), 2);
+            player.teleport(playerTPLocation);
 
             if(hasPhysicallyMorphed){
 
