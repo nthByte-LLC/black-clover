@@ -20,6 +20,10 @@ Spell Settings:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
+    Poison Duration: 10
+    Poison Level: 1
+    # How long the fungus field will stay
+    Duration: 60
   photosynthesis:
     Hotbar Number: 4
     Cooldown: 5

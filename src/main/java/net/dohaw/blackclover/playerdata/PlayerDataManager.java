@@ -80,7 +80,7 @@ public class PlayerDataManager {
     }
 
     /**
-     * Saves all the player data. Usually used on plugin shutdown.
+     * Saves all the player data. Usually used on plugin prepareShutdown.
      * Also removes player's mana bars.
      */
     public void shutdown(){

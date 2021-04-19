@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.runnable.particle;
 
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -11,6 +12,13 @@ public class HelixParticleRunner extends CircleParticleRunner {
 
     public HelixParticleRunner(Entity entity, Particle.DustOptions data, double radius, boolean isOpposite) {
         super(entity, data, true, radius);
+        yAdditive = 0.05;
+        this.y = entity.getLocation().getY();
+        this.isOpposite = isOpposite;
+    }
+
+    public HelixParticleRunner(Location location, Particle.DustOptions data, double radius, boolean isOpposite){
+        super(SpellUtils.invisibleArmorStand(location), data, true, radius);
         yAdditive = 0.05;
         this.y = entity.getLocation().getY();
         this.isOpposite = isOpposite;

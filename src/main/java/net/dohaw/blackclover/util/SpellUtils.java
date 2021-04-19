@@ -239,6 +239,14 @@ public class SpellUtils {
         return isTargetValid(player, entityInSight, LivingEntity.class);
     }
 
+    public static ArmorStand invisibleArmorStand(Location location){
+        ArmorStand stand = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);
+        stand.setVisible(false);
+        stand.setInvisible(true);
+        stand.setCollidable(false);
+        return stand;
+    }
+
     public static Vector calculateVelocity(Vector from, Vector to, int heightGain)
     {
         // Gravity of a potion
