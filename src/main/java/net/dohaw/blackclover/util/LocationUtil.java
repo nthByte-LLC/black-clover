@@ -6,12 +6,6 @@ import org.bukkit.entity.Entity;
 
 public class LocationUtil {
 
-    public static Block getBlockToSide(Location loc){
-        final int newZ = (int) (loc.getZ() + ( 1 * Math.sin(Math.toRadians(loc.getYaw()))));
-        final int newX = (int) (loc.getX() + ( 1 * Math.cos(Math.toRadians(loc.getYaw()))));
-        return loc.getWorld().getBlockAt(newX, loc.getBlockY(), newZ);
-    }
-
     public static Location getLocationInFront(Entity entity, double numBlocksInFront){
         return getLocationInFront(entity.getLocation(), numBlocksInFront);
     }
@@ -31,6 +25,11 @@ public class LocationUtil {
     public static Location getAbsoluteLocationInFront(Location location, double numBlocksInFront){
         location.setPitch(0);
         return getLocationInFront(location, numBlocksInFront);
+    }
+
+    public static Location getAbsoluteLocationInBack(Location location, double numBlocksInBack){
+        location.setPitch(0);
+        return getLocationInFront(location, numBlocksInBack * -1);
     }
 
     public static Location getLocationInFront(Location location, double numBlocksInFront){

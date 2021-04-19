@@ -1,23 +1,26 @@
 package net.dohaw.blackclover.grimmoire.spell.type.fungus;
 
+import net.dohaw.blackclover.MorphStructureRemovalSession;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.type.Fungus;
 import net.dohaw.blackclover.menu.FungusMorphMenu;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.TreeType;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -40,9 +43,7 @@ public class Morph extends CastSpellWrapper implements Listener {
                 // They want to un-morph
                 if(isSneaking){
                     stopMorphing(fpd);
-                    System.out.println("IS SNEAKING");
                 }else{
-                    System.out.println("BRUH");
                     player.sendMessage("You are already morphed!");
                 }
                 return false;
@@ -93,10 +94,18 @@ public class Morph extends CastSpellWrapper implements Listener {
         Player player = fpd.getPlayer();
         player.setInvisible(false);
         fpd.setFrozen(false);
+        fpd.setMorphed(false);
 
         ItemStack[] contents = fpd.getItemsBeforeMorphing();
         player.getInventory().setContents(contents);
 
+        TreeType treeType = fpd.getMorphType();
+        Location morphLocation = fpd.getMorphLocation();
+        MorphStructureRemovalSession session = new MorphStructureRemovalSession(morphLocation, treeType);
+        session.startRemovalProcess();
+
     }
+
+
 
 }

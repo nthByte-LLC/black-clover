@@ -2,7 +2,6 @@ package net.dohaw.blackclover.menu;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
-import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.menus.Menu;
@@ -98,22 +97,25 @@ public class FungusMorphMenu extends Menu implements Listener {
 
     private void morphPlayer(Player player, TreeType treeType){
 
-        Location playerLocation = player.getLocation();
         if(treeType != null){
 
             FungusPlayerData data = (FungusPlayerData) Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
             boolean hasPhysicallyMorphed = true;
+            Location morphLocation = player.getLocation().clone();
+            data.setMorphLocation(morphLocation);
 
             if(treeType != TreeType.CHORUS_PLANT){
                 World world = player.getWorld();
-                Location frontOfPlayer = LocationUtil.getAbsoluteLocationInFront(player, 1);
-                hasPhysicallyMorphed = world.generateTree(frontOfPlayer, treeType);
+                hasPhysicallyMorphed = world.generateTree(morphLocation, treeType);
+                // Teleports player behind the morphed structure
+                Location playerTPLocation = LocationUtil.getAbsoluteLocationInBack(morphLocation.clone(), 2);
+                player.teleport(playerTPLocation);
             }else{
 
                 List<Location> cactusBlockLocations = new ArrayList<>();
                 // We make a cactus
                 for(int i = 0; i < 3; i++){
-                    Location cactusBlockLocation = playerLocation.clone().add(0, i, 0);
+                    Location cactusBlockLocation = morphLocation.clone().add(0, i, 0);
                     Block currentBlock = cactusBlockLocation.add(0, i, 0).getBlock();
                     currentBlock.setType(Material.CACTUS);
                     cactusBlockLocations.add(cactusBlockLocation);
@@ -132,7 +134,7 @@ public class FungusMorphMenu extends Menu implements Listener {
                 playerInventory.clear();
 
                 player.setInvisible(true);
-                data.setTypeMorph(treeType);
+                data.setMorphType(treeType);
                 data.setMorphed(true);
                 data.setFrozen(true);
                 data.setCanCast(false);

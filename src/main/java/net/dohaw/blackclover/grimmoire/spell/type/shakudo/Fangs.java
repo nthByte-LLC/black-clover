@@ -70,7 +70,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.duration = (int) grimmoireConfig.getIntegerSetting(KEY, "Duration");
+        this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
         this.damageMultiplier = grimmoireConfig.getIntegerSetting(KEY, "Damage Multiplier");
     }
 

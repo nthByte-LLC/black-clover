@@ -55,7 +55,6 @@ public class FireProtection extends PassiveSpellWrapper implements Listener {
             PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
             if(pd.getGrimmoireWrapper().getKEY() == GrimmoireType.FIRE){
                 if(e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                    System.out.println("CANCEL");
                     e.setCancelled(true);
                 }
             }

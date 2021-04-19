@@ -48,8 +48,6 @@ public class SandGrave extends CastSpellWrapper implements Listener {
                 sandBlocks.add(fBlock);
             });
 
-            System.out.println("CASTING");
-
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                 for(FallingBlock block : sandBlocks){
                     block.getLocation().getBlock().setType(Material.AIR);
@@ -72,7 +70,6 @@ public class SandGrave extends CastSpellWrapper implements Listener {
             FallingBlock fBlock = (FallingBlock) e.getEntity();
             if(fBlock.getMaterial() == Material.SAND){
                 if(fBlock.getPersistentDataContainer().has(NSK, PersistentDataType.STRING)){
-                    System.out.println("HAS NSK");
                     fBlock.getLocation().getBlock().setType(Material.SAND);
                     e.setCancelled(true);
                 }

@@ -127,7 +127,6 @@ public class IceAge extends CastSpellWrapper implements Listener {
      */
     @EventHandler
     public void onIceMelt(BlockFadeEvent e){
-        System.out.println("YO");
         Block block = e.getBlock();
         if(changedLocations.contains(block.getLocation())){
             e.setCancelled(true);
@@ -145,4 +144,5 @@ public class IceAge extends CastSpellWrapper implements Listener {
     public void prepareShutdown() {
 
     }
+
 }

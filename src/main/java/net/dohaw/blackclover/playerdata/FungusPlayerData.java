@@ -3,19 +3,19 @@ package net.dohaw.blackclover.playerdata;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import org.bukkit.Location;
 import org.bukkit.TreeType;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class FungusPlayerData extends PlayerData{
 
-    /*
-        These variables are used when the player morphs and we need to store their items before we take them off them so that they can be completely invisible
-     */
+    private Location morphLocation;
+
     private ItemStack[] itemsBeforeMorphing;
 
-    private TreeType typeMorph;
+    private TreeType morphType;
 
     private List<Location> cactusBlockLocations = new ArrayList<>();
 
@@ -41,12 +41,12 @@ public class FungusPlayerData extends PlayerData{
         this.cactusBlockLocations = cactusBlockLocations;
     }
 
-    public TreeType getTypeMorph() {
-        return typeMorph;
+    public TreeType getMorphType() {
+        return morphType;
     }
 
-    public void setTypeMorph(TreeType typeMorph) {
-        this.typeMorph = typeMorph;
+    public void setMorphType(TreeType morphType) {
+        this.morphType = morphType;
     }
 
     public ItemStack[] getItemsBeforeMorphing() {
@@ -55,6 +55,14 @@ public class FungusPlayerData extends PlayerData{
 
     public void setItemsBeforeMorphing(ItemStack[] itemsBeforeMorphing) {
         this.itemsBeforeMorphing = itemsBeforeMorphing;
+    }
+
+    public Location getMorphLocation() {
+        return morphLocation;
+    }
+
+    public void setMorphLocation(Location morphLocation) {
+        this.morphLocation = morphLocation;
     }
 
 }
