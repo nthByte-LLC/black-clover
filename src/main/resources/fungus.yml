@@ -28,6 +28,11 @@ Spell Settings:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    Required Light Level: 15
+    # Heals 2 heal points per second
+    Heal Amount: 2
+    # How often it checks to see if the player is in the sun.
+    Check Interval: 3
   fungus_meal:
     Hotbar Number: 5
     Cooldown: 5

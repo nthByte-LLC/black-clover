@@ -106,6 +106,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
                         JPUtils.registerEvents((Listener) spell);
                     }
                 }
+
             }
         }
     }

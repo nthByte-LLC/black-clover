@@ -132,13 +132,15 @@ public class SpellUtils {
         double newHealth = health + amount;
         if(newHealth > maxHealth) {
             livingEntity.setHealth(maxHealth);
+            return maxHealth - health;
         }else if(newHealth <= 0){
             livingEntity.setHealth(0);
+            return health;
         }else{
             livingEntity.setHealth(newHealth);
         }
         // changed health amount
-        return (health + Math.abs(amount)) - health;
+        return Math.abs(newHealth - health);
     }
 
     /**
