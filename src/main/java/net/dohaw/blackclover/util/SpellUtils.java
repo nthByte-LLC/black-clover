@@ -246,6 +246,7 @@ public class SpellUtils {
         stand.setVisible(false);
         stand.setInvisible(true);
         stand.setCollidable(false);
+        stand.setGravity(false);
         return stand;
     }
 

@@ -31,6 +31,7 @@ public class Grimmoire extends WrapperHolder {
     public static final Gravity GRAVITY = new Gravity();
     public static final Poison POISON = new Poison();
     public static final Fungus FUNGUS = new Fungus();
+    public static final GrimmoireWrapper COMPASS = new Compass();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

@@ -3,6 +3,7 @@ package net.dohaw.blackclover.util;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.util.Vector;
 
 public class LocationUtil {
 
@@ -50,6 +51,14 @@ public class LocationUtil {
         return loc.clone().add(leftDirectionLocation.getDirection().multiply(dist));
     }
 
+    public static Location getLocationInDirection(Location start, Location end, double blocksForward){
+        Location startClone = start.clone();
+        startClone = startClone.setDirection(end.toVector().subtract(startClone.toVector()));
+        Location startClone2 = start.clone();
+        startClone2.setYaw(startClone.getYaw());
+        return start.clone().add(startClone2.getDirection().multiply(blocksForward));
+    }
+
     public static boolean hasMoved(Location to, Location from, boolean checkY){
         if(to != null){
             boolean hasMovedHorizontally = from.getX() != to.getX() || from.getZ() != to.getZ();
@@ -59,6 +68,13 @@ public class LocationUtil {
             return hasMovedHorizontally;
         }
         return false;
+    }
+
+    public static Location getMiddleOfBlock(Location blockLocation) {
+        return new Location(blockLocation.getWorld(),
+                Location.locToBlock(blockLocation.getX()) + 0.5,
+                Location.locToBlock(blockLocation.getY()),
+                Location.locToBlock(blockLocation.getZ()) + 0.5);
     }
 
 }

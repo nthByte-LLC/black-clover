@@ -133,7 +133,17 @@ public enum SpellType {
     GROWTH("growth", false),
     FUNGUS_FIELD("fungus_field", false),
     PHOTOSYNTHESIS("photosynthesis", false),
-    FUNGUS_MEAL("fungus_meal", true);
+    FUNGUS_MEAL("fungus_meal", true),
+
+    /*
+        Compass spells
+     */
+    DIRECTION("direction", false),
+    CARTOGRAPHER("cartographer", false),
+    WAYPOINT("waypoint", false),
+    PATH_MAKER("path_maker", false),
+    FAST_TRAVEL("fast_travel", false),
+    HOMESTONE("homestone", false);
 
     @Getter
     private boolean isUltimate;
