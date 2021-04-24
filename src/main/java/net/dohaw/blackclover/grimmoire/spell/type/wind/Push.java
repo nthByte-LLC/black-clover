@@ -1,4 +1,4 @@
-package net.dohaw.blackclover.grimmoire.spell.wind;
+package net.dohaw.blackclover.grimmoire.spell.type.wind;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;

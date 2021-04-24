@@ -1,7 +1,7 @@
 package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.spell.wind.Pull;
+import net.dohaw.blackclover.grimmoire.spell.type.wind.Pull;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;

@@ -3,9 +3,12 @@ package net.dohaw.blackclover.playerdata;
 import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -172,6 +175,17 @@ public class PlayerData {
     }
 
     public void prepareDataRemoval(){
+        // Removes all effects of activatable spells
+        for(SpellWrapper wrapper : grimmoireWrapper.getSpells().values()){
+            if(wrapper instanceof ActivatableSpellWrapper){
+                try {
+                    ((ActivatableSpellWrapper)wrapper).deactiveSpell(this);
+                } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                    unexpectedPlayerData.printStackTrace();
+                }
+            }
+        }
+        stopAllRunnables();
         saveData();
     }
 

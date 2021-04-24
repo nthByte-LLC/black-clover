@@ -4,16 +4,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.wind.Airshot;
-import net.dohaw.blackclover.grimmoire.spell.wind.Pull;
-import net.dohaw.blackclover.grimmoire.spell.wind.Push;
-import net.dohaw.blackclover.grimmoire.spell.wind.Suffocate;
+import net.dohaw.blackclover.grimmoire.spell.type.wind.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Wind extends GrimmoireWrapper {
 
+    public Flight flight;
     public Suffocate suffocate;
     public Airshot airshot;
     public Pull pull;
@@ -52,6 +50,9 @@ public class Wind extends GrimmoireWrapper {
 
         this.suffocate = new Suffocate(config);
         this.spells.put(SpellType.SUFFOCATE, suffocate);
+
+        this.flight = new Flight(config);
+        this.spells.put(SpellType.FLIGHT, flight);
 
     }
 

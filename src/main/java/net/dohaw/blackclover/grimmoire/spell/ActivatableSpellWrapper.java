@@ -1,11 +1,10 @@
 package net.dohaw.blackclover.grimmoire.spell;
 
-import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import org.bukkit.Bukkit;
+import net.dohaw.blackclover.runnable.ActiveSpellRunner;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -21,30 +20,8 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
     }
 
     protected void activateRunnable(PlayerData pd){
-
-        BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-
-            BlackCloverPlugin instance = Grimmoire.instance;
-            PlayerData updatedData = instance.getPlayerDataManager().getData(pd.getUuid());
-
-            if(updatedData.hasSufficientRegenForSpell(this)){
-                deductMana(updatedData);
-                instance.updateRegenBar(updatedData);
-                doRunnableTick(updatedData);
-            }else{
-                try {
-                    deactiveSpell(pd);
-                } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                    unexpectedPlayerData.printStackTrace();
-                }
-                updatedData.stopSpellRunnables(this.KEY);
-            }
-
-        }, 1, getRunnableInterval());
-
-        PlayerData updatedData = Grimmoire.instance.getPlayerDataManager().getData(pd.getUuid());
-        updatedData.addSpellRunnables(KEY, runnable);
-
+        BukkitTask task = new ActiveSpellRunner(pd, this).runTaskTimer(Grimmoire.instance, 0L, getRunnableInterval());
+        pd.addSpellRunnables(KEY, task);
     }
 
     @Override
