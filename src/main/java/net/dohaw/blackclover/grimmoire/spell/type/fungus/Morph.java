@@ -44,8 +44,7 @@ public class Morph extends CastSpellWrapper implements Listener {
                 }else{
                     player.sendMessage("You are already morphed!");
                 }
-                // I return true here so that they can't instantly morph again
-                return true;
+                return false;
             }else{
                 if(isSneaking){
                     player.sendMessage("You aren't morphed right now!");
@@ -56,7 +55,6 @@ public class Morph extends CastSpellWrapper implements Listener {
                         FungusMorphMenu fungusMorphMenu = new FungusMorphMenu(Grimmoire.instance);
                         fungusMorphMenu.initializeItems(player);
                         fungusMorphMenu.openInventory(player);
-                        return true;
                     }else{
                         player.sendMessage("You can only morph on the ground!");
                     }

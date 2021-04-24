@@ -26,23 +26,27 @@ public class TornadoParticleRunner extends CircleParticleRunner{
     @Override
     public void run(){
 
-        doYIncreaseCheck();
+        if(areEntitiesValid()){
 
-        if(numIteration >= POINTS){
-            numIteration = 0;
-        }
+            doYIncreaseCheck();
 
-        double yAdditive2 = yAdditive;
-        for (int i = 0; i < verticalPoints; i++) {
-            double angle = angle(numIteration);
-            if(goesRight){
-                angle *= -1;
+            if(numIteration >= POINTS){
+                numIteration = 0;
             }
-            Location point = entity.getLocation().clone().add(radius * Math.sin(angle), yAdditive2, radius * Math.cos(angle));
-            entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
-            yAdditive2 += verticalPointSpread;
+
+            double yAdditive2 = yAdditive;
+            for (int i = 0; i < verticalPoints; i++) {
+                double angle = angle(numIteration);
+                if(goesRight){
+                    angle *= -1;
+                }
+                Location point = entity.getLocation().clone().add(radius * Math.sin(angle), yAdditive2, radius * Math.cos(angle));
+                entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
+                yAdditive2 += verticalPointSpread;
+            }
+            numIteration++;
+
         }
-        numIteration++;
 
     }
 

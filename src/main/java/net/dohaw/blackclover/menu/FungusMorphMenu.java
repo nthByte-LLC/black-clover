@@ -1,6 +1,9 @@
 package net.dohaw.blackclover.menu;
 
+import net.dohaw.blackclover.event.PostCastSpellEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.spell.type.compass.Homestone;
+import net.dohaw.blackclover.grimmoire.spell.type.fungus.Morph;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.corelib.JPUtils;
@@ -58,9 +61,7 @@ public class FungusMorphMenu extends Menu implements Listener {
         if (!topInventory.equals(inv) || !clickedInventory.equals(topInventory)) return;
         if (clickedItem == null && e.getCursor() == null) return;
 
-        if(slotClicked == 9){
-            player.closeInventory();
-        }
+        e.setCancelled(true);
 
         TreeType treeType = getTreeTypeClicked(slotClicked);
         if(treeType == null){
@@ -139,6 +140,11 @@ public class FungusMorphMenu extends Menu implements Listener {
                 data.setMorphed(true);
                 data.setFrozen(true);
                 data.setCanCast(false);
+
+                Morph spell = Grimmoire.FUNGUS.morph;
+                spell.deductMana(data);
+                // Starts cooldown when you actually start teleporting
+                Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(data, spell, true));
 
             }else{
                 player.sendMessage("There isn't sufficient space to morph here!");

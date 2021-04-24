@@ -52,4 +52,5 @@ public class BatteringRamGoalChecker extends EntityRunner {
         super.cancel();
         caster.removeGoldenSheep();
     }
+
 }

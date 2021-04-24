@@ -26,8 +26,10 @@ public class HelixParticleRunner extends CircleParticleRunner {
 
     @Override
     public void run() {
-        doYIncreaseCheck();
-        doParticleIteration(0);
+        if(areEntitiesValid()){
+            doYIncreaseCheck();
+            doParticleIteration(0);
+        }
     }
 
     @Override

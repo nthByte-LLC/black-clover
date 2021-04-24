@@ -16,6 +16,7 @@ public class Compass extends GrimmoireWrapper {
     public Cartographer cartographer;
     public Direction direction;
     public FastTravel fastTravel;
+    public Homestone homestone;
 
     public Compass() {
         super(GrimmoireType.COMPASS);
@@ -53,6 +54,9 @@ public class Compass extends GrimmoireWrapper {
 
         this.fastTravel = new FastTravel(config);
         this.spells.put(SpellType.FAST_TRAVEL, fastTravel);
+
+        this.homestone = new Homestone(config);
+        this.spells.put(SpellType.HOMESTONE, homestone);
 
     }
 

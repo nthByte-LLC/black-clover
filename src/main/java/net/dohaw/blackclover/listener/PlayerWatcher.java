@@ -370,8 +370,8 @@ public class PlayerWatcher implements Listener {
                             if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
                                 spellBoundToSlot.deductMana(pd);
                             }
-
                             Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
+
                         }else{
                             player.sendMessage("You don't have enough mana at the moment!");
                         }

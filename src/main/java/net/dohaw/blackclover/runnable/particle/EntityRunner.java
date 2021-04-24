@@ -14,18 +14,19 @@ public abstract class EntityRunner extends BukkitRunnable {
 
     public EntityRunner(Entity ...reliedEntities){
         this.reliedEntities = reliedEntities;
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                for (Entity reliedEntity : reliedEntities) {
-                    if(!reliedEntity.isValid()){
-                        EntityRunner.this.cancel();
-                        this.cancel();
-                        break;
-                    }
-                }
+    }
+
+    /**
+     * Should be used in every single run method that extends this. If the entities aren't valid, then we need to not run everything else in the run method.
+     */
+    protected boolean areEntitiesValid(){
+        for (Entity reliedEntity : reliedEntities) {
+            if(!reliedEntity.isValid()){
+                cancel();
+                return false;
             }
-        }.runTaskTimer(Grimmoire.instance, 1L, 20L);
+        }
+        return true;
     }
 
 }

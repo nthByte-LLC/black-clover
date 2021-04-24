@@ -44,7 +44,7 @@ public class FastTravel extends PassiveSpellWrapper implements DependableSpell {
     private void startPathChecker(Pathmaker pathmaker){
 
         this.pathChecker = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-            System.out.println("PATHS: " + pathmaker.getAllPaths().keySet().toString());
+
             Iterator<Map.Entry<UUID, LinkedList<Location>>> itr = pathmaker.getAllPaths().entrySet().iterator();
             while(itr.hasNext()){
 

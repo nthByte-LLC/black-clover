@@ -53,9 +53,11 @@ public class CircleParticleRunner extends EntityRunner {
 
     @Override
     public void run(){
-        doYIncreaseCheck();
-        for (int i = 0; i < POINTS; i++) {
-            doParticleIteration(i);
+        if(areEntitiesValid()){
+            doYIncreaseCheck();
+            for (int i = 0; i < POINTS; i++) {
+                doParticleIteration(i);
+            }
         }
     }
 
