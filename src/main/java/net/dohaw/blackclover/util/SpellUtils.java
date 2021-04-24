@@ -81,6 +81,7 @@ public class SpellUtils {
         return arr;
     }
 
+    //TODO: Make it to where you can't target player's through a wall
     /**
      * Gets the first entity in the line of sight of the player.
      * If the event passed from the spell is of a EntityDamageByEntityEvent, then just get the entity that was hurt.

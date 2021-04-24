@@ -18,7 +18,8 @@ Spell Settings:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
-
+    Damage: 8
+    Cast Distance: 10
   airshot:
     Hotbar Number: 3
     Cooldown: 5

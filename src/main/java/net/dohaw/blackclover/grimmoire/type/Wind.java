@@ -7,12 +7,14 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.wind.Airshot;
 import net.dohaw.blackclover.grimmoire.spell.wind.Pull;
 import net.dohaw.blackclover.grimmoire.spell.wind.Push;
+import net.dohaw.blackclover.grimmoire.spell.wind.Suffocate;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Wind extends GrimmoireWrapper {
 
+    public Suffocate suffocate;
     public Airshot airshot;
     public Pull pull;
     public Push push;
@@ -47,6 +49,9 @@ public class Wind extends GrimmoireWrapper {
 
         this.airshot = new Airshot(config);
         this.spells.put(SpellType.AIRSHOT, airshot);
+
+        this.suffocate = new Suffocate(config);
+        this.spells.put(SpellType.SUFFOCATE, suffocate);
 
     }
 
