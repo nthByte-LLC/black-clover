@@ -9,6 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * Spells that you cast once and run its course until you reach two conditiongs:
+ * 1. You run out of mana
+ * 2. You cancel the spell by shift left-clicking
+ */
 public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
 
     public ActivatableSpellWrapper(SpellType spellType, GrimmoireConfig grimmoireConfig) {
@@ -27,10 +32,15 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
                 instance.updateRegenBar(updatedData);
                 doRunnableTick(updatedData);
             }else{
+                try {
+                    deactiveSpell(pd);
+                } catch (UnexpectedPlayerData unexpectedPlayerData) {
+                    unexpectedPlayerData.printStackTrace();
+                }
                 updatedData.stopSpellRunnables(this.KEY);
             }
 
-        }, 1, 20);
+        }, 1, getRunnableInterval());
 
         PlayerData updatedData = Grimmoire.instance.getPlayerDataManager().getData(pd.getUuid());
         updatedData.addSpellRunnables(KEY, runnable);
@@ -38,13 +48,23 @@ public abstract class ActivatableSpellWrapper extends CastSpellWrapper {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
         activateRunnable(pd);
         return true;
     }
 
+    /**
+     * What you do in the runner every single second
+     */
     public abstract void doRunnableTick(PlayerData caster);
 
+    public long getRunnableInterval(){
+        return 20L;
+    }
+
+    /**
+     * Specific things you need to do when the spell is done running its course
+     */
     public abstract void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData;
 
 }

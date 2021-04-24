@@ -76,9 +76,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData {
-
-    }
+    public void deactiveSpell(PlayerData caster) { }
 
     @Override
     public void loadSettings() {

@@ -5,6 +5,7 @@ import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.WrapperHolder;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import net.dohaw.blackclover.grimmoire.type.*;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -31,7 +32,8 @@ public class Grimmoire extends WrapperHolder {
     public static final Gravity GRAVITY = new Gravity();
     public static final Poison POISON = new Poison();
     public static final Fungus FUNGUS = new Fungus();
-    public static final GrimmoireWrapper COMPASS = new Compass();
+    public static final Compass COMPASS = new Compass();
+    public static final GrimmoireWrapper WIND = new Wind();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

@@ -8,5 +8,4 @@ import org.bukkit.configuration.file.FileConfiguration;
 public interface SpecifiableData {
     void saveSpecifiedData(FileConfiguration config);
     void loadSpecifiedData(FileConfiguration config);
-
 }

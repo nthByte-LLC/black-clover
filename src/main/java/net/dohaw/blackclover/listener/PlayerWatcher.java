@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
+import net.dohaw.blackclover.playerdata.CompassPlayerData;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
@@ -19,7 +20,13 @@ import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.minecraft.server.v1_16_R3.EntityArmorStand;
+import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
+import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntity;
+import net.minecraft.server.v1_16_R3.PlayerConnection;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -47,13 +54,31 @@ public class PlayerWatcher implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
-        plugin.getPlayerDataManager().loadData(e.getPlayer());
+
+        Player player = e.getPlayer();
+        plugin.getPlayerDataManager().loadData(player);
+
+        PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        if(pd instanceof CompassPlayerData){
+            CompassPlayerData cpd = (CompassPlayerData) pd;
+            PlayerConnection conn = ((CraftPlayer)player).getHandle().playerConnection;
+            System.out.println("WAYPOINTS: " + cpd.getWaypoints().toString());
+            for(Location waypoint : cpd.getWaypoints().values()){
+                //TODO: Make client side name tag for waypoint
+//                System.out.println("LOCATION: " + waypoint.toString());
+//                EntityArmorStand stand = SpellUtils.nmsInvisibleArmorStand(waypoint);
+//                conn.sendPacket(new PacketPlayOutSpawnEntity(stand));
+//                conn.sendPacket(new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), false));
+            }
+        }
+
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e){
         PlayerDataManager pdm = plugin.getPlayerDataManager();
-        UUID uuid = e.getPlayer().getUniqueId();
+        Player player = e.getPlayer();
+        UUID uuid = player.getUniqueId();
         pdm.saveData(uuid);
         pdm.removeDataFromMemory(uuid);
     }

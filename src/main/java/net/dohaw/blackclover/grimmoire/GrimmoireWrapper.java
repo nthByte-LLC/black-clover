@@ -5,6 +5,7 @@ import lombok.NonNull;
 import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.Wrapper;
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
@@ -22,7 +23,7 @@ import java.util.Map;
 public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
 
     /**
-     * The slot number for each spell bound item and the spell iteself.
+     * The slot number for each spell bound item and the spell itself.
      */
     @Getter
     protected Map<SpellType, SpellWrapper> spells = new HashMap<>();

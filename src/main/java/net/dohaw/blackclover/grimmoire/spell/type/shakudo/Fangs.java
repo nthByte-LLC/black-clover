@@ -38,7 +38,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData{
         if(pd instanceof ShakudoPlayerData){
             ShakudoPlayerData spd = (ShakudoPlayerData) pd;
             boolean fangsAreEnabled = spd.isFangsEnabled();
@@ -58,11 +58,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
                 rf.sendMessage("You already have fangs enabled!");
             }
         } else {
-            try {
-                throw new UnexpectedPlayerData();
-            } catch (UnexpectedPlayerData unexpectedPlayerData) {
-                unexpectedPlayerData.printStackTrace();
-            }
+            throw new UnexpectedPlayerData();
         }
         return false;
     }

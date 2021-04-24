@@ -8,14 +8,20 @@ import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.runnable.spells.FallingBlockRunner;
 import net.dohaw.blackclover.runnable.spells.MultiFallingBlockRunner;
 import net.dohaw.corelib.helpers.MathHelper;
+import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -247,6 +253,15 @@ public class SpellUtils {
         stand.setInvisible(true);
         stand.setCollidable(false);
         stand.setGravity(false);
+        return stand;
+    }
+
+    public static EntityArmorStand nmsInvisibleArmorStand(Location location){
+        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
+        EntityArmorStand stand = new EntityArmorStand(EntityTypes.ARMOR_STAND, world);
+        stand.setCustomName(new ChatMessage("Brooo"));
+        stand.setNoGravity(true);
+        stand.setInvulnerable(true);
         return stand;
     }
 

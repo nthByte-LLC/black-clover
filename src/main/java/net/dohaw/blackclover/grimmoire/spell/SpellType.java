@@ -143,7 +143,17 @@ public enum SpellType {
     WAYPOINT("waypoint", false),
     PATH_MAKER("path_maker", false),
     FAST_TRAVEL("fast_travel", false),
-    HOMESTONE("homestone", false);
+    HOMESTONE("homestone", true),
+
+    /*
+        Wind spells
+     */
+    PUSH("push", false),
+    PULL("pull", false),
+    SUFFOCATE("suffocate", false),
+    AIRSHOT("airshot", false),
+    FLIGHT("flight", false),
+    HURRICANE("hurricane", false);
 
     @Getter
     private boolean isUltimate;

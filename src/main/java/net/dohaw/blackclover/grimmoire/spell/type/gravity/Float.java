@@ -30,7 +30,7 @@ public class Float extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
         initFloat(pd);
         return super.cast(e, pd);
     }

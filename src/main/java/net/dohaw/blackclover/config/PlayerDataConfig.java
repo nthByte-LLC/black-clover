@@ -15,7 +15,8 @@ public class PlayerDataConfig extends Config {
 
     private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(
             GrimmoireType.SHAKUDO, GrimmoireType.WATER,
-            GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON, GrimmoireType.FUNGUS
+            GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON,
+            GrimmoireType.FUNGUS, GrimmoireType.COMPASS
     );
 
     public PlayerDataConfig(File file){
@@ -45,8 +46,10 @@ public class PlayerDataConfig extends Config {
                 newData = new AshPlayerData(uuid);
             }else if(grimmoireType == GrimmoireType.COTTON) {
                 newData = new CottonPlayerData(uuid);
-            }else if(grimmoireType == GrimmoireType.FUNGUS){
+            }else if(grimmoireType == GrimmoireType.FUNGUS) {
                 newData = new FungusPlayerData(uuid);
+            }else if(grimmoireType == GrimmoireType.COMPASS){
+                newData = new CompassPlayerData(uuid);
             }else{
                 // If it gets to here, then there's a conflict between what's in the list and what is being checked in the if statement chain.
                 return pd;
@@ -55,9 +58,9 @@ public class PlayerDataConfig extends Config {
             newData.merge(pd);
 
             // this is currently always false but keeping it here for future purposes...
-//            if(newData instanceof SpecifiableData){
-//                ((SpecifiableData) newData).loadSpecifiedData(config);
-//            }
+            if(newData instanceof SpecifiableData){
+                ((SpecifiableData) newData).loadSpecifiedData(config);
+            }
             return newData;
         }
 
@@ -69,11 +72,10 @@ public class PlayerDataConfig extends Config {
         config.set("Max Regen", pd.getMaxRegen());
         config.set("Regen Amount", pd.getRegenAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
-//        if(pd instanceof SpecifiableData){
-//            SpecifiableData spd = (SpecifiableData) pd;
-//            spd.saveSpecifiedData(config);
-//            System.out.println("SAVING SPECIFIED DATA");
-//        }
+        if(pd instanceof SpecifiableData){
+            SpecifiableData spd = (SpecifiableData) pd;
+            spd.saveSpecifiedData(config);
+        }
         saveConfig();
     }
 
