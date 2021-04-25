@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Wind extends GrimmoireWrapper {
 
+    public Hurricane hurricane;
     public Flight flight;
     public Suffocate suffocate;
     public Airshot airshot;
@@ -53,6 +54,9 @@ public class Wind extends GrimmoireWrapper {
 
         this.flight = new Flight(config);
         this.spells.put(SpellType.FLIGHT, flight);
+
+        this.hurricane = new Hurricane(config);
+        this.spells.put(SpellType.HURRICANE, hurricane);
 
     }
 

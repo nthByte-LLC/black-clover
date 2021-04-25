@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
+import net.dohaw.blackclover.grimmoire.spell.type.wind.Hurricane;
 import net.dohaw.blackclover.playerdata.CompassPlayerData;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -37,6 +38,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -64,12 +66,21 @@ public class PlayerWatcher implements Listener {
             PlayerConnection conn = ((CraftPlayer)player).getHandle().playerConnection;
             System.out.println("WAYPOINTS: " + cpd.getWaypoints().toString());
             for(Location waypoint : cpd.getWaypoints().values()){
-                //TODO: Make client side name tag for waypoint
+                //TODO: Make client side name tag for waypoints (Compass Grimmoire)
 //                System.out.println("LOCATION: " + waypoint.toString());
 //                EntityArmorStand stand = SpellUtils.nmsInvisibleArmorStand(waypoint);
 //                conn.sendPacket(new PacketPlayOutSpawnEntity(stand));
 //                conn.sendPacket(new PacketPlayOutEntityMetadata(stand.getId(), stand.getDataWatcher(), false));
             }
+        }
+
+        // They'll be in for a rude awakening if they log out while they were in a hurricane with setAllowFlight set to true...
+        boolean wasInHurricanePreviously = player.getPersistentDataContainer().has(Hurricane.NSK_MARKER, PersistentDataType.STRING);
+        if(wasInHurricanePreviously){
+            player.setAllowFlight(false);
+            player.setFlying(false);
+            player.setGravity(true);
+            player.getPersistentDataContainer().remove(Hurricane.NSK_MARKER);
         }
 
     }

@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.runnable.particle;
 
 import lombok.Setter;
+import net.dohaw.blackclover.util.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -36,7 +37,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
 
             double yAdditive2 = yAdditive;
             for (int i = 0; i < verticalPoints; i++) {
-                double angle = angle(numIteration);
+                double angle = MathHelper.angle(numIteration, POINTS);
                 if(goesRight){
                     angle *= -1;
                 }

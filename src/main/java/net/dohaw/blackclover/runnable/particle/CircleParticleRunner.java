@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.runnable.particle;
 
 import lombok.Setter;
+import net.dohaw.blackclover.util.MathHelper;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -61,10 +62,6 @@ public class CircleParticleRunner extends EntityRunner {
         }
     }
 
-    protected double angle(int i){
-        return 2 * Math.PI * i / POINTS;
-    }
-
     protected void doYIncreaseCheck(){
         if(isYIncreasing){
             if(yAdditive >= maxYAdditive){
@@ -80,7 +77,7 @@ public class CircleParticleRunner extends EntityRunner {
     }
 
     protected void doParticleIteration(int iteration){
-        double angle = angle(iteration);
+        double angle = MathHelper.angle(iteration, POINTS);
         Location point = entity.getLocation().clone().add(0, startYAdditive, 0).add(radius * Math.sin(angle), yAdditive, radius * Math.cos(angle));
         if(data != null){
             entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
