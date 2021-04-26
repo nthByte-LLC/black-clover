@@ -11,6 +11,8 @@ Spell Settings:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    Damage Multiplier: 1.2
+    Fire Ticks Per Hit: 5
   electric_ball:
     Hotbar Number: 2
     Cooldown: 5

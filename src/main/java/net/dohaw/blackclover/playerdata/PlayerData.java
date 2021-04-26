@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
@@ -187,6 +188,10 @@ public class PlayerData {
         }
         stopAllRunnables();
         saveData();
+    }
+
+    public GrimmoireType getGrimmoireType(){
+        return grimmoireWrapper.getKEY();
     }
 
 }

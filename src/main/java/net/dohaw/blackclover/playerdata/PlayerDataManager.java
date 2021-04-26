@@ -51,6 +51,10 @@ public class PlayerDataManager {
         return playerData.get(uuid);
     }
 
+    public PlayerData getData(Player player){
+        return playerData.get(player.getUniqueId());
+    }
+
     /**
      * Loads player data. Usually used when a player joins the server.
      * @param player The player you want to load data for.

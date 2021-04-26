@@ -24,13 +24,15 @@ public class LocationUtil {
     }
 
     public static Location getAbsoluteLocationInFront(Location location, double numBlocksInFront){
-        location.setPitch(0);
-        return getLocationInFront(location, numBlocksInFront);
+        Location clone = location.clone();
+        clone.setPitch(0);
+        return getLocationInFront(clone, numBlocksInFront);
     }
 
     public static Location getAbsoluteLocationInBack(Location location, double numBlocksInBack){
-        location.setPitch(0);
-        return getLocationInFront(location, numBlocksInBack * -1);
+        Location clone = location.clone();
+        clone.setPitch(0);
+        return getLocationInFront(clone, numBlocksInBack * -1);
     }
 
     public static Location getLocationInFront(Location location, double numBlocksInFront){
@@ -42,6 +44,12 @@ public class LocationUtil {
         // shifts direction to the right
         rightDirectionLocation.setYaw(rightDirectionLocation.getYaw() + 90);
         return loc.clone().add(rightDirectionLocation.getDirection().multiply(dist));
+    }
+
+    public static Location getAbsoluteLocationToRight(Location loc, double dist){
+        Location clone = loc.clone();
+        clone.setPitch(0);
+        return getLocationToRight(clone, dist);
     }
 
     public static Location getLocationToLeft(Location loc, double dist){

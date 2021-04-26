@@ -1,7 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.lightning;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -12,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -20,6 +18,9 @@ import org.bukkit.event.Event;
 
 import java.util.Collection;
 
+/**
+ * Shoots a lightning bolt toward whichever direction the player is facing.
+ */
 public class LightningBolt extends CastSpellWrapper {
 
     private double damage;
@@ -61,7 +62,7 @@ public class LightningBolt extends CastSpellWrapper {
             // 0.4 is just some random thing i came up with
             damageNearbyPlayers(player, currentBoltLocation.getWorld().getNearbyEntities(currentBoltLocation, 0.4, 0.4, 0.4));
 
-            SpellUtils.spawnParticle(currentBoltLocation, Particle.REDSTONE, new Particle.DustOptions(BukkitColor.CYAN, 1), 30, 0, 0, 0);
+            SpellUtils.spawnParticle(currentBoltLocation, Particle.REDSTONE, new Particle.DustOptions(BukkitColor.PALE_CYAN, 1), 30, 0, 0, 0);
             directionCount++;
             count++;
 
@@ -82,9 +83,7 @@ public class LightningBolt extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
+    public void prepareShutdown() { }
 
     @Override
     public void loadSettings() {
@@ -92,4 +91,5 @@ public class LightningBolt extends CastSpellWrapper {
         this.numParticlePoints = grimmoireConfig.getIntegerSetting(KEY, "Number of Particle Points");
         this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
+    
 }
