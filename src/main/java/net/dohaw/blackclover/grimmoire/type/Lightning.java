@@ -3,23 +3,19 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.iron.Sword;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Iron extends GrimmoireWrapper {
+public class Lightning extends GrimmoireWrapper {
 
-    public Sword sword;
-
-    public Iron() {
-        super(GrimmoireType.IRON);
+    public Lightning() {
+        super(GrimmoireType.LIGHTNING);
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("iron");
+        return Arrays.asList("lightning");
     }
 
     @Override
@@ -29,14 +25,11 @@ public class Iron extends GrimmoireWrapper {
 
     @Override
     public GrimmoireClassType getClassType() {
-        return GrimmoireClassType.DEFENSE;
+        return GrimmoireClassType.DAMAGE;
     }
 
     @Override
     public void initSpells() {
-
-        this.sword = new Sword(config);
-        this.spells.put(SpellType.SWORD, sword);
 
     }
 

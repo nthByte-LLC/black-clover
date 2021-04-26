@@ -34,6 +34,7 @@ public class Morph extends CastSpellWrapper implements Listener {
     public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
         if(pd instanceof FungusPlayerData){
+
             FungusPlayerData fpd = (FungusPlayerData) pd;
             Player player = pd.getPlayer();
             boolean isSneaking = player.isSneaking();

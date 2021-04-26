@@ -34,6 +34,9 @@ public class Grimmoire extends WrapperHolder {
     public static final Fungus FUNGUS = new Fungus();
     public static final Compass COMPASS = new Compass();
     public static final GrimmoireWrapper WIND = new Wind();
+    //public static final GrimmoireWrapper LIGHTNING = new Lightning();
+    public static final GrimmoireWrapper TIME = new Time();
+    public static final GrimmoireWrapper IRON = new Iron();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

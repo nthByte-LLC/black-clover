@@ -153,7 +153,37 @@ public enum SpellType {
     SUFFOCATE("suffocate", false),
     AIRSHOT("airshot", false),
     FLIGHT("flight", false),
-    HURRICANE("hurricane", false);
+    HURRICANE("hurricane", false),
+
+    /*
+        Lightning spells
+     */
+    LIGHTNING_BOLT("lightning_bolt", false),
+    ELECTRIC_FIRE("electric_fire", false),
+    ELECTRIC_BALL("eletric_ball", false),
+    GOD_SPEED("god_speed", false),
+    TELEPORT("teleport", false),
+    THUNDER_STORM("thunder_storm", true),
+
+    /*
+        Iron spells
+     */
+    SWORD("sword", false),
+    GOLEM("golem", false),
+    ARMOR("armor", false),
+    DOME("dome", false),
+    REPAIR("repair", false),
+    EXTRACTION("extraction", true),
+
+    /*
+        Time spells
+     */
+    CHANGE_TIME("change_time", false),
+    TIME_BEAM("time_beam", false),
+    ALTER_TIME("alter_time", false),
+    SKIP("skip", false),
+    STOP_TIME("stop_time", false),
+    TIME_LORD("time_lord", true);
 
     @Getter
     private boolean isUltimate;

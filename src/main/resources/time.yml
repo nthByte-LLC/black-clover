@@ -1,0 +1,27 @@
+Display Name Color: "&0"
+
+Spell Settings:
+  change_time:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+  time_beam:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  alter_time:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  skip:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  stop_time:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  time_lord:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
