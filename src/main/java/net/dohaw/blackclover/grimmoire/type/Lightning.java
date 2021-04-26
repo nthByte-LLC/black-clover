@@ -3,11 +3,15 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.lightning.LightningBolt;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Lightning extends GrimmoireWrapper {
+
+    public LightningBolt lightningBolt;
 
     public Lightning() {
         super(GrimmoireType.LIGHTNING);
@@ -30,6 +34,9 @@ public class Lightning extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
+        this.lightningBolt = new LightningBolt(config);
+        this.spells.put(SpellType.LIGHTNING_BOLT, lightningBolt);
 
     }
 

@@ -34,7 +34,7 @@ public class LocationUtil {
     }
 
     public static Location getLocationInFront(Location location, double numBlocksInFront){
-        return location.add(location.getDirection().multiply(numBlocksInFront));
+        return location.clone().add(location.clone().getDirection().multiply(numBlocksInFront));
     }
 
     public static Location getLocationToRight(Location loc, double dist){
