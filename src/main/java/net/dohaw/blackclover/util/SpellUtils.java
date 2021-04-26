@@ -154,8 +154,9 @@ public class SpellUtils {
      * Damages the entity and also fires the spell damage event.
      */
     public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
-        boolean isCancelledEvent = callSpellDamageEvent(spell, damagedEntity, damager, damage);
-        if(!isCancelledEvent){
+        // -1 means it was canceled
+        double damagedDone = callSpellDamageEvent(spell, damagedEntity, damager, damage);
+        if(damagedDone != -1){
             alterHealth(damagedEntity, damage);
             damagedEntity.playEffect(EntityEffect.HURT);
             return true;
@@ -163,10 +164,10 @@ public class SpellUtils {
         return false;
     }
 
-    public static boolean callSpellDamageEvent(SpellType spell, LivingEntity damagedEntity, Player damager, double damage){
+    public static double callSpellDamageEvent(SpellType spell, LivingEntity damagedEntity, Player damager, double damage){
         SpellDamageEvent event = new SpellDamageEvent(spell, damage, damagedEntity, damager);
         Bukkit.getPluginManager().callEvent(event);
-        return event.isCancelled();
+        return event.getDamage();
     }
 
     /**

@@ -17,6 +17,7 @@ Spell Settings:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 2
   god_speed:
     Hotbar Number: 3
     Cooldown: 5

@@ -160,7 +160,7 @@ public enum SpellType {
      */
     LIGHTNING_BOLT("lightning_bolt", false),
     ELECTRIC_FIRE("electric_fire", false),
-    ELECTRIC_BALL("eletric_ball", false),
+    ELECTRIC_BALL("electric_ball", false),
     GOD_SPEED("god_speed", false),
     TELEPORT("teleport", false),
     THUNDER_STORM("thunder_storm", true),

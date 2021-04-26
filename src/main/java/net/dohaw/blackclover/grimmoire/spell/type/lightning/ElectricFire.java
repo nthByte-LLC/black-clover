@@ -20,6 +20,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+/**
+ * Makes a ball of flame in the player's hand constantly. Every time they punch something, it catches on fire (living entities)
+ */
 public class ElectricFire extends PassiveSpellWrapper implements DependableSpell, Listener {
 
     private int fireTicksPerHit;
@@ -46,8 +49,8 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
                 double initDamage = e.getDamage();
                 double damage = initDamage * damageMultiplier;
                 LivingEntity le = (LivingEntity) eDamaged;
-                boolean isEventCancelled = SpellUtils.callSpellDamageEvent(KEY, le, (Player) eDamager, initDamage * damageMultiplier);
-                if(!isEventCancelled){
+                double damagedDone = SpellUtils.callSpellDamageEvent(KEY, le, (Player) eDamager, initDamage * damageMultiplier);
+                if(damagedDone != -1){
 
                     int currentFireTicks = le.getFireTicks();
                     int newFireTicks = currentFireTicks + fireTicksPerHit;
@@ -57,8 +60,8 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
                     }
 
                     le.setFireTicks(newFireTicks);
-                    SpellUtils.alterHealth(le, damage);
-                    SpellUtils.spawnParticle(le, Particle.FLAME, 10, 0.5f,0.5f, 0.5f);
+                    SpellUtils.alterHealth(le, damagedDone);
+                    SpellUtils.spawnParticle(le, Particle.SOUL_FIRE_FLAME, 10, 0.5f,0.5f, 0.5f);
 
                 }
 
