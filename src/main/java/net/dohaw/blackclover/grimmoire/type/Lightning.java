@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.lightning.ElectricBall;
 import net.dohaw.blackclover.grimmoire.spell.type.lightning.ElectricFire;
+import net.dohaw.blackclover.grimmoire.spell.type.lightning.GodSpeed;
 import net.dohaw.blackclover.grimmoire.spell.type.lightning.LightningBolt;
 
 import java.util.Arrays;
@@ -16,6 +17,7 @@ public class Lightning extends GrimmoireWrapper {
     public ElectricBall electricBall;
     public ElectricFire electricFire;
     public LightningBolt lightningBolt;
+    public GodSpeed godSpeed;
 
     public Lightning() {
         super(GrimmoireType.LIGHTNING);
@@ -47,6 +49,9 @@ public class Lightning extends GrimmoireWrapper {
 
         this.electricBall = new ElectricBall(config);
         this.spells.put(SpellType.ELECTRIC_BALL, electricBall);
+
+        this.godSpeed = new GodSpeed(config);
+        this.spells.put(SpellType.GOD_SPEED, godSpeed);
 
     }
 

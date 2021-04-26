@@ -22,6 +22,8 @@ Spell Settings:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
+    Speed Level: 3
+    Speed Duration: 60
   teleport:
     Hotbar Number: 4
     Cooldown: 5

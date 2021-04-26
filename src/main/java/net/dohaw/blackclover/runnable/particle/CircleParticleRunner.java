@@ -23,7 +23,9 @@ public class CircleParticleRunner extends EntityRunner {
     protected double radius;
     protected double yAdditive = 0;
 
-    // If you want the circle to start higher up, use this.
+    /**
+        If you want the circle to start higher up, use this.
+     */
     @Setter
     protected double startYAdditive = 0;
 
