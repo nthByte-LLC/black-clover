@@ -28,6 +28,7 @@ Spell Settings:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    Cast Distance: 10
   thunder_storm:
     Hotbar Number: 5
     Cooldown: 5
