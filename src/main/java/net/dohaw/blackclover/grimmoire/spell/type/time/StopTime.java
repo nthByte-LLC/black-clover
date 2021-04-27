@@ -5,6 +5,8 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -26,7 +28,10 @@ public class StopTime extends CastSpellWrapper {
         Collection<Entity> nearbyEntities = player.getNearbyEntities(radius, radius, radius);
         for(Entity en : nearbyEntities){
             SpellUtils.freezeEntity(en, durationFrozen);
+            SpellUtils.spawnParticle(en, Particle.VILLAGER_ANGRY, 30, 1, 1, 1);
         }
+
+        SpellUtils.playSound(player, Sound.BLOCK_ANVIL_PLACE);
 
         return true;
     }

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Time extends GrimmoireWrapper {
 
+    public TimeLord timeLord;
     public StopTime stopTime;
     public Regeneration regeneration;
     public AlterTime alterTime;
@@ -55,6 +56,9 @@ public class Time extends GrimmoireWrapper {
 
         this.stopTime = new StopTime(config);
         this.spells.put(SpellType.STOP_TIME, stopTime);
+
+        this.timeLord = new TimeLord(config);
+        this.spells.put(SpellType.TIME_LORD, timeLord);
 
     }
 

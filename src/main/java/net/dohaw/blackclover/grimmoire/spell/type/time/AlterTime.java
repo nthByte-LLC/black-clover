@@ -30,7 +30,7 @@ public class AlterTime extends CastSpellWrapper {
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, entityInSight)){
 
-
+            SpellUtils.freezeEntity(entityInSight, durationFrozen);
 
             SpellUtils.playSound(entityInSight, Sound.BLOCK_ANVIL_PLACE);
             SpellUtils.spawnParticle(entityInSight, Particle.VILLAGER_ANGRY, 30, 1, 1, 1);
