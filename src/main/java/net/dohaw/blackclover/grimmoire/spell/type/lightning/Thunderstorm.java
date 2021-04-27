@@ -67,12 +67,12 @@ public class Thunderstorm extends CastSpellWrapper implements Listener {
                     String lightningBoltOwnerName = pdc.get(STRIKE_OWNER_KEY, PersistentDataType.STRING);
                     Player lightningBoltOwner = Bukkit.getPlayer(lightningBoltOwnerName);
 
-                    if(lightningBoltOwner.getUniqueId().equals(eDamaged.getUniqueId())){
-                        e.setCancelled(true);
-                    }
-
                     // Could be null if they're offline for whatever reason
                     if(lightningBoltOwner != null){
+
+                        if(lightningBoltOwner.getUniqueId().equals(eDamaged.getUniqueId())){
+                            e.setCancelled(true);
+                        }
 
                         double damagedDone = SpellUtils.callSpellDamageEvent(KEY, damagedEntity, lightningBoltOwner, damage);
                         if(damagedDone != -1){
@@ -80,6 +80,7 @@ public class Thunderstorm extends CastSpellWrapper implements Listener {
                         }
 
                     }
+
                 }
 
             }
