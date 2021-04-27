@@ -6,11 +6,16 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
+/**
+ * Allows to you teleport behind a target and do damage to them
+ */
 public class TimeSkip extends CastSpellWrapper {
 
     private double damage;
@@ -26,9 +31,15 @@ public class TimeSkip extends CastSpellWrapper {
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, entityInSight)){
+
             LivingEntity target = (LivingEntity) entityInSight;
             Grimmoire.LIGHTNING.teleport.teleportPlayer(player, target);
+
             SpellUtils.doSpellDamage(target, player, KEY, damage);
+
+            SpellUtils.spawnParticle(target, Particle.HEART, 10, 0.5f, 0.5f, 0.5f);
+            SpellUtils.playSound(player, Sound.BLOCK_GLASS_BREAK);
+
             return true;
         }
 

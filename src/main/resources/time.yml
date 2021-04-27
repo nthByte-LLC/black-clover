@@ -11,6 +11,8 @@ Spell Settings:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    Slowness Level: 3
+    Cast Distance: 10
   alter_time:
     Hotbar Number: 2
     Cooldown: 5
