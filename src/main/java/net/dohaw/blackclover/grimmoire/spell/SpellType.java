@@ -178,10 +178,10 @@ public enum SpellType {
     /*
         Time spells
      */
-    CHANGE_TIME("change_time", false),
+    TIME_SKIP("time_skip", false),
     TIME_BEAM("time_beam", false),
     ALTER_TIME("alter_time", false),
-    SKIP("skip", false),
+    REGENERATION("regeneration", false),
     STOP_TIME("stop_time", false),
     TIME_LORD("time_lord", true);
 

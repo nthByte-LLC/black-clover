@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -30,18 +31,20 @@ public class Teleport extends CastSpellWrapper {
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, entityInSight)){
-
-            Location locationBehind = LocationUtil.getAbsoluteLocationInBack(entityInSight.getLocation(), 1);
-            SpellUtils.spawnParticle(player, Particle.SQUID_INK, 30, 1, 1, 1);
-            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                player.teleport(locationBehind);
-                SpellUtils.playSound(player, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
-            }, 3);
+            teleportPlayer(player, entityInSight);
             return true;
-
         }
 
         return false;
+    }
+
+    public void teleportPlayer(Player caster, Entity target){
+        Location locationBehind = LocationUtil.getAbsoluteLocationInBack(target.getLocation(), 1);
+        SpellUtils.spawnParticle(caster, Particle.SQUID_INK, 30, 1, 1, 1);
+        Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+            caster.teleport(locationBehind);
+            SpellUtils.playSound(caster, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
+        }, 3);
     }
 
     @Override

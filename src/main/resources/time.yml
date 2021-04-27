@@ -1,10 +1,12 @@
 Display Name Color: "&0"
 
 Spell Settings:
-  change_time:
+  time_skip:
     Hotbar Number: 0
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 4
+    Cast Distance: 10
   time_beam:
     Hotbar Number: 1
     Cooldown: 5
@@ -13,7 +15,7 @@ Spell Settings:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
-  skip:
+  regeneration:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
