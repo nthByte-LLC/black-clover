@@ -25,7 +25,7 @@ public class Teleport extends CastSpellWrapper {
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
+    public boolean cast(Event e, PlayerData pd) {
 
         Player player = pd.getPlayer();
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);

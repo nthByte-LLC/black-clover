@@ -43,13 +43,14 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
 
         if(eDamager instanceof Player && eDamaged instanceof LivingEntity){
 
-            PlayerData playerData = Grimmoire.instance.getPlayerDataManager().getData(e.getDamager().getUniqueId());
+            Player damager = (Player) eDamager;
+            PlayerData playerData = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
             if(playerData.getGrimmoireType() == GrimmoireType.LIGHTNING){
 
                 double initDamage = e.getDamage();
                 double damage = initDamage * damageMultiplier;
                 LivingEntity le = (LivingEntity) eDamaged;
-                double damagedDone = SpellUtils.callSpellDamageEvent(KEY, le, (Player) eDamager, initDamage * damageMultiplier);
+                double damagedDone = SpellUtils.callSpellDamageEvent(KEY, le, (Player) eDamager, damage);
                 if(damagedDone != -1){
 
                     int currentFireTicks = le.getFireTicks();
@@ -60,7 +61,7 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
                     }
 
                     le.setFireTicks(newFireTicks);
-                    SpellUtils.alterHealth(le, damagedDone);
+                    e.setDamage(damagedDone);
                     SpellUtils.spawnParticle(le, Particle.SOUL_FIRE_FLAME, 10, 0.5f,0.5f, 0.5f);
 
                 }

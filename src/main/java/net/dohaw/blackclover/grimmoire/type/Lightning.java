@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Lightning extends GrimmoireWrapper {
 
+    public Thunderstorm thunderstorm;
     public Teleport teleport;
     public ElectricBall electricBall;
     public ElectricFire electricFire;
@@ -53,6 +54,9 @@ public class Lightning extends GrimmoireWrapper {
 
         this.teleport = new Teleport(config);
         this.spells.put(SpellType.TELEPORT, teleport);
+
+        this.thunderstorm = new Thunderstorm(config);
+        this.spells.put(SpellType.THUNDER_STORM, thunderstorm);
 
     }
 

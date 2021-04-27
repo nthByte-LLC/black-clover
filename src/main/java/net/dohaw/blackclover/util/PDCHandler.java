@@ -14,6 +14,7 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 
 public class PDCHandler {
@@ -62,8 +63,6 @@ public class PDCHandler {
         return null;
     }
 
-
-
     /**
      * Gets the casted spell bound to the projectile
      * @param pd The caster
@@ -83,18 +82,13 @@ public class PDCHandler {
         return null;
     }
 
-    /**
-     * Gets the casted spell bound to the projectile
-     * @param projectile
-     * @return
-     */
-    public static CastSpellWrapper getSpellBoundToProjectile(Projectile projectile){
+    public static CastSpellWrapper getSpellBoundTo(PersistentDataHolder pdh){
         for(Wrapper wrapper : Grimmoire.wrappers.values()){
             GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) wrapper;
             for(SpellWrapper spell : grimmoireWrapper.getSpells().values()){
                 if(spell instanceof CastSpellWrapper){
                     CastSpellWrapper cSpell = (CastSpellWrapper) spell;
-                    if(cSpell.isSpellBound(projectile)){
+                    if(cSpell.isSpellBound(pdh)){
                         return cSpell;
                     }
                 }
