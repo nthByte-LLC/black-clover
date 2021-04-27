@@ -4,6 +4,7 @@ import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.runnable.spells.FallingBlockRunner;
 import net.dohaw.blackclover.runnable.spells.MultiFallingBlockRunner;
@@ -270,6 +271,20 @@ public class SpellUtils {
         stand.setNoGravity(true);
         stand.setInvulnerable(true);
         return stand;
+    }
+
+    public static void freezeEntity(Entity entityInSight, double durationFrozen){
+        if(entityInSight instanceof Player){
+            Player target = (Player) entityInSight;
+            PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target);
+            targetPlayerData.setFrozen(Grimmoire.instance, (int) durationFrozen);
+        }else{
+            LivingEntity target = (LivingEntity) entityInSight;
+            target.setAI(false);
+            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+                target.setAI(true);
+            }, (long) (durationFrozen * 20));
+        }
     }
 
     public static Vector calculateVelocity(Vector from, Vector to, int heightGain)

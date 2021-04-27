@@ -30,17 +30,7 @@ public class AlterTime extends CastSpellWrapper {
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, player, castDistance);
         if(SpellUtils.isTargetValid(player, entityInSight)){
 
-            if(entityInSight instanceof Player){
-                Player target = (Player) entityInSight;
-                PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target);
-                targetPlayerData.setFrozen(Grimmoire.instance, (int) durationFrozen);
-            }else{
-                LivingEntity target = (LivingEntity) entityInSight;
-                target.setAI(false);
-                Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                   target.setAI(true);
-                }, (long) (durationFrozen * 20));
-            }
+
 
             SpellUtils.playSound(entityInSight, Sound.BLOCK_ANVIL_PLACE);
             SpellUtils.spawnParticle(entityInSight, Particle.VILLAGER_ANGRY, 30, 1, 1, 1);

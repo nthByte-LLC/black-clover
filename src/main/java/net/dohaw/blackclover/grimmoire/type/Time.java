@@ -1,19 +1,19 @@
 package net.dohaw.blackclover.grimmoire.type;
 
+import com.google.gson.internal.$Gson$Preconditions;
+import javafx.scene.paint.Stop;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.time.AlterTime;
-import net.dohaw.blackclover.grimmoire.spell.type.time.Regeneration;
-import net.dohaw.blackclover.grimmoire.spell.type.time.TimeBeam;
-import net.dohaw.blackclover.grimmoire.spell.type.time.TimeSkip;
+import net.dohaw.blackclover.grimmoire.spell.type.time.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Time extends GrimmoireWrapper {
 
+    public StopTime stopTime;
     public Regeneration regeneration;
     public AlterTime alterTime;
     public TimeBeam timeBeam;
@@ -52,6 +52,9 @@ public class Time extends GrimmoireWrapper {
 
         this.regeneration = new Regeneration(config);
         this.spells.put(SpellType.REGENERATION, regeneration);
+
+        this.stopTime = new StopTime(config);
+        this.spells.put(SpellType.STOP_TIME, stopTime);
 
     }
 

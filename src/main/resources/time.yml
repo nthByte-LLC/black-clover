@@ -17,6 +17,8 @@ Spell Settings:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
+    Duration Frozen: 10
+    Cast Distance: 10
   regeneration:
     Hotbar Number: 3
     Cooldown: 5
@@ -25,6 +27,8 @@ Spell Settings:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    Radius: 2
+    Duration Frozen: 10
   time_lord:
     Hotbar Number: 5
     Cooldown: 5
