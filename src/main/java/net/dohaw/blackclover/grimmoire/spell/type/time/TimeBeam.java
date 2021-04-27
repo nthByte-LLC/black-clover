@@ -50,4 +50,5 @@ public class TimeBeam extends ActivatableSpellWrapper {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.slownessLevel = grimmoireConfig.getIntegerSetting(KEY, "Slowness Level");
     }
+
 }
