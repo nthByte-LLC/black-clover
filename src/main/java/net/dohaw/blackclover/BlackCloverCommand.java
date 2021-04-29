@@ -1,17 +1,21 @@
 package net.dohaw.blackclover;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.ResponderFactory;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 public class BlackCloverCommand implements CommandExecutor {
 
@@ -25,7 +29,7 @@ public class BlackCloverCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         ResponderFactory rf = new ResponderFactory(sender, plugin.getPrefix());
-        if(args.length == 3){
+        if(args.length > 0){
 
             if(args[0].equalsIgnoreCase("setgrim") && sender.hasPermission("blackclover.change.grimmoire")){
 
@@ -76,6 +80,16 @@ public class BlackCloverCommand implements CommandExecutor {
                     rf.sendMessage("This is not a valid player!");
                 }
 
+            }else if(args[0].equalsIgnoreCase("list") && sender.hasPermission("blackclover.list")){
+                rf.sendMessage("&0Black&dClover&f Grimmoies:");
+                Map<Enum, Wrapper> grimmoires = Grimmoire.wrappers;
+                for(Enum key : grimmoires.keySet()){
+                    if(key instanceof GrimmoireType){
+                        GrimmoireType type = (GrimmoireType) key;
+                        String formalName = StringUtils.capitalize(type.toString().toLowerCase());
+                        sender.sendMessage(net.dohaw.corelib.StringUtils.colorString("> " + formalName));
+                    }
+                }
             }
 
         }
