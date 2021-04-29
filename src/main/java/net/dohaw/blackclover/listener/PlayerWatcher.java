@@ -64,7 +64,6 @@ public class PlayerWatcher implements Listener {
         if(pd instanceof CompassPlayerData){
             CompassPlayerData cpd = (CompassPlayerData) pd;
             PlayerConnection conn = ((CraftPlayer)player).getHandle().playerConnection;
-            System.out.println("WAYPOINTS: " + cpd.getWaypoints().toString());
             for(Location waypoint : cpd.getWaypoints().values()){
                 //TODO: Make client side name tag for waypoints (Compass Grimmoire)
 //                System.out.println("LOCATION: " + waypoint.toString());

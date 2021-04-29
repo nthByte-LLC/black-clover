@@ -37,7 +37,6 @@ public abstract class CastSpellWrapper extends SpellWrapper{
     }
 
     public boolean isSpellBoundSlot(int slot){
-        System.out.println("SLOT: " + this.getHotbarSlot());
         return this.getHotbarSlot() == slot;
     }
 

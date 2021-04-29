@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//TODO: Make hurricane particles rise up
 public class Hurricane extends CastSpellWrapper implements Listener {
 
     public static final NamespacedKey NSK_MARKER = NamespacedKey.minecraft("in_hurricane_marker");

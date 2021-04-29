@@ -125,11 +125,8 @@ public class PlayerData {
 
     public void stopSpellRunnables(SpellType spellType){
         List<BukkitTask> runnables = spellRunnables.get(spellType);
-        System.out.println("SPELL TYPE: " + spellType);
         if(runnables != null){
-            System.out.println("NOT NULL");
             runnables.forEach(runner -> {
-                System.out.println("DOING THIS");
                 runner.cancel();
             });
             spellRunnables.remove(spellType);
@@ -150,7 +147,6 @@ public class PlayerData {
         }
         tasks.addAll(Arrays.asList(task));
         spellRunnables.put(spellType, tasks);
-        System.out.println("SPELL RUNNABLES: " + spellRunnables.toString());
     }
 
     public void stopTimedCast(){
