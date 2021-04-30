@@ -70,7 +70,7 @@ public class FireStormRunner extends BukkitRunnable {
         runner1.setVerticalPointSpread(0.3);
         runner1.setVerticalPoints(10);
 
-        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, false);
+        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.ORANGE, 1), true, radius, false);
         runner2.setVerticalPointSpread(0.3);
         runner2.setVerticalPoints(10);
 
