@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.SnowPlayerData;
 import net.dohaw.blackclover.util.BlockSnapshot;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,12 +16,15 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Snowable;
 import org.bukkit.block.data.type.Snow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFadeEvent;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,7 +39,7 @@ public class IceAge extends CastSpellWrapper implements Listener {
      */
     private HashSet<Location> changedLocations = new HashSet<>();
 
-    private double duration;
+    private double iceAgeDuration, freezeDuration;
     private int radius;
 
     public IceAge(GrimmoireConfig grimmoireConfig) {
@@ -97,18 +101,26 @@ public class IceAge extends CastSpellWrapper implements Listener {
                 }
             }
 
+            /*
+                Freeze nearby entities
+             */
+            Collection<Entity> nearbyEntities = player.getNearbyEntities(radius, radius, radius);
+            for(Entity en : nearbyEntities){
+                if(en instanceof LivingEntity){
+                    SpellUtils.freezeEntity(en, freezeDuration);
+                }
+            }
+
             List<BlockSnapshot> changedBlocks = spd.getChangedIceAgeBlocks();
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                 changedBlocks.forEach(snap -> {
-                    Location loc = snap.getLocation();
-                    BlockData data = snap.getData();
-                    loc.getBlock().setBlockData(data);
-                    changedLocations.remove(loc);
+                    snap.apply();
+                    changedLocations.remove(snap.getLocation());
                 });
 
                 spd.getChangedIceAgeBlocks().clear();
 
-            }, (long) (duration * 20));
+            }, (long) (iceAgeDuration * 20));
 
         }else{
             try {
@@ -137,7 +149,8 @@ public class IceAge extends CastSpellWrapper implements Listener {
     public void loadSettings() {
         super.loadSettings();
         this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
-        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
+        this.iceAgeDuration = grimmoireConfig.getDoubleSetting(KEY, "Ice Age Duration");
+        this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Freeze Duration");
     }
 
     @Override

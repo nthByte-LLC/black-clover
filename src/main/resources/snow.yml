@@ -37,4 +37,5 @@ Spell Settings:
     Regen Consumed: 100
     Damage: 8
     Radius: 25
-    Duration: 10
+    Ice Age Duration: 10
+    Freeze Duration: 10
