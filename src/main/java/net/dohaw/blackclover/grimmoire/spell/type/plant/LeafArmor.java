@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class LeafArmor extends CastSpellWrapper implements Listener {
+public class  LeafArmor extends CastSpellWrapper implements Listener {
 
     private double healingInterval;
     private double duration;
@@ -69,8 +70,7 @@ public class LeafArmor extends CastSpellWrapper implements Listener {
 
         Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
             task.cancel();
-            ItemStack[] previousArmorContents = playersWithArmor.remove(player.getUniqueId());
-            player.getInventory().setArmorContents(previousArmorContents);
+            removeArmor(player);
             particleRunner.cancel();
         }, (long) (duration * 20));
 
@@ -101,7 +101,12 @@ public class LeafArmor extends CastSpellWrapper implements Listener {
 
     @Override
     public void prepareShutdown() {
-
+        for(Map.Entry<UUID, ItemStack[]> entry : playersWithArmor.entrySet()){
+            Player player = Bukkit.getPlayer(entry.getKey());
+            if(player != null){
+                removeArmor(player);
+            }
+        }
     }
 
     // Doesn't allow them to remove the armor.
@@ -119,6 +124,19 @@ public class LeafArmor extends CastSpellWrapper implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e){
+        Player player = e.getPlayer();
+        if(playersWithArmor.containsKey(player.getUniqueId())){
+            removeArmor(player);
+        }
+    }
+
+    private void removeArmor(Player player){
+        ItemStack[] previousArmorContents = playersWithArmor.remove(player.getUniqueId());
+        player.getInventory().setArmorContents(previousArmorContents);
     }
 
 }
