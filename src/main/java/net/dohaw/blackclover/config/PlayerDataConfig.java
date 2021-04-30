@@ -14,9 +14,9 @@ import java.util.UUID;
 public class PlayerDataConfig extends Config {
 
     private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(
-            GrimmoireType.SHAKUDO, GrimmoireType.WATER,
-            GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON,
-            GrimmoireType.FUNGUS, GrimmoireType.COMPASS
+        GrimmoireType.SHAKUDO, GrimmoireType.WATER,
+        GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON,
+        GrimmoireType.FUNGUS, GrimmoireType.COMPASS
     );
 
     public PlayerDataConfig(File file){

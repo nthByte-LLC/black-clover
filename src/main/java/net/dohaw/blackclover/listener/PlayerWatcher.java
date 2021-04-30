@@ -97,7 +97,7 @@ public class PlayerWatcher implements Listener {
     public void onPrepareToCast(PlayerInteractEvent e){
 
         Action action = e.getAction();
-        if(action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK){
+        if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
             castPotentialSpell(e, e.getPlayer());
         }
 

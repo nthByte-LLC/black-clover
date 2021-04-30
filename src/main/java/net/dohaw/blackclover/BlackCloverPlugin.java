@@ -15,19 +15,17 @@ import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public final class BlackCloverPlugin extends JavaPlugin {
-
-    private List<EntityType> passiveMobs = new ArrayList<>();
 
     @Getter
     private String prefix;
@@ -189,10 +187,6 @@ public final class BlackCloverPlugin extends JavaPlugin {
         BossBar bossBar = regenBars.get(uuidPlayer);
         bossBar.removeAll();
         regenBars.remove(uuidPlayer);
-    }
-
-    private void compilePassiveEntities(){
-
     }
 
 }

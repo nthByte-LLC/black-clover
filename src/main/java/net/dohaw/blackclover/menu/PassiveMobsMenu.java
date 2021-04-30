@@ -13,6 +13,7 @@ public class PassiveMobsMenu extends Menu {
 
     @Override
     public void initializeItems(Player p) {
+
     }
 
     @Override
