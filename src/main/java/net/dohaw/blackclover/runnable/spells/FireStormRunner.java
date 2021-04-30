@@ -44,16 +44,21 @@ public class FireStormRunner extends BukkitRunnable {
         float yaw = 0;
 
         for (int i = 0; i < numFireBalls; i++) {
+
             Location fireBallLoc = origin.clone();
             fireBallLoc.setYaw(yaw);
             fireBallLoc.setPitch(0);
+
             Fireball entitySpawned = (Fireball) world.spawnEntity(fireBallLoc, EntityType.SMALL_FIREBALL);
             fireStorm.markAsSpellBinding(entitySpawned);
+
             entitySpawned.setIsIncendiary(false);
             entitySpawned.setGravity(false);
             entitySpawned.setYield(0);
             entitySpawned.setFireTicks(0);
+
             yaw += yawAdditive;
+
         }
 
         if(numIterationsRan == numWaves){
