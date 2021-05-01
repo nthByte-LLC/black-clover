@@ -31,17 +31,21 @@ public class BatteringRamGoalChecker extends EntityRunner {
     @Override
     public void run() {
 
-        double distance = sheep.getLocation().distance(target.getLocation());
-        if (distance > 20) cancel();
+        if(areEntitiesValid()){
 
-        if(distance <= spell.getDamageDistance()){
+            double distance = sheep.getLocation().distance(target.getLocation());
+            if (distance > 20) cancel();
 
-            SpellUtils.playSound(sheep, Sound.ENTITY_SHEEP_SHEAR);
-            SpellUtils.spawnParticle(sheep, Particle.SQUID_INK, 20, 1, 1, 1);
+            if(distance <= spell.getDamageDistance()){
 
-            target.damage(spell.getDamage(), sheep);
-            target.playEffect(EntityEffect.HURT);
-            caster.removeGoldenSheep();
+                SpellUtils.playSound(sheep, Sound.ENTITY_SHEEP_SHEAR);
+                SpellUtils.spawnParticle(sheep, Particle.SQUID_INK, 20, 1, 1, 1);
+
+                SpellUtils.doSpellDamage(target, caster.getPlayer(), spell.getKEY(), spell.getDamage());
+                caster.removeGoldenSheep();
+                cancel();
+
+            }
 
         }
 
