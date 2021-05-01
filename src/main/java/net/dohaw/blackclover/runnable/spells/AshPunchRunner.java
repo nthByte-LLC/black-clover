@@ -4,6 +4,7 @@ import lombok.NonNull;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
@@ -49,9 +50,10 @@ public class AshPunchRunner extends BukkitRunnable {
         Location particleLocation2 = LocationUtil.getLocationToLeft(particleLocation1, 0.1);
         Location particleLocation3 = LocationUtil.getLocationToRight(particleLocation1, 0.1);
 
-        SpellUtils.spawnParticle(particleLocation1, Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0.5f), 10, 0, 0, 0);
-        SpellUtils.spawnParticle(particleLocation2, Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0.5f), 10, 0, 0, 0);
-        SpellUtils.spawnParticle(particleLocation3, Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 0.5f), 10, 0, 0, 0);
+        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.DARK_GREY, 0.5f);
+        SpellUtils.spawnParticle(particleLocation1, Particle.REDSTONE, dustOptions, 10, 0, 0, 0);
+        SpellUtils.spawnParticle(particleLocation2, Particle.REDSTONE, dustOptions, 10, 0, 0, 0);
+        SpellUtils.spawnParticle(particleLocation3, Particle.REDSTONE, dustOptions, 10, 0, 0, 0);
 
         currentYAdditive += Y_ADDITIVE;
         currentHorizAdditive -= HORIZ_ADDITIVE;
@@ -67,11 +69,7 @@ public class AshPunchRunner extends BukkitRunnable {
             velocity.setY(0.33333);
             target.setVelocity(velocity);
 
-            SpellDamageEvent event = new SpellDamageEvent(SpellType.ASH_PUNCH, damage, target, caster.getPlayer());
-            Bukkit.getPluginManager().callEvent(event);
-            if(!event.isCancelled()){
-                SpellUtils.alterHealth(target, -damage);
-            }
+            SpellUtils.doSpellDamage(target, caster.getPlayer(), SpellType.ASH_PUNCH, damage);
 
             caster.stopSpellRunnables(SpellType.ASH_PUNCH);
         }

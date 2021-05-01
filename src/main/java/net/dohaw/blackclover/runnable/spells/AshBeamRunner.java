@@ -34,7 +34,7 @@ public class AshBeamRunner extends BeamDamager {
 
         boolean isEventCancelled = event.isCancelled();
         if(!event.isCancelled()){
-            livingEntity.damage(damage);
+            livingEntity.damage(event.getDamage());
         }
 
         return !isEventCancelled;
@@ -47,8 +47,8 @@ public class AshBeamRunner extends BeamDamager {
         SpellDamageEvent event = new SpellDamageEvent(SpellType.ASH_BEAM, damage, entityInBeam, (Player) entity);
         Bukkit.getPluginManager().callEvent(event);
 
-        if(event.isCancelled()){
-            entityInBeam.damage(damage);
+        if(!event.isCancelled()){
+            entityInBeam.damage(event.getDamage());
             entityInBeam.playEffect(EntityEffect.HURT);
             SpellUtils.spawnParticle(entityInBeam, Particle.HEART, 20, 0.3f, 0.3f, 0.3f);
             SpellUtils.playSound(entityInBeam, Sound.BLOCK_BONE_BLOCK_BREAK);

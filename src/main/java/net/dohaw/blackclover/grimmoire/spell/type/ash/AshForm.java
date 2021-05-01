@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.AshPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
+import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -46,7 +47,7 @@ public class AshForm extends CastSpellWrapper implements Listener {
             apd.setInAshForm(true);
             player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, (int) (durationInvisiblity * 20), 1, false));
 
-            BukkitTask[] tornadoParticles = SpellUtils.startDoubleTornadoParticles(player, new Particle.DustOptions(Color.BLACK, 1), new Particle.DustOptions(Color.BLACK, 1), true,1);
+            BukkitTask[] tornadoParticles = SpellUtils.startDoubleTornadoParticles(player, new Particle.DustOptions(BukkitColor.DARK_GREY, 1), new Particle.DustOptions(Color.BLACK, 1), true,1);
             pd.addSpellRunnables(KEY, tornadoParticles);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
