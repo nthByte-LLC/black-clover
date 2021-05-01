@@ -17,6 +17,9 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.Event;
 
+/**
+ * Spawns a glowing yellow sheep that chases its target and disappears after damaging it once.
+ */
 public class BatteringRam extends CastSpellWrapper {
 
     @Getter

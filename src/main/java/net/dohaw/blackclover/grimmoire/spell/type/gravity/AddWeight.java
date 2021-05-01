@@ -16,6 +16,9 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+/**
+ * Slows down the player, but also gives strength
+ */
 public class AddWeight extends CastSpellWrapper {
 
     private int levelSlowness, levelStrength;

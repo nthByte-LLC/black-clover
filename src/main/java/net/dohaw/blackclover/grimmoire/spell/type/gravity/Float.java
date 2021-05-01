@@ -21,6 +21,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+/**
+ * Allows the player to hover at a certain y level.
+ */
 public class Float extends ActivatableSpellWrapper implements Listener {
 
     @Getter

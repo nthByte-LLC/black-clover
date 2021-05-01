@@ -13,6 +13,9 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+/**
+ * Speeds up the player, but also applies weakness
+ */
 public class RemoveWeight extends CastSpellWrapper {
 
     private int levelSpeed, levelWeakness;
