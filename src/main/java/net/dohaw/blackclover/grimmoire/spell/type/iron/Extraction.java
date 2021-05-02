@@ -1,12 +1,11 @@
 package net.dohaw.blackclover.grimmoire.spell.type.iron;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
-import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,46 +19,38 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Extraction extends CastSpellWrapper implements DependableSpell, Listener {
+public class Extraction extends CastSpellWrapper implements Listener {
 
     public Extraction(GrimmoireConfig grimmoireConfig) {
         super(SpellType.EXTRACTION, grimmoireConfig);
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
+    public boolean cast(Event e, PlayerData pd) {
+
         Player p = pd.getPlayer();
-        List<Location> locs = getSphere(p.getLocation(), 20, false);
-        int counter = 0;
-        for (Location loc : locs) {
-            Block b = p.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-            if (b.getType() == Material.IRON_ORE) {
-                b.setType(Material.STONE);
-                counter++;
-            }
-        }
-        if (counter > 0) {
-            for (int i = 0; i < counter/64; i++) {
+        List<Location> oreLocations = getIronLocations(p.getLocation(), 20, false);
+        int numOres = oreLocations.size();
+        if (numOres != 0) {
+
+            for (int i = 0; i < numOres/64; i++) {
                 p.getInventory().addItem(new ItemStack(Material.IRON_ORE, 64));
             }
-            p.getInventory().addItem(new ItemStack(Material.IRON_ORE, counter%64));
-            p.sendMessage(((counter == 1)? "1 block has" : counter + " blocks have") + " been added to your inventory");
-            for (int i = 0; i < (Math.min(counter, 3)); i++) {
-                Bukkit.getServer().getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                    p.playSound(p.getLocation(), Sound.BLOCK_STONE_HIT, 10, 10);
-                }, 5L * i);
-            }
+            p.getInventory().addItem(new ItemStack(Material.IRON_ORE, numOres%64));
+            p.sendMessage(((numOres == 1)? "1 block has" : numOres + " blocks have") + " been added to your inventory");
+            SpellUtils.playSound(p, Sound.BLOCK_STONE_BREAK);
+
         } else {
-            p.playSound(p.getLocation(), Sound.BLOCK_ANVIL_HIT, 10, 10);
+            SpellUtils.playSound(p, Sound.BLOCK_ANVIL_HIT);
         }
         return false;
     }
 
-    public static List<Location> getSphere(Location centerBlock, int radius, boolean hollow) {
+    public static List<Location> getIronLocations(Location centerBlock, int radius, boolean hollow) {
         if (centerBlock == null) {
             return new ArrayList<>();
         }
-        List<Location> circleBlocks = new ArrayList<Location>();
+        List<Location> ironLocation = new ArrayList<Location>();
         int bx = centerBlock.getBlockX();
         int by = centerBlock.getBlockY();
         int bz = centerBlock.getBlockZ();
@@ -71,21 +62,19 @@ public class Extraction extends CastSpellWrapper implements DependableSpell, Lis
 
                     if(distance < radius * radius && !(hollow && distance < ((radius - 1) * (radius - 1)))) {
 
-                        Location l = new Location(centerBlock.getWorld(), x, y, z);
-
-                        circleBlocks.add(l);
+                        Location loc = new Location(centerBlock.getWorld(), x, y, z);
+                        Block b = loc.getBlock();
+                        if(b.getType() == Material.IRON_ORE) ironLocation.add(loc);
 
                     }
 
                 }
             }
         }
-        return circleBlocks;
+        return ironLocation;
     }
-
 
     @Override
     public void prepareShutdown() {}
-    @Override
-    public void initDependableData() {}
+
 }
