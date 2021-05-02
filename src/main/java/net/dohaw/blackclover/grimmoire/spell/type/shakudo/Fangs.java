@@ -79,7 +79,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
     public void onFangsCast(FangsCastedEvent e){
 
         ShakudoPlayerData caster = e.getCaster();
-        if(caster.isPackCalled()){
+        if(caster.isPackStanding()){
             caster.getPack().forEach(this::startWolfParticleRunner);
         }else if(caster.isSingularWolfSpawned()){
             startWolfParticleRunner(caster.getWolf());
@@ -132,7 +132,7 @@ public class Fangs extends CastSpellWrapper implements Listener {
             ShakudoPlayerData spd = (ShakudoPlayerData) e.getPlayerData();
             if(spd.isFangsEnabled()){
                 if(spellType == SpellType.PACK){
-                    if(spd.isPackCalled()){
+                    if(spd.isPackStanding()){
                         spd.getPack().forEach(this::startWolfParticleRunner);
                     }
                 }else if(spellType == SpellType.WILD_CALL){

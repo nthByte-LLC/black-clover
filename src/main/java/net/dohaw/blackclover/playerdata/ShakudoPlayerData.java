@@ -21,12 +21,6 @@ public class ShakudoPlayerData extends PlayerData {
     private Wolf wolf;
 
     @Getter @Setter
-    private boolean singularWolfSpawned;
-
-    @Getter @Setter
-    private boolean packCalled;
-
-    @Getter @Setter
     private boolean fangsEnabled;
 
     public ShakudoPlayerData(UUID uuid) {
@@ -51,7 +45,34 @@ public class ShakudoPlayerData extends PlayerData {
             wolf.remove();
             itr.remove();
         }
-        this.packCalled = false;
+        pack.clear();
+    }
+
+    public void removeSingularWolf(){
+        wolf.remove();
+        this.wolf = null;
+    }
+
+    public boolean isSingularWolfSpawned(){
+        return wolf != null && wolf.isValid();
+    }
+
+    /**
+     * Whether there is at least 1 wolf in the pack alive
+     */
+    public boolean isPackStanding(){
+
+        if(pack.isEmpty()) return false;
+
+        int numWolvesAlive = 0;
+        for (Wolf wolf1 : pack) {
+            if(wolf1.isValid()){
+                numWolvesAlive++;
+            }
+        }
+
+        return numWolvesAlive != 0;
+
     }
 
 }

@@ -25,7 +25,7 @@ public class Goodie extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) {
         ShakudoPlayerData spd = (ShakudoPlayerData) pd;
         if(hasWolvesOut(spd)){
-            if(spd.isPackCalled()){
+            if(spd.isPackStanding()){
                 List<Wolf> pack = spd.getPack();
                 pack.forEach(this::giveHealth);
             }else{
@@ -36,8 +36,11 @@ public class Goodie extends CastSpellWrapper {
         return true;
     }
 
+    /**
+     * Whether there is either the singular wolf or the pack spawned
+     */
     private boolean hasWolvesOut(ShakudoPlayerData spd){
-        return spd.isPackCalled() || spd.isSingularWolfSpawned();
+        return spd.isPackStanding() || spd.isSingularWolfSpawned();
     }
 
     @Override

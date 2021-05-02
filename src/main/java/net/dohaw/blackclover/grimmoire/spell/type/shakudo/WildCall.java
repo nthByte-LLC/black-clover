@@ -40,9 +40,8 @@ public class WildCall extends CastSpellWrapper {
                 SpellUtils.spawnParticle(wolf, Particle.END_ROD, 30, 0.5f, 0.5f, 0.5f);
                 SpellUtils.playSound(wolf, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
                 spd.setWolf(wolf);
-                spd.setSingularWolfSpawned(true);
 
-                if(spd.isPackCalled()){
+                if(spd.isPackStanding()){
                     spd.removePack();
                 }
 
@@ -52,18 +51,18 @@ public class WildCall extends CastSpellWrapper {
                 if(player.isSneaking()){
                     spd.getWolf().remove();
                     spd.setWolf(null);
-                    spd.setSingularWolfSpawned(false);
                 }else{
                     ResponderFactory rf = new ResponderFactory(player);
                     rf.sendMessage("You already have a wolf spawned in!");
                 }
             }
 
-            return true;
-
         }else{
             throw new UnexpectedPlayerData();
         }
+
+        return false;
+
 
     }
 

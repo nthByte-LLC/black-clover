@@ -30,12 +30,12 @@ public class Pack extends CastSpellWrapper {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
+
         if(pd instanceof ShakudoPlayerData){
+
             ShakudoPlayerData spd = (ShakudoPlayerData) pd;
             Player player = pd.getPlayer();
-            if(!spd.isPackCalled()){
-
-                spd.setPackCalled(true);
+            if(!spd.isPackStanding()){
 
                 // block in front
                 Location wolfLocation = player.getLocation().add(player.getLocation().getDirection().multiply(1));
@@ -58,9 +58,7 @@ public class Pack extends CastSpellWrapper {
                 spd.setPack(pack);
 
                 if(spd.isSingularWolfSpawned()){
-                    Wolf singularWolf = spd.getWolf();
-                    singularWolf.remove();
-                    spd.setSingularWolfSpawned(false);
+                    spd.removeSingularWolf();
                 }
 
                 return true;

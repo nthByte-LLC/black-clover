@@ -71,6 +71,10 @@ public class SpellUtils {
         spawnParticle(block.getLocation(), particle, count, offsetX, offsetY, offsetZ);
     }
 
+    public static void playWorldEffect(Entity e, Effect effect){
+        e.getWorld().playEffect(e.getLocation(), effect, 10);
+    }
+
     public static BukkitTask startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, boolean yIncrease, double radius, boolean goesRight){
         return new TornadoParticleRunner(entity, dustOptions, yIncrease, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
     }
