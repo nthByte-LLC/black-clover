@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.HelixParticleRunner;
+import net.dohaw.blackclover.util.BlockSnapshot;
 import net.dohaw.blackclover.util.LocationUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -34,12 +35,14 @@ public class Direction extends CastSpellWrapper {
             Location playerLocation = player.getLocation();
             Location woolLocation = LocationUtil.getLocationInDirection(playerLocation, bedLocation, 2).add(0, 0.5, 0);
 
+            BlockSnapshot woolPreviousBlock = BlockSnapshot.toSnapshot(woolLocation.getBlock());
             woolLocation.getBlock().setType(Material.BLUE_WOOL);
 
             HelixParticleRunner helix = new HelixParticleRunner(woolLocation, new Particle.DustOptions(Color.WHITE, 3), 1.25, true);
             helix.runTaskTimer(Grimmoire.instance, 0L, 3L);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+                woolPreviousBlock.apply();
                 helix.cancel();
             }, (long) (woolStayTime * 20));
 

@@ -54,7 +54,7 @@ public class AshBomb extends CastSpellWrapper {
                     double randYAdditive = tlr.nextDouble(-1, 1);
                     double randZAdditive = tlr.nextDouble(-1, 1);
                     Location particleLocation = leLocation.clone().add(randXAdditive, randYAdditive, randZAdditive);
-                    SpellUtils.spawnParticle(particleLocation, Particle.REDSTONE, new Particle.DustOptions(Color.BLACK, 1), 30, 0.5f, 0.5f, 0.5f);
+                    SpellUtils.spawnParticle(particleLocation, Particle.ASH, 30, 0.5f, 0.5f, 0.5f);
                 }, 0L, 5L);
 
                 Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {

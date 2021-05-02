@@ -30,8 +30,13 @@ public class GodSpeed extends CastSpellWrapper {
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
-
         Player player = pd.getPlayer();
+        applyGodspeed(player);
+        return true;
+    }
+
+    public void applyGodspeed(Player player){
+
         CircleParticleRunner footParticles = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.PALE_CYAN, 1), false, 1);
         CircleParticleRunner haloParticles = new CircleParticleRunner(player, new Particle.DustOptions(BukkitColor.PALE_CYAN, 1), false, 1);
         haloParticles.setStartYAdditive(2.3);
@@ -46,7 +51,6 @@ public class GodSpeed extends CastSpellWrapper {
 
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, (int) (speedDuration * 20), speedLevel - 1));
 
-        return false;
     }
 
     @Override

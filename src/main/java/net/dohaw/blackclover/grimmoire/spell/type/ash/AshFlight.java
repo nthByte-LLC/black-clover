@@ -7,6 +7,7 @@ import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
+import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -40,7 +41,7 @@ public class AshFlight extends CastSpellWrapper implements Listener {
         if(targetBlock != null){
 
             SpellUtils.playSound(player, Sound.ENTITY_ENDER_DRAGON_FLAP);
-            SpellUtils.spawnParticle(player, Particle.SQUID_INK, 20, 1, 1, 1);
+            SpellUtils.spawnParticle(player, Particle.ASH, 20, 1, 1, 1);
 
             ArmorStand stand = (ArmorStand) player.getWorld().spawnEntity(targetBlock.getLocation().add(0, 1, 0), EntityType.ARMOR_STAND);
             stand.setVisible(false);
@@ -75,8 +76,8 @@ public class AshFlight extends CastSpellWrapper implements Listener {
     private void startCloudParticles(ArmorStand stand){
 
         // Creates the cloud under the location that the player is going to land on.
-        Particle.DustOptions dustOptions = new Particle.DustOptions(Color.BLACK, 3);
-        BukkitTask particleTask = new CircleParticleRunner(stand, new Particle.DustOptions(Color.BLACK, 3), false, 2).runTaskTimer(Grimmoire.instance, 0L, 3L);
+        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.DARK_GREY, 3);
+        BukkitTask particleTask = new CircleParticleRunner(stand, dustOptions, false, 2).runTaskTimer(Grimmoire.instance, 0L, 3L);
         BukkitTask moreParticlesTask = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             SpellUtils.spawnParticle(stand.getLocation(), Particle.REDSTONE, dustOptions, 30, 1, 1, 1);
         }, 0L, 10L);

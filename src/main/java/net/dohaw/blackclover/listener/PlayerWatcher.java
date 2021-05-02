@@ -64,7 +64,6 @@ public class PlayerWatcher implements Listener {
         if(pd instanceof CompassPlayerData){
             CompassPlayerData cpd = (CompassPlayerData) pd;
             PlayerConnection conn = ((CraftPlayer)player).getHandle().playerConnection;
-            System.out.println("WAYPOINTS: " + cpd.getWaypoints().toString());
             for(Location waypoint : cpd.getWaypoints().values()){
                 //TODO: Make client side name tag for waypoints (Compass Grimmoire)
 //                System.out.println("LOCATION: " + waypoint.toString());
@@ -98,7 +97,7 @@ public class PlayerWatcher implements Listener {
     public void onPrepareToCast(PlayerInteractEvent e){
 
         Action action = e.getAction();
-        if(action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK){
+        if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
             castPotentialSpell(e, e.getPlayer());
         }
 
@@ -379,6 +378,7 @@ public class PlayerWatcher implements Listener {
                             }
 
                             if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
+                                SpellUtils.spawnParticle(player, Particle.SPELL_INSTANT, 30, 0.5f, 0.5f, 0.5f);
                                 spellBoundToSlot.deductMana(pd);
                             }
                             Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));

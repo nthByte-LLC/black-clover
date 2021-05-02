@@ -44,16 +44,21 @@ public class FireStormRunner extends BukkitRunnable {
         float yaw = 0;
 
         for (int i = 0; i < numFireBalls; i++) {
+
             Location fireBallLoc = origin.clone();
             fireBallLoc.setYaw(yaw);
             fireBallLoc.setPitch(0);
+
             Fireball entitySpawned = (Fireball) world.spawnEntity(fireBallLoc, EntityType.SMALL_FIREBALL);
             fireStorm.markAsSpellBinding(entitySpawned);
+
             entitySpawned.setIsIncendiary(false);
             entitySpawned.setGravity(false);
             entitySpawned.setYield(0);
             entitySpawned.setFireTicks(0);
+
             yaw += yawAdditive;
+
         }
 
         if(numIterationsRan == numWaves){
@@ -70,7 +75,7 @@ public class FireStormRunner extends BukkitRunnable {
         runner1.setVerticalPointSpread(0.3);
         runner1.setVerticalPoints(10);
 
-        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, false);
+        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.ORANGE, 1), true, radius, false);
         runner2.setVerticalPointSpread(0.3);
         runner2.setVerticalPoints(10);
 

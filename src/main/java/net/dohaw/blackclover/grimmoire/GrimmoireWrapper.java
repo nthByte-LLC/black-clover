@@ -122,7 +122,7 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
 
         BookMeta bookMeta = (BookMeta) grimmoire.getItemMeta();
         bookMeta.setTitle("Blank");
-        bookMeta.setAuthor("Server");
+        bookMeta.setAuthor("Destiny");
 
         String firstPage = "";
         String firstPageHeader = StringUtils.colorString(config.getDisplayNameColor() + getCenteredHeader());

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Golem extends CastSpellWrapper implements DependableSpell, Listener {
+
     private double duration;
     private int castDistance;
     private HashMap<Entity, IronGolem> golems = new HashMap<>();

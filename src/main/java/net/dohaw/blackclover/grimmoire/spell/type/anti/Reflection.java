@@ -26,6 +26,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.time.LocalDateTime;
 
+/**
+ * Allows you to reflect spell damage back to the caster with your anti sword
+ */
 public class Reflection extends CastSpellWrapper implements Listener {
 
     private final NamespacedKey NSK_TIME_MARK = NamespacedKey.minecraft("reflection-time-mark");
@@ -108,7 +111,6 @@ public class Reflection extends CastSpellWrapper implements Listener {
                             player.getInventory().remove(mainHand);
                         }else{
 
-                            System.out.println("WE HERE");
                             // reflects the damage back to the caster and cancels the event
                             int currentNumUses = mainHandPDC.get(NSK_USES_MARK, PersistentDataType.INTEGER) + 1;
                             Player damager = e.getDamager();

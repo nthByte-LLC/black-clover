@@ -70,7 +70,7 @@ public class Sword extends CastSpellWrapper implements DependableSpell, Listener
     private void startTemporarySwordRemover(){
         Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             for(Player player : Bukkit.getOnlinePlayers()){
-                if(player.getPersistentDataContainer().has(NEEDS_TEMP_SWORD_REMOVED, PersistentDataType.STRING)) {
+                if(player.getPersistentDataContainer().has(NEEDS_TEMP_SWORD_REMOVED, PersistentDataType.STRING)){
                     removePotentialTempSword(player);
                 }
             }

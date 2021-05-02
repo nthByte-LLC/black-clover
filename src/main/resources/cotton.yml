@@ -20,7 +20,6 @@ Spell Settings:
     Cast Distance: 10
     Number of Sheep: 4
     Damage: 2
-    Movement Speed Additive: 0.5
   sheep:
     Hotbar Number: 3
     Cooldown: 5

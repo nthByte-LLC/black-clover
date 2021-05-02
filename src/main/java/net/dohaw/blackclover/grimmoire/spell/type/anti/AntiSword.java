@@ -26,6 +26,9 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.time.LocalDateTime;
 
+/**
+ * Allows you to absorb damage with your anti sword
+ */
 public class AntiSword extends CastSpellWrapper implements Listener {
 
     private final NamespacedKey NSK_TIME_MARK = NamespacedKey.minecraft("antisword-time-mark");

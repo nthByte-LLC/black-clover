@@ -97,7 +97,7 @@ public class ShapeUtils {
                 for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
                     Location loc = new Location(start.getWorld(), x, y, z);
                     Block block = loc.getBlock();
-                    blocks.add(new BlockSnapshot(block.getBlockData(), loc));
+                    blocks.add(BlockSnapshot.toSnapshot(block));
                 }
             }
         }

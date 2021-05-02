@@ -24,15 +24,12 @@ import java.util.List;
 
 public class SheepArmy extends CastSpellWrapper {
 
-
     @Getter
     private double explosionDistance;
     private int castDistance, numSheep;
 
-    private double movementSpeedAdditive;
-
     @Getter
-    private int damage;
+    private double damage;
 
     public SheepArmy(GrimmoireConfig grimmoireConfig) {
         super(SpellType.SHEEP_ARMY, grimmoireConfig);
@@ -91,12 +88,12 @@ public class SheepArmy extends CastSpellWrapper {
         this.numSheep = grimmoireConfig.getIntegerSetting(KEY, "Number of Sheep");
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
         this.explosionDistance = grimmoireConfig.getDoubleSetting(KEY, "Explosion Distance");
-        this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
-        this.movementSpeedAdditive = grimmoireConfig.getDoubleSetting(KEY, "Movement Speed Additive");
+        this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
 
     @Override
     public void prepareShutdown() {
 
     }
+
 }

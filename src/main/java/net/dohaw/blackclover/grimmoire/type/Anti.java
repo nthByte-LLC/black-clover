@@ -96,6 +96,4 @@ public class Anti extends GrimmoireWrapper {
         return antiMagicSword.clone();
     }
 
-
-
 }

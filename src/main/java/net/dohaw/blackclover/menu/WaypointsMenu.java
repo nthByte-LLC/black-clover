@@ -38,6 +38,7 @@ public class WaypointsMenu extends Menu implements Listener {
 
     @Override
     public void initializeItems(Player p) {
+
         for(Map.Entry<String, Location> entry : waypoints.entrySet()){
             String displayName = "&c&l" + entry.getKey();
             int distance = (int) p.getLocation().distance(entry.getValue());

@@ -77,7 +77,7 @@ public class Poison extends GrimmoireWrapper {
     public void startPoisonEffect(LivingEntity target){
 
         SpellUtils.playSound(target, Sound.BLOCK_CROP_BREAK);
-        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.CYAN, 1.5f);
+        Particle.DustOptions dustOptions = new Particle.DustOptions(BukkitColor.VIOLET, 1.5f);
         new BukkitRunnable() {
             @Override
             public void run() {

@@ -51,7 +51,7 @@ public class SheepArmyGoalChecker extends BukkitRunnable {
                     sheep.remove();
                     SpellUtils.spawnParticle(sheep, Particle.EXPLOSION_NORMAL, 20, 1, 1, 1);
                     SpellUtils.playSound(sheep, Sound.ENTITY_GENERIC_EXPLODE);
-                    target.damage(spell.getDamage(), sheep);
+                    SpellUtils.doSpellDamage(target, caster.getPlayer(), spell.getKEY(), spell.getDamage());
                     target.playEffect(EntityEffect.HURT_EXPLOSION);
                 }
             }

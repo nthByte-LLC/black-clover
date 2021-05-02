@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
@@ -12,6 +13,8 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -122,11 +125,8 @@ public class PlayerData {
 
     public void stopSpellRunnables(SpellType spellType){
         List<BukkitTask> runnables = spellRunnables.get(spellType);
-        System.out.println("SPELL TYPE: " + spellType);
         if(runnables != null){
-            System.out.println("NOT NULL");
             runnables.forEach(runner -> {
-                System.out.println("DOING THIS");
                 runner.cancel();
             });
             spellRunnables.remove(spellType);
@@ -147,7 +147,6 @@ public class PlayerData {
         }
         tasks.addAll(Arrays.asList(task));
         spellRunnables.put(spellType, tasks);
-        System.out.println("SPELL RUNNABLES: " + spellRunnables.toString());
     }
 
     public void stopTimedCast(){
@@ -192,6 +191,13 @@ public class PlayerData {
 
     public GrimmoireType getGrimmoireType(){
         return grimmoireWrapper.getKEY();
+    }
+
+    public void setFrozen(JavaPlugin plugin, int duration){
+        this.isFrozen = true;
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            this.isFrozen = false;
+        }, duration * 20);
     }
 
 }

@@ -17,13 +17,16 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Sheep;
 import org.bukkit.event.Event;
 
+/**
+ * Spawns a glowing yellow sheep that chases its target and disappears after damaging it once.
+ */
 public class BatteringRam extends CastSpellWrapper {
 
     @Getter
     private double damageDistance;
 
     @Getter
-    private int damage;
+    private double damage;
 
     private int castDistance;
 
@@ -83,7 +86,7 @@ public class BatteringRam extends CastSpellWrapper {
     public void loadSettings() {
         super.loadSettings();
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
-        this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");
+        this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
         this.damageDistance = grimmoireConfig.getDoubleSetting(KEY, "Damage Distance");
     }
 
@@ -91,4 +94,5 @@ public class BatteringRam extends CastSpellWrapper {
     public void prepareShutdown() {
 
     }
+
 }

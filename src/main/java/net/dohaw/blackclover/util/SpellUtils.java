@@ -4,6 +4,7 @@ import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.runnable.spells.FallingBlockRunner;
 import net.dohaw.blackclover.runnable.spells.MultiFallingBlockRunner;
@@ -155,9 +156,10 @@ public class SpellUtils {
      */
     public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
         // -1 means it was canceled
-        double damagedDone = callSpellDamageEvent(spell, damagedEntity, damager, damage);
-        if(damagedDone != -1){
-            alterHealth(damagedEntity, damage);
+        double damagedDone = callSpellDamageEvent(spell, damagedEntity, damager, -damage);
+        System.out.println("DAMAGE DONE: " + damagedDone);
+        if(damagedDone != -999){
+            alterHealth(damagedEntity, damagedDone);
             damagedEntity.playEffect(EntityEffect.HURT);
             return true;
         }
@@ -167,7 +169,11 @@ public class SpellUtils {
     public static double callSpellDamageEvent(SpellType spell, LivingEntity damagedEntity, Player damager, double damage){
         SpellDamageEvent event = new SpellDamageEvent(spell, damage, damagedEntity, damager);
         Bukkit.getPluginManager().callEvent(event);
-        return event.getDamage();
+        if(event.isCancelled()){
+            return -999;
+        }else{
+            return event.getDamage();
+        }
     }
 
     /**
@@ -270,6 +276,20 @@ public class SpellUtils {
         stand.setNoGravity(true);
         stand.setInvulnerable(true);
         return stand;
+    }
+
+    public static void freezeEntity(Entity entityInSight, double durationFrozen){
+        if(entityInSight instanceof Player){
+            Player target = (Player) entityInSight;
+            PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target);
+            targetPlayerData.setFrozen(Grimmoire.instance, (int) durationFrozen);
+        }else{
+            LivingEntity target = (LivingEntity) entityInSight;
+            target.setAI(false);
+            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+                target.setAI(true);
+            }, (long) (durationFrozen * 20));
+        }
     }
 
     public static Vector calculateVelocity(Vector from, Vector to, int heightGain)
