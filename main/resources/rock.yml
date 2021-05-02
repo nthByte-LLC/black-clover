@@ -1,0 +1,46 @@
+Display Name Color: "&5"
+
+Spell Settings:
+  pebble:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Force Multiplier: 2
+    Damage: 2
+  stone:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Force Multiplier: 2
+    Damage: 2
+  rock:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Force Multiplier: 2
+    Damage: 2
+  wall:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+    # Time the wall will stay up in seconds
+    Duration: 5
+    Wall Width: 3
+    Wall Height: 3
+  fortress:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+    # Time the wall will stay up in seconds
+    Duration: 5
+    Wall Width: 5
+    Wall Height: 3
+  metroid:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
+    Damage: 10
+    Cast Distance: 10
+    Height: 5
+    Width: 5
+    Force Multiplier: 2
