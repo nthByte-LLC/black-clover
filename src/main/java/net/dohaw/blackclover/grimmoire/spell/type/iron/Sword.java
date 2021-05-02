@@ -102,4 +102,5 @@ public class Sword extends CastSpellWrapper implements DependableSpell, Listener
     public void initDependableData() {
         startTemporarySwordRemover();
     }
+
 }

@@ -15,6 +15,7 @@ Spell Settings:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
+    Duration: 60
   dome:
     Hotbar Number: 3
     Cooldown: 5
