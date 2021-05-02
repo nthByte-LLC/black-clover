@@ -183,7 +183,17 @@ public enum SpellType {
     ALTER_TIME("alter_time", false),
     REGENERATION("regeneration", false),
     STOP_TIME("stop_time", false),
-    TIME_LORD("time_lord", true);
+    TIME_LORD("time_lord", true),
+
+    /*
+        Trap spells
+     */
+    STUN("stun", false),
+    FIRE("fire", false),
+    CAGE("cage", false),
+    FALL("fall", false),
+    FLAG("flag", false),
+    REFLECTION_TRAP("reflection_trap", true);
 
     @Getter
     private boolean isUltimate;
