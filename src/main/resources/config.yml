@@ -1,0 +1,46 @@
+Testing Mode: true
+Prefix: "&f&l[&0Black&dClover&f&l]"
+# Grimmoire Display Properties.
+Grimmoire Properties:
+  Material: WRITTEN_BOOK
+  Display Name: "Grimmoire of %name%"
+  Lore:
+    - "&fTier: %tierNum% &f(%rarity%&f)"
+    - "&fClass: %class%"
+
+# The amount of regen that occurs per second (Without Tier Multipliers)
+Base Regen: 50
+
+# Tier Properties
+## Base Regen
+## Obtaining Chance
+## Regen Multiplier
+Tier Properties:
+  Tier 2:
+    # The starting Regen for a tier. (Without upgrades)
+    Max Regen: 1000
+    # The chance at which a player has at obtaining this tier grimmoire
+    Obtaining Chance: 50
+    # It takes the "Base Regen" and multiplies it by this number. That's how much the player regenerates Regen per second.
+    Regen Multiplier: 1
+  Tier 3:
+    Max Regen: 1500
+    Obtaining Chance: 35
+    Regen Multiplier: 1.25
+  Tier 4:
+    Max Regen: 2000
+    Obtaining Chance: 10
+    Regen Multiplier: 2
+  Tier 5:
+    Max Regen: 2500
+    Obtaining Chance: 5
+    Regen Multiplier: 5
+
+# Please don't touch these 2 lines
+Acquisition Info:
+  Tier 4:
+    Who Has It:
+  Tier 5:
+    Who Has It:
+
+

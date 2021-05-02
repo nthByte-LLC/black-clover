@@ -1,0 +1,39 @@
+Display Name Color: "&f"
+
+Spell Settings:
+  bed:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration: 60
+  life_net:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+    Cast Distance: 10
+    Duration: 5
+  sheep_army:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Explosion Distance: 1.5
+    Cast Distance: 10
+    Number of Sheep: 4
+    Damage: 2
+    Movement Speed Additive: 0.5
+  sheep:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  tent:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  battering_ram:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
+    Cast Distance: 10
+    Damage: 2
+    # How far away the sheep has to be to do damage to the target
+    Damage Distance: 1.5

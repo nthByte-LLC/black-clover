@@ -1,0 +1,32 @@
+Display Name Color: "&f"
+
+Spell Settings:
+  direction:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Wool Stay Time: 5
+  cartographer:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  waypoint:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+    Max Waypoints: 5
+  path_maker:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+    # Pretty much defines how long the path will be before it starts removing the oldest points in the path
+    Maximum Path Points: 30
+  fast_travel:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+    Speed Level: 5
+  homestone:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

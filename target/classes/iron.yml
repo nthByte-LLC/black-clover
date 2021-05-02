@@ -1,0 +1,28 @@
+Display Name Color: "&7"
+
+Spell Settings:
+  sword:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Duration: 60
+  golem:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  armor:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  dome:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  repair:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  extraction:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
