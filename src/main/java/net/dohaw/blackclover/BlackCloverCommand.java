@@ -100,8 +100,6 @@ public class BlackCloverCommand implements CommandExecutor {
 
         }
 
-
-
         return false;
     }
 
