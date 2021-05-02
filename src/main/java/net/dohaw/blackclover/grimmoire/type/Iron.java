@@ -16,6 +16,7 @@ public class Iron extends GrimmoireWrapper {
     public Golem golem;
     public Extraction extraction;
     public Dome dome;
+    public Repair repair;
 
     public Iron() {
         super(GrimmoireType.IRON);
@@ -44,11 +45,14 @@ public class Iron extends GrimmoireWrapper {
         this.golem = new Golem(config);
         this.extraction = new Extraction(config);
         this.dome = new Dome(config);
+        this.repair = new Repair(config);
+        
         this.spells.put(SpellType.SWORD, sword);
         this.spells.put(SpellType.ARMOR, armor);
         this.spells.put(SpellType.GOLEM, golem);
         this.spells.put(SpellType.EXTRACTION, extraction);
         this.spells.put(SpellType.DOME, dome);
+        this.spells.put(SpellType.REPAIR, repair);
 
     }
 
