@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Golem extends CastSpellWrapper implements DependableSpell, Listener {
+public class Golem extends CastSpellWrapper implements Listener {
 
     private int castDistance;
-    private HashMap<Entity, IronGolem> golems = new HashMap<>();
+    // Iron golem and its target
+    private HashMap<IronGolem, Entity> golems = new HashMap<>();
 
     public Golem(GrimmoireConfig grimmoireConfig) {
         super(SpellType.GOLEM, grimmoireConfig);
@@ -37,7 +38,8 @@ public class Golem extends CastSpellWrapper implements DependableSpell, Listener
         if(SpellUtils.isTargetValid(player, entityInSight)) {
             org.bukkit.entity.IronGolem golem = (IronGolem) player.getWorld().spawnEntity(player.getLocation(), EntityType.IRON_GOLEM);
             golem.setTarget((LivingEntity) entityInSight);
-            golems.put(entityInSight, golem);
+            golem.setPlayerCreated(true);
+            golems.put(golem, entityInSight);
             SpellUtils.playWorldEffect(golem, Effect.MOBSPAWNER_FLAMES);
             SpellUtils.playSound(golem, Sound.ENTITY_HORSE_ARMOR);
             return true;
@@ -49,13 +51,29 @@ public class Golem extends CastSpellWrapper implements DependableSpell, Listener
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
         Entity en = e.getEntity();
-        if (golems.containsKey(en)) {
-            IronGolem golem = golems.get(en);
-            golem.setPlayerCreated(true);
-            Bukkit.getServer().getWorld(golem.getWorld().getName()).playEffect(golem.getLocation(), Effect.SMOKE, 10);
-            Bukkit.getServer().getWorld(golem.getWorld().getName()).playSound(golem.getLocation(), Sound.ENTITY_FOX_DEATH, 10, 10);
-            golems.remove(en);
-            golem.remove();
+        if(en instanceof IronGolem){
+            if (golems.containsKey(en)) {
+                IronGolem golem = (IronGolem) golems.get(en);
+                SpellUtils.playWorldEffect(golem, Effect.SMOKE);
+                SpellUtils.playSound(golem, Sound.ENTITY_FOX_DEATH);
+                golems.remove(en);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onTargetChange(EntityTargetEvent e) {
+        Entity potentialGolem = e.getEntity();
+        if (potentialGolem instanceof IronGolem) {
+            if (golems.containsKey(potentialGolem)) {
+                Entity golemTarget = golems.get(potentialGolem);
+                Entity eventTarget = e.getTarget();
+                if(eventTarget != null){
+                    if(!golemTarget.getUniqueId().equals(eventTarget.getUniqueId())){
+                        e.setCancelled(true);
+                    }
+                }
+            }
         }
     }
 
@@ -67,8 +85,5 @@ public class Golem extends CastSpellWrapper implements DependableSpell, Listener
 
     @Override
     public void prepareShutdown() {}
-    @Override
-    public void initDependableData() {
-    }
 
 }

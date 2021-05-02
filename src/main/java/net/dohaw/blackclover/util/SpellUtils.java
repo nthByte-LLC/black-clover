@@ -255,7 +255,7 @@ public class SpellUtils {
                 return false;
             }
         }else{
-            player.sendMessage("There is not entity within a reasonable distance from you!");
+            player.sendMessage("There is not an entity within a reasonable distance from you!");
             return false;
         }
     }
