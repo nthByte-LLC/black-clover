@@ -6,10 +6,8 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.trap.Cage;
+import net.dohaw.blackclover.grimmoire.spell.type.trap.*;
 import net.dohaw.blackclover.grimmoire.spell.type.trap.Fire;
-import net.dohaw.blackclover.grimmoire.spell.type.trap.Stun;
-import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.TrapPlayerData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +17,8 @@ import java.util.List;
 
 public class Trap extends GrimmoireWrapper implements Listener {
 
+    public Flag flag;
+    public Fall fall;
     public Cage cage;
     public Fire fire;
     public Stun stun;
@@ -53,6 +53,12 @@ public class Trap extends GrimmoireWrapper implements Listener {
 
         this.cage = new Cage(config);
         this.spells.put(SpellType.CAGE, cage);
+
+        this.fall = new Fall(config);
+        this.spells.put(SpellType.FALL, fall);
+
+        this.flag = new Flag(config);
+        this.spells.put(SpellType.FLAG, flag);
 
     }
 

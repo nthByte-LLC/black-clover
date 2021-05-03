@@ -6,10 +6,8 @@ import net.dohaw.blackclover.util.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.LivingEntity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
