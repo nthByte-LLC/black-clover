@@ -3,6 +3,7 @@ package net.dohaw.blackclover.config;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.type.Trap;
 import net.dohaw.blackclover.playerdata.*;
 import net.dohaw.corelib.Config;
 
@@ -16,7 +17,7 @@ public class PlayerDataConfig extends Config {
     private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(
         GrimmoireType.SHAKUDO, GrimmoireType.WATER,
         GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON,
-        GrimmoireType.FUNGUS, GrimmoireType.COMPASS, GrimmoireType.GRAVITY
+        GrimmoireType.FUNGUS, GrimmoireType.COMPASS, GrimmoireType.GRAVITY, GrimmoireType.TRAP
     );
 
     public PlayerDataConfig(File file){
@@ -50,8 +51,10 @@ public class PlayerDataConfig extends Config {
                 newData = new FungusPlayerData(uuid);
             }else if(grimmoireType == GrimmoireType.COMPASS) {
                 newData = new CompassPlayerData(uuid);
-            }else if(grimmoireType == GrimmoireType.GRAVITY){
+            }else if(grimmoireType == GrimmoireType.GRAVITY) {
                 newData = new GravityPlayerData(uuid);
+            }else if(grimmoireType == GrimmoireType.TRAP){
+                newData = new TrapPlayerData(uuid);
             }else{
                 // If it gets to here, then there's a conflict between what's in the list and what is being checked in the if statement chain.
                 return pd;

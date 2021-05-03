@@ -1,41 +1,52 @@
 package net.dohaw.blackclover.grimmoire.spell.type.trap;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.playerdata.PlayerData;
-import org.bukkit.Location;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
 
 public class Stun extends TrapSpell {
 
-    private Map<UUID, Location> carpetLocations = new HashMap<>();
+    private double freezeDuration;
 
     public Stun(GrimmoireConfig grimmoireConfig) {
         super(SpellType.STUN, grimmoireConfig);
     }
 
     @Override
-    public boolean cast(Event e, PlayerData pd) {
+    public void onStepOnTrap(Trap trap, LivingEntity le) {
+        SpellUtils.freezeEntity(le, freezeDuration);
+        SpellUtils.spawnParticle(le, Particle.PORTAL, 30, 1, 1, 1);
+        SpellUtils.playSound(le, Sound.ENTITY_SLIME_JUMP);
+    }
 
-        Player player = pd.getPlayer();
-        Block playerCurrentStandingBlock = player.getLocation().getBlock();
-        playerCurrentStandingBlock.setType(Material.BLACK_CARPET);
+    @Override
+    public Material getCarpetMaterial() {
+        return Material.BLACK_CARPET;
+    }
 
-        carpetLocations.put(player.getUniqueId(), playerCurrentStandingBlock.getLocation());
+    @Override
+    public Particle placeParticles() {
+        return Particle.FIREWORKS_SPARK;
+    }
 
-        return true;
+    @Override
+    public TrapType getTrapType() {
+        return TrapType.STUN;
     }
 
     @Override
     public void prepareShutdown() {
         
     }
+
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Freeze Duration");
+    }
+
 }

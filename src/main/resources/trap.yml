@@ -5,23 +5,30 @@ Spell Settings:
     Hotbar Number: 0
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
+    Freeze Duration: 5
   fire:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
   cage:
     Hotbar Number: 2
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
   fall:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
   flag:
     Hotbar Number: 4
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
   reflection_trap:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Max Number of Traps: 3
