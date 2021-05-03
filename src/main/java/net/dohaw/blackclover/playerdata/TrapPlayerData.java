@@ -53,4 +53,5 @@ public class TrapPlayerData extends PlayerData {
             currentTraps.forEach(Trap::removeTrap);
         }
     }
+
 }

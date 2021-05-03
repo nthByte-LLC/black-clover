@@ -6,6 +6,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.trap.Cage;
 import net.dohaw.blackclover.grimmoire.spell.type.trap.Fire;
 import net.dohaw.blackclover.grimmoire.spell.type.trap.Stun;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class Trap extends GrimmoireWrapper implements Listener {
 
+    public Cage cage;
     public Fire fire;
     public Stun stun;
 
@@ -48,6 +50,9 @@ public class Trap extends GrimmoireWrapper implements Listener {
 
         this.fire = new Fire(config);
         this.spells.put(SpellType.FIRE, fire);
+
+        this.cage = new Cage(config);
+        this.spells.put(SpellType.CAGE, cage);
 
     }
 

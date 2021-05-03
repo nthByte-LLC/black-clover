@@ -35,6 +35,8 @@ public class LocationUtil {
         return getLocationInFront(clone, numBlocksInBack * -1);
     }
 
+
+
     public static Location getLocationInFront(Location location, double numBlocksInFront){
         return location.clone().add(location.clone().getDirection().multiply(numBlocksInFront));
     }
@@ -57,6 +59,12 @@ public class LocationUtil {
         // shifts direction to the left
         leftDirectionLocation.setYaw(leftDirectionLocation.getYaw() - 90);
         return loc.clone().add(leftDirectionLocation.getDirection().multiply(dist));
+    }
+
+    public static Location getAbsoluteLocationToLeft(Location location, double numBlocksToLeft){
+        Location clone = location.clone();
+        clone.setPitch(0);
+        return getLocationToLeft(clone, numBlocksToLeft);
     }
 
     public static Location getLocationInDirection(Location start, Location end, double blocksForward){
