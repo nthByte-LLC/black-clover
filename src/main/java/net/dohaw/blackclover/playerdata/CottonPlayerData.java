@@ -69,4 +69,5 @@ public class CottonPlayerData extends PlayerData{
         removeArmy();
         super.prepareDataRemoval();
     }
+
 }

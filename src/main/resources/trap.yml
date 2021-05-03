@@ -12,6 +12,7 @@ Spell Settings:
     Cooldown: 5
     Regen Consumed: 100
     Max Number of Traps: 3
+    Damage: 3
   cage:
     Hotbar Number: 2
     Cooldown: 5

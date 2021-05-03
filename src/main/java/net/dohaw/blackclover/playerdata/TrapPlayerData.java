@@ -6,7 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.type.trap.TrapType;
 
 import java.util.*;
 
-public class TrapPlayerData extends PlayerData{
+public class TrapPlayerData extends PlayerData {
 
     private Map<TrapType, List<Trap>> traps = new HashMap<>();
 
@@ -46,4 +46,11 @@ public class TrapPlayerData extends PlayerData{
         return 0;
     }
 
+    @Override
+    public void prepareDataRemoval() {
+        super.prepareDataRemoval();
+        for(List<Trap> currentTraps : traps.values()){
+            currentTraps.forEach(Trap::removeTrap);
+        }
+    }
 }

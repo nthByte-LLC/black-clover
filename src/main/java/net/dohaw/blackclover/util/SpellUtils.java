@@ -161,6 +161,7 @@ public class SpellUtils {
 
     /**
      * Damages the entity and also fires the spell damage event.
+     * @return Whether the damage was canceled
      */
     public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
         // -1 means it was canceled

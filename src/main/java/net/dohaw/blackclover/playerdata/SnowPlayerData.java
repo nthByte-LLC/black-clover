@@ -61,4 +61,11 @@ public class SnowPlayerData extends PlayerData{
         changedIceAgeBlocks.add(BlockSnapshot.toSnapshot(block));
     }
 
+    @Override
+    public void prepareDataRemoval() {
+        super.prepareDataRemoval();
+        if(snowman != null){
+            removeSnowman();
+        }
+    }
 }
