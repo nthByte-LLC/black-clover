@@ -1,17 +1,24 @@
 package net.dohaw.blackclover.grimmoire.spell.type.trap;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.exception.UnexpectedPlayerData;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.util.LocationUtil;
-import org.bukkit.Location;
+import net.dohaw.blackclover.util.BlockSnapshot;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.LivingEntity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Cage extends TrapSpell{
+
+    private List<BlockSnapshot> allPreviousBlocks = new ArrayList<>();
 
     private double duration;
 
@@ -22,15 +29,44 @@ public class Cage extends TrapSpell{
     @Override
     public void onStepOnTrap(Trap trap, LivingEntity trapStepper) {
 
-        Location trapStepperLocation = trapStepper.getLocation();
-        List<Location> doorLocations = new ArrayList<>();
+        final List<BlockFace> CHECKED_FACES = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.EAST, BlockFace.SOUTH);
+        Block trapStepperBlock = trapStepper.getLocation().getBlock();
+        List<BlockSnapshot> previousBlocks = new ArrayList<>();
 
-        doorLocations.add(LocationUtil.getAbsoluteLocationInFront(trapStepperLocation, 1));
-        doorLocations.add(LocationUtil.getAbsoluteLocationToLeft(trapStepperLocation, 1));
-        doorLocations.add(LocationUtil.getAbsoluteLocationToRight(trapStepperLocation, 1));
-        doorLocations.add(LocationUtil.getAbsoluteLocationInBack(trapStepperLocation, 1));
+        for(BlockFace face : CHECKED_FACES){
 
-        doorLocations.forEach(loc -> loc.getBlock().setType(Material.IRON_DOOR));
+            Block relative = trapStepperBlock.getRelative(face).getRelative(BlockFace.UP);
+            previousBlocks.add(BlockSnapshot.toSnapshot(relative));
+            relative.setType(Material.IRON_DOOR);
+
+            Door door = (Door) relative.getBlockData();
+            door.setFacing(face);
+            door.setHalf(Bisected.Half.TOP);
+            relative.setBlockData(door);
+
+            /*
+                Under
+             */
+            Block relativeUnder = relative.getRelative(BlockFace.DOWN);
+            previousBlocks.add(BlockSnapshot.toSnapshot(relativeUnder));
+            relativeUnder.setType(Material.IRON_DOOR);
+
+            Door doorBottom = (Door) relativeUnder.getBlockData();
+            doorBottom.setFacing(face);
+            door.setHalf(Bisected.Half.BOTTOM);
+            relativeUnder.setBlockData(doorBottom);
+
+        }
+
+        allPreviousBlocks.addAll(previousBlocks);
+
+        // Makes the cage disappear
+        Bukkit.getScheduler().runTaskLater(Grimmoire.instance,  () -> {
+           previousBlocks.forEach(blockSnapshot -> {
+               allPreviousBlocks.remove(blockSnapshot);
+               blockSnapshot.apply();
+           });
+        }, (long) (duration * 20));
 
     }
 
@@ -49,4 +85,15 @@ public class Cage extends TrapSpell{
         return TrapType.CAGE;
     }
 
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
+    }
+
+    @Override
+    public void prepareShutdown() {
+        super.prepareShutdown();
+        this.allPreviousBlocks.forEach(BlockSnapshot::apply);
+    }
 }
