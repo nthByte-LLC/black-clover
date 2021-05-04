@@ -75,6 +75,7 @@ public class Reflection extends TrapSpell{
             }
 
         }
+
     }
 
     @Override
@@ -90,6 +91,12 @@ public class Reflection extends TrapSpell{
     @Override
     public TrapType getTrapType() {
         return TrapType.REFLECTION;
+    }
+
+    @Override
+    public void loadSettings() {
+        super.loadSettings();
+        this.reflectionDuration = grimmoireConfig.getDoubleSetting(KEY, "Reflection Duration");
     }
 
 }

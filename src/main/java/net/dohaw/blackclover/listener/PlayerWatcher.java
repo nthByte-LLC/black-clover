@@ -378,7 +378,7 @@ public class PlayerWatcher implements Listener {
                             }
 
                             if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
-                                SpellUtils.spawnParticle(player, Particle.SPELL_INSTANT, 30, 0.5f, 0.5f, 0.5f);
+                                //SpellUtils.spawnParticle(player, Particle.SPELL_INSTANT, 30, 0.5f, 0.5f, 0.5f);
                                 spellBoundToSlot.deductMana(pd);
                             }
                             Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));

@@ -193,7 +193,17 @@ public enum SpellType {
     CAGE("cage", false),
     FALL("fall", false),
     FLAG("flag", false),
-    REFLECTION_TRAP("reflection_trap", true);
+    REFLECTION_TRAP("reflection_trap", true),
+
+    /*
+        Transformation spells
+     */
+    ANIMORPHER("animorpher", false),
+    MONSTOPHER("monstopher", false),
+    SELECTION("selection", false),
+    CHANGELING("changeling", false),
+    MIME("mime", false),
+    TERRAIN("terrain", true);
 
     @Getter
     private boolean isUltimate;

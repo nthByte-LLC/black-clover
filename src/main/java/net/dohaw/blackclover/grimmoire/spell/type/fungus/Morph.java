@@ -45,7 +45,6 @@ public class Morph extends CastSpellWrapper implements Listener {
                 }else{
                     player.sendMessage("You are already morphed!");
                 }
-                return false;
             }else{
                 if(isSneaking){
                     player.sendMessage("You aren't morphed right now!");
