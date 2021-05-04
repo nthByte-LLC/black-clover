@@ -18,8 +18,6 @@ import java.util.*;
 
 public class Cage extends TrapSpell{
 
-    private List<BlockSnapshot> allPreviousBlocks = new ArrayList<>();
-
     private double duration;
 
     public Cage(GrimmoireConfig grimmoireConfig) {
@@ -58,16 +56,6 @@ public class Cage extends TrapSpell{
 
         }
 
-        allPreviousBlocks.addAll(previousBlocks);
-
-        // Makes the cage disappear
-        Bukkit.getScheduler().runTaskLater(Grimmoire.instance,  () -> {
-           previousBlocks.forEach(blockSnapshot -> {
-               allPreviousBlocks.remove(blockSnapshot);
-               blockSnapshot.apply();
-           });
-        }, (long) (duration * 20));
-
     }
 
     @Override
@@ -94,6 +82,6 @@ public class Cage extends TrapSpell{
     @Override
     public void prepareShutdown() {
         super.prepareShutdown();
-        this.allPreviousBlocks.forEach(BlockSnapshot::apply);
     }
+    
 }

@@ -66,9 +66,18 @@ public abstract class TrapSpell extends CastSpellWrapper implements Listener {
         this.maxNumTraps = grimmoireConfig.getIntegerSetting(KEY, "Max Number of Traps");
     }
 
+    /**
+     * Returns the location at which the trap will be placed.
+     * This method is important because we alter the placement location in the Reflection spell.
+     * @param location Normally the player's location
+     */
+    public Location getPlacementLocation(Location location){
+        return location;
+    }
+
     public void placeTrap(TrapPlayerData placer, Location location){
 
-        Block blockUnderPlayer = location.getBlock();
+        Block blockUnderPlayer = getPlacementLocation(location).getBlock();
         Location blockLocation = blockUnderPlayer.getLocation();
         Location centeredLocation = new Location(location.getWorld(), blockLocation.getBlockX() + 0.5D, blockLocation.getBlockY(), blockLocation.getBlockZ() + 0.5D);
         Block locationBlock = centeredLocation.getBlock();

@@ -8,6 +8,8 @@ import java.util.*;
 
 public class TrapPlayerData extends PlayerData {
 
+    private boolean reflectingSpells;
+
     private Map<TrapType, List<Trap>> traps = new HashMap<>();
 
     public TrapPlayerData(UUID uuid) {
@@ -54,4 +56,11 @@ public class TrapPlayerData extends PlayerData {
         }
     }
 
+    public boolean isReflectingSpells() {
+        return reflectingSpells;
+    }
+
+    public void setReflectingSpells(boolean reflectingSpells) {
+        this.reflectingSpells = reflectingSpells;
+    }
 }
