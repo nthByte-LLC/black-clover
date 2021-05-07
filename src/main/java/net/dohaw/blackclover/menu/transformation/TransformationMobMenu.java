@@ -4,21 +4,20 @@ import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.playerdata.TransformationPlayerData;
 import net.dohaw.corelib.menus.Menu;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class TransformationMobMenu extends TransformationMenu {
+
+    private final List<EntityType> FLYING_ENTITY_TYPES = Arrays.asList(
+        EntityType.BAT, EntityType.BLAZE, EntityType.PARROT, EntityType.BEE
+    );
 
     public final Map<EntityType, Material> MOB_EGGS = new HashMap<>();
     protected Map<Integer, EntityType> entitiesInSlots = new HashMap<>();
@@ -61,6 +60,15 @@ public abstract class TransformationMobMenu extends TransformationMenu {
         TransformationPlayerData tpd = (TransformationPlayerData) Grimmoire.instance.getPlayerDataManager().getData(morpher);
         tpd.setMorphedEntity(entity);
 
+        if(canEntityFly(entityClicked)){
+            morpher.setAllowFlight(true);
+            morpher.setFlying(true);
+        }
+
+    }
+
+    private boolean canEntityFly(EntityType entityType){
+        return FLYING_ENTITY_TYPES.contains(entityType);
     }
 
     public abstract void compileMobEggs();

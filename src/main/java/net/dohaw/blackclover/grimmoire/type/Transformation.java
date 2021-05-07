@@ -8,11 +8,14 @@ import net.dohaw.blackclover.grimmoire.spell.type.transformation.MorphMenuType;
 import net.dohaw.blackclover.grimmoire.spell.type.transformation.MorphSpell;
 import net.dohaw.blackclover.menu.transformation.HostileMobsMenu;
 import net.dohaw.blackclover.menu.transformation.PassiveMobsMenu;
+import net.dohaw.blackclover.menu.transformation.TransformationPlayerMenu;
 
 import java.util.*;
 
 public class Transformation extends GrimmoireWrapper {
 
+    public MorphSpell<TransformationPlayerMenu> mime;
+    public MorphSpell<TransformationPlayerMenu> changeling;
     public MorphSpell<PassiveMobsMenu> animorpher;
     public MorphSpell<HostileMobsMenu> monstopher;
 
@@ -43,6 +46,12 @@ public class Transformation extends GrimmoireWrapper {
 
         this.monstopher = new MorphSpell<>(SpellType.MONSTOPHER, config, MorphMenuType.HOSTILE_MOB);
         this.spells.put(SpellType.MONSTOPHER, monstopher);
+
+        this.mime = new MorphSpell<>(SpellType.MIME, config, MorphMenuType.SELF_TO_PLAYER);
+        this.spells.put(SpellType.MIME, mime);
+
+        this.changeling = new MorphSpell<>(SpellType.CHANGELING, config, MorphMenuType.PLAYER_TO_PLAYER);
+        this.spells.put(SpellType.CHANGELING, changeling);
 
     }
 

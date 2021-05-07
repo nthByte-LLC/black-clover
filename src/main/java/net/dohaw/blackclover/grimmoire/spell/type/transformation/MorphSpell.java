@@ -8,6 +8,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.menu.transformation.HostileMobsMenu;
 import net.dohaw.blackclover.menu.transformation.PassiveMobsMenu;
 import net.dohaw.blackclover.menu.transformation.TransformationMenu;
+import net.dohaw.blackclover.menu.transformation.TransformationPlayerMenu;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.TransformationPlayerData;
 import org.bukkit.entity.LivingEntity;
@@ -35,7 +36,7 @@ public class MorphSpell<T extends TransformationMenu> extends CastSpellWrapper i
             TransformationPlayerData tpd = (TransformationPlayerData) pd;
             if(!tpd.isMorphed()){
 
-                T menu = getMenu();
+                T menu = getMenu(player);
                 if(menu != null){
                     menu.initializeItems(player);
                     menu.openInventory(player);
@@ -56,20 +57,30 @@ public class MorphSpell<T extends TransformationMenu> extends CastSpellWrapper i
         return false;
     }
 
-    private T getMenu(){
+    private T getMenu(Player player){
         switch(morphMenuType){
             case PASSIVE_MOB:
                 return (T) new PassiveMobsMenu(Grimmoire.instance);
             case HOSTILE_MOB:
                 return (T) new HostileMobsMenu(Grimmoire.instance);
+            case SELF_TO_PLAYER:
+                return (T) new TransformationPlayerMenu(Grimmoire.instance, null, "Morph Into A Player", 54, player);
+            case PLAYER_TO_PLAYER:
+                return (T) new TransformationPlayerMenu(Grimmoire.instance, null, "Choose a Player to Morph", 54, null);
             default:
                 return null;
         }
     }
 
     private void stopMorphing(TransformationPlayerData tpd){
+
         tpd.removeMorphedEntity();
-        tpd.getPlayer().setInvisible(false);
+
+        Player player = tpd.getPlayer();
+        player.setInvisible(false);
+        player.setFlying(false);
+        player.setAllowFlight(false);
+
     }
 
     /*
