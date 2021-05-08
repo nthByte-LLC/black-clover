@@ -1,27 +1,34 @@
 package net.dohaw.blackclover.runnable.particle;
 
-import lombok.Setter;
+import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.util.MathHelper;
+import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TornadoParticleRunner extends CircleParticleRunner{
 
-    @Setter
-    protected double verticalPointSpread = 0.2;
+    private List<Location> particleLocations = new ArrayList<>();
 
-    @Setter
-    protected int verticalPoints;
+    private final double START_RADIUS;
 
-    private int numIteration = 0;
+    private double iteration = 0;
+
+    // Whether the tornado goes right or left.
     private boolean goesRight;
 
-    public TornadoParticleRunner(Entity entity, Particle.DustOptions data, boolean isYIncreasing, double radius, boolean goesRight) {
-        super(entity, data, isYIncreasing, radius);
-        this.maxYAdditive = 3;
-        this.verticalPoints = 10;
+    public TornadoParticleRunner(Entity entity, Particle.DustOptions data, double startRadius, boolean goesRight) {
+        super(entity, data, true, startRadius);
+        this.yAdditive = 0.5;
+        this.points = 10;
         this.goesRight = goesRight;
+        this.maxYAdditive = 5;
+        this.START_RADIUS = startRadius;
     }
 
     @Override
@@ -29,23 +36,32 @@ public class TornadoParticleRunner extends CircleParticleRunner{
 
         if(areEntitiesValid()){
 
-            doYIncreaseCheck();
-
-            if(numIteration >= POINTS){
-                numIteration = 0;
+            if(iteration == points){
+                iteration = 0;
             }
 
-            double yAdditive2 = yAdditive;
-            for (int i = 0; i < verticalPoints; i++) {
-                double angle = MathHelper.angle(numIteration, POINTS);
-                if(goesRight){
-                    angle *= -1;
+            if(yAdditive >= maxYAdditive){
+                yAdditive = 0.5;
+                radius = START_RADIUS;
+                particleLocations.clear();
+            }
+
+            double angle = MathHelper.angle(iteration, points);
+            if(goesRight){
+                angle *= -1;
+            }
+            Location entityLocation = entity.getLocation().clone();
+            Location point = entityLocation.add(radius * Math.sin(angle), yAdditive, radius * Math.cos(angle));
+            SpellUtils.spawnParticle(point, particle, data, 15, 0, 0,0);
+            if(iteration % 4 == 0){
+                for(Location loc : particleLocations){
+                    SpellUtils.spawnParticle(loc, particle, data, 15, 0, 0,0);
                 }
-                Location point = entity.getLocation().clone().add(radius * Math.sin(angle), yAdditive2, radius * Math.cos(angle));
-                entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
-                yAdditive2 += verticalPointSpread;
             }
-            numIteration++;
+            particleLocations.add(point);
+            iteration++;
+            yAdditive += 0.1;
+            radius += 0.05;
 
         }
 

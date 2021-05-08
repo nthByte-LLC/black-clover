@@ -61,11 +61,11 @@ public class PullRunner extends BukkitRunnable {
     private void startTornado(){
 
         Particle.DustOptions dustOptions = new Particle.DustOptions(Color.WHITE, 1);
-        this.tpr1 = new TornadoParticleRunner(caster, dustOptions, true, 1.5, true);
-        this.tpr2 = new TornadoParticleRunner(caster, dustOptions, true, 1.5, false);
+        this.tpr1 = new TornadoParticleRunner(caster, dustOptions, 1.5, true);
+        this.tpr2 = new TornadoParticleRunner(caster, dustOptions, 1.5, false);
 
-        tpr1.runTaskTimer(Grimmoire.instance, 0L, 3L);
-        tpr2.runTaskTimer(Grimmoire.instance, 0L, 3L);
+        tpr1.runTaskTimer(Grimmoire.instance, 0L, 1L);
+        tpr2.runTaskTimer(Grimmoire.instance, 0L, 1L);
 
     }
 

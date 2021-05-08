@@ -1,0 +1,27 @@
+Display Name Color: "&8"
+
+Spell Settings:
+  disable:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+  anti_sword:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  demon_jump:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  demon_scratch:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  reflection:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  demon_form:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

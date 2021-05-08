@@ -185,6 +185,7 @@ public class PlayerData {
                 }
             }
         }
+        getPlayer().setGlowing(false);
         stopAllRunnables();
         saveData();
     }

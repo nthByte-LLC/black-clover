@@ -30,10 +30,9 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
 
         Player player = pd.getPlayer();
 
-        TornadoParticleRunner pr1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 1), true, radius, false);
-        pr1.setVerticalPointSpread(0.1);
-        TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), true, radius, true);
-        pr2.setVerticalPointSpread(0.1);
+        TornadoParticleRunner pr1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.WHITE, 1), radius, false);
+        TornadoParticleRunner pr2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.GRAY, 1), radius, true);
+
         pd.addSpellRunnables(KEY, pr1.runTaskTimer(Grimmoire.instance, 0L, 1L), pr2.runTaskTimer(Grimmoire.instance, 0L, 1L));
         SpellUtils.playSound(player, Sound.BLOCK_BEACON_ACTIVATE);
 

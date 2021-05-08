@@ -20,8 +20,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +87,7 @@ public class WaypointsMenu extends Menu implements Listener {
         PlayerData pd = ((BlackCloverPlugin)plugin).getPlayerDataManager().getData(player.getUniqueId());
         Particle.DustOptions do1 = new Particle.DustOptions(Color.WHITE, 1.5f);
         Particle.DustOptions do2 = new Particle.DustOptions(Color.BLACK, 1.5f);
-        BukkitTask[] tasks = SpellUtils.startDoubleTornadoParticles(player, do1, do2, true, 1);
+        BukkitTask[] tasks = SpellUtils.startDoubleTornadoParticles(player, do1, do2, 1);
         pd.addSpellRunnables(SpellType.HOMESTONE, tasks);
         player.closeInventory();
 

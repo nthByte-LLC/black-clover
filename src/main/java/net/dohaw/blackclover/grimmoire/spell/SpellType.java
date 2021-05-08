@@ -203,7 +203,17 @@ public enum SpellType {
     SELECTION("selection", false),
     CHANGELING("changeling", false),
     MIME("mime", false),
-    TERRAIN("terrain", true);
+    TERRAIN("terrain", true),
+
+    /*
+        Vortex spells
+     */
+    TORNADO("tornado", false),
+    FIRADO("firado", false),
+    WATERHOSE("waterhose", false),
+    EARTHSTORM("earthstorm", false),
+    PORTNADO("portnado", false),
+    ELEMENT_STORM("element_storm", true);
 
     @Getter
     private boolean isUltimate;

@@ -71,13 +71,8 @@ public class FireStormRunner extends BukkitRunnable {
 
     private void initRingOfFire(){
 
-        TornadoParticleRunner runner1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.RED, 1), true, radius, true);
-        runner1.setVerticalPointSpread(0.3);
-        runner1.setVerticalPoints(10);
-
-        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.ORANGE, 1), true, radius, false);
-        runner2.setVerticalPointSpread(0.3);
-        runner2.setVerticalPoints(10);
+        TornadoParticleRunner runner1 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.RED, 1),  radius, true);
+        TornadoParticleRunner runner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.ORANGE, 1), radius, false);
 
         this.particleRunner1 = runner1.runTaskTimer(Grimmoire.instance, 0L, 1L);
         this.particleRunner2 = runner2.runTaskTimer(Grimmoire.instance, 0L, 1L);

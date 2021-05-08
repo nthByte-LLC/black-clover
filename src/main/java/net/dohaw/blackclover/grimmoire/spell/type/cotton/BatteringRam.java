@@ -56,7 +56,7 @@ public class BatteringRam extends CastSpellWrapper {
 
                     SpellUtils.playSound(goldenSheep, Sound.ENTITY_GENERIC_EXPLODE);
                     SpellUtils.spawnParticle(goldenSheep, Particle.END_ROD, 10, 1, 1, 1);
-                    SpellUtils.startTornadoParticles(goldenSheep, new Particle.DustOptions(Color.YELLOW, 1), true, 1, true);
+                    SpellUtils.startTornadoParticles(goldenSheep, new Particle.DustOptions(Color.YELLOW, 1), 1, true);
                     new BatteringRamGoalChecker(goldenSheep, (LivingEntity) entityInSight, cpd, this).runTaskTimer(Grimmoire.instance, 0L, 5L);
                     return true;
 

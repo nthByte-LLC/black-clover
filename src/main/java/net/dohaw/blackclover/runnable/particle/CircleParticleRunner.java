@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class CircleParticleRunner extends EntityRunner {
 
-    protected final int POINTS = 30;
+    protected int points = 30;
 
     @Setter
     public double yIncrease = 0.1;
@@ -43,7 +43,7 @@ public class CircleParticleRunner extends EntityRunner {
     }
 
     /*
-        Primarily used for redstone particles (To my knowledge)
+        Primarily used for redstone particles
      */
     public CircleParticleRunner(Entity entity, Particle.DustOptions data, boolean isYIncreasing, double radius){
         super(entity);
@@ -58,7 +58,7 @@ public class CircleParticleRunner extends EntityRunner {
     public void run(){
         if(areEntitiesValid()){
             doYIncreaseCheck();
-            for (int i = 0; i < POINTS; i++) {
+            for (int i = 0; i < points; i++) {
                 doParticleIteration(i);
             }
         }
@@ -79,13 +79,17 @@ public class CircleParticleRunner extends EntityRunner {
     }
 
     protected void doParticleIteration(int iteration){
-        double angle = MathHelper.angle(iteration, POINTS);
+        double angle = MathHelper.angle(iteration, points);
         Location point = entity.getLocation().clone().add(0, startYAdditive, 0).add(radius * Math.sin(angle), yAdditive, radius * Math.cos(angle));
         if(data != null){
             entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0, data);
         }else{
             entity.getWorld().spawnParticle(particle, point, 6, 0, 0, 0, 0);
         }
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 
 }

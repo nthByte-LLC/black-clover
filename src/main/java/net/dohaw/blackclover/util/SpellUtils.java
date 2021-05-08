@@ -18,7 +18,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftSnowball;
 import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
 import org.bukkit.entity.*;
@@ -79,14 +78,14 @@ public class SpellUtils {
         e.getWorld().playEffect(e.getLocation(), effect, data);
     }
 
-    public static BukkitTask startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, boolean yIncrease, double radius, boolean goesRight){
-        return new TornadoParticleRunner(entity, dustOptions, yIncrease, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
+    public static BukkitTask startTornadoParticles(Entity entity, Particle.DustOptions dustOptions, double radius, boolean goesRight){
+        return new TornadoParticleRunner(entity, dustOptions, radius, goesRight).runTaskTimer(Grimmoire.instance, 0L, 3L);
     }
 
-    public static BukkitTask[] startDoubleTornadoParticles(Entity entity, Particle.DustOptions data1, Particle.DustOptions data2, boolean yIncrease, double radius){
+    public static BukkitTask[] startDoubleTornadoParticles(Entity entity, Particle.DustOptions data1, Particle.DustOptions data2, double radius){
         BukkitTask[] arr = new BukkitTask[2];
-        arr[0] = startTornadoParticles(entity, data1, yIncrease, radius, true);
-        arr[1] = startTornadoParticles(entity, data2, yIncrease, radius, false);
+        arr[0] = startTornadoParticles(entity, data1, radius, true);
+        arr[1] = startTornadoParticles(entity, data2, radius, false);
         return arr;
     }
 
