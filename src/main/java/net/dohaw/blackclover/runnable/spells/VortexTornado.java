@@ -12,7 +12,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class VortexTornado extends BukkitRunnable {
 
@@ -44,11 +46,16 @@ public class VortexTornado extends BukkitRunnable {
         // Moves the tornado forward if the block in front is not a solid
         Location locInFront = LocationUtil.getLocationInFront(entity, 0.5);
         if(!locInFront.getBlock().getType().isSolid()){
-            System.out.println("Entity Location: " + entity.getLocation());
             entity = SpellUtils.invisibleArmorStand(locInFront);
             // Changes the entity for all the child entities
             for(TornadoParticleRunner childTornado : tornadoes){
                 childTornado.setEntity(entity);
+                // Shifts the tornado particles forward to make it look like the tornado is moving forward as well.
+                ListIterator<Location> itr = childTornado.getParticleLocations().listIterator();
+                while(itr.hasNext()){
+                    Location currentParticleLocation = itr.next();
+                    itr.set(LocationUtil.getLocationInFront(currentParticleLocation, 0.5));
+                }
             }
             distanceTraveled += 0.5;
         }else{
@@ -58,7 +65,7 @@ public class VortexTornado extends BukkitRunnable {
         /*
             The tornado will only move forward if it is allowed to move forward. It'll only stay in place for so long until it stops.
          */
-        final int ALLOWED_STAYED_INTERVALS = 100;
+        final int ALLOWED_STAYED_INTERVALS = 50;
         if(numStayedIntervals == ALLOWED_STAYED_INTERVALS || distanceTraveled == MAX_DISTANCE_TRAVEL){
             cancel();
         }

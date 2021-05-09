@@ -25,7 +25,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
     public TornadoParticleRunner(Entity entity, Particle.DustOptions data, double startRadius, boolean goesRight) {
         super(entity, data, true, startRadius);
         this.yAdditive = 0.5;
-        this.points = 10;
+        this.points = 15;
         this.goesRight = goesRight;
         this.maxYAdditive = 5;
         this.START_RADIUS = startRadius;
@@ -55,7 +55,7 @@ public class TornadoParticleRunner extends CircleParticleRunner{
             SpellUtils.spawnParticle(point, particle, data, 15, 0, 0,0);
             if(iteration % 4 == 0){
                 for(Location loc : particleLocations){
-                    SpellUtils.spawnParticle(loc, particle, data, 15, 0, 0,0);
+                    SpellUtils.spawnParticle(loc, particle, data, 5, 0, 0,0);
                 }
             }
             particleLocations.add(point);
@@ -65,6 +65,10 @@ public class TornadoParticleRunner extends CircleParticleRunner{
 
         }
 
+    }
+
+    public List<Location> getParticleLocations() {
+        return particleLocations;
     }
 
 }

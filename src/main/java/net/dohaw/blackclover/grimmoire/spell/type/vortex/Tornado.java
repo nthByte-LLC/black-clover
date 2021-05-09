@@ -32,4 +32,5 @@ public class Tornado extends CastSpellWrapper {
     public void prepareShutdown() {
 
     }
+
 }
