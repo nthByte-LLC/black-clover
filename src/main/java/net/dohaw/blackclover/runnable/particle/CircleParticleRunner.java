@@ -92,4 +92,8 @@ public class CircleParticleRunner extends EntityRunner {
         this.entity = entity;
     }
 
+    public Entity getEntity() {
+        return entity;
+    }
+
 }

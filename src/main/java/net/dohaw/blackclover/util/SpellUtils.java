@@ -163,7 +163,7 @@ public class SpellUtils {
      * @return Whether the damage was canceled
      */
     public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
-        // -1 means it was canceled
+        // -999 means it was canceled
         double damagedDone = callSpellDamageEvent(spell, damagedEntity, damager, -damage);
         System.out.println("DAMAGE DONE: " + damagedDone);
         if(damagedDone != -999){

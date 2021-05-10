@@ -12,6 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -65,13 +66,12 @@ public abstract class AbstractVortexTornado extends BukkitRunnable {
             numStayedIntervals++;
         }
 
-        doTornadoSpecifics();
-
         /*
             The tornado will only move forward if it is allowed to move forward. It'll only stay in place for so long until it stops.
          */
         final int ALLOWED_STAYED_INTERVALS = 50;
         if(numStayedIntervals >= ALLOWED_STAYED_INTERVALS || distanceTraveled >= MAX_DISTANCE_TRAVEL){
+            System.out.println("HERE");
             cancel();
         }
 
@@ -104,5 +104,11 @@ public abstract class AbstractVortexTornado extends BukkitRunnable {
     }
 
     public abstract void doTornadoSpecifics();
+
+    protected Collection<Entity> getEntitiesNearTornado(){
+        TornadoParticleRunner firstTornado = tornadoes.get(0);
+        // Gets the entities as high as the tornado and 2 blocks in each x and y direction.
+        return entity.getNearbyEntities(2, firstTornado.yIncrease, 2);
+    }
 
 }

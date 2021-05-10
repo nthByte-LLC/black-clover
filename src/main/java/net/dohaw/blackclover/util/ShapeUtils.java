@@ -48,13 +48,38 @@ public class ShapeUtils {
         return circleBlocks;
     }
 
-    public static List<Block> getBlocksInCube(Location start, int radius){
+    /**
+     * Gets the blocks in a cube
+     */
+    public static List<Block> getBlocksInCube(Location start, int radius, Material mat){
         List<Block> blocks = new ArrayList<>();
         for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
             for(double y = start.getY() - radius; y <= start.getY() + radius; y++){
                 for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
                     Location loc = new Location(start.getWorld(), x, y, z);
-                    blocks.add(loc.getBlock());
+                    Block block = loc.getBlock();
+                    if(mat == null || mat == block.getType()){
+                        blocks.add(loc.getBlock());
+                    }
+                }
+            }
+        }
+        return blocks;
+    }
+
+    /**
+     * Gets the blocks in a cube, but doesn't get the blocks under the start location (Only above it or at its level)
+     */
+    public static List<Block> getBlocksInCube(Location start, int radius, double heightBox, Material mat){
+        List<Block> blocks = new ArrayList<>();
+        for(double x = start.getX() - radius; x <= start.getX() + radius; x++){
+            for(double y = start.getY(); y <= start.getY() + heightBox; y++){
+                for(double z = start.getZ() - radius; z <= start.getZ() + radius; z++){
+                    Location loc = new Location(start.getWorld(), x, y, z);
+                    Block block = loc.getBlock();
+                    if(mat == null || mat == block.getType()){
+                        blocks.add(loc.getBlock());
+                    }
                 }
             }
         }

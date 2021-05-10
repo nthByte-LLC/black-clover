@@ -42,27 +42,17 @@ public class SmokeBomb extends CastSpellWrapper {
         pd.setInVulnerable(true);
 
         final Location CAST_LOCATION = player.getLocation().clone();
-        List<Block> particleLocations = ShapeUtils.getBlocksInCube(CAST_LOCATION, radiusField);
+        List<Block> particleLocations = ShapeUtils.getBlocksInCube(CAST_LOCATION, radiusField, Material.AIR);
 
         // Draws the smoke field
         BukkitTask particleDrawer = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             for(Block block : particleLocations){
-                if(block.getType() == Material.AIR){
-                    Location particleLocation = block.getLocation();
-                    SpellUtils.spawnParticle(particleLocation, Particle.REDSTONE, new Particle.DustOptions(BukkitColor.DARK_GREY, 1), 30, 0.5f, 0.5f, 0.5f);
-                }
+                Location particleLocation = block.getLocation();
+                SpellUtils.spawnParticle(particleLocation, Particle.REDSTONE, new Particle.DustOptions(BukkitColor.DARK_GREY, 1), 30, 0.5f, 0.5f, 0.5f);
             }
         }, 0, 20);
 
-        double additive = radiusField / 2.0;
-//            Location topLeftCorner = LocationUtil.getLocationToLeft(LocationUtil.getLocationInFront(player, additive), additive).add(0, additive, 0);
-//            Location bottomRightCorner = LocationUtil.getLocationToRight(LocationUtil.getLocationInFront(player, -additive), additive);
-
         BukkitTask playerBlinder = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
-//                for(Player player : Bukkit.getOnlinePlayers()){
-//
-//                }
-            // blinds player's in the smoke
             Collection<Entity> entitiesInField = CAST_LOCATION.getWorld().getNearbyEntities(CAST_LOCATION, radiusField, radiusField, radiusField);
             entitiesInField.removeIf(entity -> player.getUniqueId().equals(entity.getUniqueId()));
             for(Entity en : entitiesInField){

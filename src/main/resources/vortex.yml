@@ -6,11 +6,14 @@ Spell Settings:
     Cooldown: 5
     Regen Consumed: 100
     Force Multiplier: 1.2
-    Maximum Travel Distance: 10
+    Tornado Max Travel Distance: 10
   firado:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    # The amount of fire ticks that are added to the entity every single time they are detected to be within range of the tornado
+    Burning Time Added: 10
+    Tornado Max Travel Distance: 10
   waterhose:
     Hotbar Number: 2
     Cooldown: 5

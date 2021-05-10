@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.vortex.Firado;
 import net.dohaw.blackclover.grimmoire.spell.type.vortex.Tornado;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class Vortex extends GrimmoireWrapper {
 
+    public Firado firado;
     public Tornado tornado;
 
     public Vortex() {
@@ -34,8 +36,13 @@ public class Vortex extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
         this.tornado = new Tornado(config);
         this.spells.put(SpellType.TORNADO, tornado);
+
+        this.firado = new Firado(config);
+        this.spells.put(SpellType.FIRADO, firado);
+
     }
 
 }

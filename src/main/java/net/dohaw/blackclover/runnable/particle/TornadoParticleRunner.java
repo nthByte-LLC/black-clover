@@ -69,4 +69,8 @@ public class TornadoParticleRunner extends CircleParticleRunner{
         return particleLocations;
     }
 
+    public double getStartRadius() {
+        return START_RADIUS;
+    }
+
 }
