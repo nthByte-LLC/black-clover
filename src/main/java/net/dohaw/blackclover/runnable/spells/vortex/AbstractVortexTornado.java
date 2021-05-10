@@ -1,42 +1,45 @@
-package net.dohaw.blackclover.runnable.spells;
+package net.dohaw.blackclover.runnable.spells.vortex;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.runnable.particle.EntityRunner;
 import net.dohaw.blackclover.runnable.particle.TornadoParticleRunner;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class VortexTornado extends BukkitRunnable {
+public abstract class AbstractVortexTornado extends BukkitRunnable {
 
     // Keeps track of all the invisible armor stands we have placed and removes them from the world later.
     private List<Entity> invisibleArmorStands = new ArrayList<>();
 
     // The maximum distance the tornado should travel before this is canceled.
-    private final double MAX_DISTANCE_TRAVEL;
+    private final int MAX_DISTANCE_TRAVEL;
 
     private double distanceTraveled = 0;
 
     private int numStayedIntervals = 0;
 
-    private Entity entity;
+    protected Entity entity;
     private final Particle.DustOptions DUST_OPTIONS;
-    private List<TornadoParticleRunner> tornadoes = new ArrayList<>();
+    protected List<TornadoParticleRunner> tornadoes = new ArrayList<>();
 
-    public VortexTornado(Entity entity, Particle.DustOptions dustOptions, int maxDistanceTravel) {
+    // The task that carries out the specifics of what the tornado is supposed to do
+    private BukkitTask innerTask;
+
+    public AbstractVortexTornado(Entity entity, Particle.DustOptions dustOptions, int maxDistanceTravel, long intervalInnerRunner) {
         this.entity = entity;
         this.DUST_OPTIONS = dustOptions;
         this.MAX_DISTANCE_TRAVEL = maxDistanceTravel;
         initTornadoes();
+        this.innerTask = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, this::doTornadoSpecifics, 0L, intervalInnerRunner);
     }
 
     @Override
@@ -62,11 +65,13 @@ public class VortexTornado extends BukkitRunnable {
             numStayedIntervals++;
         }
 
+        doTornadoSpecifics();
+
         /*
             The tornado will only move forward if it is allowed to move forward. It'll only stay in place for so long until it stops.
          */
         final int ALLOWED_STAYED_INTERVALS = 50;
-        if(numStayedIntervals == ALLOWED_STAYED_INTERVALS || distanceTraveled == MAX_DISTANCE_TRAVEL){
+        if(numStayedIntervals >= ALLOWED_STAYED_INTERVALS || distanceTraveled >= MAX_DISTANCE_TRAVEL){
             cancel();
         }
 
@@ -75,6 +80,7 @@ public class VortexTornado extends BukkitRunnable {
     @Override
     public synchronized void cancel() throws IllegalStateException {
         super.cancel();
+        innerTask.cancel();
         for(TornadoParticleRunner childTornado: tornadoes){
             childTornado.cancel();
         }
@@ -85,19 +91,18 @@ public class VortexTornado extends BukkitRunnable {
 
     private void initTornadoes(){
 
-        final int NUM_OUTER_TORNADOES = 1;
-        for(int i = 0; i < NUM_OUTER_TORNADOES; i++){
-            TornadoParticleRunner currentTornado = new TornadoParticleRunner(entity, DUST_OPTIONS, i + 1, false);
-            TornadoParticleRunner currentTornado2 = new TornadoParticleRunner(entity, DUST_OPTIONS, i + 1, true);
-            currentTornado.setMaxYAdditive(50);
-            currentTornado2.setMaxYAdditive(50);
+        TornadoParticleRunner currentTornado = new TornadoParticleRunner(entity, DUST_OPTIONS, 1, false);
+        TornadoParticleRunner currentTornado2 = new TornadoParticleRunner(entity, DUST_OPTIONS, 1, true);
+        currentTornado.setMaxYAdditive(50);
+        currentTornado2.setMaxYAdditive(50);
 
-            currentTornado.runTaskTimer(Grimmoire.instance, 0L, 1L);
-            currentTornado2.runTaskTimer(Grimmoire.instance, 0L, 1L);
-            tornadoes.add(currentTornado);
-            tornadoes.add(currentTornado2);
-        }
+        currentTornado.runTaskTimer(Grimmoire.instance, 0L, 1L);
+        currentTornado2.runTaskTimer(Grimmoire.instance, 0L, 1L);
+        tornadoes.add(currentTornado);
+        tornadoes.add(currentTornado2);
 
     }
+
+    public abstract void doTornadoSpecifics();
 
 }
