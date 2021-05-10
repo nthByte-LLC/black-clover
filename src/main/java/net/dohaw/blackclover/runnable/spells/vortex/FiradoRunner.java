@@ -17,11 +17,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class VortexFiradoSpell extends AbstractVortexTornado {
+public class FiradoRunner extends VortexTornadoRunner {
 
     private Firado spell;
 
-    public VortexFiradoSpell(Entity entity, Firado spell) {
+    public FiradoRunner(Entity entity, Firado spell) {
         super(entity, new Particle.DustOptions(Color.ORANGE, 1), spell.getTornadoMaxTravelDistance(), 20L);
         this.spell = spell;
     }

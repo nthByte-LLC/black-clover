@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collection;
 
-public class VortexTornadoSpell extends AbstractVortexTornado {
+public class VortexTornadoSpell extends VortexTornadoRunner {
 
     private Player caster;
     private double damage;

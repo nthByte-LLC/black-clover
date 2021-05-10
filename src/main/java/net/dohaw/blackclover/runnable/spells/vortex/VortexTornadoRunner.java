@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-public abstract class AbstractVortexTornado extends BukkitRunnable {
+public abstract class VortexTornadoRunner extends BukkitRunnable {
 
     // Keeps track of all the invisible armor stands we have placed and removes them from the world later.
     private List<Entity> invisibleArmorStands = new ArrayList<>();
@@ -35,7 +35,7 @@ public abstract class AbstractVortexTornado extends BukkitRunnable {
     // The task that carries out the specifics of what the tornado is supposed to do
     private BukkitTask innerTask;
 
-    public AbstractVortexTornado(Entity entity, Particle.DustOptions dustOptions, int maxDistanceTravel, long intervalInnerRunner) {
+    public VortexTornadoRunner(Entity entity, Particle.DustOptions dustOptions, int maxDistanceTravel, long intervalInnerRunner) {
         this.entity = entity;
         this.DUST_OPTIONS = dustOptions;
         this.MAX_DISTANCE_TRAVEL = maxDistanceTravel;
