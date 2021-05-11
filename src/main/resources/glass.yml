@@ -5,10 +5,15 @@ Spell Settings:
     Hotbar Number: 0
     Cooldown: 5
     Regen Consumed: 100
+    Wall Height: 3
+    Wall Width: 5
+    Duration: 10
   glass_shot:
     Hotbar Number: 1
     Cooldown: 5
     Regen Consumed: 100
+    Force Multiplier: 1
+    Damage: 2
   glass_creation:
     Hotbar Number: 2
     Cooldown: 5

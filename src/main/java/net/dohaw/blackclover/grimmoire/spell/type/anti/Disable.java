@@ -39,7 +39,7 @@ public class Disable extends ActivatableSpellWrapper implements Listener {
             PlayerData damagerData = Grimmoire.instance.getPlayerDataManager().getData(damager.getUniqueId());
             if(damagerData.isSpellActive(SpellType.DISABLE)){
 
-                SpellDamageEvent event = new SpellDamageEvent(KEY, 0,e.getEntity(), damager);
+                SpellDamageEvent event = new SpellDamageEvent(KEY, 0, damaged, damager);
                 Bukkit.getPluginManager().callEvent(event);
                 if(!event.isCancelled()){
 

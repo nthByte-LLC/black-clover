@@ -38,6 +38,7 @@ public class Wall extends CastSpellWrapper {
         super.loadSettings();
         this.wallHeight = grimmoireConfig.getIntegerSetting(KEY, "Wall Height");
         this.wallWidth = grimmoireConfig.getIntegerSetting(KEY, "Wall Width");
+        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
     @Override

@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.glass.GlassShot;
 import net.dohaw.blackclover.grimmoire.spell.type.glass.Wall;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class Glass extends GrimmoireWrapper {
 
+    public GlassShot glassShot;
     public Wall wall;
 
     public Glass() {
@@ -37,6 +39,9 @@ public class Glass extends GrimmoireWrapper {
 
         this.wall = new Wall(config);
         this.spells.put(SpellType.GLASS_WALL, wall);
+
+        this.glassShot = new GlassShot(config);
+        this.spells.put(SpellType.GLASS_SHOT, glassShot);
 
     }
 

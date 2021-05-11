@@ -31,7 +31,6 @@ public class IceSpike extends CastSpellWrapper implements Listener {
         Player player = pd.getPlayer();
         Projectile proj = SpellUtils.fireProjectile(player, this, Material.PACKED_ICE);
         Vector velocity = proj.getVelocity();
-        System.out.println("SCALE: " + velocityScale);
         proj.setVelocity(velocity.multiply(velocityScale));
 
         SpellUtils.playSound(player, Sound.ENTITY_SNOW_GOLEM_SHOOT);
