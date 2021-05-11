@@ -10,10 +10,10 @@ import org.bukkit.entity.Entity;
 
 import java.util.List;
 
-public class WaterhoseRunner extends VortexTornadoRunner {
+public class WaterhoseRunner extends AbstractVortexTornadoRunner {
 
     public WaterhoseRunner(Entity entity, Waterhose spell) {
-        super(entity, new Particle.DustOptions(Color.BLUE, 1), spell.getTornadoMaxTravelDistance(), 20L);
+        super(entity, spell, new Particle.DustOptions(Color.BLUE, 1), 20L);
     }
 
     @Override

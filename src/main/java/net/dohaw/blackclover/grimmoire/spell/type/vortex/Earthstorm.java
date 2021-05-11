@@ -4,48 +4,46 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.runnable.spells.vortex.VortexTornadoRunner;
+import net.dohaw.blackclover.runnable.spells.vortex.EarthstormRunner;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
-public class Tornado extends VortexSpell {
+public class Earthstorm extends VortexSpell{
 
-    private double damage;
-    private double forceMultiplier;
+    private double slownessDuration;
+    private int slownessLevel;
 
-    public Tornado(GrimmoireConfig grimmoireConfig) {
-        super(SpellType.TORNADO, grimmoireConfig);
+    public Earthstorm(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.EARTHSTORM, grimmoireConfig);
     }
 
     @Override
     public boolean cast(Event e, PlayerData pd) {
         Player player = pd.getPlayer();
         Location locInFront = LocationUtil.getLocationInFront(player, 1);
-        new VortexTornadoRunner(SpellUtils.invisibleArmorStand(locInFront), this, player).runTaskTimer(Grimmoire.instance, 0L, 5L);
+        new EarthstormRunner(SpellUtils.invisibleArmorStand(locInFront), this, player).runTaskTimer(Grimmoire.instance, 0L, 5L);
         return true;
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
+    public void prepareShutdown() { }
 
     @Override
     public void loadSettings() {
         super.loadSettings();
-        this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");
-        this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
+        this.slownessDuration = grimmoireConfig.getDoubleSetting(KEY, "Slowness Duration");
+        this.slownessLevel = grimmoireConfig.getIntegerSetting(KEY, "Slowness Level");
     }
 
-    public double getForceMultiplier() {
-        return forceMultiplier;
+    public double getSlownessDuration() {
+        return slownessDuration;
     }
 
-    public double getDamage(){
-        return damage;
+    public int getSlownessLevel() {
+        return slownessLevel;
     }
 
 }

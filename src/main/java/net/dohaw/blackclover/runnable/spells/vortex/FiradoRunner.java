@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class FiradoRunner extends VortexTornadoRunner {
+public class FiradoRunner extends AbstractVortexTornadoRunner {
 
     private Firado spell;
 
