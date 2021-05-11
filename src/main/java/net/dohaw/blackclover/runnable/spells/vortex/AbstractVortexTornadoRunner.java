@@ -36,12 +36,15 @@ public abstract class AbstractVortexTornadoRunner extends BukkitRunnable {
     // The task that carries out the specifics of what the tornado is supposed to do
     private BukkitTask innerTask;
 
+    private VortexSpell spell;
+
     public AbstractVortexTornadoRunner(Entity entity, VortexSpell spell, Particle.DustOptions dustOptions, long intervalInnerRunner) {
         this.entity = entity;
         this.DUST_OPTIONS = dustOptions;
         this.MAX_DISTANCE_TRAVEL = spell.getTornadoMaxTravelDistance();
         initTornadoes();
         this.innerTask = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, this::doTornadoSpecifics, 0L, intervalInnerRunner);
+        this.spell = spell;
     }
 
     @Override

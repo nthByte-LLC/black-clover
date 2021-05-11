@@ -4,14 +4,16 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.vortex.Firado;
-import net.dohaw.blackclover.grimmoire.spell.type.vortex.Tornado;
+import net.dohaw.blackclover.grimmoire.spell.type.vortex.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Vortex extends GrimmoireWrapper {
 
+    public Portnado portnado;
+    public Earthstorm earthstorm;
+    public Waterhose waterhose;
     public Firado firado;
     public Tornado tornado;
 
@@ -42,6 +44,15 @@ public class Vortex extends GrimmoireWrapper {
 
         this.firado = new Firado(config);
         this.spells.put(SpellType.FIRADO, firado);
+
+        this.waterhose = new Waterhose(config);
+        this.spells.put(SpellType.WATERHOSE, waterhose);
+
+        this.earthstorm = new Earthstorm(config);
+        this.spells.put(SpellType.EARTHSTORM, earthstorm);
+
+        this.portnado = new Portnado(config);
+        this.spells.put(SpellType.PORTNADO, portnado);
 
     }
 

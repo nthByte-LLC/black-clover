@@ -13,8 +13,8 @@ import org.bukkit.event.Event;
 
 public class Waterhose extends VortexSpell{
 
-    public Waterhose(SpellType spellType, GrimmoireConfig grimmoireConfig) {
-        super(spellType, grimmoireConfig);
+    public Waterhose(GrimmoireConfig grimmoireConfig) {
+        super(SpellType.WATERHOSE, grimmoireConfig);
     }
 
     @Override
@@ -26,8 +26,6 @@ public class Waterhose extends VortexSpell{
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
+    public void prepareShutdown() { }
 
 }

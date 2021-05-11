@@ -22,7 +22,7 @@ public class FiradoRunner extends AbstractVortexTornadoRunner {
     private Firado spell;
 
     public FiradoRunner(Entity entity, Firado spell) {
-        super(entity, new Particle.DustOptions(Color.ORANGE, 1), spell.getTornadoMaxTravelDistance(), 20L);
+        super(entity, spell, new Particle.DustOptions(Color.ORANGE, 1), 20L);
         this.spell = spell;
     }
 
