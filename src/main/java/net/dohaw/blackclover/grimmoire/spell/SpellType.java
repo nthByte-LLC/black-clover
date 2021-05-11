@@ -213,7 +213,17 @@ public enum SpellType {
     WATERHOSE("waterhose", false),
     EARTHSTORM("earthstorm", false),
     PORTNADO("portnado", false),
-    ELEMENT_STORM("element_storm", true);
+    ELEMENT_STORM("element_storm", true),
+
+    /*
+        Glass spells
+     */
+    GLASS_WALL("wall", false),
+    GLASS_SHOT("glass_shot", false),
+    GLASS_CREATION("glass_creation", false),
+    SHIELD("shield", false),
+    PRISON("prison", false),
+    GLASS_SNAKE("glass_snake", true);
 
     @Getter
     private boolean isUltimate;

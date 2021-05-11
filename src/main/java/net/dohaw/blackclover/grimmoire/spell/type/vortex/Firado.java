@@ -8,6 +8,7 @@ import net.dohaw.blackclover.runnable.spells.vortex.FiradoRunner;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -24,6 +25,7 @@ public class Firado extends VortexSpell {
         Player player = pd.getPlayer();
         Location locInFront = LocationUtil.getLocationInFront(player, 1);
         new FiradoRunner(SpellUtils.invisibleArmorStand(locInFront), this).runTaskTimer(Grimmoire.instance, 0L, 5L);
+        SpellUtils.playSound(player, Sound.BLOCK_FURNACE_FIRE_CRACKLE);
         return true;
     }
 

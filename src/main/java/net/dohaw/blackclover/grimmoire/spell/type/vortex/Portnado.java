@@ -8,6 +8,7 @@ import net.dohaw.blackclover.runnable.spells.vortex.PortnadoRunner;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -25,6 +26,7 @@ public class Portnado extends VortexSpell{
         Player player = pd.getPlayer();
         Location locInFront = LocationUtil.getLocationInFront(player, 1);
         new PortnadoRunner(SpellUtils.invisibleArmorStand(locInFront), this, player).runTaskTimer(Grimmoire.instance, 0L, 5L);
+        SpellUtils.playSound(player, Sound.ENTITY_ENDER_PEARL_THROW);
         return true;
     }
 

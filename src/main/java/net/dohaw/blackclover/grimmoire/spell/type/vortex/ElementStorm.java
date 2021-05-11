@@ -9,6 +9,7 @@ import net.dohaw.blackclover.runnable.spells.vortex.*;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -63,6 +64,8 @@ public class ElementStorm extends VortexSpell {
             }
 
         }
+        SpellUtils.playSound(caster, Sound.BLOCK_BEACON_POWER_SELECT);
+
         return true;
     }
 

@@ -39,6 +39,7 @@ public class Grimmoire extends WrapperHolder {
     public static final GrimmoireWrapper TRAP = new Trap();
     public static final Transformation TRANSFORMATION = new Transformation();
     public static final Vortex VORTEX = new Vortex();
+    public static final GrimmoireWrapper GLASS = new Glass();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

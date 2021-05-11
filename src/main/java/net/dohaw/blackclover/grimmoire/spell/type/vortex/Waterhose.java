@@ -8,6 +8,7 @@ import net.dohaw.blackclover.runnable.spells.vortex.WaterhoseRunner;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -22,6 +23,7 @@ public class Waterhose extends VortexSpell{
         Player player = pd.getPlayer();
         Location locInFront = LocationUtil.getLocationInFront(player, 1);
         new WaterhoseRunner(SpellUtils.invisibleArmorStand(locInFront), this).runTaskTimer(Grimmoire.instance, 0L, 5L);
+        SpellUtils.playSound(player, Sound.MUSIC_UNDER_WATER);
         return true;
     }
 
