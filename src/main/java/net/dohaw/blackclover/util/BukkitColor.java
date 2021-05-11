@@ -10,5 +10,6 @@ public class BukkitColor {
     public static final Color VIOLET = Color.fromRGB(128, 0, 255);
     public static final Color PALE_CYAN = Color.fromRGB(199, 231, 237);
     public static final Color BROWN = Color.fromRGB(96, 70, 15);
+    public static final Color TURQUOISE = Color.fromRGB(175, 238, 238);
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Vortex extends GrimmoireWrapper {
 
+    public ElementStorm elementStorm;
     public Portnado portnado;
     public Earthstorm earthstorm;
     public Waterhose waterhose;
@@ -53,6 +54,9 @@ public class Vortex extends GrimmoireWrapper {
 
         this.portnado = new Portnado(config);
         this.spells.put(SpellType.PORTNADO, portnado);
+
+        this.elementStorm = new ElementStorm(config);
+        this.spells.put(SpellType.ELEMENT_STORM, elementStorm);
 
     }
 
