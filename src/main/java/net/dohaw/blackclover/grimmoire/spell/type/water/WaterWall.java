@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
+/**
+ * Repeatedly creates a water wall in the direction that the player is looking. Very similar to the Shield spell in the Glass Magic grimmoire.
+ */
 public class WaterWall extends CastSpellWrapper implements Listener {
 
     private double duration;

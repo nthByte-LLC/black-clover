@@ -12,6 +12,9 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+/**
+ * Periodically turns the player's target block into glass if the target block is sand.
+ */
 public class GlassCreation extends ActivatableSpellWrapper {
 
     public GlassCreation(GrimmoireConfig grimmoireConfig) {

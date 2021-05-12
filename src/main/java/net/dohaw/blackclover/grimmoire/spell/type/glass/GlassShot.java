@@ -9,6 +9,9 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 
+/**
+ * Simply shoots a glass bottle as a projectile
+ */
 public class GlassShot extends ProjectileSpellWrapper {
 
     public GlassShot(GrimmoireConfig grimmoireConfig) {

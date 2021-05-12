@@ -27,11 +27,21 @@ public class ShieldRunner extends BukkitRunnable {
 
     @Override
     public void run() {
+        clearShieldBlocks();
+        this.shieldBlockLocations = SpellUtils.makeWall(shieldUser.getLocation(), Material.GLASS, shieldWidth, shieldHeight, false);
+        SpellUtils.playSound(shieldUser, Sound.BLOCK_GLASS_PLACE);
+    }
+
+    @Override
+    public synchronized void cancel() throws IllegalStateException {
+        clearShieldBlocks();
+        super.cancel();
+    }
+
+    private void clearShieldBlocks(){
         for (Location shieldBlockLocation : shieldBlockLocations) {
             shieldBlockLocation.getBlock().setType(Material.AIR);
         }
-        this.shieldBlockLocations = SpellUtils.makeWall(shieldUser.getLocation(), Material.GLASS, shieldWidth, shieldHeight, false);
-        SpellUtils.playSound(shieldUser, Sound.BLOCK_GLASS_PLACE);
     }
 
 }
