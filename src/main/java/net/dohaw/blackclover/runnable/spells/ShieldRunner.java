@@ -29,7 +29,6 @@ public class ShieldRunner extends BukkitRunnable {
     public void run() {
         clearShieldBlocks();
         this.shieldBlockLocations = SpellUtils.makeWall(shieldUser.getLocation(), Material.GLASS, shieldWidth, shieldHeight, false);
-        SpellUtils.playSound(shieldUser, Sound.BLOCK_GLASS_PLACE);
     }
 
     @Override

@@ -41,7 +41,9 @@ public class Prison extends CastSpellWrapper {
         Entity entityInSight = SpellUtils.getEntityInLineOfSight(e, caster, castDistance);
         if(SpellUtils.isTargetValid(caster, entityInSight)){
 
-            Location originWall = caster.getLocation();
+            assert entityInSight != null;
+
+            Location originWall = entityInSight.getLocation();
             for(int i = 0; i < 4; i++){
 
                 originWall.setYaw(i * 90);
@@ -59,8 +61,8 @@ public class Prison extends CastSpellWrapper {
             return true;
 
         }
-
         return false;
+
     }
 
     @Override

@@ -11,6 +11,7 @@ import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -21,6 +22,7 @@ public class GlassSnake extends CastSpellWrapper {
 
     private List<List<Location>> snakeBlocks = new ArrayList<>();
 
+    private double damage;
     private int lengthSnake, castDistance;
 
     public GlassSnake(GrimmoireConfig grimmoireConfig) {
@@ -55,8 +57,11 @@ public class GlassSnake extends CastSpellWrapper {
             snakeBlocks.add(currentSnakeBlocks);
 
             Location firstSnakeBlockLocation = currentSnakeBlocks.get(0);
-            SpellUtils.playSound(firstSnakeBlockLocation, Sound.BLOCK_GLASS_PLACE);
-            SpellUtils.spawnParticle(firstSnakeBlockLocation, Particle.CLOUD, 30, 1, 1, 1);
+            boolean damageHasBeenDone = SpellUtils.doSpellDamage((LivingEntity) entityInSight, caster, KEY, damage);
+            if(damageHasBeenDone){
+                SpellUtils.playSound(firstSnakeBlockLocation, Sound.BLOCK_GLASS_PLACE);
+                SpellUtils.spawnParticle(firstSnakeBlockLocation, Particle.CLOUD, 30, 1, 1, 1);
+            }
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
                 snakeBlocks.remove(currentSnakeBlocks);
@@ -83,6 +88,7 @@ public class GlassSnake extends CastSpellWrapper {
         super.loadSettings();
         this.lengthSnake = grimmoireConfig.getIntegerSetting(KEY, "Length Snake");
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
+        this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
 
     private void removeSnakeBlocks(List<Location> snakeBlocks){
