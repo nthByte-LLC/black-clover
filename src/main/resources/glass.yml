@@ -36,3 +36,6 @@ Spell Settings:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    # Length Snake needs to be longer than cast distance
+    Length Snake: 15
+    Cast Distance: 10

@@ -32,6 +32,9 @@ Spell Settings:
     Cooldown: 5
     Regen Consumed: 100
     Tornado Max Travel Distance: 20
+    # The max amount you want adjusted to the entities coordinate when getting randomly teleported.
+    Max X Additive: 5
+    Max Z Additive: 5
   element_storm:
     Hotbar Number: 5
     Cooldown: 5

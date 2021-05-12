@@ -2,9 +2,8 @@ package net.dohaw.blackclover.runnable.spells.vortex;
 
 import net.dohaw.blackclover.grimmoire.spell.type.vortex.Portnado;
 import net.dohaw.blackclover.grimmoire.spell.type.vortex.VortexSpell;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
+import net.dohaw.blackclover.util.SpellUtils;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -32,15 +31,15 @@ public class PortnadoRunner extends AbstractVortexTornadoRunner{
             if(e instanceof LivingEntity){
                 LivingEntity livingEntity = (LivingEntity) e;
                 if(!livingEntity.getUniqueId().equals(caster.getUniqueId()) && livingEntity.getType() != EntityType.ARMOR_STAND){
-                    teleportToRandomLocation(livingEntity.getLocation());
+                    teleportToRandomLocation(livingEntity);
                 }
             }
         }
     }
 
-    private void teleportToRandomLocation(Location livingEntityLocation){
+    private void teleportToRandomLocation(LivingEntity entityBeingTeleported){
 
-        Location newEntityLocation = livingEntityLocation.clone();
+        Location newEntityLocation = entityBeingTeleported.getLocation().clone();
         double distanceFromTornado = newEntityLocation.distance(entity.getLocation());
         while(distanceFromTornado < 3){
 
@@ -49,12 +48,16 @@ public class PortnadoRunner extends AbstractVortexTornadoRunner{
             int randomZAdditive = current.nextInt(-maxZAdditive, maxZAdditive);
             int newX = newEntityLocation.getBlockX() + randomXAdditive;
             int newZ = newEntityLocation.getBlockZ() + randomZAdditive;
-            int highestY = livingEntityLocation.getWorld().getHighestBlockYAt(newX, newZ);
 
-            newEntityLocation = new Location(livingEntityLocation.getWorld(), newX, highestY, newZ);
+            World entityWorld = entityBeingTeleported.getWorld();
+            int highestY = entityWorld.getHighestBlockYAt(newX, newZ);
+
+            newEntityLocation = new Location(entityWorld, newX, highestY, newZ);
             distanceFromTornado = newEntityLocation.distance(entity.getLocation());
 
         }
+        SpellUtils.playSound(entityBeingTeleported, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
+        entityBeingTeleported.teleport(newEntityLocation);
 
     }
 

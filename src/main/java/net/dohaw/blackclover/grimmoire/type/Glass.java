@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Glass extends GrimmoireWrapper {
 
+    public GlassSnake glassSnake;
     public Prison prison;
     public Shield shield;
     public GlassCreation glassCreation;
@@ -53,6 +54,9 @@ public class Glass extends GrimmoireWrapper {
 
         this.prison = new Prison(config);
         this.spells.put(SpellType.PRISON, prison);
+
+        this.glassSnake = new GlassSnake(config);
+        this.spells.put(SpellType.GLASS_SNAKE, glassSnake);
 
     }
 

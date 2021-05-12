@@ -23,7 +23,7 @@ public class Waterhose extends VortexSpell{
         Player player = pd.getPlayer();
         Location locInFront = LocationUtil.getLocationInFront(player, 1);
         new WaterhoseRunner(SpellUtils.invisibleArmorStand(locInFront), this).runTaskTimer(Grimmoire.instance, 0L, 5L);
-        SpellUtils.playSound(player, Sound.MUSIC_UNDER_WATER);
+        SpellUtils.playSound(player, Sound.ENTITY_BOAT_PADDLE_WATER);
         return true;
     }
 

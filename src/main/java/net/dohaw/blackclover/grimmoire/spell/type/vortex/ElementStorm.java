@@ -14,6 +14,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -27,12 +28,12 @@ public class ElementStorm extends VortexSpell {
     @Override
     public boolean cast(Event e, PlayerData pd) {
 
-        List<SpellType> elementSpells = Arrays.asList(SpellType.FIRADO, SpellType.WATERHOSE, SpellType.EARTHSTORM, SpellType.TORNADO);
+        List<SpellType> elementSpells = new ArrayList<>(Arrays.asList(SpellType.FIRADO, SpellType.WATERHOSE, SpellType.EARTHSTORM, SpellType.TORNADO));
         ThreadLocalRandom current = ThreadLocalRandom.current();
 
         Player caster = pd.getPlayer();
         Location playerLocation = caster.getLocation();
-        for(int yaw = 0; yaw < 270; yaw += 90){
+        for(int yaw = 0; yaw <= 270; yaw += 90){
 
             Location turnedLocation = playerLocation.clone();
             turnedLocation.setYaw(yaw);

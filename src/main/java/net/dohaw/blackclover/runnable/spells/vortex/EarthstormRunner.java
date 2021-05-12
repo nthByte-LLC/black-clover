@@ -1,11 +1,10 @@
 package net.dohaw.blackclover.runnable.spells.vortex;
 
-import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.vortex.Earthstorm;
-import net.dohaw.blackclover.grimmoire.spell.type.vortex.Waterhose;
 import net.dohaw.blackclover.util.BukkitColor;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -35,6 +34,7 @@ public class EarthstormRunner extends AbstractVortexTornadoRunner {
             if(e instanceof LivingEntity){
                 LivingEntity livingEntity = (LivingEntity) e;
                 if(!livingEntity.getUniqueId().equals(caster.getUniqueId()) && livingEntity.getType() != EntityType.ARMOR_STAND){
+                    SpellUtils.playSound(livingEntity, Sound.ENTITY_SQUID_SQUIRT);
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) (slownessDuration * 20), slownessLevel - 1));
                 }
             }
