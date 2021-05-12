@@ -74,6 +74,10 @@ public class SpellUtils {
         e.getWorld().playEffect(e.getLocation(), effect, 10);
     }
 
+    public static void playWorldEffect(Block block, Effect effect){
+        block.getWorld().playEffect(block.getLocation(), effect, 10);
+    }
+
     public static void playWorldEffect(Entity e, Effect effect, int data){
         e.getWorld().playEffect(e.getLocation(), effect, data);
     }
