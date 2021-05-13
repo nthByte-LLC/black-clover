@@ -17,7 +17,7 @@ public class PlayerDataConfig extends Config {
     private final List<GrimmoireType> hasSpecialPlayerData = Arrays.asList(
         GrimmoireType.SHAKUDO, GrimmoireType.WATER,
         GrimmoireType.SNOW, GrimmoireType.ASH, GrimmoireType.COTTON,
-        GrimmoireType.FUNGUS, GrimmoireType.COMPASS, GrimmoireType.GRAVITY, GrimmoireType.TRAP, GrimmoireType.TRANSFORMATION
+        GrimmoireType.FUNGUS, GrimmoireType.COMPASS, GrimmoireType.GRAVITY, GrimmoireType.TRAP, GrimmoireType.TRANSFORMATION, GrimmoireType.DARK
     );
 
     public PlayerDataConfig(File file){
@@ -55,8 +55,10 @@ public class PlayerDataConfig extends Config {
                 newData = new GravityPlayerData(uuid);
             }else if(grimmoireType == GrimmoireType.TRAP) {
                 newData = new TrapPlayerData(uuid);
-            }else if(grimmoireType == GrimmoireType.TRANSFORMATION){
+            }else if(grimmoireType == GrimmoireType.TRANSFORMATION) {
                 newData = new TransformationPlayerData(uuid);
+            }else if(grimmoireType == GrimmoireType.DARK){
+                newData = new DarkPlayerData(uuid);
             }else{
                 // If it gets to here, then there's a conflict between what's in the list and what is being checked in the if statement chain.
                 return pd;

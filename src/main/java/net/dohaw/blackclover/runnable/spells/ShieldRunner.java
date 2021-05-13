@@ -2,6 +2,7 @@ package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.spell.type.glass.Shield;
 import net.dohaw.blackclover.util.SpellUtils;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;

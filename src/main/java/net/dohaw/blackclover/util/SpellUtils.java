@@ -34,6 +34,8 @@ import java.util.Objects;
 
 public class SpellUtils {
 
+    public static final double DAMAGE_CANCEL_VALUE = -999;
+
     public static void playSound(Location location, Sound sound){
         location.getWorld().playSound(location, sound, (float) 0.5, 1);
     }
@@ -167,10 +169,9 @@ public class SpellUtils {
      * @return Whether the damage was canceled
      */
     public static boolean doSpellDamage(LivingEntity damagedEntity, Player damager, SpellType spell, double damage){
-        // -999 means it was canceled
         double damagedDone = callSpellDamageEvent(spell, damagedEntity, damager, -damage);
         System.out.println("DAMAGE DONE IN SPELL DAMAGE: " + damagedDone);
-        if(damagedDone != -999){
+        if(damagedDone != DAMAGE_CANCEL_VALUE){
             alterHealth(damagedEntity, damagedDone);
             damagedEntity.playEffect(EntityEffect.HURT);
             return true;
@@ -182,7 +183,7 @@ public class SpellUtils {
         SpellDamageEvent event = new SpellDamageEvent(spell, damage, damagedEntity, damager);
         Bukkit.getPluginManager().callEvent(event);
         if(event.isCancelled()){
-            return -999;
+            return DAMAGE_CANCEL_VALUE;
         }else{
             return event.getDamage();
         }

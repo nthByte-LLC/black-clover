@@ -223,7 +223,17 @@ public enum SpellType {
     GLASS_CREATION("glass_creation", false),
     SHIELD("shield", false),
     PRISON("prison", false),
-    GLASS_SNAKE("glass_snake", true);
+    GLASS_SNAKE("glass_snake", true),
+
+    /*
+        Dark spells
+     */
+    SHADOW_BOXING("shadow_boxing", false),
+    SHADOW_TRAP("shadow_trap", false),
+    SHADOW_FORM("shadow_form", false),
+    BLACK_HOLE("black_hole", false),
+    SHADOW_TRAVEL("shadow_travel", false),
+    DARK_HEART("dark_heart", true);
 
     @Getter
     private boolean isUltimate;

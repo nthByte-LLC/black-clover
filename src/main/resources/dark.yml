@@ -1,0 +1,27 @@
+Display Name Color: "&0"
+
+Spell Settings:
+  shadow_boxing:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+  shadow_trap:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  shadow_form:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  black_hole:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  shadow_travel:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  dark_heart:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100
