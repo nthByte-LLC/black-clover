@@ -1,7 +1,6 @@
 package net.dohaw.blackclover.grimmoire.spell.type.trap;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.event.TrapActivationEvent;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -9,14 +8,15 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.TrapPlayerData;
 import net.dohaw.blackclover.util.BlockSnapshot;
 import net.dohaw.blackclover.util.SpellUtils;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashMap;
 import java.util.Map;

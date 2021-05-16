@@ -25,6 +25,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
@@ -282,27 +283,46 @@ public class SpellUtils {
         return stand;
     }
 
-    public static EntityArmorStand nmsInvisibleArmorStand(Location location){
-        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
-        EntityArmorStand stand = new EntityArmorStand(EntityTypes.ARMOR_STAND, world);
-        stand.setCustomName(new ChatMessage("Brooo"));
-        stand.setNoGravity(true);
-        stand.setInvulnerable(true);
-        return stand;
-    }
+//    public static EntityArmorStand nmsInvisibleArmorStand(Location location){
+//        WorldServer world = ((CraftWorld) location.getWorld()).getHandle();
+//        EntityArmorStand stand = new EntityArmorStand(EntityTypes.ARMOR_STAND, world);
+//        stand.setCustomName(new ChatMessage("Brooo"));
+//        stand.setNoGravity(true);
+//        stand.setInvulnerable(true);
+//        return stand;
+//    }
 
     public static void freezeEntity(Entity entityInSight, double durationFrozen){
+
         if(entityInSight instanceof Player){
             Player target = (Player) entityInSight;
             PlayerData targetPlayerData = Grimmoire.instance.getPlayerDataManager().getData(target);
             targetPlayerData.setFrozen(Grimmoire.instance, (int) durationFrozen);
         }else{
+
             LivingEntity target = (LivingEntity) entityInSight;
-            target.setAI(false);
+            boolean hasAI = target.hasAI();
+            int initNumFrozenStacks = getNumLivinEntityFrozenStacks(target);
+            if(!hasAI){
+                target.setMetadata("frozen-stacks", new FixedMetadataValue(Grimmoire.instance, initNumFrozenStacks + 1));
+            }else{
+                target.setAI(false);
+            }
+
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
+
                 target.setAI(true);
+                int currentNumFrozenStacks = getNumLivinEntityFrozenStacks(target);
+
+                if(currentNumFrozenStacks != 0){
+                    target.setMetadata("frozen-stacks", new FixedMetadataValue(Grimmoire.instance, currentNumFrozenStacks - 1));
+                    freezeEntity(entityInSight, durationFrozen);
+                }
+
             }, (long) (durationFrozen * 20));
+
         }
+
     }
 
     public static Vector calculateVelocity(Vector from, Vector to, int heightGain)
@@ -351,6 +371,15 @@ public class SpellUtils {
         double dx = to.getBlockX() - from.getBlockX();
         double dz = to.getBlockZ() - from.getBlockZ();
         return dx * dx + dz * dz;
+    }
+
+    private static int getNumLivinEntityFrozenStacks(LivingEntity livingEntity){
+        int frozenStacks = 0;
+        // If the entity is already frozen
+        if(livingEntity.hasMetadata("frozen-stacks")){
+            frozenStacks = livingEntity.getMetadata("frozen-stacks").get(0).asInt();
+        }
+        return frozenStacks;
     }
 
 }

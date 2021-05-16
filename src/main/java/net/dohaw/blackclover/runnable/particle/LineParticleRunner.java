@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.runnable.particle;
 
+import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +16,10 @@ public class LineParticleRunner extends BukkitRunnable {
     protected Location start, end;
     protected Particle.DustOptions dustOptions;
     protected double spread, count;
+
+    protected double leftOffset;
+    protected double rightOffset;
+    protected double yOffset = 0;
 
     public LineParticleRunner(Location start, Location end, Particle.DustOptions dustOptions, double spread){
         this.start = start;
@@ -38,7 +43,9 @@ public class LineParticleRunner extends BukkitRunnable {
      * Draws the line.
      */
     public void drawLine(){
-        Location particleLoc = getParticleLocation();
+
+        Location particleLoc = getParticleLocation().add(0, yOffset, 0);
+        particleLoc = LocationUtil.getLocationToRight(particleLoc, rightOffset);
         boolean isWithinABlock = isCloseToEnd(particleLoc);
         while(!isWithinABlock){
             SpellUtils.spawnParticle(particleLoc, Particle.REDSTONE, dustOptions, 30, 0, 0, 0);
@@ -57,6 +64,10 @@ public class LineParticleRunner extends BukkitRunnable {
 
     protected boolean isCloseToEnd(Location particleLoc){
         return particleLoc.distance(end) <= 1;
+    }
+
+    public void setyOffset(double yOffset) {
+        this.yOffset = yOffset;
     }
 
 }

@@ -9,7 +9,7 @@ import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
- * Spells that you cast once and run its course until you reach two conditiongs:
+ * Spells that you cast once and run its course until you reach two conditions:
  * 1. You run out of mana
  * 2. You cancel the spell by shift left-clicking
  */

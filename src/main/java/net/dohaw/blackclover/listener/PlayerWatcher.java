@@ -82,6 +82,7 @@ public class PlayerWatcher implements Listener {
             player.getPersistentDataContainer().remove(Hurricane.NSK_MARKER);
         }
 
+
     }
 
     @EventHandler
@@ -91,6 +92,7 @@ public class PlayerWatcher implements Listener {
         UUID uuid = player.getUniqueId();
         pdm.saveData(uuid);
         pdm.removeDataFromMemory(uuid);
+        player.setInvisible(false);
     }
 
     @EventHandler
@@ -154,8 +156,8 @@ public class PlayerWatcher implements Listener {
                 }
 
             }
-        }
 
+        }
 
     }
 

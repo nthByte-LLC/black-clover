@@ -19,7 +19,7 @@ public class EntityLineParticleRunner extends LineParticleRunner {
     @Override
     public void run() {
 
-        if(startEntity.isValid() || target.isValid() || isWithinReasonableDistance()){
+        if(!startEntity.isValid() || !target.isValid() || !isWithinReasonableDistance()){
             cancel();
         }
 

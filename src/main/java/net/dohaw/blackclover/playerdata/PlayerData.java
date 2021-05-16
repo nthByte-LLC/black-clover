@@ -1,10 +1,7 @@
 package net.dohaw.blackclover.playerdata;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.dohaw.blackclover.config.PlayerDataConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
-import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
@@ -14,67 +11,51 @@ import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
 public class PlayerData {
 
-    @Getter @Setter
     private boolean willTakeFallDamage = true;
 
     /*
         Whether the player is floating with the Float spell in the Gravity grimmoire.
      */
-    @Getter @Setter
     private boolean isFloating;
 
     // The y level at which they started floating
-    @Getter @Setter
     private double floatY;
 
     /*
         For spells that have a cast time like "Freeze" from the Snow grimmoire
      */
-    @Getter @Setter
     private boolean isCurrentlyCasting;
 
-    @Getter @Setter
     private double castStartHealth;
 
-    @Getter @Setter
     private SpellType spellCurrentlyCasting;
 
-    @Setter
     private boolean canCast = true;
 
-    @Getter @Setter
     private boolean isFrozen;
 
-    @Getter @Setter
+    private int frozenStacks = 0;
+
     private boolean isInVulnerable;
 
-    @Getter @Setter
     private boolean canAttack;
 
-    @Getter
     private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
 
-    @Getter
     private Map<SpellType, List<BukkitTask>> spellRunnables = new HashMap<>();
 
-    @Getter @Setter
     private int maxRegen, regenAmount;
 
-    @Getter @Setter
     private GrimmoireWrapper grimmoireWrapper;
 
-    @Getter @Setter
     private PlayerDataConfig config;
 
-    @Getter
     private UUID uuid;
 
     /*
@@ -126,9 +107,7 @@ public class PlayerData {
     public void stopSpellRunnables(SpellType spellType){
         List<BukkitTask> runnables = spellRunnables.get(spellType);
         if(runnables != null){
-            runnables.forEach(runner -> {
-                runner.cancel();
-            });
+            runnables.forEach(BukkitTask::cancel);
             spellRunnables.remove(spellType);
         }
     }
@@ -195,10 +174,145 @@ public class PlayerData {
     }
 
     public void setFrozen(JavaPlugin plugin, int duration){
-        this.isFrozen = true;
+
+        if(isFrozen){
+            frozenStacks++;
+        }else{
+            this.isFrozen = true;
+        }
+
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             this.isFrozen = false;
+            if(frozenStacks != 0){
+                frozenStacks--;
+                setFrozen(plugin, duration);
+            }
         }, duration * 20);
+
+    }
+
+    public boolean isWillTakeFallDamage() {
+        return willTakeFallDamage;
+    }
+
+    public void setWillTakeFallDamage(boolean willTakeFallDamage) {
+        this.willTakeFallDamage = willTakeFallDamage;
+    }
+
+    public boolean isFloating() {
+        return isFloating;
+    }
+
+    public void setFloating(boolean floating) {
+        isFloating = floating;
+    }
+
+    public double getFloatY() {
+        return floatY;
+    }
+
+    public void setFloatY(double floatY) {
+        this.floatY = floatY;
+    }
+
+    public boolean isCurrentlyCasting() {
+        return isCurrentlyCasting;
+    }
+
+    public void setCurrentlyCasting(boolean currentlyCasting) {
+        isCurrentlyCasting = currentlyCasting;
+    }
+
+    public double getCastStartHealth() {
+        return castStartHealth;
+    }
+
+    public void setCastStartHealth(double castStartHealth) {
+        this.castStartHealth = castStartHealth;
+    }
+
+    public SpellType getSpellCurrentlyCasting() {
+        return spellCurrentlyCasting;
+    }
+
+    public void setSpellCurrentlyCasting(SpellType spellCurrentlyCasting) {
+        this.spellCurrentlyCasting = spellCurrentlyCasting;
+    }
+
+    public void setCanCast(boolean canCast) {
+        this.canCast = canCast;
+    }
+
+    public boolean isCanCast() {
+        return canCast;
+    }
+
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        isFrozen = frozen;
+    }
+
+    public boolean isInVulnerable() {
+        return isInVulnerable;
+    }
+
+    public void setInVulnerable(boolean inVulnerable) {
+        isInVulnerable = inVulnerable;
+    }
+
+    public boolean isCanAttack() {
+        return canAttack;
+    }
+
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
+    }
+
+    public HashSet<SpellType> getSpellsOnCooldown() {
+        return spellsOnCooldown;
+    }
+
+    public Map<SpellType, List<BukkitTask>> getSpellRunnables() {
+        return spellRunnables;
+    }
+
+    public int getMaxRegen() {
+        return maxRegen;
+    }
+
+    public void setMaxRegen(int maxRegen) {
+        this.maxRegen = maxRegen;
+    }
+
+    public int getRegenAmount() {
+        return regenAmount;
+    }
+
+    public void setRegenAmount(int regenAmount) {
+        this.regenAmount = regenAmount;
+    }
+
+    public GrimmoireWrapper getGrimmoireWrapper() {
+        return grimmoireWrapper;
+    }
+
+    public void setGrimmoireWrapper(GrimmoireWrapper grimmoireWrapper) {
+        this.grimmoireWrapper = grimmoireWrapper;
+    }
+
+    public PlayerDataConfig getConfig() {
+        return config;
+    }
+
+    public void setConfig(PlayerDataConfig config) {
+        this.config = config;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
 }

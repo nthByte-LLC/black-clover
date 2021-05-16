@@ -1,11 +1,10 @@
 package net.dohaw.blackclover.playerdata;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 
 import java.util.UUID;
 
-public class DarkPlayerData extends PlayerData{
+public class DarkPlayerData extends PlayerData {
 
     private boolean isShadowBoxing;
 
