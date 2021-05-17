@@ -37,3 +37,8 @@ Spell Settings:
     Hotbar Number: 5
     Cooldown: 5
     Regen Consumed: 100
+    Wither Level: 1
+    Wither Duration: 10
+    Radius: 25
+    #How long the black concrete blocks stay
+    Duration: 10

@@ -43,7 +43,7 @@ public class BlackHole extends CastSpellWrapper {
             List<BlockSnapshot> blocksBeforeBlackHole = makeBlackHolePatch(blockAimingAt);
             this.previousBlocks.addAll(blocksBeforeBlackHole);
 
-            BlackHoleRunner blackHoleRunner = new BlackHoleRunner(this, blockAimingAt.getLocation());
+            BlackHoleRunner blackHoleRunner = new BlackHoleRunner(caster, this, blockAimingAt.getLocation());
             blackHoleRunner.runTaskTimer(Grimmoire.instance, 0L, 10L);
 
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {

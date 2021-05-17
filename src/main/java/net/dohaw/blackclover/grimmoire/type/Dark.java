@@ -4,16 +4,15 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.dark.BlackHole;
-import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowBoxing;
-import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowForm;
-import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowTrap;
+import net.dohaw.blackclover.grimmoire.spell.type.dark.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Dark extends GrimmoireWrapper {
 
+    public DarkHeart darkHeart;
+    public ShadowTravel shadowTravel;
     public BlackHole blackHole;
     public ShadowTrap shadowTrap;
     public ShadowForm shadowForm;
@@ -52,6 +51,12 @@ public class Dark extends GrimmoireWrapper {
 
         this.blackHole = new BlackHole(config);
         this.spells.put(SpellType.BLACK_HOLE, blackHole);
+
+        this.shadowTravel = new ShadowTravel(config);
+        this.spells.put(SpellType.SHADOW_TRAVEL, shadowTravel);
+
+        this.darkHeart = new DarkHeart(config);
+        this.spells.put(SpellType.DARK_HEART, darkHeart);
 
     }
 
