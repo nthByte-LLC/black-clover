@@ -2,12 +2,12 @@ package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.type.dark.BlackHole;
-import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -23,7 +23,10 @@ public class BlackHoleRunner extends BukkitRunnable {
     private BukkitTask blackHoleExtras;
     private Location blackHoleLocation;
 
-    public BlackHoleRunner(BlackHole spell, Location blackHoleLocation){
+    private Player caster;
+
+    public BlackHoleRunner(Player caster, BlackHole spell, Location blackHoleLocation){
+        this.caster = caster;
         this.maxCoordinateAdditive = spell.getMaxCoordinateAdditive();
         this.reach = spell.getReach();
         this.forceMultiplier = spell.getForceMultiplier();
@@ -38,8 +41,10 @@ public class BlackHoleRunner extends BukkitRunnable {
     @Override
     public void run() {
         for(Entity entity : blackHoleLocation.getWorld().getNearbyEntities(blackHoleLocation, reach, reach, reach)){
-            entity.setVelocity(blackHoleLocation.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(forceMultiplier));
-            SpellUtils.playSound(blackHoleLocation, Sound.BLOCK_BONE_BLOCK_STEP);
+            if(!entity.getUniqueId().equals(caster.getUniqueId())){
+                entity.setVelocity(blackHoleLocation.toVector().subtract(entity.getLocation().toVector()).normalize().multiply(forceMultiplier));
+                SpellUtils.playSound(blackHoleLocation, Sound.BLOCK_BONE_BLOCK_STEP);
+            }
         }
     }
 
@@ -54,17 +59,28 @@ public class BlackHoleRunner extends BukkitRunnable {
             public void run() {
                 for(Entity entity : blackHoleLocation.getWorld().getNearbyEntities(blackHoleLocation, 1, 2, 1)){
 
-                    Location currentEntityLocation = entity.getLocation();
-                    int newX = currentEntityLocation.getBlockX() + current.nextInt(-maxCoordinateAdditive, maxCoordinateAdditive);
-                    int newZ = currentEntityLocation.getBlockZ() + current.nextInt(-maxCoordinateAdditive, maxCoordinateAdditive);
-                    int newY = entity.getWorld().getHighestBlockYAt(newX, newZ);
-                    Location newLocation = new Location(entity.getWorld(), newX, newY, newZ);
+                    if(!entity.getUniqueId().equals(caster.getUniqueId())){
 
-                    entity.teleport(newLocation);
+                        int deathChance = current.nextInt(100);
+                        // 5% chance they get teleported to their death
+                        if(deathChance < 5){
+                            entity.teleport(new Location(entity.getWorld(), 0, -5, 0));
+                            continue;
+                        }
+
+                        Location currentEntityLocation = entity.getLocation();
+                        int newX = currentEntityLocation.getBlockX() + current.nextInt(-maxCoordinateAdditive, maxCoordinateAdditive);
+                        int newZ = currentEntityLocation.getBlockZ() + current.nextInt(-maxCoordinateAdditive, maxCoordinateAdditive);
+                        int newY = entity.getWorld().getHighestBlockYAt(newX, newZ);
+                        Location newLocation = new Location(entity.getWorld(), newX, newY, newZ);
+
+                        entity.teleport(newLocation);
+
+                    }
 
                 }
             }
-        }.runTaskTimer(Grimmoire.instance, 0L, 3L);
+        }.runTaskTimer(Grimmoire.instance, 0L, 5L);
 
     }
 
