@@ -4,6 +4,7 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.dark.BlackHole;
 import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowBoxing;
 import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowForm;
 import net.dohaw.blackclover.grimmoire.spell.type.dark.ShadowTrap;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class Dark extends GrimmoireWrapper {
 
+    public BlackHole blackHole;
     public ShadowTrap shadowTrap;
     public ShadowForm shadowForm;
     public ShadowBoxing shadowBoxing;
@@ -47,6 +49,9 @@ public class Dark extends GrimmoireWrapper {
 
         this.shadowTrap = new ShadowTrap(config);
         this.spells.put(SpellType.SHADOW_TRAP, shadowTrap);
+
+        this.blackHole = new BlackHole(config);
+        this.spells.put(SpellType.BLACK_HOLE, blackHole);
 
     }
 

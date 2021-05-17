@@ -20,6 +20,15 @@ Spell Settings:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
+    # How far away you can put the black hole
+    Cast Distance: 5
+    # How far away the black hole will detect entities and pull them in
+    Reach: 5
+    # The maximum amount the X or Z value will change when a player is teleported
+    Teleport Maximum Additive: 100
+    # Adjusts how hard the pull is
+    Force Multiplier: 0.5
+    Duration: 10
   shadow_travel:
     Hotbar Number: 4
     Cooldown: 5
