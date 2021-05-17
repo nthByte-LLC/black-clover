@@ -233,7 +233,17 @@ public enum SpellType {
     SHADOW_FORM("shadow_form", false),
     BLACK_HOLE("black_hole", false),
     SHADOW_TRAVEL("shadow_travel", false),
-    DARK_HEART("dark_heart", true);
+    DARK_HEART("dark_heart", true),
+
+    /*
+        Spatial spells
+     */
+    PORTALS("portals", false),
+    HELL_GATE("hell_gate", false),
+    END_GATE("end_gate", false),
+    HOME_GATE("home_gate", false),
+    SPATIAL_TELEPORT("teleport", false),
+    BANISH("banish", true);
 
     @Getter
     private boolean isUltimate;

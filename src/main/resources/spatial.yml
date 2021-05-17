@@ -1,0 +1,29 @@
+Display Name Color: "&b"
+
+Spell Settings:
+  portals:
+    Hotbar Number: 0
+    Cooldown: 5
+    Regen Consumed: 100
+    Width Portal: 3
+    Height Portal: 5
+  hell_gate:
+    Hotbar Number: 1
+    Cooldown: 5
+    Regen Consumed: 100
+  end_gate:
+    Hotbar Number: 2
+    Cooldown: 5
+    Regen Consumed: 100
+  home_gate:
+    Hotbar Number: 3
+    Cooldown: 5
+    Regen Consumed: 100
+  spatial_teleport:
+    Hotbar Number: 4
+    Cooldown: 5
+    Regen Consumed: 100
+  banish:
+    Hotbar Number: 5
+    Cooldown: 5
+    Regen Consumed: 100

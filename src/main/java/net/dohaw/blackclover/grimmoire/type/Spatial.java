@@ -3,11 +3,15 @@ package net.dohaw.blackclover.grimmoire.type;
 import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
+import net.dohaw.blackclover.grimmoire.spell.type.spatial.Portals;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Spatial extends GrimmoireWrapper {
+
+    public Portals portals;
 
     public Spatial() {
         super(GrimmoireType.SPATIAL);
@@ -30,6 +34,9 @@ public class Spatial extends GrimmoireWrapper {
 
     @Override
     public void initSpells() {
+
+        this.portals = new Portals(config);
+        this.spells.put(SpellType.PORTALS, portals);
 
     }
 
