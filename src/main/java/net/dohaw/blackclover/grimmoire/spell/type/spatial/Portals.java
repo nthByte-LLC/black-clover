@@ -3,31 +3,24 @@ package net.dohaw.blackclover.grimmoire.spell.type.spatial;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.PortalThresholdCrossEvent;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
-import net.dohaw.blackclover.grimmoire.Grimmoire;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
-import net.dohaw.blackclover.util.LocationUtil;
-import org.bukkit.Bukkit;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
-public class Portals extends CastSpellWrapper implements Listener {
 
-    private double widthPortal, heightPortal;
+public class Portals extends PortalSpell {
 
     private Map<UUID, PortalLink> portalLinks = new HashMap<>();
-
-    private HashSet<UUID> hasRecentlyEnteredPortal = new HashSet<>();
 
     public Portals(GrimmoireConfig grimmoireConfig) {
         super(SpellType.PORTALS, grimmoireConfig);
@@ -47,7 +40,9 @@ public class Portals extends CastSpellWrapper implements Listener {
         }
 
         boolean isSettingFirstPortal = !player.isSneaking();
-        Portal createdPortal = createPortal(player.getLocation(), isSettingFirstPortal);
+        Location portalStartLocation = getPortalStartLocation(player);
+
+        Portal createdPortal = new Portal(portalStartLocation, widthPortal, heightPortal, isSettingFirstPortal);
         currentPortalLink.setPortal(createdPortal, isSettingFirstPortal);
 
         if(isSettingFirstPortal){
@@ -70,19 +65,6 @@ public class Portals extends CastSpellWrapper implements Listener {
 
     }
 
-    @Override
-    public void loadSettings() {
-        super.loadSettings();
-        this.widthPortal = grimmoireConfig.getDoubleSetting(KEY, "Width Portal");
-        this.heightPortal = grimmoireConfig.getDoubleSetting(KEY, "Height Portal");
-    }
-
-    private Portal createPortal(Location playerLocation, boolean isFirstPortal){
-        Location locInFront = LocationUtil.getAbsoluteLocationInFront(playerLocation.add(0, 0.1, 0), 1);
-        Location bottomLeftCorner = LocationUtil.getAbsoluteLocationToLeft(locInFront, widthPortal / 2);
-        return new Portal(bottomLeftCorner, widthPortal, heightPortal, isFirstPortal);
-    }
-
     private Portal getLink(Portal portal){
 
         for(PortalLink link : portalLinks.values()){
@@ -100,20 +82,16 @@ public class Portals extends CastSpellWrapper implements Listener {
     public void onEnterPortal(PortalThresholdCrossEvent e){
 
         Entity entityEntered = e.getEntityEntered();
-
-        UUID entityUUID = entityEntered.getUniqueId();
-        if(!hasRecentlyEnteredPortal.contains(entityUUID)){
+        if(!hasEnteredPortalRecently(entityEntered)){
 
             Portal portalEntered = e.getPortalEntered();
             Portal potentialLink = getLink(portalEntered);
             if(potentialLink != null){
 
                 potentialLink.teleportEntityToThisPortal(entityEntered);
-                hasRecentlyEnteredPortal.add(entityUUID);
-
-                Bukkit.getScheduler().runTaskLater(Grimmoire.instance, () -> {
-                    hasRecentlyEnteredPortal.remove(entityUUID);
-                }, 20L * 5);
+                hasRecentlyEnteredPortal.add(entityEntered.getUniqueId());
+                startPortalEnteringCooldown(entityEntered);
+                SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
 
             }
 

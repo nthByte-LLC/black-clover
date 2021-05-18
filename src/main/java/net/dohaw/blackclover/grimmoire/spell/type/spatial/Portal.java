@@ -29,11 +29,39 @@ public class Portal {
 
     private BoundingBox boundingBox;
 
+    /**
+     * Constructor used for the Portals spell
+     */
     public Portal(Location bottomLeftCorner, double portalWidth, double portalHeight, boolean isFirstPortal){
         this.BOTTOM_LEFT_CORNER = bottomLeftCorner;
         this.PORTAL_WIDTH = portalWidth;
         this.PORTAL_HEIGHT = portalHeight;
         this.DUST_OPTIONS = isFirstPortal ? new Particle.DustOptions(Color.AQUA, 1) : new Particle.DustOptions(Color.ORANGE, 1);
+        this.HORIZONTAL_DISTANCE_BETWEEN_POINTS = PORTAL_WIDTH / NUM_HORIZONTAL_POINTS;
+        this.VERTICAL_DISTANCE_BETWEEN_POINTS = PORTAL_HEIGHT / NUM_VERTICAL_POINTS;
+        initPortalDrawer();
+        initPortalEnterChecker();
+    }
+
+    /**
+     * Constructor used for the Teleport spell
+     */
+    public Portal(Location bottomLeftCorner, double portalWidth, double portalHeight, Particle.DustOptions dustOptions){
+        this.BOTTOM_LEFT_CORNER = bottomLeftCorner;
+        this.PORTAL_WIDTH = portalWidth;
+        this.PORTAL_HEIGHT = portalHeight;
+        this.DUST_OPTIONS = dustOptions;
+        this.HORIZONTAL_DISTANCE_BETWEEN_POINTS = PORTAL_WIDTH / NUM_HORIZONTAL_POINTS;
+        this.VERTICAL_DISTANCE_BETWEEN_POINTS = PORTAL_HEIGHT / NUM_VERTICAL_POINTS;
+        initPortalDrawer();
+        initPortalEnterChecker();
+    }
+
+    public Portal(Location bottomLeftCorner, PortalSpell portalSpell, Particle.DustOptions dustOptions){
+        this.BOTTOM_LEFT_CORNER = bottomLeftCorner;
+        this.PORTAL_WIDTH = portalSpell.getWidthPortal();
+        this.PORTAL_HEIGHT = portalSpell.getHeightPortal();
+        this.DUST_OPTIONS = dustOptions;
         this.HORIZONTAL_DISTANCE_BETWEEN_POINTS = PORTAL_WIDTH / NUM_HORIZONTAL_POINTS;
         this.VERTICAL_DISTANCE_BETWEEN_POINTS = PORTAL_HEIGHT / NUM_VERTICAL_POINTS;
         initPortalDrawer();
