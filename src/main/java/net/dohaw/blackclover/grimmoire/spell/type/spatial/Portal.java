@@ -80,11 +80,6 @@ public class Portal {
         return portalEnterChecker;
     }
 
-    public void teleportEntityToThisPortal(Entity entity){
-        Location middleOfPortal = LocationUtil.getAbsoluteLocationToRight(BOTTOM_LEFT_CORNER, PORTAL_WIDTH /  2).add(0, PORTAL_HEIGHT /  2, 0);
-        entity.teleport(middleOfPortal);
-    }
-
     private void initPortalDrawer(){
 
         this.portalDrawer = new BukkitRunnable(){
@@ -135,6 +130,11 @@ public class Portal {
             currentParticleLocation = currentParticleLocation.add(0, VERTICAL_DISTANCE_BETWEEN_POINTS, 0);
         }
 
+    }
+
+    public void teleport(Entity entity){
+        Location middleOfPortal = LocationUtil.getAbsoluteLocationToRight(BOTTOM_LEFT_CORNER, PORTAL_WIDTH /  2).add(0, PORTAL_HEIGHT /  2, 0);
+        entity.teleport(middleOfPortal);
     }
 
 }

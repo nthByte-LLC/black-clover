@@ -58,9 +58,12 @@ public class Teleport extends PortalSpell {
         if(portalEntered instanceof PlayerPortal){
             PlayerPortal playerPortal = (PlayerPortal) portalEntered;
             if(!hasEnteredPortalRecently(entityEntered)){
-                entityEntered.teleport(playerPortal.getDestinationPlayer());
-                SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
-                startPortalEnteringCooldown(entityEntered);
+                Player destinationPlayer = playerPortal.getDestinationPlayer();
+                if(!entityEntered.getUniqueId().equals(destinationPlayer.getUniqueId())){
+                    ((PlayerPortal) portalEntered).teleport(entityEntered);
+                    SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
+                    startPortalEnteringCooldown(entityEntered);
+                }
             }
         }
 

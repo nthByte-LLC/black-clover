@@ -1,6 +1,7 @@
 package net.dohaw.blackclover.grimmoire.spell.type.spatial;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
+import net.dohaw.blackclover.event.PortalThresholdCrossEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -9,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.util.HashSet;
@@ -61,4 +63,11 @@ public abstract class PortalSpell extends CastSpellWrapper implements Listener {
     public double getHeightPortal() {
         return heightPortal;
     }
+
+    @Override
+    public void prepareShutdown() { }
+
+    @EventHandler
+    public abstract void onEnterPortal(PortalThresholdCrossEvent e);
+
 }

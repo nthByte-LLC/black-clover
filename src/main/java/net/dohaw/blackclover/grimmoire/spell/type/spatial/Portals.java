@@ -88,7 +88,7 @@ public class Portals extends PortalSpell {
             Portal potentialLink = getLink(portalEntered);
             if(potentialLink != null){
 
-                potentialLink.teleportEntityToThisPortal(entityEntered);
+                potentialLink.teleport(entityEntered);
                 hasRecentlyEnteredPortal.add(entityEntered.getUniqueId());
                 startPortalEnteringCooldown(entityEntered);
                 SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);

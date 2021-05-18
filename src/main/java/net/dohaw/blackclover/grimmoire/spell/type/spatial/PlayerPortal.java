@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.spatial;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class PlayerPortal extends Portal {
@@ -16,6 +17,10 @@ public class PlayerPortal extends Portal {
 
     public Player getDestinationPlayer() {
         return destinationPlayer;
+    }
+
+    public void teleport(Entity entity){
+        entity.teleport(destinationPlayer.getLocation());
     }
 
 }

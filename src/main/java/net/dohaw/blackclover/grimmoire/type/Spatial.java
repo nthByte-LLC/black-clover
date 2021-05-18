@@ -4,16 +4,14 @@ import net.dohaw.blackclover.grimmoire.GrimmoireClassType;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
-import net.dohaw.blackclover.grimmoire.spell.type.spatial.EndGate;
-import net.dohaw.blackclover.grimmoire.spell.type.spatial.HellGate;
-import net.dohaw.blackclover.grimmoire.spell.type.spatial.Portals;
-import net.dohaw.blackclover.grimmoire.spell.type.spatial.Teleport;
+import net.dohaw.blackclover.grimmoire.spell.type.spatial.*;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Spatial extends GrimmoireWrapper {
 
+    public HomeGate homeGate;
     public Teleport teleport;
     public EndGate endGate;
     public HellGate hellGate;
@@ -52,6 +50,9 @@ public class Spatial extends GrimmoireWrapper {
 
         this.teleport = new Teleport(config);
         this.spells.put(SpellType.TELEPORT, teleport);
+
+        this.homeGate = new HomeGate(config);
+        this.spells.put(SpellType.HOME_GATE, homeGate);
 
     }
 
