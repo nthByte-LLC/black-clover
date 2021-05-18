@@ -35,6 +35,7 @@ public class PortalLink {
          */
         if(replacedPortal != null){
             replacedPortal.getPortalDrawer().cancel();
+            replacedPortal.getPortalEnterChecker().cancel();
         }
 
     }

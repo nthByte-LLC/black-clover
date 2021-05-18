@@ -48,6 +48,10 @@ public class Portal {
         return portalDrawer;
     }
 
+    public BukkitTask getPortalEnterChecker() {
+        return portalEnterChecker;
+    }
+
     public void teleportEntityToThisPortal(Entity entity){
         Location middleOfPortal = LocationUtil.getAbsoluteLocationToRight(BOTTOM_LEFT_CORNER, PORTAL_WIDTH /  2).add(0, PORTAL_HEIGHT /  2, 0);
         entity.teleport(middleOfPortal);
