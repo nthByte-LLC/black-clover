@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Teleport extends PortalSpell {
+public class Teleport extends PortalSpell<StandingPortal> {
 
-    private Map<UUID, Portal> portals = new HashMap<>();
+    private Map<UUID, StandingPortal> portals = new HashMap<>();
 
     public Teleport(GrimmoireConfig grimmoireConfig) {
         super(SpellType.TELEPORT, grimmoireConfig);
@@ -51,16 +51,16 @@ public class Teleport extends PortalSpell {
     }
 
     @EventHandler
-    public void onEnterPortal(PortalThresholdCrossEvent e) {
+    public void onEnterPortal(PortalThresholdCrossEvent<StandingPortal> e) {
 
         Entity entityEntered = e.getEntityEntered();
         Portal portalEntered = e.getPortalEntered();
-        if(portalEntered instanceof PlayerPortal){
+        if(e.getPortalEntered() instanceof PlayerPortal){
             PlayerPortal playerPortal = (PlayerPortal) portalEntered;
             if(!hasEnteredPortalRecently(entityEntered)){
                 Player destinationPlayer = playerPortal.getDestinationPlayer();
                 if(!entityEntered.getUniqueId().equals(destinationPlayer.getUniqueId())){
-                    ((PlayerPortal) portalEntered).teleport(entityEntered);
+                    portalEntered.teleport(entityEntered);
                     SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
                     startPortalEnteringCooldown(entityEntered);
                 }
@@ -69,7 +69,7 @@ public class Teleport extends PortalSpell {
 
     }
 
-    public Map<UUID, Portal> getPortals() {
+    public Map<UUID, StandingPortal> getPortals() {
         return portals;
     }
 

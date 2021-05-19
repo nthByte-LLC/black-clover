@@ -2,26 +2,26 @@ package net.dohaw.blackclover.grimmoire.spell.type.spatial;
 
 public class PortalLink {
 
-    private Portal firstPortal, secondPortal;
+    private LinkedPortal firstPortal, secondPortal;
 
-    public PortalLink(Portal firstPortal, Portal secondPortal){
+    public PortalLink(LinkedPortal firstPortal, LinkedPortal secondPortal){
         this.firstPortal = firstPortal;
         this.secondPortal = secondPortal;
     }
 
     public PortalLink(){}
 
-    public Portal getFirstPortal() {
+    public LinkedPortal getFirstPortal() {
         return firstPortal;
     }
 
-    public Portal getSecondPortal() {
+    public LinkedPortal getSecondPortal() {
         return secondPortal;
     }
 
-    public void setPortal(Portal portal, boolean isFirstPortal){
+    public void setPortal(LinkedPortal portal, boolean isFirstPortal){
 
-        Portal replacedPortal;
+        LinkedPortal replacedPortal;
         if(isFirstPortal){
             replacedPortal = firstPortal;
             this.firstPortal = portal;
@@ -40,7 +40,7 @@ public class PortalLink {
 
     }
 
-    public Portal getLink(Portal portal){
+    public LinkedPortal getLink(LinkedPortal portal){
         if(portal.equals(firstPortal)){
             return secondPortal;
         }else if(portal.equals(secondPortal)){

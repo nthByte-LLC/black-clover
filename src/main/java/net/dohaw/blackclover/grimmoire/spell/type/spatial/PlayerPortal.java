@@ -6,7 +6,7 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class PlayerPortal extends Portal {
+public class PlayerPortal extends StandingPortal {
 
     private Player destinationPlayer;
 

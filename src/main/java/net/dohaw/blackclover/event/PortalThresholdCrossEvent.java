@@ -5,14 +5,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PortalThresholdCrossEvent extends Event {
+public class PortalThresholdCrossEvent<T extends Portal> extends Event {
 
     private static final HandlerList HANDLERS_LIST = new HandlerList();
 
     private Entity entityEntered;
-    private Portal portalEntered;
+    private T portalEntered;
 
-    public PortalThresholdCrossEvent(Entity entityEntered, Portal portalEntered){
+    public PortalThresholdCrossEvent(Entity entityEntered, T portalEntered){
         this.entityEntered = entityEntered;
         this.portalEntered = portalEntered;
     }
@@ -30,7 +30,7 @@ public class PortalThresholdCrossEvent extends Event {
         return entityEntered;
     }
 
-    public Portal getPortalEntered() {
+    public T getPortalEntered() {
         return portalEntered;
     }
 

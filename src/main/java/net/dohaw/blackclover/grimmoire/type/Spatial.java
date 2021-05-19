@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Spatial extends GrimmoireWrapper {
 
+    public Banish banish;
     public HomeGate homeGate;
     public Teleport teleport;
     public EndGate endGate;
@@ -53,6 +54,9 @@ public class Spatial extends GrimmoireWrapper {
 
         this.homeGate = new HomeGate(config);
         this.spells.put(SpellType.HOME_GATE, homeGate);
+
+        this.banish = new Banish(config);
+        this.spells.put(SpellType.BANISH, banish);
 
     }
 

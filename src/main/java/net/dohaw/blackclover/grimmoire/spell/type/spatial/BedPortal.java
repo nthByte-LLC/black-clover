@@ -6,12 +6,13 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-public class BedPortal extends Portal{
+public class BedPortal extends StandingPortal {
 
     private Player portalMaker;
 
     public BedPortal(Location bottomLeftCorner, PortalSpell portalSpell, Player portalMaker) {
         super(bottomLeftCorner, portalSpell, new Particle.DustOptions(Color.WHITE, 1));
+        System.out.println("BED IS MADEEEE");
         this.portalMaker = portalMaker;
     }
 

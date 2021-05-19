@@ -3,7 +3,7 @@ package net.dohaw.blackclover.menu;
 import net.dohaw.blackclover.event.PostCastSpellEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.type.spatial.PlayerPortal;
-import net.dohaw.blackclover.grimmoire.spell.type.spatial.Portal;
+import net.dohaw.blackclover.grimmoire.spell.type.spatial.StandingPortal;
 import net.dohaw.blackclover.grimmoire.spell.type.spatial.Teleport;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.corelib.JPUtils;
@@ -81,8 +81,8 @@ public class PlayerTeleportMenu extends Menu implements Listener {
                 return;
             }
 
-            Map<UUID, Portal> portals = spell.getPortals();
-            Portal potentialPreviousPortal = portals.remove(player.getUniqueId());
+            Map<UUID, StandingPortal> portals = spell.getPortals();
+            StandingPortal potentialPreviousPortal = portals.remove(player.getUniqueId());
             if(potentialPreviousPortal != null){
                 potentialPreviousPortal.getPortalEnterChecker().cancel();
                 potentialPreviousPortal.getPortalDrawer().cancel();

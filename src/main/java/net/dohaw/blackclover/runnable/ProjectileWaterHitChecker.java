@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Projectile;
 import org.bukkit.scheduler.BukkitRunnable;
 
-/*
+/**
     Checks to see when a projectile hits water. If so, then it checks to see if it's hitting a water wall. If so, then remove it.
  */
 public class ProjectileWaterHitChecker extends BukkitRunnable {

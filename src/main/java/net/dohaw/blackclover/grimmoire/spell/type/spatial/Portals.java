@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class Portals extends PortalSpell {
+public class Portals extends PortalSpell<LinkedPortal> {
 
     private Map<UUID, PortalLink> portalLinks = new HashMap<>();
 
@@ -42,7 +42,7 @@ public class Portals extends PortalSpell {
         boolean isSettingFirstPortal = !player.isSneaking();
         Location portalStartLocation = getPortalStartLocation(player);
 
-        Portal createdPortal = new Portal(portalStartLocation, widthPortal, heightPortal, isSettingFirstPortal);
+        LinkedPortal createdPortal = new LinkedPortal(portalStartLocation, this, isSettingFirstPortal);
         currentPortalLink.setPortal(createdPortal, isSettingFirstPortal);
 
         if(isSettingFirstPortal){
@@ -65,10 +65,10 @@ public class Portals extends PortalSpell {
 
     }
 
-    private Portal getLink(Portal portal){
+    private LinkedPortal getLink(LinkedPortal portal){
 
         for(PortalLink link : portalLinks.values()){
-            Portal potentialLink = link.getLink(portal);
+            LinkedPortal potentialLink = link.getLink(portal);
             if(potentialLink != null){
                 return potentialLink;
             }
@@ -79,19 +79,24 @@ public class Portals extends PortalSpell {
     }
 
     @EventHandler
-    public void onEnterPortal(PortalThresholdCrossEvent e){
+    @Override
+    public void onEnterPortal(PortalThresholdCrossEvent<LinkedPortal> e){
 
         Entity entityEntered = e.getEntityEntered();
-        if(!hasEnteredPortalRecently(entityEntered)){
+        // Not always true for whatever reason. I probably have a fundamental misunderstanding of my design with generics
+        if(e.getPortalEntered() instanceof LinkedPortal){
 
-            Portal portalEntered = e.getPortalEntered();
-            Portal potentialLink = getLink(portalEntered);
-            if(potentialLink != null){
+            LinkedPortal portalEntered = e.getPortalEntered();
 
-                potentialLink.teleport(entityEntered);
-                hasRecentlyEnteredPortal.add(entityEntered.getUniqueId());
-                startPortalEnteringCooldown(entityEntered);
-                SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
+            if(!hasEnteredPortalRecently(entityEntered)){
+
+                LinkedPortal potentialLink = getLink(portalEntered);
+                if(potentialLink != null){
+                    potentialLink.teleport(entityEntered);
+                    hasRecentlyEnteredPortal.add(entityEntered.getUniqueId());
+                    startPortalEnteringCooldown(entityEntered);
+                    SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
+                }
 
             }
 

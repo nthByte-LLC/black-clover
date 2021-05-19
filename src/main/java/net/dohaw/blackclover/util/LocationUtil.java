@@ -29,13 +29,11 @@ public class LocationUtil {
         return getLocationInFront(clone, numBlocksInFront);
     }
 
-    public static Location getAbsoluteLocationInBack(Location location, double numBlocksInBack){
+    public static Location getAbsoluteLocationInBack(Location location, double numBlocksInBack) {
         Location clone = location.clone();
         clone.setPitch(0);
         return getLocationInFront(clone, numBlocksInBack * -1);
     }
-
-
 
     public static Location getLocationInFront(Location location, double numBlocksInFront){
         return location.clone().add(location.clone().getDirection().multiply(numBlocksInFront));

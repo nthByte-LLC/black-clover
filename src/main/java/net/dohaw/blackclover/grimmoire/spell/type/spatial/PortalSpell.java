@@ -16,7 +16,7 @@ import org.bukkit.event.Listener;
 import java.util.HashSet;
 import java.util.UUID;
 
-public abstract class PortalSpell extends CastSpellWrapper implements Listener {
+public abstract class PortalSpell<T extends Portal> extends CastSpellWrapper implements Listener {
 
     protected double widthPortal, heightPortal;
 
@@ -38,12 +38,8 @@ public abstract class PortalSpell extends CastSpellWrapper implements Listener {
     }
 
     public Location getPortalStartLocation(Location portalCreatorLocation){
-        Location locInFront = LocationUtil.getAbsoluteLocationInFront(portalCreatorLocation.add(0, 0.1, 0), 1);
+        Location locInFront = LocationUtil.getAbsoluteLocationInFront(portalCreatorLocation.add(0, 0.1, 0), 2);
         return LocationUtil.getAbsoluteLocationToLeft(locInFront, widthPortal / 2);
-    }
-
-    private Portal createProperPortal(Portal initalPortal){
-        return initalPortal;
     }
 
     protected void startPortalEnteringCooldown(Entity entity){
@@ -68,6 +64,6 @@ public abstract class PortalSpell extends CastSpellWrapper implements Listener {
     public void prepareShutdown() { }
 
     @EventHandler
-    public abstract void onEnterPortal(PortalThresholdCrossEvent e);
+    public abstract void onEnterPortal(PortalThresholdCrossEvent<T> e);
 
 }

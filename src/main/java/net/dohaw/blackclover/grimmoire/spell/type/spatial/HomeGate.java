@@ -17,9 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class HomeGate extends PortalSpell{
+public class HomeGate extends PortalSpell<BedPortal>{
 
-    private Map<UUID, Portal> portals = new HashMap<>();
+    private Map<UUID, BedPortal> portals = new HashMap<>();
 
     public HomeGate(GrimmoireConfig grimmoireConfig) {
         super(SpellType.HOME_GATE, grimmoireConfig);
@@ -36,9 +36,8 @@ public class HomeGate extends PortalSpell{
         }
 
         if(portals.containsKey(player.getUniqueId())){
-            Portal currentPortal = portals.get(player.getUniqueId());
-            currentPortal.getPortalEnterChecker().cancel();
-            currentPortal.getPortalDrawer().cancel();
+            BedPortal currentPortal = portals.get(player.getUniqueId());
+            currentPortal.stopPortal();
         }
 
         Location portalStartLocation = getPortalStartLocation(player);
@@ -50,14 +49,14 @@ public class HomeGate extends PortalSpell{
 
     @EventHandler
     @Override
-    public void onEnterPortal(PortalThresholdCrossEvent e) {
+    public void onEnterPortal(PortalThresholdCrossEvent<BedPortal> e) {
 
         Entity entityEntered = e.getEntityEntered();
         Portal portalEntered = e.getPortalEntered();
         if(portalEntered instanceof BedPortal){
-            BedPortal bedPortal = (BedPortal) portalEntered;
             if(!hasEnteredPortalRecently(entityEntered)){
-                bedPortal.teleport(entityEntered);
+                portalEntered.teleport(entityEntered);
+                startPortalEnteringCooldown(entityEntered);
                 SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
             }
         }
