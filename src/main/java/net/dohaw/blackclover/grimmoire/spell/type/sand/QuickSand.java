@@ -53,9 +53,4 @@ public class QuickSand extends CastSpellWrapper {
         this.slownessLevel = (grimmoireConfig.getIntegerSetting(KEY, "Slowness Level") - 1);
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

@@ -42,11 +42,6 @@ public class GlassCreation extends ActivatableSpellWrapper {
     public void deactiveSpell(PlayerData caster) { }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public long getRunnableInterval() {
         return 15L;
     }

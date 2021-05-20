@@ -46,11 +46,6 @@ public class TimeLord extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.speedDuration = grimmoireConfig.getDoubleSetting(KEY, "Speed Duration");

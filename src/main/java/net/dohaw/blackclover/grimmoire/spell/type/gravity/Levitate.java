@@ -43,9 +43,6 @@ public class Levitate extends CastSpellWrapper {
         return false;
     }
 
-    @Override
-    public void prepareShutdown() { }
-
     private void giveEffects(LivingEntity le){
 
         le.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, (int) (duration * 20), 0));

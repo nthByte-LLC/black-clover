@@ -37,11 +37,6 @@ public class Portnado extends VortexSpell{
         this.maxZAdditive = grimmoireConfig.getIntegerSetting(KEY, "Max Z Additive");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     public int getMaxXAdditive() {
         return maxXAdditive;
     }

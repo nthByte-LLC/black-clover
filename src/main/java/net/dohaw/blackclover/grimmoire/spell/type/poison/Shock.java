@@ -51,11 +51,6 @@ public class Shock extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.damage = grimmoireConfig.getIntegerSetting(KEY, "Damage");

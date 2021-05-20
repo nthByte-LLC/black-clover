@@ -42,9 +42,6 @@ public class TimeBeam extends ActivatableSpellWrapper {
     public void deactiveSpell(PlayerData caster){ }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");

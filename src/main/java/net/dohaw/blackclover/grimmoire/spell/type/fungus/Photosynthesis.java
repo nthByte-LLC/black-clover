@@ -2,12 +2,13 @@ package net.dohaw.blackclover.grimmoire.spell.type.fungus;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.spell.PassiveSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.runnable.spells.PhotosynthesisRunner;
 import net.dohaw.corelib.CoreLib;
 import org.bukkit.scheduler.BukkitTask;
 
-public class Photosynthesis extends PassiveSpellWrapper {
+public class Photosynthesis extends PassiveSpellWrapper implements PersistableSpell {
 
     private BukkitTask photosynthesisTask;
     private double checkInterval;

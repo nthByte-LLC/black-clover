@@ -32,9 +32,4 @@ public class ElectricBall extends ParticleProjectileSpellWrapper {
         return new Particle.DustOptions(BukkitColor.PALE_CYAN, 2);
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

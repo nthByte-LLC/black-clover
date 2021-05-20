@@ -53,11 +53,6 @@ public class Waypoint extends CastSpellWrapper {
 
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     private Location getCloseWaypoint(Player player, Map<String, Location> waypoints){
         for(Location waypoint : waypoints.values()){
             if(waypoint.distance(player.getLocation()) <= 2){

@@ -75,8 +75,4 @@ public class AshBomb extends CastSpellWrapper {
         this.durationBlindness = grimmoireConfig.getDoubleSetting(KEY, "Duration Blindness");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

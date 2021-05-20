@@ -118,8 +118,4 @@ public class DemonScratch extends CastSpellWrapper implements Listener {
         this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

@@ -74,7 +74,4 @@ public class Extraction extends CastSpellWrapper implements Listener {
         return ironLocation;
     }
 
-    @Override
-    public void prepareShutdown() {}
-
 }

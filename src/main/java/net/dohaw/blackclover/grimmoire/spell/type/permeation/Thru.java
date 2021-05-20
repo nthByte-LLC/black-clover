@@ -64,11 +64,6 @@ public class Thru extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.maxCastDistance = grimmoireConfig.getIntegerSetting(KEY, "Max Cast Distance");

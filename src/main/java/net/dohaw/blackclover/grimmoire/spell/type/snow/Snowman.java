@@ -124,8 +124,4 @@ public class Snowman extends CastSpellWrapper implements Listener {
         }
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

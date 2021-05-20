@@ -44,11 +44,6 @@ public class Push extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.radius = grimmoireConfig.getDoubleSetting(KEY, "Radius");

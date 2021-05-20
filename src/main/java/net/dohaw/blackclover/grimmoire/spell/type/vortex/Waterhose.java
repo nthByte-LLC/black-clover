@@ -27,7 +27,4 @@ public class Waterhose extends VortexSpell{
         return true;
     }
 
-    @Override
-    public void prepareShutdown() { }
-
 }

@@ -91,9 +91,4 @@ public class SheepArmy extends CastSpellWrapper {
         this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

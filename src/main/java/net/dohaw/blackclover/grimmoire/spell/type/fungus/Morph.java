@@ -69,11 +69,6 @@ public class Morph extends CastSpellWrapper implements Listener {
 
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     /*
         Cancels the picking up of items if they are morphed.
      */

@@ -31,9 +31,6 @@ public class Earthstorm extends VortexSpell{
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.slownessDuration = grimmoireConfig.getDoubleSetting(KEY, "Slowness Duration");

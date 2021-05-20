@@ -60,11 +60,6 @@ public class Portals extends PortalSpell<LinkedPortal> {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     private LinkedPortal getLink(LinkedPortal portal){
 
         for(PortalLink link : portalLinks.values()){

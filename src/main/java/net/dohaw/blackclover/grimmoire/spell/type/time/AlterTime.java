@@ -46,9 +46,4 @@ public class AlterTime extends CastSpellWrapper {
         this.durationFrozen = grimmoireConfig.getDoubleSetting(KEY, "Duration Frozen");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

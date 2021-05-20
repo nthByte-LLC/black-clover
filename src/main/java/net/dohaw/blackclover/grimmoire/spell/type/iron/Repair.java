@@ -55,6 +55,4 @@ public class Repair extends CastSpellWrapper implements Listener {
         return false;
     }
 
-    @Override
-    public void prepareShutdown() {}
 }

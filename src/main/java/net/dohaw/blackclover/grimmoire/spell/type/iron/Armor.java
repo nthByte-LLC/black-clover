@@ -94,9 +94,6 @@ public class Armor extends CastSpellWrapper implements DependableSpell, Listener
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
-    @Override
-    public void prepareShutdown() {}
-
     private void startTemporaryArmorRemover(){
         Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {
             for(Player player : Bukkit.getOnlinePlayers()){

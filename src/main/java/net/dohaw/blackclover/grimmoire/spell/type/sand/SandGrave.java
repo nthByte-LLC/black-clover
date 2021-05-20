@@ -86,9 +86,4 @@ public class SandGrave extends CastSpellWrapper implements Listener {
         this.sandStayTime = grimmoireConfig.getIntegerSetting(KEY, "Sand Stay Time");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

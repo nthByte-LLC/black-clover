@@ -4,6 +4,7 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.spells.BlackHoleRunner;
@@ -18,7 +19,7 @@ import org.bukkit.event.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackHole extends CastSpellWrapper {
+public class BlackHole extends CastSpellWrapper implements PersistableSpell {
 
     private List<BlockSnapshot> previousBlocks = new ArrayList<>();
 

@@ -153,9 +153,4 @@ public class IceAge extends CastSpellWrapper implements Listener {
         this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Freeze Duration");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

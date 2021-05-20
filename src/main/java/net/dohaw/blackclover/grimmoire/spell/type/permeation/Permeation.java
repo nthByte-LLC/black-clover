@@ -51,11 +51,6 @@ public class Permeation extends ActivatableSpellWrapper implements Listener {
         permeatingPlayers.remove(player.getUniqueId());
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     /*
         Prevents the player from using the spectator hotbar
      */

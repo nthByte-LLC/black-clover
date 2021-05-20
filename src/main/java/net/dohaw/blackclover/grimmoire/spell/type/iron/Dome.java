@@ -86,9 +86,6 @@ public class Dome extends CastSpellWrapper implements Listener {
     }
 
     @Override
-    public void prepareShutdown() {}
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");

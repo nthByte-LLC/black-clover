@@ -287,11 +287,13 @@ public class PlayerWatcher implements Listener {
     // makes player invulnerable
     @EventHandler
     public void onPlayerTakeDamager(EntityDamageEvent e){
-        Entity entity = e.getEntity();
-        if(entity instanceof Player){
-            Player player = (Player) entity;
-            PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
+        Entity damagedEntity = e.getEntity();
+        if(damagedEntity instanceof Player){
+            Player damagedPlayer = (Player) damagedEntity;
+            PlayerData pd = plugin.getPlayerDataManager().getData(damagedPlayer.getUniqueId());
             if(pd.isInVulnerable()){
+                SpellUtils.playSound(damagedPlayer, Sound.ITEM_SHIELD_BLOCK);
+                SpellUtils.spawnParticle(damagedEntity, Particle.VILLAGER_ANGRY, 10, 0.3f, 0.3f, 0.3f);
                 e.setCancelled(true);
             }
         }

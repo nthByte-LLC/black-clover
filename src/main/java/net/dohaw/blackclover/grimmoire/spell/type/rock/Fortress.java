@@ -48,11 +48,6 @@ public class Fortress extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.wallWidth = grimmoireConfig.getIntegerSetting(KEY, "Wall Width");

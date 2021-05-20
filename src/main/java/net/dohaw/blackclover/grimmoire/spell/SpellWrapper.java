@@ -20,6 +20,4 @@ public abstract class SpellWrapper extends Wrapper<SpellType> {
 
     public void loadSettings(){ }
 
-    public abstract void prepareShutdown();
-
 }

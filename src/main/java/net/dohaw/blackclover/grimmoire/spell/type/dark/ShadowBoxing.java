@@ -51,11 +51,6 @@ public class ShadowBoxing extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.witherDuration = grimmoireConfig.getDoubleSetting(KEY, "Wither Duration");

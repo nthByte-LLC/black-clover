@@ -57,11 +57,6 @@ public class Bed extends CastSpellWrapper {
         this.duration = grimmoireConfig.getIntegerSetting(KEY, "Duration");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     public void setBed(Block start, BlockFace facing) {
         for (org.bukkit.block.data.type.Bed.Part part : org.bukkit.block.data.type.Bed.Part.values()) {
             start.setBlockData(Bukkit.createBlockData(Material.WHITE_BED, data -> {

@@ -45,9 +45,5 @@ public class LeafLadder extends CastSpellWrapper {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }
 

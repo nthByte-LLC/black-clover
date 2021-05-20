@@ -70,9 +70,6 @@ public class AshFlight extends CastSpellWrapper implements Listener {
         this.heightGain = grimmoireConfig.getIntegerSetting(KEY, "Height Gain");
     }
 
-    @Override
-    public void prepareShutdown() { }
-
     private void startCloudParticles(ArmorStand stand){
 
         // Creates the cloud under the location that the player is going to land on.

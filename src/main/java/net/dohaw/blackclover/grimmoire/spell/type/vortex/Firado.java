@@ -30,9 +30,6 @@ public class Firado extends VortexSpell {
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.burningTimeAdded = grimmoireConfig.getIntegerSetting(KEY, "Burning Time Added");

@@ -66,9 +66,4 @@ public class Regeneration extends CastSpellWrapper implements Listener {
 
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

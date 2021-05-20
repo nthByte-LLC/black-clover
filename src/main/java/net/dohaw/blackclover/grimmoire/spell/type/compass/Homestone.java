@@ -50,9 +50,4 @@ public class Homestone extends CastSpellWrapper {
         return slots;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

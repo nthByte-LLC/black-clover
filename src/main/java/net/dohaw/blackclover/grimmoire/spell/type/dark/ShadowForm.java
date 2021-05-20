@@ -47,11 +47,6 @@ public class ShadowForm extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");

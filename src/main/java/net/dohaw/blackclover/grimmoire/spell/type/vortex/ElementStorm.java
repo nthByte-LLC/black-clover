@@ -72,9 +72,4 @@ public class ElementStorm extends VortexSpell {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

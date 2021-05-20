@@ -44,11 +44,6 @@ public class Soup extends CastSpellWrapper {
         return false;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     private void feed(Player player){
 
         int foodLevel = player.getFoodLevel();

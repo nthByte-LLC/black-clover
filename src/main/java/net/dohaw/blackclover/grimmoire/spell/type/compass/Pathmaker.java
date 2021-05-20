@@ -69,9 +69,6 @@ public class Pathmaker extends ActivatableSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.maxPathPoints = grimmoireConfig.getIntegerSetting(KEY, "Maximum Path Points");

@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.plant;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.runnable.particle.CircleParticleRunner;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class  LeafArmor extends CastSpellWrapper implements Listener {
+public class  LeafArmor extends CastSpellWrapper implements Listener, PersistableSpell {
 
     private double healingInterval;
     private double duration;

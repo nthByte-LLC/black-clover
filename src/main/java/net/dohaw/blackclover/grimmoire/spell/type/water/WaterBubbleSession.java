@@ -25,11 +25,8 @@ public class WaterBubbleSession {
         });
     }
 
-    public List<BlockSnapshot> getInsideBubble() {
-        return insideBubble;
-    }
-
     public List<Block> getOutline() {
         return outline;
     }
+
 }

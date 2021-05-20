@@ -34,9 +34,4 @@ public class FungusMeal extends CastSpellWrapper {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

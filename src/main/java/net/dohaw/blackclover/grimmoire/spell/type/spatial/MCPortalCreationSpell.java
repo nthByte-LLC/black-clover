@@ -4,6 +4,7 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.LocationUtil;
@@ -24,7 +25,7 @@ import java.util.*;
 /**
  * Defines a spell that creates either a nether portal or a end portal
  */
-public abstract class MCPortalCreationSpell extends CastSpellWrapper implements Listener {
+public abstract class MCPortalCreationSpell extends CastSpellWrapper implements Listener, PersistableSpell {
 
     protected Map<UUID, List<List<Block>>> portals = new HashMap<>();
 

@@ -54,8 +54,4 @@ public class Sheep extends CastSpellWrapper {
         return false;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

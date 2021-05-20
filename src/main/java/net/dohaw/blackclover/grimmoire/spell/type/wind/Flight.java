@@ -53,11 +53,6 @@ public class Flight extends ActivatableSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.flightSpeeds = new HashMap<>();

@@ -1,11 +1,8 @@
 package net.dohaw.blackclover.grimmoire.spell.type.trap;
 
 import net.dohaw.blackclover.config.GrimmoireConfig;
-import net.dohaw.blackclover.exception.UnexpectedPlayerData;
-import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.BlockSnapshot;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
@@ -14,11 +11,11 @@ import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.LivingEntity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Cage extends TrapSpell{
-
-    private double duration;
 
     public Cage(GrimmoireConfig grimmoireConfig) {
         super(SpellType.CAGE, grimmoireConfig);
@@ -71,12 +68,6 @@ public class Cage extends TrapSpell{
     @Override
     public TrapType getTrapType() {
         return TrapType.CAGE;
-    }
-
-    @Override
-    public void loadSettings() {
-        super.loadSettings();
-        this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
     @Override

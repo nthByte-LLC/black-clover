@@ -60,9 +60,6 @@ public abstract class PortalSpell<T extends Portal> extends CastSpellWrapper imp
         return heightPortal;
     }
 
-    @Override
-    public void prepareShutdown() { }
-
     @EventHandler
     public abstract void onEnterPortal(PortalThresholdCrossEvent<T> e);
 

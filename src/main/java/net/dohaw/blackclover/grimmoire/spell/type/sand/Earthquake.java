@@ -36,8 +36,4 @@ public class Earthquake extends CastSpellWrapper {
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

@@ -55,8 +55,4 @@ public class SandStorm extends CastSpellWrapper {
         this.blindnessDuration = grimmoireConfig.getIntegerSetting(KEY, "Blindness Duration");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

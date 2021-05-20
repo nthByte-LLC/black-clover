@@ -39,11 +39,6 @@ public class Teleport extends PortalSpell<StandingPortal> {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.widthPortal = grimmoireConfig.getDoubleSetting(KEY, "Width Portal");

@@ -59,9 +59,6 @@ public class Sword extends CastSpellWrapper implements DependableSpell, Listener
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");

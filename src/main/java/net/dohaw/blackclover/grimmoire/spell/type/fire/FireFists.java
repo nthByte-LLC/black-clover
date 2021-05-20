@@ -81,11 +81,6 @@ public class FireFists extends ActivatableSpellWrapper implements Listener{
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.damageScale = grimmoireConfig.getDoubleSetting(KEY, "Damage Scale");

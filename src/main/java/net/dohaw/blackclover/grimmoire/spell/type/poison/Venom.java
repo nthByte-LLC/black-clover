@@ -39,9 +39,6 @@ public class Venom extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.beamRange = grimmoireConfig.getIntegerSetting(KEY, "Beam Range");

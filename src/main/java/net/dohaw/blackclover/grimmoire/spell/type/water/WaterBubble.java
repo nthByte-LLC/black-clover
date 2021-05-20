@@ -71,11 +71,6 @@ public class WaterBubble extends ActivatableSpellWrapper implements Listener {
         this.radius = grimmoireConfig.getIntegerSetting(KEY, "Radius");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     @EventHandler
     public void onBlockChange(BlockFromToEvent e){
         for(WaterBubbleSession session : waterBubbleSessions.values()){

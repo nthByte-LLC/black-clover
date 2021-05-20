@@ -26,11 +26,6 @@ public class Pull extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");

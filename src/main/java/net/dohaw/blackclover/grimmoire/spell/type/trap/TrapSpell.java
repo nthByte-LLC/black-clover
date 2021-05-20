@@ -3,6 +3,7 @@ package net.dohaw.blackclover.grimmoire.spell.type.trap;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.TrapPlayerData;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class TrapSpell extends CastSpellWrapper implements Listener {
+public abstract class TrapSpell extends CastSpellWrapper implements Listener, PersistableSpell {
 
     private int maxNumTraps;
     private Map<UUID, BlockSnapshot> carpetLocationSnapshots = new HashMap<>();

@@ -66,9 +66,6 @@ public class Float extends ActivatableSpellWrapper implements Listener {
 
     }
 
-    @Override
-    public void prepareShutdown() { }
-
     /*
         Levitates the player without the levitate potion effect
      */

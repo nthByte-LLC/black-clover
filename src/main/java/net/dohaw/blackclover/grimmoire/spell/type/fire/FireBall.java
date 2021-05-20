@@ -17,11 +17,6 @@ public class FireBall extends ParticleProjectileSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public Particle getOnHitParticle() {
         return Particle.FLAME;
     }

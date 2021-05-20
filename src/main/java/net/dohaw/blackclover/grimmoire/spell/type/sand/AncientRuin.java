@@ -55,8 +55,4 @@ public class AncientRuin extends CastSpellWrapper {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

@@ -81,9 +81,4 @@ public class SmokeBomb extends CastSpellWrapper {
         this.radiusField = grimmoireConfig.getIntegerSetting(KEY, "Radius Field");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

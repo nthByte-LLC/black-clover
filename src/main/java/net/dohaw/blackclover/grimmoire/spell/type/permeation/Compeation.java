@@ -33,8 +33,4 @@ public class Compeation extends CastSpellWrapper {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

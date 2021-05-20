@@ -25,9 +25,4 @@ public class Cartographer extends CastSpellWrapper {
         return true;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

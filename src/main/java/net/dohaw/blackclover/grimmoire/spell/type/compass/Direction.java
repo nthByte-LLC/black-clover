@@ -56,11 +56,6 @@ public class Direction extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.woolStayTime = grimmoireConfig.getDoubleSetting(KEY, "Wool Stay Time");

@@ -32,9 +32,4 @@ public class FireBlast extends CastSpellWrapper {
         this.damageScale = grimmoireConfig.getDoubleSetting(KEY, "Damage Scale");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

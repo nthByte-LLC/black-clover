@@ -83,9 +83,6 @@ public class LightningBolt extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() { }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.numParticlePoints = grimmoireConfig.getIntegerSetting(KEY, "Number of Particle Points");

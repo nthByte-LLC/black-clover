@@ -48,11 +48,6 @@ public class Teleport extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");

@@ -24,11 +24,6 @@ public class ShadowTravel extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
         Player casterPlayer = pd.getPlayer();

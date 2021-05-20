@@ -53,9 +53,4 @@ public class TimeSkip extends CastSpellWrapper {
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

@@ -34,9 +34,4 @@ public class GlassShot extends ProjectileSpellWrapper {
         return Material.GLASS_BOTTLE;
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

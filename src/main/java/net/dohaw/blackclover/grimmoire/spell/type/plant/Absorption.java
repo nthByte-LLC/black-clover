@@ -24,8 +24,6 @@ public class Absorption extends CastSpellWrapper {
     private double duration;
     private double stealInterval;
     
-    private final int NUM_POINTS = 10;
-
     public Absorption(GrimmoireConfig grimmoireConfig) {
         super(SpellType.ABSORPTION, grimmoireConfig);
     }
@@ -70,11 +68,6 @@ public class Absorption extends CastSpellWrapper {
         this.duration = grimmoireConfig.getDoubleSetting(KEY, "Duration");
         this.stealInterval = grimmoireConfig.getDoubleSetting(KEY, "Steal Interval");
         this.castDistance = grimmoireConfig.getIntegerSetting(KEY, "Cast Distance");
-    }
-
-    @Override
-    public void prepareShutdown() {
-
     }
 
 }

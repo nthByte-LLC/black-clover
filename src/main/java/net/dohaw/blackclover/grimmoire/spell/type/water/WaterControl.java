@@ -47,11 +47,6 @@ public class WaterControl extends ActivatableSpellWrapper implements Listener {
         this.checkingRadius = grimmoireConfig.getIntegerSetting(KEY, "Water Checking Radius");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     private boolean isNearWater(Player player){
         Location start = player.getLocation();
         World world = start.getWorld();

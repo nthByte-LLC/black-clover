@@ -4,6 +4,7 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.LocationUtil;
@@ -18,7 +19,7 @@ import org.bukkit.event.Event;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GlassSnake extends CastSpellWrapper {
+public class GlassSnake extends CastSpellWrapper implements PersistableSpell {
 
     private List<List<Location>> snakeBlocks = new ArrayList<>();
 

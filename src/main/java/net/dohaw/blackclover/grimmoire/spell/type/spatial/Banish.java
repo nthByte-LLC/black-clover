@@ -47,11 +47,6 @@ public class Banish extends PortalSpell<FloorPortal> {
 
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
     @EventHandler
     @Override
     public void onEnterPortal(PortalThresholdCrossEvent<FloorPortal> e) {

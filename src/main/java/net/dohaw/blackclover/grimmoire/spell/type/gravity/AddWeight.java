@@ -62,11 +62,6 @@ public class AddWeight extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.levelSlowness = grimmoireConfig.getIntegerSetting(KEY, "Slowness Level");

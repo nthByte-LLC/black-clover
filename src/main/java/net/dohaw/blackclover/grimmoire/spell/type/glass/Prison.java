@@ -4,6 +4,7 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.ShapeUtils;
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Creates a cage around the targeted enemy
  */
-public class Prison extends CastSpellWrapper {
+public class Prison extends CastSpellWrapper implements PersistableSpell {
 
     private List<List<Location>> allCageWallBlockLocations = new ArrayList<>();
 

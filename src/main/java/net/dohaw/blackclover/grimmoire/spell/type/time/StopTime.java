@@ -43,9 +43,4 @@ public class StopTime extends CastSpellWrapper {
         this.durationFrozen = grimmoireConfig.getDoubleSetting(KEY, "Duration Frozen");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

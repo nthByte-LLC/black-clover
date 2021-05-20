@@ -31,11 +31,6 @@ public class Tornado extends VortexSpell {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.forceMultiplier = grimmoireConfig.getDoubleSetting(KEY, "Force Multiplier");

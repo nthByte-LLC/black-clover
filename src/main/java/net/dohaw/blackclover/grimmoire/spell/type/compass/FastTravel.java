@@ -4,6 +4,7 @@ import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.PassiveSpellWrapper;
+import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ import java.util.*;
 /**
  * Gives a speed boost whenever a player walks on a path
  */
-public class FastTravel extends PassiveSpellWrapper implements DependableSpell {
+public class FastTravel extends PassiveSpellWrapper implements DependableSpell, PersistableSpell {
 
     private Pathmaker pathmaker;
     private BukkitTask pathChecker;

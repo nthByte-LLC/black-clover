@@ -68,11 +68,6 @@ public class Poison extends CastSpellWrapper {
     }
 
     @Override
-    public void prepareShutdown() {
-
-    }
-
-    @Override
     public void loadSettings() {
         super.loadSettings();
         this.poisonDuration = grimmoireConfig.getDoubleSetting(KEY, "Poison Duration");

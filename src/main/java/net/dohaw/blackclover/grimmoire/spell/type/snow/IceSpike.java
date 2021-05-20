@@ -55,8 +55,4 @@ public class IceSpike extends CastSpellWrapper implements Listener {
         this.damage = grimmoireConfig.getDoubleSetting(KEY, "Damage");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
 }

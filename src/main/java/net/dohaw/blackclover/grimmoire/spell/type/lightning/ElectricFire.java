@@ -32,9 +32,6 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
         super(SpellType.ELECTRIC_FIRE, grimmoireConfig);
     }
 
-    @Override
-    public void prepareShutdown() { }
-
     @EventHandler
     public void onHitEntity(EntityDamageByEntityEvent e){
 

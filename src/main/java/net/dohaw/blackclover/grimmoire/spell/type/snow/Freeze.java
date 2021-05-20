@@ -95,9 +95,4 @@ public class Freeze extends CastSpellWrapper implements TimeCastable, Listener {
         this.freezeDuration = grimmoireConfig.getDoubleSetting(KEY, "Duration Freeze");
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }

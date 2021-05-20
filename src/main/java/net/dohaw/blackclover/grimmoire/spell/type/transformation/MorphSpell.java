@@ -106,7 +106,4 @@ public class MorphSpell<T extends TransformationMenu> extends CastSpellWrapper i
         }
     }
 
-    @Override
-    public void prepareShutdown() { }
-
 }

@@ -77,9 +77,4 @@ public class LeafWall extends CastSpellWrapper {
         this.leafMaterial = Material.valueOf(leafMaterialStr);
     }
 
-    @Override
-    public void prepareShutdown() {
-
-    }
-
 }
