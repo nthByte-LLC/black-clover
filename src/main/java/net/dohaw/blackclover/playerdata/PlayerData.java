@@ -81,6 +81,10 @@ public class PlayerData {
         return Bukkit.getPlayer(uuid);
     }
 
+    public UUID getUUID(){
+        return uuid;
+    }
+
     public boolean hasSufficientRegenForSpell(CastSpellWrapper spell){
         return regenAmount >= spell.getRegenConsumed();
     }
@@ -309,10 +313,6 @@ public class PlayerData {
 
     public void setConfig(PlayerDataConfig config) {
         this.config = config;
-    }
-
-    public UUID getUuid() {
-        return uuid;
     }
 
 }

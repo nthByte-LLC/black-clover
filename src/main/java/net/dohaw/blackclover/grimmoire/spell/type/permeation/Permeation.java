@@ -7,6 +7,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SpectralArrow;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,9 @@ public class Permeation extends ActivatableSpellWrapper implements Listener {
     public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
         Player player = pd.getPlayer();
-        if(player.getGameMode() != GameMode.SPECTATOR && !permeatingPlayers.contains(player.getUniqueId())){
+        UUID playerUUID = player.getUniqueId();
+        if(player.getGameMode() != GameMode.SPECTATOR && !permeatingPlayers.contains(playerUUID)) {
+            permeatingPlayers.add(playerUUID);
             player.setGameMode(GameMode.SPECTATOR);
             return super.cast(e, pd);
         }
@@ -42,9 +45,10 @@ public class Permeation extends ActivatableSpellWrapper implements Listener {
     }
 
     @Override
-    public void deactiveSpell(PlayerData caster) throws UnexpectedPlayerData {
+    public void deactiveSpell(PlayerData caster) {
         Player player = caster.getPlayer();
         player.setGameMode(GameMode.SURVIVAL);
+        permeatingPlayers.remove(player.getUniqueId());
     }
 
     @Override
@@ -59,6 +63,7 @@ public class Permeation extends ActivatableSpellWrapper implements Listener {
     public void onTeleportInSpectator(PlayerTeleportEvent e){
         Player player = e.getPlayer();
         if(e.getCause() == PlayerTeleportEvent.TeleportCause.SPECTATE && permeatingPlayers.contains(player.getUniqueId())){
+            player.sendMessage("You can't do this right now!");
             e.setCancelled(true);
         }
     }

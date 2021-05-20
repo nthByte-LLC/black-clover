@@ -18,6 +18,7 @@ Spell Settings:
     Hotbar Number: 3
     Cooldown: 5
     Regen Consumed: 100
+    Duration: 10
   punch:
     Hotbar Number: 4
     Cooldown: 5

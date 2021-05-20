@@ -51,7 +51,7 @@ public class Pathmaker extends ActivatableSpellWrapper {
         }
 
         path.add(caster.getPlayer().getLocation());
-        allPaths.put(caster.getUuid(), path);
+        allPaths.put(caster.getUUID(), path);
 
         //Spawn path particles
         for(Location loc : path){
@@ -65,7 +65,7 @@ public class Pathmaker extends ActivatableSpellWrapper {
         CompassPlayerData cpd = (CompassPlayerData) caster;
         cpd.setMakingPath(false);
         cpd.getPath().clear();
-        allPaths.remove(cpd.getUuid());
+        allPaths.remove(cpd.getUUID());
     }
 
     @Override

@@ -58,10 +58,10 @@ public class WaterBubble extends ActivatableSpellWrapper implements Listener {
 
     @Override
     public void deactiveSpell(PlayerData caster) {
-        WaterBubbleSession session = waterBubbleSessions.get(caster.getUuid());
+        WaterBubbleSession session = waterBubbleSessions.get(caster.getUUID());
         if(session != null){
             session.finish();
-            waterBubbleSessions.remove(caster.getUuid());
+            waterBubbleSessions.remove(caster.getUUID());
         }
     }
 

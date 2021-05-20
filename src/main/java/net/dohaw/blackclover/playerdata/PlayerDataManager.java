@@ -68,7 +68,7 @@ public class PlayerDataManager {
             PlayerDataConfig pdc = new PlayerDataConfig(file);
             PlayerData pd = pdc.loadData(uuid);
             initManaBar(player, pd.getGrimmoireWrapper());
-            playerData.put(pd.getUuid(), pd);
+            playerData.put(pd.getUUID(), pd);
         }else{
             createData(player);
         }
@@ -90,7 +90,7 @@ public class PlayerDataManager {
      */
     public void shutdown(){
         for(PlayerData pd : playerData.values()){
-            UUID uuid = pd.getUuid();
+            UUID uuid = pd.getUUID();
             Map<UUID, BossBar> manaBars = plugin.getRegenBars();
             if(manaBars.containsKey(uuid)){
                 BossBar manaBar = manaBars.get(uuid);

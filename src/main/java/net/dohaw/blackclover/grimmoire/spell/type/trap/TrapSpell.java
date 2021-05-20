@@ -82,7 +82,7 @@ public abstract class TrapSpell extends CastSpellWrapper implements Listener {
         Location centeredLocation = new Location(location.getWorld(), blockLocation.getBlockX() + 0.5D, blockLocation.getBlockY(), blockLocation.getBlockZ() + 0.5D);
         Block locationBlock = centeredLocation.getBlock();
 
-        Trap trap = new Trap(this, BlockSnapshot.toSnapshot(locationBlock), placer.getUuid(), centeredLocation);
+        Trap trap = new Trap(this, BlockSnapshot.toSnapshot(locationBlock), placer.getUUID(), centeredLocation);
         locationBlock.setType(getCarpetMaterial());
         SpellUtils.spawnParticle(location, placeParticles(), 30, 1, 1, 1);
         SpellUtils.playSound(location, Sound.BLOCK_WOOL_PLACE);

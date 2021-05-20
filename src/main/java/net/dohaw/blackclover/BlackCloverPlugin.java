@@ -167,7 +167,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
 
     public void updateRegenBar(PlayerData pd){
 
-        BossBar regenBar = regenBars.get(pd.getUuid());
+        BossBar regenBar = regenBars.get(pd.getUUID());
         double regenAmount = pd.getRegenAmount();
         double maxRegen = pd.getMaxRegen();
         double percentageRegenFull = regenAmount / maxRegen;
