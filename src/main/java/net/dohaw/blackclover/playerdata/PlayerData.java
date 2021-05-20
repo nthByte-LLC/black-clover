@@ -46,7 +46,7 @@ public class PlayerData {
 
     private boolean canAttack;
 
-    private HashSet<SpellType> spellsOnCooldown = new HashSet<>();
+    private EnumSet<SpellType> spellsOnCooldown = EnumSet.noneOf(SpellType.class);
 
     private Map<SpellType, List<BukkitTask>> spellRunnables = new HashMap<>();
 
@@ -271,7 +271,7 @@ public class PlayerData {
         this.canAttack = canAttack;
     }
 
-    public HashSet<SpellType> getSpellsOnCooldown() {
+    public EnumSet<SpellType> getSpellsOnCooldown() {
         return spellsOnCooldown;
     }
 

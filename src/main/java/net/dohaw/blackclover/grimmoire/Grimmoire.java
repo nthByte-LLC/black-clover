@@ -42,6 +42,7 @@ public class Grimmoire extends WrapperHolder {
     public static final GrimmoireWrapper GLASS = new Glass();
     public static final GrimmoireWrapper DARK = new Dark();
     public static final GrimmoireWrapper SPATIAL = new Spatial();
+    public static final GrimmoireWrapper PERMEATION = new Permeation();
 
     public static List<GrimmoireWrapper> getByTier(int tier){
         List<GrimmoireWrapper> validWrappers = new ArrayList<>();

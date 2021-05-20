@@ -3,7 +3,6 @@ package net.dohaw.blackclover.grimmoire.spell.type.spatial;
 import net.dohaw.blackclover.config.GrimmoireConfig;
 import net.dohaw.blackclover.event.PortalThresholdCrossEvent;
 import net.dohaw.blackclover.exception.UnexpectedPlayerData;
-import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.SpellUtils;
@@ -58,13 +57,11 @@ public class Banish extends PortalSpell<FloorPortal> {
     public void onEnterPortal(PortalThresholdCrossEvent<FloorPortal> e) {
 
         Entity entityEntered = e.getEntityEntered();
-        FloorPortal portalEntered = e.getPortalEntered();
 
         if(!hasEnteredPortalRecently(entityEntered)){
-            portalEntered.teleport(entityEntered);
+            entityEntered.teleport(netherWorld.getSpawnLocation());
             SpellUtils.playSound(entityEntered, Sound.ITEM_CHORUS_FRUIT_TELEPORT);
         }
-
 
     }
 
@@ -78,7 +75,6 @@ public class Banish extends PortalSpell<FloorPortal> {
             netherWorld = null;
             return;
         }
-
         this.netherWorld = Bukkit.getWorld(netherWorldName);
 
     }

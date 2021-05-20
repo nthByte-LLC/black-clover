@@ -12,7 +12,7 @@ public class AshBeamRunner extends BeamDamager {
 
     private double damage;
 
-    public AshBeamRunner(Entity start, double distanceBeam, double damage) {
+    public AshBeamRunner(LivingEntity start, double distanceBeam, double damage) {
         super(start, distanceBeam, new Particle.DustOptions(Color.BLACK, 1f), false);
         this.damage = damage;
     }

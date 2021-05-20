@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -25,17 +26,10 @@ public class BeamParticleRunner extends LineParticleRunner{
     private boolean isPersistent;
 
     protected List<Location> particleLocations = new ArrayList<>();
-    protected Entity entity;
+    protected LivingEntity entity;
     protected BukkitTask beamDrawer;
 
-    public BeamParticleRunner(Entity start, Location end, Particle.DustOptions dustOptions, double spread, boolean isPersistent) {
-        super(start.getLocation(), end, dustOptions, spread);
-        this.isPersistent = isPersistent;
-        this.entity = start;
-        initBeamDrawer();
-    }
-
-    public BeamParticleRunner(Entity start, double distanceBeam, Particle.DustOptions dustOptions, double spread, boolean isPersistent){
+    public BeamParticleRunner(LivingEntity start, double distanceBeam, Particle.DustOptions dustOptions, double spread, boolean isPersistent){
         super(start.getLocation(), LocationUtil.getLocationInFront(start, distanceBeam).add(0,1 , 0), dustOptions, spread);
         this.isPersistent = isPersistent;
         this.entity = start;

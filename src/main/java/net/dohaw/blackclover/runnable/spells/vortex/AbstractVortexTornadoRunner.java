@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -29,22 +30,19 @@ public abstract class AbstractVortexTornadoRunner extends BukkitRunnable {
 
     private int numStayedIntervals = 0;
 
-    protected Entity entity;
+    protected LivingEntity entity;
     private final Particle.DustOptions DUST_OPTIONS;
     protected List<TornadoParticleRunner> tornadoes = new ArrayList<>();
 
     // The task that carries out the specifics of what the tornado is supposed to do
     private BukkitTask innerTask;
 
-    private VortexSpell spell;
-
-    public AbstractVortexTornadoRunner(Entity entity, VortexSpell spell, Particle.DustOptions dustOptions, long intervalInnerRunner) {
+    public AbstractVortexTornadoRunner(LivingEntity entity, VortexSpell spell, Particle.DustOptions dustOptions, long intervalInnerRunner) {
         this.entity = entity;
         this.DUST_OPTIONS = dustOptions;
         this.MAX_DISTANCE_TRAVEL = spell.getTornadoMaxTravelDistance();
         initTornadoes();
         this.innerTask = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, this::doTornadoSpecifics, 0L, intervalInnerRunner);
-        this.spell = spell;
     }
 
     @Override
@@ -75,7 +73,6 @@ public abstract class AbstractVortexTornadoRunner extends BukkitRunnable {
          */
         final int ALLOWED_STAYED_INTERVALS = 50;
         if(numStayedIntervals >= ALLOWED_STAYED_INTERVALS || distanceTraveled >= MAX_DISTANCE_TRAVEL){
-            System.out.println("HERE");
             cancel();
         }
 

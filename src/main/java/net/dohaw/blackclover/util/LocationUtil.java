@@ -3,12 +3,13 @@ package net.dohaw.blackclover.util;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
 public class LocationUtil {
 
-    public static Location getLocationInFront(Entity entity, double numBlocksInFront){
-        return getLocationInFront(entity.getLocation(), numBlocksInFront);
+    public static Location getLocationInFront(LivingEntity entity, double numBlocksInFront){
+        return getLocationInFront(entity.getEyeLocation(), numBlocksInFront);
     }
 
     /**

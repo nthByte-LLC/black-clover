@@ -18,7 +18,7 @@ public class VortexTornadoRunner extends AbstractVortexTornadoRunner {
     private double damage;
     private double forceMultiplier;
 
-    public VortexTornadoRunner(Entity entity, Tornado spell, Player caster) {
+    public VortexTornadoRunner(LivingEntity entity, Tornado spell, Player caster) {
         super(entity, spell, new Particle.DustOptions(BukkitColor.DARK_GREY, 1),20L);
         this.forceMultiplier = spell.getForceMultiplier();
         this.damage = spell.getDamage();

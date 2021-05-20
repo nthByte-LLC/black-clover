@@ -16,7 +16,7 @@ public abstract class BeamDamager extends BeamParticleRunner {
     private BukkitTask damageDealer;
     private HashSet<UUID> inBeam = new HashSet<>();
 
-    public BeamDamager(Entity start, double distanceBeam, Particle.DustOptions dustOptions, boolean isPersistent) {
+    public BeamDamager(LivingEntity start, double distanceBeam, Particle.DustOptions dustOptions, boolean isPersistent) {
         super(start, distanceBeam, dustOptions, 0.2, isPersistent);
         startDamager();
     }

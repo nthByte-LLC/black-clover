@@ -107,6 +107,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         Grimmoire.registerWrapper(Grimmoire.GLASS);
         Grimmoire.registerWrapper(Grimmoire.DARK);
         Grimmoire.registerWrapper(Grimmoire.SPATIAL);
+        Grimmoire.registerWrapper(Grimmoire.PERMEATION);
 
         for(Wrapper wrapper : Grimmoire.wrappers.values()){
             if(wrapper instanceof GrimmoireWrapper){

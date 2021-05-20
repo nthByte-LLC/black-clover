@@ -243,7 +243,17 @@ public enum SpellType {
     END_GATE("end_gate", false),
     HOME_GATE("home_gate", false),
     SPATIAL_TELEPORT("teleport", false),
-    BANISH("banish", true);
+    BANISH("banish", true),
+
+    /*
+        Thru spells
+     */
+    THRU("thru", false),
+    PERMEATION("permeation", false),
+    COMPEATION("compeation", false),
+    INVULNERABILITY("invulnerability", false),
+    PUNCH("punch", false),
+    GHOST_WORLD("ghost_world", true);
 
     @Getter
     private boolean isUltimate;

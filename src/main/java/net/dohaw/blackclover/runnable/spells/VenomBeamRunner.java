@@ -19,7 +19,7 @@ public class VenomBeamRunner extends BeamDamager{
     private int poisonLevel;
     private double poisonDuration;
 
-    public VenomBeamRunner(Entity start, double distanceBeam, int poisonLevel, double poisonDuration) {
+    public VenomBeamRunner(LivingEntity start, double distanceBeam, int poisonLevel, double poisonDuration) {
         super(start, distanceBeam, new Particle.DustOptions(BukkitColor.VIOLET, 1.5f), true);
         this.poisonLevel = poisonLevel;
         this.poisonDuration = poisonDuration;

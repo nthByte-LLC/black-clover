@@ -17,7 +17,7 @@ public class PortnadoRunner extends AbstractVortexTornadoRunner{
     private int maxXAdditive, maxZAdditive;
     private Player caster;
 
-    public PortnadoRunner(Entity entity, Portnado spell, Player caster) {
+    public PortnadoRunner(LivingEntity entity, Portnado spell, Player caster) {
         super(entity, spell, new Particle.DustOptions(Color.PURPLE, 1), 20L);
         this.caster = caster;
         this.maxXAdditive = spell.getMaxXAdditive();

@@ -20,7 +20,7 @@ public class EarthstormRunner extends AbstractVortexTornadoRunner {
     private double slownessDuration;
     private Player caster;
 
-    public EarthstormRunner(Entity entity, Earthstorm spell, Player caster) {
+    public EarthstormRunner(LivingEntity entity, Earthstorm spell, Player caster) {
         super(entity, spell, new Particle.DustOptions(BukkitColor.BROWN, 1), 20L);
         this.caster = caster;
         this.slownessLevel = spell.getSlownessLevel();

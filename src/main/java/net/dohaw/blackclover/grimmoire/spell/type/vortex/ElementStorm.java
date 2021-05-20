@@ -10,7 +10,9 @@ import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
@@ -40,7 +42,7 @@ public class ElementStorm extends VortexSpell {
             Location locInFront = LocationUtil.getLocationInFront(turnedLocation, 1);
             SpellType randomElementSpell = elementSpells.remove(current.nextInt(elementSpells.size()));
 
-            Entity invisibleArmorStand = SpellUtils.invisibleArmorStand(locInFront);
+            ArmorStand invisibleArmorStand = SpellUtils.invisibleArmorStand(locInFront);
             Vortex vortex = Grimmoire.VORTEX;
             AbstractVortexTornadoRunner tornadoRunner;
             switch(randomElementSpell){

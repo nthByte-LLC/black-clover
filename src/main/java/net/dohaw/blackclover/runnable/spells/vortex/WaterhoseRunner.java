@@ -7,12 +7,13 @@ import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 
 import java.util.List;
 
 public class WaterhoseRunner extends AbstractVortexTornadoRunner {
 
-    public WaterhoseRunner(Entity entity, Waterhose spell) {
+    public WaterhoseRunner(LivingEntity entity, Waterhose spell) {
         super(entity, spell, new Particle.DustOptions(Color.BLUE, 1), 20L);
     }
 
