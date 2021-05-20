@@ -30,6 +30,9 @@ public class Thru extends CastSpellWrapper {
         Player player = pd.getPlayer();
         Block blockTarget = null;
         int numIterations = 0;
+        /*
+            Gets the target block Player#getTargetBlockExact wasn't treating me well for whatever reason.
+         */
         for(int i = 0; i < maxCastDistance; i++){
             Location currentLocation = LocationUtil.getLocationInFront(player, i);
             Block currentLocationBlock = currentLocation.getBlock();
@@ -48,8 +51,6 @@ public class Thru extends CastSpellWrapper {
         Block inFrontOfTarget = LocationUtil.getLocationInFront(player, numIterations + 1).getBlock();
         Block headLevelBlock = inFrontOfTarget.getRelative(BlockFace.UP);
 
-        inFrontOfTarget.setType(Material.REDSTONE_BLOCK);
-
         if(!inFrontOfTarget.getType().isAir() || !headLevelBlock.getType().isAir()){
             player.sendMessage("There isn't sufficient space!");
             return false;
@@ -57,7 +58,7 @@ public class Thru extends CastSpellWrapper {
 
         SpellUtils.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT);
         SpellUtils.spawnParticle(player, Particle.CLOUD, 30, 1, 1, 1);
-        player.teleport(inFrontOfTarget.getLocation());
+        player.teleport(LocationUtil.getMiddleOfBlock(inFrontOfTarget.getLocation()));
 
         return true;
     }
@@ -71,11 +72,6 @@ public class Thru extends CastSpellWrapper {
     public void loadSettings() {
         super.loadSettings();
         this.maxCastDistance = grimmoireConfig.getIntegerSetting(KEY, "Max Cast Distance");
-    }
-
-    private Block getTargetBlock(Player player){
-
-        return null;
     }
 
 }
