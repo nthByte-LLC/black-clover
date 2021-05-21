@@ -37,7 +37,8 @@ Spell Settings:
     Regen Consumed: 100
   earthquake:
     Hotbar Number: 5
-    Radius: 5
-    Duration: 5
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 3
+    Radius: 5
+    Number of Waves: 5

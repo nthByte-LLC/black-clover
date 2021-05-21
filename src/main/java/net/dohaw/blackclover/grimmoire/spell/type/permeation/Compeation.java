@@ -23,12 +23,10 @@ public class Compeation extends CastSpellWrapper {
     public boolean cast(Event e, PlayerData pd) throws UnexpectedPlayerData {
 
         Player player = pd.getPlayer();
-        if(canGoThroughWalls.contains(pd.getUUID())){
+        if(canGoThroughWalls.contains(pd.getUUID())) {
             player.sendMessage("You can already go through walls!");
             return false;
         }
-
-
 
         return true;
     }

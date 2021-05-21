@@ -48,7 +48,7 @@ public class PlayerData {
 
     private EnumSet<SpellType> spellsOnCooldown = EnumSet.noneOf(SpellType.class);
 
-    private Map<SpellType, List<BukkitTask>> spellRunnables = new HashMap<>();
+    private EnumMap<SpellType, List<BukkitTask>> spellRunnables = new EnumMap<>(SpellType.class);
 
     private int maxRegen, regenAmount;
 

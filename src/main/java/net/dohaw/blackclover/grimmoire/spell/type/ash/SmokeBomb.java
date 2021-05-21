@@ -42,7 +42,7 @@ public class SmokeBomb extends CastSpellWrapper {
         pd.setInVulnerable(true);
 
         final Location CAST_LOCATION = player.getLocation().clone();
-        List<Block> particleLocations = ShapeUtils.getBlocksInCube(CAST_LOCATION, radiusField, Material.AIR);
+        List<Block> particleLocations = ShapeUtils.makeCube(CAST_LOCATION, radiusField, Material.AIR);
 
         // Draws the smoke field
         BukkitTask particleDrawer = Bukkit.getScheduler().runTaskTimer(Grimmoire.instance, () -> {

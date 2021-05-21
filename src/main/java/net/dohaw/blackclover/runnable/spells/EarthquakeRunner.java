@@ -1,117 +1,124 @@
 package net.dohaw.blackclover.runnable.spells;
 
 import net.dohaw.blackclover.grimmoire.Grimmoire;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.type.sand.Earthquake;
 import net.dohaw.blackclover.util.BlockSnapshot;
+import net.dohaw.blackclover.util.LocationUtil;
+import net.dohaw.blackclover.util.SpellUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EarthquakeRunner extends BukkitRunnable {
 
-    private int radius;
-    private int originX, originY, originZ;
-    private Player player;
-    private int currentRadius = 1;
-    private int currentWave = 0;
-    private final int WAVES = 3;
+    private final double MAX_BLOCK_Y_ADDITIVE = 1;
 
-    private final double MAX_BLOCK_Y_ADDITIVE = 0.5;
+    private List<BlockSnapshot> waveBlocksRemoved = new ArrayList<>();
 
-    private Queue<BlockSnapshot> blocksRemoved = new LinkedList<>();
-    private Queue<FallingBlock> fallingBlocks = new LinkedList<>();
+    private Location originEarthquake;
 
-    public EarthquakeRunner(Player player, Earthquake earthquake){
-        this.player = player;
-        this.originX = player.getLocation().getBlockX();
-        this.originY = player.getLocation().getBlockY() - 1;
-        this.originZ = player.getLocation().getBlockZ();
-        this.radius = earthquake.getRadius();
+    private int radius, radiusCount;
+    private int numberOfWaves, waveCount;
+
+    private Player caster;
+
+    private double damage;
+
+    public EarthquakeRunner(Player caster, Location originEarthquake, Earthquake earthquake){
+        this.caster = caster;
+        this.originEarthquake = originEarthquake;
+        this.radius =  earthquake.getRadius();
+        this.numberOfWaves = earthquake.getNumberOfWaves();
+        this.damage = earthquake.getDamage();
     }
 
     @Override
     public void run() {
 
-        // side 1
-        Location side1Start = new Location(player.getWorld(), originX - currentRadius, originY, originZ - currentRadius);
-        for(int additive = 0; additive < (currentRadius * 2); additive++){
-            Location loc = side1Start.clone().add(additive, 0, 0);
-            spawnFallingBlock(loc);
+        double earthquakeStartX = originEarthquake.getX();
+        double earthquakeStartY = originEarthquake.getY();
+        double earthquakeStartZ = originEarthquake.getZ();
+        World earthquakeWorld = originEarthquake.getWorld();
+
+        for(double x = earthquakeStartX - radiusCount; x <= earthquakeStartX + radiusCount; x++){
+            for(double z = earthquakeStartZ - radiusCount; z <= earthquakeStartZ + radiusCount; z++){
+                Location loc = new Location(earthquakeWorld, x, earthquakeStartY, z);
+                Block block = loc.getBlock();
+                if(block.getType().isSolid()){
+                    double minX = earthquakeStartX - radiusCount;
+                    double maxX = earthquakeStartX + radiusCount;
+                    double minZ = earthquakeStartZ - radiusCount;
+                    double maxZ = earthquakeStartZ + radiusCount;
+                    if(x == minX || x == maxX || z == minZ || z == maxZ){
+                        spawnFallingBlock(block);
+                    }
+                }
+            }
         }
 
-        // side 2
-        Location side2Start = new Location(player.getWorld(), originX + currentRadius, originY, originZ - currentRadius);
-        for(int additive = 0; additive < (currentRadius * 2) + 1; additive++){
-            Location loc = side2Start.clone().add(0, 0, additive);
-            spawnFallingBlock(loc);
-        }
+        radiusCount++;
 
-        // side 3
-        // added 1 to cover up for missed corner
-        Location side3Start = new Location(player.getWorld(), originX - currentRadius, originY, originZ + currentRadius);
-        for(int additive = 0; additive < (currentRadius * 2); additive++){
-            Location loc = side3Start.clone().add(additive, 0, 0);
-            spawnFallingBlock(loc);
-        }
-
-        // side 4
-        Location side4Start = new Location(player.getWorld(), originX - currentRadius, originY, originZ - currentRadius);
-        for(int additive = 0; additive < (currentRadius * 2); additive++){
-            Location loc = side4Start.clone().add(0, 0, additive);
-            spawnFallingBlock(loc);
-        }
-
-        currentRadius++;
-
-        if(radius == currentRadius){
-            currentWave++;
-            currentRadius = 1;
+        if(radiusCount == radius){
+            doEarthquakeDamage();
+            radiusCount = 0;
+            waveCount++;
             Bukkit.getScheduler().runTaskLater(Grimmoire.instance, this::finishWave, 1);
         }
 
-        if(currentWave == WAVES){
-            this.cancel();
-            Bukkit.getScheduler().runTaskLater(Grimmoire.instance, this::finishWave, 1);
+        if(waveCount == numberOfWaves){
+            cancel();
         }
 
     }
 
-    private void spawnFallingBlock(Location locationBlockRemoving){
-        BlockSnapshot snapshot = BlockSnapshot.toSnapshot(locationBlockRemoving.getBlock());
+    private void doEarthquakeDamage(){
+        for(Entity entity : originEarthquake.getWorld().getNearbyEntities(originEarthquake, radiusCount, 2, radiusCount)){
+            if(!entity.getUniqueId().equals(caster.getUniqueId()) && !(entity instanceof FallingBlock)){
+                // Little bit of knockback upwards
+                Vector velocity = entity.getVelocity();
+                velocity.setY(0.33333);
+                entity.setVelocity(velocity);
+                if(entity instanceof LivingEntity){
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    SpellUtils.doSpellDamage(livingEntity, caster, SpellType.EARTHQUAKE, damage);
+                }
+            }
+        }
+    }
+
+    private void spawnFallingBlock(Block blockBeingRemoved){
+        BlockSnapshot snapshot = BlockSnapshot.toSnapshot(blockBeingRemoved);
         // some blocks get added twice so this is important to check
-        if(!blocksRemoved.contains(snapshot)){
-            blocksRemoved.add(snapshot);
-            locationBlockRemoving.getBlock().setType(Material.AIR);
+        if(!waveBlocksRemoved.contains(snapshot)){
+            waveBlocksRemoved.add(snapshot);
+            blockBeingRemoved.setType(Material.AIR);
             double randomYAdditive = ThreadLocalRandom.current().nextDouble(0.1, MAX_BLOCK_Y_ADDITIVE);
-            Location fallingBlockLoc = locationBlockRemoving.clone().add(0, randomYAdditive, 0);
+            Location fallingBlockLoc = blockBeingRemoved.getLocation().clone().add(0, randomYAdditive, 0);
             FallingBlock fallingBlock = fallingBlockLoc.getWorld().spawnFallingBlock(fallingBlockLoc, snapshot.getData().getMaterial().createBlockData());
             fallingBlock.setHurtEntities(true);
             fallingBlock.setDropItem(false);
-            fallingBlocks.add(fallingBlock);
         }
     }
 
     private void finishWave(){
 
-        FallingBlock fallingBlock;
-        while((fallingBlock = fallingBlocks.poll()) != null){
-            if(!fallingBlock.isOnGround()){
-                fallingBlock.remove();
-            }
-        }
-
-        BlockSnapshot snapshot;
-        while((snapshot = blocksRemoved.poll()) != null){
-            BlockData data = snapshot.getData();
-            snapshot.getLocation().getBlock().setBlockData(data);
-        }
+       for(BlockSnapshot snapshot : waveBlocksRemoved){
+           snapshot.apply();
+       }
+       waveBlocksRemoved.clear();
 
     }
 

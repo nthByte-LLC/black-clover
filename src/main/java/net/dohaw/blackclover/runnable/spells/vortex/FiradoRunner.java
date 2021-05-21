@@ -72,7 +72,7 @@ public class FiradoRunner extends AbstractVortexTornadoRunner {
         for(int y = 0; y < tornadoHeight; y++){
 
             Location loc = centeredArmorStand.getLocation().clone().add(0, y, 0);
-            List<Block> heightLevelBlocks = ShapeUtils.getBlocksInCube(loc, currentCheckingRadius, 1, null);
+            List<Block> heightLevelBlocks = ShapeUtils.makeCube(loc, currentCheckingRadius, 1, null);
             for(Block block : heightLevelBlocks){
 
                 String blockTypeName = block.getType().toString().toLowerCase();

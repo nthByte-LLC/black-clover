@@ -39,7 +39,7 @@ public class WaterhoseRunner extends AbstractVortexTornadoRunner {
         for(int y = 0; y < tornadoHeight; y++){
 
             Location loc = centeredArmorStand.getLocation().clone().add(0, y, 0);
-            List<Block> heightLevelBlocks = ShapeUtils.getBlocksInCube(loc, currentCheckingRadius, 1, Material.FIRE);
+            List<Block> heightLevelBlocks = ShapeUtils.makeCube(loc, currentCheckingRadius, 1, Material.FIRE);
             for(Block block : heightLevelBlocks){
                 block.setType(Material.AIR);
                 SpellUtils.playSound(block, Sound.BLOCK_FIRE_EXTINGUISH);
