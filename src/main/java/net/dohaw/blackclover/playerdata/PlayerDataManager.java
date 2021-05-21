@@ -127,7 +127,7 @@ public class PlayerDataManager {
             GrimmoireWrapper randomGrimmoire = getRandomGrimmoire(randomTier);
 
             ItemStack grimmoire = BlackCloverPlugin.getBaseGrimmoire();
-            randomGrimmoire.adaptItemStack(grimmoire);
+            randomGrimmoire.adaptItemStack(pd, grimmoire);
 
             if(baseConfig.isInTestingMode()){
                 System.out.println("Random Tier: " + randomTier);

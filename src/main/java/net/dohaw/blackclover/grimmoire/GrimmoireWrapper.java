@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
+import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
@@ -69,9 +70,11 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
 
     /**
      * Edits the itemstack properties based on what the grimmoire is
+     * Also writes in the grimmoire book
+     * @param playerData The data of the player that will have this grimmoire
      * @param baseGrimmoire The base grimmoire that is unedited.
      */
-    public void adaptItemStack(@NonNull ItemStack baseGrimmoire){
+    public void adaptItemStack(PlayerData playerData, @NonNull ItemStack baseGrimmoire){
 
         ItemMeta meta = baseGrimmoire.getItemMeta();
         String displayName = meta.getDisplayName();
@@ -115,13 +118,13 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         meta.setLore(lore);
         baseGrimmoire.setItemMeta(meta);
 
-        writeInGrimmoire(baseGrimmoire);
+        writeInGrimmoire(playerData, baseGrimmoire);
 
         PDCHandler.markGrimmoire(baseGrimmoire, this.getKEY());
 
     }
 
-    private void writeInGrimmoire(ItemStack grimmoire){
+    private void writeInGrimmoire(PlayerData playerData, ItemStack grimmoire){
 
         BookMeta bookMeta = (BookMeta) grimmoire.getItemMeta();
         bookMeta.setTitle("Blank");
@@ -132,8 +135,8 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         firstPage += firstPageHeader;
 
         //20 characters wide
-        String underHeader = "&0-------------------\n";
-        firstPage += underHeader;
+        String lineUnderHeader = "&0-------------------\n";
+        firstPage += lineUnderHeader;
 
         BlackCloverPlugin plugin = (BlackCloverPlugin) CoreLib.getInstance();
         String plusSign = "&2[+]&0";
@@ -143,17 +146,22 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         // The spells
         for(SpellWrapper spell : spells.values()){
 
-            String spellName = org.apache.commons.lang.StringUtils.capitalize(spell.toString().replace("_", " ").toLowerCase());
-            String spellLine;
-            boolean isUlt = spell.getKEY().isUltimate();
+            if(!playerData.isSpellUnlocked(spell)){
 
-            if(isUlt){
-                spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
-            }else{
-                spellLine = plusSign + " Spell: " + spellName + "\n";
+                SpellType spellType = spell.getKEY();
+                String spellName = spellType.toProperName();
+                String spellLine;
+                boolean isUlt = spell.getKEY().isUltimate();
+
+                if(isUlt){
+                    spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
+                }else{
+                    spellLine = plusSign + " Spell: " + spellName + "\n";
+                }
+
+                firstPage += spellLine;
+
             }
-
-            firstPage += spellLine;
 
         }
 

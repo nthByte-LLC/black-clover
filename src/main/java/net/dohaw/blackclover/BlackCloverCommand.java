@@ -95,7 +95,7 @@ public class BlackCloverCommand implements CommandExecutor {
                         }
 
                         ItemStack newGrimmoire = BlackCloverPlugin.getBaseGrimmoire();
-                        wrapperFromAlias.adaptItemStack(newGrimmoire);
+                        wrapperFromAlias.adaptItemStack(targetPlayerData, newGrimmoire);
 
                         targetPlayer.getInventory().setItemInOffHand(newGrimmoire);
 
