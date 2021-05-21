@@ -17,11 +17,13 @@ import java.util.*;
 
 public class PlayerData {
 
-    private int level;
+    private int level = 1;
 
     private double experience;
 
     private int numUnusedPoints;
+
+    private EnumSet<SpellType> unlockedSpells = EnumSet.noneOf(SpellType.class);
 
     private boolean willTakeFallDamage = true;
 
@@ -209,6 +211,10 @@ public class PlayerData {
         this.numUnusedPoints += pointsGained;
     }
 
+    public boolean isSpellUnlocked(SpellWrapper spellWrapper){
+        return unlockedSpells.contains(spellWrapper.getKEY());
+    }
+
     public boolean isWillTakeFallDamage() {
         return willTakeFallDamage;
     }
@@ -351,6 +357,14 @@ public class PlayerData {
 
     public void setNumUnusedPoints(int numUnusedPoints) {
         this.numUnusedPoints = numUnusedPoints;
+    }
+
+    public EnumSet<SpellType> getUnlockedSpells() {
+        return unlockedSpells;
+    }
+
+    public void setUnlockedSpells(EnumSet<SpellType> unlockedSpells) {
+        this.unlockedSpells = unlockedSpells;
     }
 
 }

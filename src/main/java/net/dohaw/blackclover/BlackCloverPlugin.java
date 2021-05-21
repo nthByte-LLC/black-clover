@@ -1,6 +1,5 @@
 package net.dohaw.blackclover;
 
-import lombok.Getter;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
@@ -15,7 +14,6 @@ import net.dohaw.blackclover.util.ProgressSystem;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
-import org.bukkit.Sound;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -29,21 +27,16 @@ import java.util.UUID;
 
 public final class BlackCloverPlugin extends JavaPlugin {
 
-    @Getter
     private String prefix;
 
-    @Getter
     private PlayerDataManager playerDataManager;
 
-    @Getter
     private Map<UUID, BossBar> regenBars = new HashMap<>();
 
-    @Getter
     private int t2MaxRegen, t3MaxRegen, t4MaxRegen, t5MaxRegen;
 
     private static ItemStack baseGrimmoire;
 
-    @Getter
     private BaseConfig baseConfig;
 
     @Override
@@ -197,6 +190,22 @@ public final class BlackCloverPlugin extends JavaPlugin {
         BossBar bossBar = regenBars.get(uuidPlayer);
         bossBar.removeAll();
         regenBars.remove(uuidPlayer);
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public PlayerDataManager getPlayerDataManager() {
+        return playerDataManager;
+    }
+
+    public BaseConfig getBaseConfig() {
+        return baseConfig;
+    }
+
+    public Map<UUID, BossBar> getRegenBars() {
+        return regenBars;
     }
 
 }

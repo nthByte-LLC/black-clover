@@ -3,13 +3,12 @@ package net.dohaw.blackclover.config;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
+import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.playerdata.*;
 import net.dohaw.corelib.Config;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerDataConfig extends Config {
 
@@ -30,11 +29,20 @@ public class PlayerDataConfig extends Config {
         GrimmoireWrapper grimmoireWrapper = (GrimmoireWrapper) Grimmoire.getByKey(grimmoireType);
         PlayerData pd = new PlayerData(uuid, grimmoireWrapper);
 
+        List<String> unlockedSpellsStr = config.getStringList("Unlocked Spells");
+        EnumSet<SpellType> unlockedSpells = EnumSet.noneOf(SpellType.class);
+
+        for(String unlockedSpell : unlockedSpellsStr){
+            unlockedSpells.add(SpellType.valueOf(unlockedSpell));
+        }
+
         pd.setMaxRegen(config.getInt("Max Regen"));
         pd.setRegenAmount(config.getInt("Regen Amount"));
         pd.setLevel(config.getInt("Level"));
         pd.setExperience(config.getDouble("Experience"));
         pd.setNumUnusedPoints(config.getInt("Unused Points"));
+        pd.setUnlockedSpells(unlockedSpells);
+
         pd.setConfig(this);
 
         PlayerData newData;
@@ -81,12 +89,20 @@ public class PlayerDataConfig extends Config {
 
     public void saveData(PlayerData pd){
 
+        EnumSet<SpellType> unlockedSpells = pd.getUnlockedSpells();
+        List<String> unlockedSpellsStr = new ArrayList<>();
+
+        for(SpellType spellType : unlockedSpells){
+            unlockedSpellsStr.add(spellType.toString());
+        }
+
         config.set("Max Regen", pd.getMaxRegen());
         config.set("Regen Amount", pd.getRegenAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
         config.set("Level", pd.getLevel());
         config.set("Experience", pd.getExperience());
         config.set("Unused Points", pd.getNumUnusedPoints());
+        config.set("Unlocked Spells", unlockedSpellsStr);
 
         if(pd instanceof SpecifiableData){
             SpecifiableData spd = (SpecifiableData) pd;

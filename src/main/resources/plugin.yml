@@ -23,6 +23,9 @@ permissions:
   blackclover.set.xp:
     default: op
     description: Allows a player to set a player's XP
+  blackclover.set.points:
+    default: op
+    description: Allows a player to set a player's points
   blackclover.info.others:
     default: op
     description: Allows a player to see info about another player

@@ -2,7 +2,7 @@ Testing Mode: true
 Prefix: "&f&l[&0Black&dClover&f&l]"
 # Grimmoire Display Properties.
 Grimmoire Properties:
-  Material: WRITABLE_BOOK
+  Material: WRITTEN_BOOK
   Display Name: "Grimmoire of %name%"
   Lore:
     - "&fTier: %tierNum% &f(%rarity%&f)"

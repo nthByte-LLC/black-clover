@@ -338,8 +338,7 @@ public class PlayerWatcher implements Listener {
 
             PlayerData playerData = plugin.getPlayerDataManager().getData(player.getUniqueId());
             CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(playerData, slot);
-
-            if(spellBoundToSlot != null){
+            if(spellBoundToSlot != null && playerData.isSpellUnlocked(spellBoundToSlot)){
                 String properName = spellBoundToSlot.getKEY().toProperName();
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(StringUtils.colorString("&f&l" + properName)));
             }
@@ -374,7 +373,7 @@ public class PlayerWatcher implements Listener {
         PlayerData pd = plugin.getPlayerDataManager().getData(player.getUniqueId());
         CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(pd, player.getInventory().getHeldItemSlot());
 
-        if(spellBoundToSlot != null){
+        if(spellBoundToSlot != null && pd.isSpellUnlocked(spellBoundToSlot)){
 
             SpellType spellType = spellBoundToSlot.getKEY();
             if(canCast(pd, spellType) && !pd.isCurrentlyCasting()){
