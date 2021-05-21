@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.DependableSpell;
 import net.dohaw.blackclover.grimmoire.spell.PersistableSpell;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.SpellWrapper;
+import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
 import org.bukkit.inventory.ItemStack;
@@ -115,6 +116,8 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         baseGrimmoire.setItemMeta(meta);
 
         writeInGrimmoire(baseGrimmoire);
+
+        PDCHandler.markGrimmoire(baseGrimmoire, this.getKEY());
 
     }
 

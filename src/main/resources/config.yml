@@ -36,6 +36,13 @@ Tier Properties:
     Obtaining Chance: 5
     Regen Multiplier: 5
 
+######
+# XP/Progress System Stuff
+Max Level: 15
+Mana Increase Per Upgrade: 500
+XP Gained From Mob Kill:
+
+
 # Please don't touch these 2 lines
 Acquisition Info:
   Tier 4:

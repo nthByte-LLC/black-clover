@@ -21,11 +21,10 @@ import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.v1_16_R3.EntityArmorStand;
-import net.minecraft.server.v1_16_R3.PacketPlayOutEntityMetadata;
-import net.minecraft.server.v1_16_R3.PacketPlayOutSpawnEntity;
-import net.minecraft.server.v1_16_R3.PlayerConnection;
+import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.*;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -38,6 +37,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitTask;
@@ -98,22 +98,15 @@ public class PlayerWatcher implements Listener {
     @EventHandler
     public void onPrepareToCast(PlayerInteractEvent e){
 
-        Action action = e.getAction();
-        if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
-            castPotentialSpell(e, e.getPlayer());
+        Player player = e.getPlayer();
+        if(hasGrimmoireInOffHand(player)){
+            Action action = e.getAction();
+            if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
+                castPotentialSpell(e, e.getPlayer());
+            }
         }
 
     }
-
-//    @EventHandler
-//    public void onGrimmoireUse(PlayerInteractEvent e){
-//        ItemStack stack = e.getItem();
-//        if(PDCHandler.isGrimmoire(stack)){
-//            if(e.getHand() == EquipmentSlot.OFF_HAND){
-//                e.setCancelled(true);
-//            }
-//        }
-//    }
 
     @EventHandler
     public void onCancelSpellDamage(SpellDamageEvent e){
@@ -148,11 +141,8 @@ public class PlayerWatcher implements Listener {
                     if(spellDamageEvent.isCancelled()){
                         e.setCancelled(true);
                     }else{
-                        System.out.println("DAMAGE PROJ: " + spellDamageEvent.getDamage());
                         e.setDamage(spellDamageEvent.getDamage());
                     }
-                }else{
-                    System.out.println("NOT SPELL BOUND PROJECTILE");
                 }
 
             }
@@ -302,14 +292,19 @@ public class PlayerWatcher implements Listener {
     @EventHandler
     public void onSwitchHotbarSlot(PlayerItemHeldEvent e){
 
-        int slot = e.getNewSlot();
         Player player = e.getPlayer();
-        PlayerData playerData = plugin.getPlayerDataManager().getData(player.getUniqueId());
-        CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(playerData, slot);
+        if(hasGrimmoireInOffHand(player)){
 
-        if(spellBoundToSlot != null){
-            String properName = spellBoundToSlot.getKEY().toProperName();
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(StringUtils.colorString("&f&l" + properName)));
+            int slot = e.getNewSlot();
+
+            PlayerData playerData = plugin.getPlayerDataManager().getData(player.getUniqueId());
+            CastSpellWrapper spellBoundToSlot = Grimmoire.getSpellBoundToSlot(playerData, slot);
+
+            if(spellBoundToSlot != null){
+                String properName = spellBoundToSlot.getKEY().toProperName();
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(StringUtils.colorString("&f&l" + properName)));
+            }
+
         }
 
     }
@@ -323,9 +318,16 @@ public class PlayerWatcher implements Listener {
         Entity eDamager = e.getDamager();
         if(eDamager instanceof Player){
             Player player = (Player) eDamager;
-            castPotentialSpell(e, player);
+            if(hasGrimmoireInOffHand(player)){
+                castPotentialSpell(e, player);
+            }
         }
 
+    }
+
+    private boolean hasGrimmoireInOffHand(Player player){
+        ItemStack offHandItem = player.getInventory().getItemInOffHand();
+        return PDCHandler.isGrimmoire(offHandItem);
     }
 
     private void castPotentialSpell(Cancellable e, Player player){
