@@ -31,6 +31,7 @@ public class ProgressSystem {
 
         playerData.setLevel(newLevel);
         playerData.setExperience(leftOverXP);
+        playerData.addPoints(1);
 
         Player playerWhoLevel = playerData.getPlayer();
         playerWhoLevel.sendMessage(StringUtils.colorString("You have leveled up to level &b&l" + newLevel + "!"));

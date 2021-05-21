@@ -15,7 +15,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
@@ -80,6 +79,9 @@ public class BlackCloverCommand implements CommandExecutor {
                             pdm.loadData(targetPlayer);
                             playerData.setMaxRegen(plugin.getMaxRegen(wrapperFromAlias.getTier()));
                             playerData.setRegenAmount(0);
+                            playerData.setExperience(0);
+                            playerData.setLevel(1);
+                            playerData.setNumUnusedPoints(0);
 
                             ItemStack grimmoire = PDCHandler.getGrimmoire(targetPlayer);
                             if (grimmoire != null) {
