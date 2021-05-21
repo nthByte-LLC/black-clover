@@ -6,10 +6,7 @@ import net.dohaw.blackclover.grimmoire.spell.type.sand.Earthquake;
 import net.dohaw.blackclover.util.BlockSnapshot;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.SpellUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -72,6 +69,11 @@ public class EarthquakeRunner extends BukkitRunnable {
         radiusCount++;
 
         if(radiusCount == radius){
+            Material originMaterial = originEarthquake.getBlock().getType();
+            SpellUtils.spawnParticle(caster, Particle.BLOCK_CRACK, originMaterial.createBlockData(), 30, 1, 1, 1);
+            SpellUtils.spawnParticle(caster, Particle.FALLING_DUST, originMaterial.createBlockData(), 30, 1,1, 1);
+            SpellUtils.playSound(caster, Sound.ENTITY_GENERIC_EXPLODE);
+            SpellUtils.playSound(caster, Sound.BLOCK_GRAVEL_STEP);
             doEarthquakeDamage();
             radiusCount = 0;
             waveCount++;

@@ -17,6 +17,10 @@ import java.util.*;
 
 public class PlayerData {
 
+    private int level;
+
+    private double currentXP;
+
     private boolean willTakeFallDamage = true;
 
     /*
