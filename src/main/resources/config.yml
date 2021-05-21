@@ -39,8 +39,14 @@ Tier Properties:
 ######
 # XP/Progress System Stuff
 Max Level: 15
+# How much mana you get per upgrade of mana
 Mana Increase Per Upgrade: 500
-XP Gained From Mob Kill:
+# How much XP is needed more than the last level to level up
+XP Increase Per Level: 500
+XP Gained:
+  Mob Kill: 15
+  Player Kill: 30
+  Spell Cast: 10
 
 
 # Please don't touch these 2 lines

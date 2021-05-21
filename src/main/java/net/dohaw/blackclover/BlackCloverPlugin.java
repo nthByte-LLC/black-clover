@@ -11,6 +11,7 @@ import net.dohaw.blackclover.listener.PlayerWatcher;
 import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.Regenerator;
+import net.dohaw.blackclover.util.ProgressSystem;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.JPUtils;
 import net.dohaw.corelib.StringUtils;
@@ -61,6 +62,7 @@ public final class BlackCloverPlugin extends JavaPlugin {
         JPUtils.validateFiles("config.yml");
 
         this.baseConfig = new BaseConfig();
+        ProgressSystem.setBaseConfig(baseConfig);
         loadConfigValues();
         baseGrimmoire = baseConfig.createBaseGrimmoire();
 

@@ -29,7 +29,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class Drowned extends CastSpellWrapper implements Listener {
 
     // pdc value contains who spawned the drowned.
-    private final NamespacedKey NSK_MARK = NamespacedKey.minecraft("summoned-drowned");
+    public static final NamespacedKey NSK_MARK = NamespacedKey.minecraft("summoned-drowned");
 
     private double movementSpeedAdditive;
     private int absorptionAmount;

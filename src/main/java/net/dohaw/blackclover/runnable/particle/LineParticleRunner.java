@@ -17,8 +17,8 @@ public class LineParticleRunner extends BukkitRunnable {
     protected Particle.DustOptions dustOptions;
     protected double spread, count;
 
-    protected double leftOffset;
-    protected double rightOffset;
+    protected double leftOffset = 0;
+    protected double rightOffset = 0;
     protected double yOffset = 0;
 
     public LineParticleRunner(Location start, Location end, Particle.DustOptions dustOptions, double spread){
@@ -44,8 +44,11 @@ public class LineParticleRunner extends BukkitRunnable {
      */
     public void drawLine(){
 
+        // Applies offsets
         Location particleLoc = getParticleLocation().add(0, yOffset, 0);
         particleLoc = LocationUtil.getLocationToRight(particleLoc, rightOffset);
+        particleLoc = LocationUtil.getLocationToLeft(particleLoc, leftOffset);
+
         boolean isWithinABlock = isCloseToEnd(particleLoc);
         while(!isWithinABlock){
             SpellUtils.spawnParticle(particleLoc, Particle.REDSTONE, dustOptions, 30, 0, 0, 0);

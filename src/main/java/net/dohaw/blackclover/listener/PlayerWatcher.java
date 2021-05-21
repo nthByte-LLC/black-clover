@@ -9,6 +9,7 @@ import net.dohaw.blackclover.grimmoire.spell.ActivatableSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.CastSpellWrapper;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
+import net.dohaw.blackclover.grimmoire.spell.type.water.Drowned;
 import net.dohaw.blackclover.grimmoire.spell.type.wind.Hurricane;
 import net.dohaw.blackclover.playerdata.CompassPlayerData;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
@@ -17,6 +18,7 @@ import net.dohaw.blackclover.playerdata.PlayerDataManager;
 import net.dohaw.blackclover.runnable.ProjectileWaterHitChecker;
 import net.dohaw.blackclover.util.LocationUtil;
 import net.dohaw.blackclover.util.PDCHandler;
+import net.dohaw.blackclover.util.ProgressSystem;
 import net.dohaw.blackclover.util.SpellUtils;
 import net.dohaw.corelib.StringUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -26,18 +28,14 @@ import org.bukkit.*;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.*;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.*;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitTask;
@@ -157,6 +155,9 @@ public class PlayerWatcher implements Listener {
         if(e.isWasSuccessfullyCasted()){
 
             PlayerData pd = e.getPlayerData();
+
+            ProgressSystem.increaseExperience(pd);
+
             Player player = pd.getPlayer();
             CastSpellWrapper spellCasted = e.getSpellCasted();
 
@@ -193,12 +194,15 @@ public class PlayerWatcher implements Listener {
         pd.setSpellCurrentlyCasting(e.getSpell());
     }
 
-    /**
+    /*
         Removes the tasks that are associated with the spell on death.
+        Also gives xp to the killer if they are a player
      */
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e){
-        PlayerData pd = plugin.getPlayerDataManager().getData(e.getEntity().getUniqueId());
+
+        Player deadPlayer = e.getEntity();
+        PlayerData pd = plugin.getPlayerDataManager().getData(deadPlayer.getUniqueId());
         Map<SpellType, List<BukkitTask>> spellTasks = pd.getSpellRunnables();
         for (SpellType spell : spellTasks.keySet()) {
             List<BukkitTask> tasks = spellTasks.remove(spell);
@@ -211,6 +215,41 @@ public class PlayerWatcher implements Listener {
         pd.setFrozen(false);
         pd.setCanCast(true);
         pd.setCanAttack(true);
+
+        /*
+            Increases a player's XP if the killer is a player
+         */
+        Player killer = deadPlayer.getKiller();
+        // They weren't killed by a player if this is null
+        if(killer != null){
+            PlayerData killerPlayerData = plugin.getPlayerDataManager().getData(killer);
+            ProgressSystem.increaseExperience(killerPlayerData);
+        }
+
+    }
+
+    /*
+        Gives XP to the player if they have killed an entity
+     */
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent e){
+
+        LivingEntity deadEntity = e.getEntity();
+        Player xpGainer = deadEntity.getKiller();
+        PlayerData xpGainerData = null;
+        if(xpGainer != null){
+            xpGainerData = plugin.getPlayerDataManager().getData(xpGainer);
+        }else{
+            Player petKillerOwner = getPetKillerOwner(deadEntity);
+            if(petKillerOwner != null){
+                xpGainerData = plugin.getPlayerDataManager().getData(petKillerOwner);
+            }
+        }
+
+        if(xpGainerData != null){
+            ProgressSystem.increaseExperience(xpGainerData);
+        }
+
     }
 
     @EventHandler (priority = EventPriority.HIGH)
@@ -384,9 +423,9 @@ public class PlayerWatcher implements Listener {
                             }
 
                             if(wasSuccessfullyCasted && !(spellBoundToSlot instanceof ActivatableSpellWrapper)){
-                                //SpellUtils.spawnParticle(player, Particle.SPELL_INSTANT, 30, 0.5f, 0.5f, 0.5f);
                                 spellBoundToSlot.deductMana(pd);
                             }
+
                             Bukkit.getPluginManager().callEvent(new PostCastSpellEvent(pd, spellBoundToSlot, wasSuccessfullyCasted));
 
                         }else{
@@ -421,6 +460,47 @@ public class PlayerWatcher implements Listener {
             }
         }
         return pd.canCast();
+    }
+
+    /**
+     * If the dead entity has died to a pet, this method will return the player that owns this pet.
+     */
+    private Player getPetKillerOwner(LivingEntity deadEntity){
+
+        /*
+            Rewards the player if their pet/tamed animal kills an entity
+         */
+        EntityDamageEvent lastDamageEvent = deadEntity.getLastDamageCause();
+        if(lastDamageEvent != null){
+
+            if(lastDamageEvent instanceof EntityDamageByEntityEvent){
+
+                EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) lastDamageEvent;
+                Entity damager = event.getDamager();
+                if(damager instanceof Tameable){
+
+                    AnimalTamer petOwner = ((Tameable) damager).getOwner();
+                    if(petOwner instanceof Player){
+                        return (Player) petOwner;
+                    }
+
+
+                }else if(damager.getType() == EntityType.DROWNED){
+                    // Player's can spawn Drowns from the Water Grimmoire (The "Drowned" spell)
+                    PersistentDataContainer pdc = damager.getPersistentDataContainer();
+                    if(pdc.has(Drowned.NSK_MARK, PersistentDataType.STRING)){
+                        String drownedOwnerName = pdc.get(Drowned.NSK_MARK, PersistentDataType.STRING);
+                        return Bukkit.getPlayer(drownedOwnerName);
+                    }
+
+                }
+
+            }
+
+        }
+
+        return null;
+
     }
 
 }

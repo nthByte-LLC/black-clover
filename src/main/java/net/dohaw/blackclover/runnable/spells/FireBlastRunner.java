@@ -1,6 +1,5 @@
 package net.dohaw.blackclover.runnable.spells;
 
-import net.dohaw.blackclover.BlackCloverPlugin;
 import net.dohaw.blackclover.event.SpellDamageEvent;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.spell.SpellType;
@@ -11,7 +10,6 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -53,7 +51,7 @@ public class FireBlastRunner extends BukkitRunnable {
             particleSpawner.cancel();
             damager.cancel();
             SpellUtils.spawnParticle(particleLocation, Particle.EXPLOSION_LARGE, 30, 1, 1, 1);
-            for(Entity e : particleLocation.getWorld().getNearbyEntities(particleLocation, 2, 2, 2)){
+            for(Entity e : particleLocation.getWorld().getNearbyEntities(particleLocation, 3, 3, 3)){
                 if(e instanceof LivingEntity){
                     LivingEntity le = (LivingEntity) e;
                     double damageDone = (BASE_DAMAGE * damageScale) + SpellUtils.getRandomDamageModifier();

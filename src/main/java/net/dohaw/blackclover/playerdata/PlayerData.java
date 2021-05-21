@@ -19,7 +19,7 @@ public class PlayerData {
 
     private int level;
 
-    private double currentXP;
+    private double experience;
 
     private boolean willTakeFallDamage = true;
 
@@ -199,6 +199,10 @@ public class PlayerData {
 
     }
 
+    public void increaseXP(double xpGained){
+        this.experience += xpGained;
+    }
+
     public boolean isWillTakeFallDamage() {
         return willTakeFallDamage;
     }
@@ -319,4 +323,19 @@ public class PlayerData {
         this.config = config;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public double getExperience() {
+        return experience;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setExperience(double experience) {
+        this.experience = experience;
+    }
 }

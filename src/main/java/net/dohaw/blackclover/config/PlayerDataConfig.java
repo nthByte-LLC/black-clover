@@ -3,7 +3,6 @@ package net.dohaw.blackclover.config;
 import net.dohaw.blackclover.grimmoire.Grimmoire;
 import net.dohaw.blackclover.grimmoire.GrimmoireType;
 import net.dohaw.blackclover.grimmoire.GrimmoireWrapper;
-import net.dohaw.blackclover.grimmoire.type.Trap;
 import net.dohaw.blackclover.playerdata.*;
 import net.dohaw.corelib.Config;
 
@@ -33,6 +32,8 @@ public class PlayerDataConfig extends Config {
 
         pd.setMaxRegen(config.getInt("Max Regen"));
         pd.setRegenAmount(config.getInt("Regen Amount"));
+        pd.setLevel(config.getInt("Level"));
+        pd.setExperience(config.getDouble("Experience"));
         pd.setConfig(this);
 
         PlayerData newData;
@@ -78,14 +79,19 @@ public class PlayerDataConfig extends Config {
     }
 
     public void saveData(PlayerData pd){
+
         config.set("Max Regen", pd.getMaxRegen());
         config.set("Regen Amount", pd.getRegenAmount());
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
+        config.set("Level", pd.getLevel());
+        config.set("Experience", pd.getExperience());
+
         if(pd instanceof SpecifiableData){
             SpecifiableData spd = (SpecifiableData) pd;
             spd.saveSpecifiedData(config);
         }
         saveConfig();
+
     }
 
 }

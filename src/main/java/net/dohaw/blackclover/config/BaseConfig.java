@@ -1,5 +1,6 @@
 package net.dohaw.blackclover.config;
 
+import net.dohaw.blackclover.XPGainType;
 import net.dohaw.corelib.Config;
 import net.dohaw.corelib.helpers.ItemStackHelper;
 import org.bukkit.Material;
@@ -48,6 +49,7 @@ public class BaseConfig extends Config {
     public void setWhoHasIt(Player whoHasIt, int tier){
         if(tier != 4 && tier != 5) throw new IllegalArgumentException("The only tiers that you can use this method for are tiers 4 and 5!");
         config.set("Acquisition Info.Tier " + tier + ".Who Has It", whoHasIt.getName());
+        saveConfig();
     }
 
     public ItemStack createBaseGrimmoire(){
@@ -69,6 +71,17 @@ public class BaseConfig extends Config {
 
     public boolean isInTestingMode(){
         return config.getBoolean("Testing Mode");
+    }
+
+    /*
+        Progress System Stuff
+     */
+    public double getXPGained(XPGainType xpGainType){
+        return config.getDouble("XP Gained." + xpGainType.getConfigKey());
+    }
+
+    public double getXPIncreasePerLevel(){
+        return config.getDouble("XP Increase Per Level");
     }
 
 }
