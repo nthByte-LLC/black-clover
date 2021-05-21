@@ -153,6 +153,10 @@ public class PlayerData {
         this.maxRegen = previousData.maxRegen;
         this.regenAmount = previousData.regenAmount;
         this.config = previousData.config;
+        this.unlockedSpells = previousData.getUnlockedSpells();
+        this.numUnusedPoints = previousData.getNumUnusedPoints();
+        this.level = previousData.getLevel();
+        this.experience = previousData.getExperience();
     }
 
     public boolean canCast(){
@@ -209,6 +213,10 @@ public class PlayerData {
 
     public void addPoints(int pointsGained){
         this.numUnusedPoints += pointsGained;
+    }
+
+    public void decreasePoints(int pointsRemoved){
+        this.numUnusedPoints -= pointsRemoved;
     }
 
     public boolean isSpellUnlocked(SpellWrapper spellWrapper){

@@ -39,8 +39,8 @@ Tier Properties:
 ######
 # XP/Progress System Stuff
 Max Level: 15
-# How much mana you get per upgrade of mana
-Mana Increase Per Upgrade: 500
+# How much regen/mana you get per upgrade of mana
+Regen Increase Per Upgrade: 500
 # How much XP is needed more than the last level to level up
 XP Increase Per Level: 500
 XP Gained:

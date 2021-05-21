@@ -67,7 +67,7 @@ public class PlayerDataManager {
         if(file.exists()){
             PlayerDataConfig pdc = new PlayerDataConfig(file);
             PlayerData pd = pdc.loadData(uuid);
-            initManaBar(player, pd.getGrimmoireWrapper());
+            initManaBar(pd);
             playerData.put(pd.getUUID(), pd);
         }else{
             createData(player);
@@ -144,7 +144,7 @@ public class PlayerDataManager {
             pd.setMaxRegen(maxMana);
             pd.setRegenAmount(0);
 
-            initManaBar(player, randomGrimmoire);
+            initManaBar(pd);
 
             playerData.put(player.getUniqueId(), pd);
             player.getInventory().setItemInOffHand(grimmoire);
@@ -161,11 +161,12 @@ public class PlayerDataManager {
 
     /**
      * Intializes the mana bar that is at the top of a player's screen.
-     * @param player The player you want to initialize the bar for
-     * @param grimmoireWrapper The grimmoire that the player has.
      */
-    public void initManaBar(Player player, GrimmoireWrapper grimmoireWrapper){
-        int maxMana = plugin.getMaxRegen(grimmoireWrapper.getTier());
+    public void initManaBar(PlayerData pd){
+
+        Player player = pd.getPlayer();
+        GrimmoireWrapper grimmoireWrapper = pd.getGrimmoireWrapper();
+        int maxMana = pd.getMaxRegen();
         BarColor barColor = Grimmoire.colorCodeToBarColor(grimmoireWrapper.getConfig().getDisplayNameColor());
         BossBar bar = Bukkit.createBossBar(StringUtils.colorString("&bMana: &f" + maxMana + "/" + maxMana), barColor, BarStyle.SOLID);
         bar.addPlayer(player);

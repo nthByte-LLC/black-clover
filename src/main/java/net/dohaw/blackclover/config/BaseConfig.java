@@ -84,4 +84,8 @@ public class BaseConfig extends Config {
         return config.getDouble("XP Increase Per Level");
     }
 
+    public int getRegenIncreasePerUpgrade(){
+        return config.getInt("Regen Increase Per Upgrade");
+    }
+
 }

@@ -13,6 +13,10 @@ import net.dohaw.blackclover.playerdata.PlayerData;
 import net.dohaw.blackclover.util.PDCHandler;
 import net.dohaw.corelib.CoreLib;
 import net.dohaw.corelib.StringUtils;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -118,59 +122,10 @@ public abstract class GrimmoireWrapper extends Wrapper<GrimmoireType> {
         meta.setLore(lore);
         baseGrimmoire.setItemMeta(meta);
 
-        writeInGrimmoire(playerData, baseGrimmoire);
-
         PDCHandler.markGrimmoire(baseGrimmoire, this.getKEY());
 
     }
 
-    private void writeInGrimmoire(PlayerData playerData, ItemStack grimmoire){
-
-        BookMeta bookMeta = (BookMeta) grimmoire.getItemMeta();
-        bookMeta.setTitle("Blank");
-        bookMeta.setAuthor("Destiny");
-
-        String firstPage = "";
-        String firstPageHeader = StringUtils.colorString(config.getDisplayNameColor() + getCenteredHeader());
-        firstPage += firstPageHeader;
-
-        //20 characters wide
-        String lineUnderHeader = "&0-------------------\n";
-        firstPage += lineUnderHeader;
-
-        BlackCloverPlugin plugin = (BlackCloverPlugin) CoreLib.getInstance();
-        String plusSign = "&2[+]&0";
-        String manaLine = plusSign + " " + plugin.getMaxRegen(getTier()) + " Mana\n";
-        firstPage += manaLine;
-
-        // The spells
-        for(SpellWrapper spell : spells.values()){
-
-            if(!playerData.isSpellUnlocked(spell)){
-
-                SpellType spellType = spell.getKEY();
-                String spellName = spellType.toProperName();
-                String spellLine;
-                boolean isUlt = spell.getKEY().isUltimate();
-
-                if(isUlt){
-                    spellLine = "\n" + plusSign + " Ultimate: " + spellName + "\n";
-                }else{
-                    spellLine = plusSign + " Spell: " + spellName + "\n";
-                }
-
-                firstPage += spellLine;
-
-            }
-
-        }
-
-        firstPage = StringUtils.colorString(firstPage);
-
-        bookMeta.addPage(firstPage);
-        grimmoire.setItemMeta(bookMeta);
-
-    }
 
     private String getCenteredHeader(){
 

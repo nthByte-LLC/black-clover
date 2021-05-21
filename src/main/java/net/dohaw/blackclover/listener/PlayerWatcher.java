@@ -11,6 +11,7 @@ import net.dohaw.blackclover.grimmoire.spell.SpellType;
 import net.dohaw.blackclover.grimmoire.spell.TimeCastable;
 import net.dohaw.blackclover.grimmoire.spell.type.water.Drowned;
 import net.dohaw.blackclover.grimmoire.spell.type.wind.Hurricane;
+import net.dohaw.blackclover.menu.GrimmoireMenu;
 import net.dohaw.blackclover.playerdata.CompassPlayerData;
 import net.dohaw.blackclover.playerdata.FungusPlayerData;
 import net.dohaw.blackclover.playerdata.PlayerData;
@@ -98,10 +99,18 @@ public class PlayerWatcher implements Listener {
 
         Player player = e.getPlayer();
         if(hasGrimmoireInOffHand(player)){
+
             Action action = e.getAction();
+            System.out.println("ACTION: " + action.toString());
             if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
                 castPotentialSpell(e, e.getPlayer());
+            }else if(action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK){
+                e.setCancelled(true);
+                GrimmoireMenu menu = new GrimmoireMenu(plugin);
+                menu.initializeItems(player);
+                menu.openInventory(player);
             }
+
         }
 
     }
