@@ -14,6 +14,19 @@ commands:
       - bclover
 
 permissions:
-  blackclover.change.grimmoire:
+  blackclover.set.grimmoire:
     default: op
+    description: Allows a player to set grimmoires
+  blackclover.set.level:
+    default: op
+    description: Allows a player to set a player's level
+  blackclover.set.xp:
+    default: op
+    description: Allows a player to set a player's XP
+  blackclover.info.others:
+    default: op
+    description: Allows a player to see info about another player
+  blackclover.info.self:
+    default: true
+    description: Allows a player to see info about themselves
 

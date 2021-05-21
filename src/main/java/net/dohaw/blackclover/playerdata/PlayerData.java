@@ -21,6 +21,8 @@ public class PlayerData {
 
     private double experience;
 
+    private int numUnusedPoints;
+
     private boolean willTakeFallDamage = true;
 
     /*
@@ -203,6 +205,10 @@ public class PlayerData {
         this.experience += xpGained;
     }
 
+    public void addPoints(int pointsGained){
+        this.numUnusedPoints += pointsGained;
+    }
+
     public boolean isWillTakeFallDamage() {
         return willTakeFallDamage;
     }
@@ -338,4 +344,13 @@ public class PlayerData {
     public void setExperience(double experience) {
         this.experience = experience;
     }
+
+    public int getNumUnusedPoints() {
+        return numUnusedPoints;
+    }
+
+    public void setNumUnusedPoints(int numUnusedPoints) {
+        this.numUnusedPoints = numUnusedPoints;
+    }
+
 }

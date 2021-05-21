@@ -3,6 +3,7 @@ package net.dohaw.blackclover.util;
 import net.dohaw.blackclover.XPGainType;
 import net.dohaw.blackclover.config.BaseConfig;
 import net.dohaw.blackclover.playerdata.PlayerData;
+import net.dohaw.corelib.StringUtils;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -17,17 +18,24 @@ public class ProgressSystem {
     public static boolean hasLeveledUp(PlayerData playerData){
         double increasePerLevel = baseConfig.getXPIncreasePerLevel();
         int currentLevel = playerData.getLevel();
-        double xpNeededForAdvance = (currentLevel + 1) * increasePerLevel;
+        double xpNeededForAdvance = currentLevel * increasePerLevel;
         return xpNeededForAdvance <= playerData.getExperience();
     }
 
     public static void levelUp(PlayerData playerData){
+
+        int currentLevel = playerData.getLevel();
         int newLevel = playerData.getLevel() + 1;
-        double xpThreshold = newLevel * baseConfig.getXPIncreasePerLevel();
+        double xpThreshold = currentLevel * baseConfig.getXPIncreasePerLevel();
         double leftOverXP = playerData.getExperience() - xpThreshold;
+
         playerData.setLevel(newLevel);
         playerData.setExperience(leftOverXP);
-        celebrate(playerData.getPlayer());
+
+        Player playerWhoLevel = playerData.getPlayer();
+        playerWhoLevel.sendMessage(StringUtils.colorString("You have leveled up to level &b&l" + newLevel + "!"));
+        celebrate(playerWhoLevel);
+
     }
 
     private static void celebrate(Player playerWhoLeveled){

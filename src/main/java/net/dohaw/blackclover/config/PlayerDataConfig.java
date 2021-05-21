@@ -34,6 +34,7 @@ public class PlayerDataConfig extends Config {
         pd.setRegenAmount(config.getInt("Regen Amount"));
         pd.setLevel(config.getInt("Level"));
         pd.setExperience(config.getDouble("Experience"));
+        pd.setNumUnusedPoints(config.getInt("Unused Points"));
         pd.setConfig(this);
 
         PlayerData newData;
@@ -85,6 +86,7 @@ public class PlayerDataConfig extends Config {
         config.set("Grimmoire Type", pd.getGrimmoireWrapper().getKEY().toString());
         config.set("Level", pd.getLevel());
         config.set("Experience", pd.getExperience());
+        config.set("Unused Points", pd.getNumUnusedPoints());
 
         if(pd instanceof SpecifiableData){
             SpecifiableData spd = (SpecifiableData) pd;
