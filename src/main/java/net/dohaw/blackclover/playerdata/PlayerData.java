@@ -52,7 +52,7 @@ public class PlayerData {
 
     private boolean isInVulnerable;
 
-    private boolean canAttack;
+    private boolean canAttack = true;
 
     private EnumSet<SpellType> spellsOnCooldown = EnumSet.noneOf(SpellType.class);
 

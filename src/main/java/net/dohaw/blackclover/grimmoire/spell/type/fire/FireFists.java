@@ -12,43 +12,39 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class FireFists extends ActivatableSpellWrapper implements Listener{
+public class FireFists extends ActivatableSpellWrapper implements Listener {
 
     private double damageScale;
     protected int fireTicksPerPunch;
 
     public FireFists(GrimmoireConfig grimmoireConfig) {
         super(SpellType.FIRE_FISTS, grimmoireConfig);
-        this.fireTicksPerPunch = grimmoireConfig.getIntegerSetting(this.getKEY(), "Fire Ticks Per Punch");
     }
 
     @EventHandler
     public void onPlayerStrike(EntityDamageByEntityEvent e){
 
         Entity eDamager = e.getDamager();
-        if(eDamager instanceof Player){
+        Entity damagedEntity = e.getEntity();
+        if(eDamager instanceof Player && damagedEntity instanceof LivingEntity){
 
             Player player = (Player) eDamager;
             PlayerData pd = Grimmoire.instance.getPlayerDataManager().getData(player.getUniqueId());
-            if(pd.isSpellActive(this.getKEY())){
+            if(pd.isSpellActive(KEY)){
 
-                double dmg = e.getDamage();
-                if(damageScale != 1){
-                    dmg *= damageScale;
-                }
+                double dmg = e.getDamage() * damageScale;
+                double damageDone = SpellUtils.callSpellDamageEvent(KEY, (LivingEntity) damagedEntity, player, dmg);
 
-                SpellDamageEvent event = new SpellDamageEvent(KEY, dmg, e.getEntity(), player);
-                Bukkit.getPluginManager().callEvent(event);
-
-                if(!event.isCancelled()){
+                if(damageDone != SpellUtils.DAMAGE_CANCEL_VALUE){
 
                     Entity eDamaged = e.getEntity();
-                    e.setDamage(event.getDamage());
+                    e.setDamage(damageDone);
 
                     int currentFireTicks = eDamaged.getFireTicks();
 
@@ -60,6 +56,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener{
                     SpellUtils.spawnParticle(eDamaged, Particle.FLAME, 30, 1, 1, 1);
 
                 }else{
+                    System.out.println("CANCELED");
                     // Cancels regular punch damage
                     e.setCancelled(true);
                 }
@@ -84,5 +81,7 @@ public class FireFists extends ActivatableSpellWrapper implements Listener{
     public void loadSettings() {
         super.loadSettings();
         this.damageScale = grimmoireConfig.getDoubleSetting(KEY, "Damage Scale");
+        this.fireTicksPerPunch = grimmoireConfig.getIntegerSetting(this.getKEY(), "Fire Ticks Per Punch");
     }
+
 }

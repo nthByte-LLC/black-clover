@@ -81,7 +81,6 @@ public class PlayerWatcher implements Listener {
             player.getPersistentDataContainer().remove(Hurricane.NSK_MARKER);
         }
 
-
     }
 
     @EventHandler
@@ -101,7 +100,6 @@ public class PlayerWatcher implements Listener {
         if(hasGrimmoireInOffHand(player)){
 
             Action action = e.getAction();
-            System.out.println("ACTION: " + action.toString());
             if(action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR){
                 castPotentialSpell(e, e.getPlayer());
             }else if(action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK){
@@ -131,8 +129,9 @@ public class PlayerWatcher implements Listener {
         Entity eDamaged = e.getEntity();
         Entity eDamager = e.getDamager();
 
-        if(eDamager instanceof Projectile){
+        if(eDamager instanceof Projectile && eDamaged instanceof LivingEntity){
 
+            LivingEntity damaged = (LivingEntity) eDamaged;
             Projectile proj = (Projectile) eDamager;
             ProjectileSource projSource = proj.getShooter();
             if(projSource instanceof Player){
@@ -143,12 +142,11 @@ public class PlayerWatcher implements Listener {
 
                 CastSpellWrapper castSpellWrapper = PDCHandler.getSpellBoundToProjectile(pdDamager, proj);
                 if(castSpellWrapper != null){
-                    SpellDamageEvent spellDamageEvent = new SpellDamageEvent(castSpellWrapper.getKEY(), e.getDamage(), eDamaged, damager);
-                    Bukkit.getPluginManager().callEvent(spellDamageEvent);
-                    if(spellDamageEvent.isCancelled()){
-                        e.setCancelled(true);
+                    double damageDone = SpellUtils.callSpellDamageEvent(castSpellWrapper.getKEY(), damaged, damager, e.getDamage());
+                    if(damageDone != SpellUtils.DAMAGE_CANCEL_VALUE){
+                        e.setDamage(damageDone);
                     }else{
-                        e.setDamage(spellDamageEvent.getDamage());
+                        e.setCancelled(true);
                     }
                 }
 
@@ -271,6 +269,7 @@ public class PlayerWatcher implements Listener {
             PlayerData damagedPlayerData = Grimmoire.instance.getPlayerDataManager().getData(damaged.getUniqueId());
             // Doesn't allow player's to do sweeping damage.
             if(!damagedPlayerData.isCanAttack()){
+                System.out.println("CANT ATTACK");
                 e.setCancelled(true);
                 return;
             }
@@ -330,6 +329,7 @@ public class PlayerWatcher implements Listener {
             Player damagedPlayer = (Player) damagedEntity;
             PlayerData pd = plugin.getPlayerDataManager().getData(damagedPlayer.getUniqueId());
             if(pd.isInVulnerable()){
+                System.out.println("INVULV");
                 SpellUtils.playSound(damagedPlayer, Sound.ITEM_SHIELD_BLOCK);
                 SpellUtils.spawnParticle(damagedEntity, Particle.VILLAGER_ANGRY, 10, 0.3f, 0.3f, 0.3f);
                 e.setCancelled(true);

@@ -48,7 +48,7 @@ public class ElectricFire extends PassiveSpellWrapper implements DependableSpell
                 double damage = initDamage * damageMultiplier;
                 LivingEntity le = (LivingEntity) eDamaged;
                 double damagedDone = SpellUtils.callSpellDamageEvent(KEY, le, (Player) eDamager, damage);
-                if(damagedDone != -1){
+                if(damagedDone != SpellUtils.DAMAGE_CANCEL_VALUE){
 
                     int currentFireTicks = le.getFireTicks();
                     int newFireTicks = currentFireTicks + fireTicksPerHit;
