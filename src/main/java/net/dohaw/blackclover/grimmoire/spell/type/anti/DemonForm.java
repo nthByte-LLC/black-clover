@@ -39,8 +39,6 @@ public class DemonForm extends CastSpellWrapper {
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, speedDuration * 20, speedLevel - 1));
         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, strengthDuration * 20, strengthLevel - 1));
 
-        InventoryHolder
-
         BukkitTask tornadoParticleRunner = new TornadoParticleRunner(player, new Particle.DustOptions(BukkitColor.DARK_GREY, 1), 1, false).runTaskTimer(Grimmoire.instance, 0L, 1L);
         BukkitTask tornadoParticleRunner2 = new TornadoParticleRunner(player, new Particle.DustOptions(Color.RED, 1), 1, true).runTaskTimer(Grimmoire.instance, 0L, 1L);
 

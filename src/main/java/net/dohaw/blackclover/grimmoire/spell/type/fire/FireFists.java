@@ -47,7 +47,6 @@ public class FireFists extends ActivatableSpellWrapper implements Listener {
                     e.setDamage(damageDone);
 
                     int currentFireTicks = eDamaged.getFireTicks();
-
                     if(currentFireTicks < 0){
                         currentFireTicks = 0;
                     }

@@ -5,6 +5,9 @@ Spell Settings:
     Hotbar Number: 0
     Cooldown: 5
     Regen Consumed: 100
+    Damage: 4
+    Wither Level: 1
+    Wither Duration: 5
   shadow_trap:
     Hotbar Number: 1
     Cooldown: 5
